@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HelloGrade Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header class="dashboard-header">
+        <h1>HelloGrade Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Account Settings</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="#">Dashboard Home</a></li>
+            <li><a href="#">Classes</a></li>
+            <li><a href="#">Assignments</a></li>
+            <li><a href="#">Students</a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <h2>Welcome, <%= userName %>!</h2>
+        <div class="content">
+            <p>Here's a quick overview of your recent activity:</p>
+            <!-- Include dynamic content such as recent grades entered, upcoming assignments, etc. -->
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 HelloGrade. All rights reserved.</p>
+    </footer>
+</body>
+</html>
