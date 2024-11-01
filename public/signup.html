@@ -159,7 +159,7 @@
     </div>
 
     <script>
-        const API_BASE_URL = 'https://hellograde.onrender.com';
+            const API_BASE_URL = 'https://hellograde.onrender.com';
         
         // Password visibility toggle
         document.querySelectorAll('.password-toggle-icon').forEach(icon => {
@@ -208,11 +208,12 @@
         studentIDNumber: document.getElementById('studentIDNumber').value
     };
 
-    fetch('${API_BASE_URL}/signup', {
+    fetch(`${API_BASE_URL}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
     })
+
     .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -240,8 +241,6 @@
                 errorMessage.style.display = 'block';
             });
         });
-
-
     </script>
 </body>
 </html>
