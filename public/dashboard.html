@@ -295,6 +295,7 @@
     </main>
 
     <script>
+        const API_BASE_URL = 'https://hellograde.onrender.com';
         // Fetch student details (name and ID) from the session
         async function fetchStudentDetails() {
             try {
@@ -402,7 +403,7 @@
             fetchStudentDetails();
             //const email = 'idiommah@gmail.com';
 
-            fetch('http://localhost:3000/user-details?email=${encodeURIComponent(email)}', {
+            fetch('${API_BASE_URL}/user-details?email=${encodeURIComponent(email)}', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include' // Ensure credentials are included to send session cookie
