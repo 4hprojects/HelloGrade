@@ -318,6 +318,7 @@
         </div>
 
     <script>
+        const API_BASE_URL = 'https://hellograde.onrender.com';
         // Fetch user details on page load
             document.addEventListener('DOMContentLoaded', async () => {
             try {
@@ -356,7 +357,7 @@
             }
             try {
                     // Send search request to the server
-                    const response = await fetch(`http://localhost:3000/search?query=${encodeURIComponent(searchQuery)}`, {
+                    const response = await fetch(`${API_BASE_URL}/search?query=${encodeURIComponent(searchQuery)}`, {
                         method: 'GET',
                         headers: { 'Content-Type': 'application/json' },
                         credentials: 'include' // Include credentials for session handling
