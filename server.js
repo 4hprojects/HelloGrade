@@ -179,83 +179,78 @@ app.post('/signup', async (req, res) => {
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = process.env.SESSION_SECRET; // Use SESSION_SECRET for JWT signing
     // Login Route with Rate Limiting
-    app.post('/login', loginLimiter, async (req, res) => {
-        const { email, password } = req.body;
+// Login Route with Rate Limiting
+app.post('/login', loginLimiter, async (req, res) => {
+    const { email, password } = req.body;
 
-        try {
-            if (!email || !password) {
-                return res.status(400).json({ success: false, message: 'Email and password are required.' });
-            }
+    try {
+        if (!email || !password) {
+            return res.status(400).json({ success: false, message: 'Email and password are required.' });
+        }
 
-            const user = await usersCollection.findOne({ emaildb: email });
-            if (!user) {
+        const user = await usersCollection.findOne({ emaildb: email });
+        if (!user) {
+            return res.status(400).json({ success: false, message: 'Invalid email or password.' });
+        }
+
+        // Check if account is locked
+        if (user.accountLockedUntil && user.accountLockedUntil > new Date()) {
+            const remainingTime = Math.ceil((user.accountLockedUntil - new Date()) / 60000);
+            return res.status(403).json({ success: false, message: `Account is locked. Try again in ${remainingTime} minutes.` });
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
+            // Increment invalid login attempts
+            let invalidAttempts = (user.invalidLoginAttempts || 0) + 1;
+
+            let updateFields = { invalidLoginAttempts: invalidAttempts };
+
+            if (invalidAttempts >= 3) {
+                // Lock the account for 30 minutes
+                updateFields.accountLockedUntil = new Date(Date.now() + 30 * 60 * 1000);
+                updateFields.invalidLoginAttempts = 0; // Reset attempts after locking
+
+                await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
+
+                // Send account lock email
+                const emailContent = `
+                    <p>Dear User,</p>
+                    <p>Your account has been locked due to multiple unsuccessful login attempts. Please wait 30 minutes before trying again or reset your password if you've forgotten it.</p>
+                    <p>Best regards,<br/>HelloGrade Student Portal Team</p>
+                `;
+                await sendEmail(user.emaildb, 'Account Locked', emailContent);
+
+                return res.status(403).json({ success: false, message: 'Account is locked due to multiple failed login attempts. An email has been sent with further instructions.' });
+            } else {
+                await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
+
                 return res.status(400).json({ success: false, message: 'Invalid email or password.' });
             }
-
-            
-            // Check if account is locked
-            if (user.accountLockedUntil && user.accountLockedUntil > new Date()) {
-                const remainingTime = Math.ceil((user.accountLockedUntil - new Date()) / 60000);
-                return res.status(403).json({ success: false, message: `Account is locked. Try again in ${remainingTime} minutes.` });
-            }
-
-            const passwordMatch = await bcrypt.compare(password, user.password);
-
-            if (!passwordMatch) {
-                // Increment invalid login attempts
-                let invalidAttempts = (user.invalidLoginAttempts || 0) + 1;
-
-                let updateFields = { invalidLoginAttempts: invalidAttempts };
-
-                if (invalidAttempts >= 3) {
-                    // Lock the account for 30 minutes
-                    updateFields.accountLockedUntil = new Date(Date.now() + 30 * 60 * 1000);
-                    updateFields.invalidLoginAttempts = 0; // Reset attempts after locking
-
-                    await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
-
-                    // Send account lock email
-                    const emailContent = `
-                        <p>Dear User,</p>
-                        <p>Your account has been locked due to multiple unsuccessful login attempts. Please wait 30 minutes before trying again or reset your password if you've forgotten it.</p>
-                        <p>Best regards,<br/>HelloGrade Student Portal Team</p>
-                    `;
-                    await sendEmail(user.emaildb, 'Account Locked', emailContent);
-
-                    return res.status(403).json({ success: false, message: 'Account is locked due to multiple failed login attempts. An email has been sent with further instructions.' });
-                } else {
-                    await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
-
-                    return res.status(400).json({ success: false, message: 'Invalid email or password.' });
-                }
-            }
-             // Create JWT with user info
-            const token = jwt.sign(
-                { userId: user._id, email: user.emaildb, role: user.role },
-                SECRET_KEY,
-                { expiresIn: '1h' }
-            );
-    
-            res.json({ success: true, role: user.role, token, message: 'Login successful!' });
-        } catch (error) {
-            console.error('Error during login:', error);
-            res.status(500).json({ success: false, message: 'Error during login.' });
         }
-    });
 
-            // Reset invalid login attempts on successful login
-            await usersCollection.updateOne(
-                { _id: user._id },
-                { $set: { invalidLoginAttempts: 0, accountLockedUntil: null } }
-            );
+        // Reset invalid login attempts on successful login
+        await usersCollection.updateOne(
+            { _id: user._id },
+            { $set: { invalidLoginAttempts: 0, accountLockedUntil: null } }
+        );
 
-            // Set up session
-            req.session.userId = user._id;
-            req.session.email = user.emaildb;
-            req.session.role = user.role;
-            req.session.studentIDNumber = user.studentIDNumber; // Store studentIDNumber in the session
-            console.log('Session user ID set:', req.session.userId); // Debug log
-        // Save the session using a Promise
+        // Create JWT with user info
+        const token = jwt.sign(
+            { userId: user._id, email: user.emaildb, role: user.role },
+            SECRET_KEY,
+            { expiresIn: '1h' }
+        );
+
+        // Set up session (if using sessions)
+        req.session.userId = user._id;
+        req.session.email = user.emaildb;
+        req.session.role = user.role;
+        req.session.studentIDNumber = user.studentIDNumber;
+        console.log('Session user ID set:', req.session.userId);
+
+        // Save the session using a Promise (if necessary)
         await new Promise((resolve, reject) => {
             req.session.save((err) => {
                 if (err) return reject(err);
@@ -263,23 +258,21 @@ const SECRET_KEY = process.env.SESSION_SECRET; // Use SESSION_SECRET for JWT sig
             });
         });
 
-
-        // After successful authentication
+        // Update last login time
         await usersCollection.updateOne(
             { _id: user._id },
-            { $set: { 
-                lastlogintime: new Date()
-             } }
+            { $set: { lastlogintime: new Date() } }
         );
-        
-        // Return response with user role
-        res.json({ success: true, role: user.role, message: 'Login successful!' });
-        
-        } catch (error) {
-            console.error('Error during login:', error);
-            res.status(500).json({ success: false, message: 'Error during login.' });
-        }
-    });
+
+        // Return response with user role and token
+        res.json({ success: true, role: user.role, token, message: 'Login successful!' });
+
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ success: false, message: 'Error during login.' });
+    }
+});
+
 
     // Logout Route
     app.post('/logout', async (req, res) => {
