@@ -55,7 +55,7 @@
         </form>
     </div>
     <script>
-
+        const API_BASE_URL = 'https://hellograde.onrender.com';
         // Password visibility toggle
         document.getElementById('togglePassword').addEventListener('click', function () {
             const passwordInput = document.getElementById('password');
@@ -110,7 +110,7 @@
             }
         });
 
-        const API_BASE_URL = 'https://hellograde.onrender.com';
+
             fetch(`${API_BASE_URL}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
