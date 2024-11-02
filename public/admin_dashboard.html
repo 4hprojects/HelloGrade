@@ -328,6 +328,9 @@
                 });
 
                 if (!response.ok) {
+                    if (response.status === 401) {
+                        window.location.href = 'login.html';
+                    }
                     throw new Error('Failed to fetch user details.');
                 }
 
@@ -359,11 +362,14 @@
                     // Send search request to the server
                     const response = await fetch(`${API_BASE_URL}/search?query=${encodeURIComponent(searchQuery)}`, {
                         method: 'GET',
-                        headers: { 'Content-Type': 'application/json' },
+                        //headers: { 'Content-Type': 'application/json' }, 
                         credentials: 'include' // Include credentials for session handling
                     });
 
                     if (!response.ok) {
+                        if (response.status === 401) {
+                            window.location.href = 'login.html';
+                        }
                         throw new Error('Failed to perform search.');
                     }
 
