@@ -4,8 +4,8 @@ const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const sgMail = require('@sendgrid/mail');
 const bcrypt = require('bcrypt');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
+//const session = require('express-session');
+//const MongoStore = require('connect-mongo');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const validator = require('validator');
@@ -32,18 +32,18 @@ const client = new MongoClient(mongoUri);
 let usersCollection;
 
 // Session management with MongoDB store
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: mongoUri }),
-    cookie: {
-        secure: true, // Set to true only if using HTTPS
-        httpOnly: true,
-        sameSite: 'none', // Adjust sameSite setting for better compatibility
-        maxAge: 30 * 60 * 1000 // 30 minutes session expiry
-    }
-}));
+//app.use(session({
+//    secret: process.env.SESSION_SECRET,
+//    resave: false,
+ //   saveUninitialized: false,
+ //   store: MongoStore.create({ mongoUrl: mongoUri }),
+  //  cookie: {
+   //     secure: true, // Set to true only if using HTTPS
+   //     httpOnly: true,
+   //     sameSite: 'none', // Adjust sameSite setting for better compatibility
+   //     maxAge: 30 * 60 * 1000 // 30 minutes session expiry
+    //}
+//}));
 
 // Helper Functions
 function hashPassword(password) {
@@ -176,7 +176,8 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = process.env.SESSION_SECRET; // Use SESSION_SECRET for JWT signing
     // Login Route with Rate Limiting
     app.post('/login', loginLimiter, async (req, res) => {
         const { email, password } = req.body;
@@ -228,6 +229,19 @@ app.post('/signup', async (req, res) => {
                     return res.status(400).json({ success: false, message: 'Invalid email or password.' });
                 }
             }
+             // Create JWT with user info
+            const token = jwt.sign(
+                { userId: user._id, email: user.emaildb, role: user.role },
+                SECRET_KEY,
+                { expiresIn: '1h' }
+            );
+    
+            res.json({ success: true, role: user.role, token, message: 'Login successful!' });
+        } catch (error) {
+            console.error('Error during login:', error);
+            res.status(500).json({ success: false, message: 'Error during login.' });
+        }
+    });
 
             // Reset invalid login attempts on successful login
             await usersCollection.updateOne(
@@ -449,16 +463,36 @@ app.post('/reset-password', async (req, res) => {
         });
     }
 });
+// Middleware to verify JWT token
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ success: false, message: 'Unauthorized access.' });
+    }
+
+    jwt.verify(token, SECRET_KEY, (err, user) => {
+        if (err) {
+            return res.status(403).json({ success: false, message: 'Token is not valid.' });
+        }
+        req.user = user; // Attach decoded user info to req
+        next();
+    });
+}
 
 // Fetch user details route
-app.get('/user-details', isAuthenticated, async (req, res) => {
+app.get('/user-details', authenticateToken, async (req, res) => {
     console.log("Session in /user-details:", req.session);
     try {
         // Find the user by session ID
-        const email = req.session.email;
+        const user = await usersCollection.findOne(
+            { _id: req.user.userId },
+            { projection: { firstName: 1, lastName: 1, studentIDNumber: 1 } }
+        );
         
-        if (!email) {
-            return res.status(401).json({ success: false, message: 'Unauthorized access.' });
+        if (!user) {
+            return res.status(401).json({ success: false, message: 'User not found.' });
         }
 
         // Fetch user details from the database
