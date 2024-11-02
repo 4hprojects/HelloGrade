@@ -322,7 +322,7 @@
         // Fetch user details on page load
             document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch(`/user-details`, {
+                const response = await fetch(`${API_BASE_URL}/user-details`, {
                     method: 'GET',
                     credentials: 'include' // Include credentials for session handling
                 });
