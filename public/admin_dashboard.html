@@ -322,7 +322,7 @@
         // Fetch user details on page load
             document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch('/user-details', {
+                const response = await fetch(`/user-details`, {
                     method: 'GET',
                     credentials: 'include' // Include credentials for session handling
                 });
@@ -435,7 +435,7 @@
         document.getElementById('logoutLink').addEventListener('click', function (event) {
             event.preventDefault();
     
-            fetch('/logout', {
+            fetch(`/logout`, {
                 method: 'POST',
                 credentials: 'include' // Include credentials for session handling
             })
