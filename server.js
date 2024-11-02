@@ -21,11 +21,11 @@ const API_BASE_URL = 'https://hellograde.onrender.com';
 app.use(helmet());
 
 // Configure CORS appropriately
-app.use(cors({
-    origin: ['https://hellograde.onrender.com', 'http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:3000', 'https://4hprojects.github.io'],
-    methods: ['GET', 'POST'],
-    credentials: true
-}));
+//app.use(cors({
+//    origin: ['https://hellograde.onrender.com', 'http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:3000', 'https://4hprojects.github.io'],
+//    methods: ['GET', 'POST'],
+//    credentials: true
+//}));
 
 const mongoUri = process.env.MONGODB_URI;
 const client = new MongoClient(mongoUri);
