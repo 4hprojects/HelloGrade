@@ -308,7 +308,7 @@
                         console.error('Required elements not found in the DOM.');
                         return; // Exit the function if elements are missing
                     }
-                    const response = await fetch('/user-details', { credentials: 'include' });
+                    const response = await fetch(`/user-details`, { credentials: 'include' });
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
@@ -379,13 +379,13 @@
  //   fetchStudentDetails();
     //});
 
-        fetch('/session-check', { credentials: 'include' })
+        fetch(`/session-check`, { credentials: 'include' })
             .then(response => {
                 if (!response.ok) {
                 window.location.href = '/login.html';
                 }
             });
-            fetch('/user-details', { credentials: 'include' })
+            fetch(`/user-details`, { credentials: 'include' })
     .then(response => {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -403,7 +403,7 @@
             fetchStudentDetails();
             //const email = 'idiommah@gmail.com';
 
-            fetch('${API_BASE_URL}/user-details?email=${encodeURIComponent(email)}', {
+            fetch(`${API_BASE_URL}/user-details?email=${encodeURIComponent(email)}`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include' // Ensure credentials are included to send session cookie
@@ -428,7 +428,7 @@
     document.getElementById('logoutLink').addEventListener('click', function (event) {
         event.preventDefault();
 
-        fetch('/logout', {
+        fetch(`/logout`, {
             method: 'POST',
             credentials: 'include' // Include credentials for session handling
         })
