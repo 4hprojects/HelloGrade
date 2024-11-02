@@ -441,7 +441,7 @@
         document.getElementById('logoutLink').addEventListener('click', function (event) {
             event.preventDefault();
     
-            fetch(`/logout`, {
+            fetch(`${API_BASE_URL}/logout`, {
                 method: 'POST',
                 credentials: 'include' // Include credentials for session handling
             })
