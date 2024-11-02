@@ -370,19 +370,11 @@
             }
         }
 
-
-// Fetch student details (name and ID) from the session
-//
-
-// Fetch student details on page load
-//document.addEventListener('DOMContentLoaded', function () {
- //   fetchStudentDetails();
-    //});
-
         fetch(`/session-check`, { credentials: 'include' })
             .then(response => {
                 if (!response.ok) {
-                window.location.href = '/login.html';
+                console.log("Cant fetch data")
+                //window.location.href = '/login.html';
                 }
             });
             fetch(`/user-details`, { credentials: 'include' })
@@ -401,7 +393,6 @@
         // Fetch user details when the page loads
         document.addEventListener('DOMContentLoaded', function () {
             fetchStudentDetails();
-            //const email = 'idiommah@gmail.com';
 
             fetch(`${API_BASE_URL}/user-details?email=${encodeURIComponent(email)}`, {
                 method: 'GET',
