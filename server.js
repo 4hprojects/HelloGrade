@@ -489,10 +489,10 @@ app.get('/user-details', authenticateToken, async (req, res) => {
         }
 
         // Fetch user details from the database
-        const user = await usersCollection.findOne(
-            { emaildb: email }, 
-            { projection: { firstName: 1, lastName: 1, studentIDNumber: 1 } }
-        );
+      //  const user = await usersCollection.findOne(
+        //    { emaildb: email }, 
+          //  { projection: { firstName: 1, lastName: 1, studentIDNumber: 1 } }
+       // );
 
         if (!user) {
             console.error('User not found in tblUser:', email); // Debug log
