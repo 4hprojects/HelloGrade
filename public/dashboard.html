@@ -308,7 +308,7 @@
                         console.error('Required elements not found in the DOM.');
                         return; // Exit the function if elements are missing
                     }
-                    const response = await fetch(`/user-details`, { credentials: 'include' });
+                    const response = await fetch(`${API_BASE_URL}/user-details`, { credentials: 'include' });
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
@@ -370,14 +370,14 @@
             }
         }
 
-        fetch(`/session-check`, { credentials: 'include' })
+        fetch(`${API_BASE_URL}/session-check`, { credentials: 'include' })
             .then(response => {
                 if (!response.ok) {
                 console.log("Cant fetch data")
                 //window.location.href = '/login.html';
                 }
             });
-            fetch(`/user-details`, { credentials: 'include' })
+            fetch(`${API_BASE_URL}/user-details`, { credentials: 'include' })
     .then(response => {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -419,7 +419,7 @@
     document.getElementById('logoutLink').addEventListener('click', function (event) {
         event.preventDefault();
 
-        fetch(`/logout`, {
+        fetch(`${API_BASE_URL}/logout`, {
             method: 'POST',
             credentials: 'include' // Include credentials for session handling
         })
