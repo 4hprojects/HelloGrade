@@ -158,9 +158,7 @@
         </form>
     </div>
 
-    <script>
-            const API_BASE_URL = 'https://hellograde.onrender.com';
-        
+    <script>      
         // Password visibility toggle
         document.querySelectorAll('.password-toggle-icon').forEach(icon => {
             icon.addEventListener('click', function () {
@@ -208,6 +206,7 @@
         studentIDNumber: document.getElementById('studentIDNumber').value
     };
 
+    const API_BASE_URL = 'https://hellograde.onrender.com';
     fetch(`${API_BASE_URL}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
