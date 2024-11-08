@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelloGrade Dashboard</title>
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        /* Body and Container Setup */
+        body {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+    
+        .sidebar {
+            width: 200px;
+            background-color: #4A90E2;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Space between items to move the footer to the bottom */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-welcome h2 {
+        padding: 20px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .sidebar-nav {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar-nav li {
+        margin: 10px 0; /* Reduce margin for compact look */
+        padding-left: 20px;
+    }
+
+    .sidebar-nav li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        display: block;
+        padding: 10px;
+    }
+
+    .sidebar-nav li a:hover {
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar-footer {
+        padding: 10px 20px;
+        text-align: center;
+        color: #fff;
+        font-size: 0.9em;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    #studentID {
+    text-align: center;
+    font-size: 0.9em;
+    color: #ccc;
+    margin-top: 5px;
+    display: block; /* Ensure it takes up the full line for centering */
+    }
+
+        header {
+            background-color: #4A90E2;
+            color: #fff;
+            width: calc(100% - 200px); /* Adjust for sidebar width */
+            margin-left: 200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            height: 60px;
+            z-index: 1000;
+        }
+    
+        header h1 {
+            font-size: 1.5em;
+            margin: 0;
+        }
+    
+        header nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            padding: 0;
+        }
+    
+        header nav ul li a {
+            color: #fff;
+            font-size: 1.5em;
+            text-decoration: none;
+        }
+    
+        .content {
+            margin-left: 200px;
+            width: calc(100% - 200px); /* Adjust for sidebar */
+            padding-top: 80px;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: calc(100vh - 80px); /* Adjust for header */
+        }
+    
+        .content-inner {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 800px; /* Set max-width for better readability */
+            margin: 0 auto; /* Center the container horizontally */
+            text-align: center; /* Center text content */
+        }
+    
+        .content-inner h2, .content-inner h3 {
+            margin: 10px 0;
+            color: #fff;
+        }
+    
+        .table-container {
+            width: 100%;
+            margin-top: 20px;
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    
+        thead th {
+            background-color: #4A90E2;
+            color: #fff;
+            padding: 12px;
+            text-align: center; /* Center column headers */
+        }
+    
+        tbody td {
+            padding: 12px;
+            color: #fff;
+           /* text-align: center; /* Center table cells */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    
+    /* Right-align Grade Category column */
+    tbody td:first-child {
+        text-align: right;
+    }
+
+    /* Center-align Midterm and Finals columns */
+    tbody td:not(:first-child) {
+        text-align: center;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    tbody td[colspan="2"] {
+        text-align: center;
+    }
+    
+        /* Adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .content {
+                margin-left: 200px;
+                padding-top: 80px;
+                justify-content: center;
+                align-items: center;
+            }
+    
+            .content-inner {
+                width: 95%;
+            }
+    
+            header nav ul li a {
+                font-size: 1.2em;
+            }
+        }
+    </style>    
+</head>
+<body>
+    <header>
+        <h1>HelloGrade Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#" title="Account Settings"><span class="material-icons">settings</span></a></li>
+                <li><a href="#" title="Help"><span class="material-icons">help_outline</span></a></li>
+                <li><a href="#" id="logoutLink" title="Logout"><span class="material-icons">logout</span></a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="sidebar">
+        <!-- Welcome Message at the Top of Sidebar -->
+        <div class="sidebar-welcome">
+            <h2>Hello, <span id="studentName">[User's Name]</span>!</h2>
+            <p id="studentID" style="font-size: 0.9em; color: #ccc; margin-top: 5px;">[Student ID]</p>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <ul class="sidebar-nav">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Classes</a></li>
+            <li><a href="#">Reports</a></li>            
+        </ul>
+
+        <!-- Footer in the Sidebar -->
+        <div class="sidebar-footer">
+            <p>&copy; 2024 HelloGrade</p>
+        </div>
+    </div>
+
+    <main>
+        <div class="content">
+            <div class="content-inner">
+                <!-- Course Name at the Top -->
+                <h3 id="courseInfo">Course: [Course Name]</h3>
+                
+                <!-- Grade Table -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Grade Category</th>
+                                <th>Midterm</th>
+                                <th>Finals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Attendance</td>
+                                <td id="midtermAttendance">No entry</td>
+                                <td id="finalsAttendance">No entry</td>
+                            </tr>
+                            <tr>
+                                <td>Class Standing</td>
+                                <td id="midtermClassStanding">No entry</td>
+                                <td id="finalsClassStanding">No entry</td>
+                            </tr>
+                            <tr>
+                                <td>Exams</td>
+                                <td id="midtermExam">No entry</td>
+                                <td id="finalExam">No entry</td>
+                            </tr>
+                            <tr>
+                                <td>Midterm Grade</td>
+                                <td id="midtermGrade">No entry</td>
+                                <td rowspan="2" id="finalGrade">No entry</td>
+                            </tr>
+                            <tr>
+                                <td>Transmuted Grade</td>
+                                <td id="transmutedMidtermGrade">No entry</td>
+                            </tr>
+                            <tr>
+                                <td>Transmuted Final Grade</td>
+                                <td colspan="2" id="transmutedFinalGrade">No entry</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Fetch student details (name and ID) from the session
+        async function fetchStudentDetails() {
+            try {
+                // Ensure the DOM is fully loaded
+                    const nameElement = document.getElementById('studentName');
+                    const idElement = document.getElementById('studentID');
+
+                    // Check if elements exist
+                    if (!nameElement || !idElement) {
+                        console.error('Required elements not found in the DOM.');
+                        return; // Exit the function if elements are missing
+                    }
+                    const response = await fetch('/user-details', { credentials: 'include' });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+
+
+                            if (data.success) {
+                                // Update the elements with user details
+                                nameElement.textContent = `${data.user.firstName} ${data.user.lastName}`;
+                                idElement.textContent = `${data.user.studentIDNumber}`;
+
+                                // Use the student ID to fetch grades
+                                fetchGrades(data.user.studentIDNumber);
+                            } else {
+                                console.error('Failed to fetch user details:', data.message);
+                            }
+                        }
+                        catch(error){
+                            console.error('Error fetching user details:', error);
+                        }
+                }
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchStudentDetails();
+        });
+        // Fetch grades using student ID
+        async function fetchGrades(studentIDNumber) {
+            if (!studentIDNumber) {
+                console.error('Invalid studentIDNumber:', studentIDNumber);
+                return;
+            }
+            try {
+                console.log('Fetching grades for:', studentIDNumber); // Debug log
+                const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
+                const data = await response.json();
+
+                if (data.success) {
+                    console.log('Grade data received:', data.gradeData); // Debug log
+
+                    document.getElementById('midtermAttendance').textContent = data.gradeData.midtermAttendance;
+                    document.getElementById('finalsAttendance').textContent = data.gradeData.finalsAttendance;
+                    document.getElementById('midtermClassStanding').textContent = data.gradeData.midtermClassStanding;
+                    document.getElementById('finalsClassStanding').textContent = data.gradeData.finalsClassStanding;
+                    document.getElementById('midtermExam').textContent = data.gradeData.midtermExam;
+                    document.getElementById('finalExam').textContent = data.gradeData.finalExam;
+                    document.getElementById('midtermGrade').textContent = data.gradeData.midtermGrade;
+                    document.getElementById('finalGrade').textContent = data.gradeData.finalGrade;
+                    document.getElementById('transmutedMidtermGrade').textContent = data.gradeData.transmutedMidtermGrade;
+                    document.getElementById('transmutedFinalGrade').textContent = data.gradeData.transmutedFinalGrade;
+                
+                    // Update the course information
+                    const courseInfoElement = document.getElementById('courseInfo');
+                    courseInfoElement.textContent = `Course: ${data.gradeData.courseID} - ${data.gradeData.courseDescription}`;
+
+                } else {
+                    console.error('Failed to fetch grades:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching grades:', error);
+            }
+        }
+
+
+// Fetch student details (name and ID) from the session
+//
+
+// Fetch student details on page load
+//document.addEventListener('DOMContentLoaded', function () {
+ //   fetchStudentDetails();
+    //});
+
+        fetch('/session-check', { credentials: 'include' })
+            .then(response => {
+                if (!response.ok) {
+                window.location.href = '/login.html';
+                }
+            });
+            fetch('/user-details', { credentials: 'include' })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Process data
+    })
+    .catch(error => {
+        console.error('Error fetching user details:', error);
+    });
+        // Fetch user details when the page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchStudentDetails();
+            //const email = 'idiommah@gmail.com';
+
+            fetch('/user-details?email=${encodeURIComponent(email)}', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include' // Ensure credentials are included to send session cookie
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user details.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    document.querySelector('.sidebar-welcome h2').textContent = `Hello, ${data.user.firstName} ${data.user.lastName}!`;
+                } else {
+                    console.error('Error:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user details:', error);
+            });
+        });
+    document.getElementById('logoutLink').addEventListener('click', function (event) {
+        event.preventDefault();
+
+        fetch('/logout', {
+            method: 'POST',
+            credentials: 'include' // Include credentials for session handling
+        })
+        .then(response => {
+            if (response.ok) {
+                // Redirect to login page after successful logout
+                window.location.href = 'index.html';
+            } else {
+                console.error('Logout failed');
+            }
+        })
+        .catch(error => {
+            console.error('Error during logout:', error);
+        });
+    });
+    </script>
+</body>
+</html>
