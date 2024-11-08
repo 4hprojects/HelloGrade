@@ -4,8 +4,8 @@ const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const sgMail = require('@sendgrid/mail');
 const bcrypt = require('bcrypt');
-//const session = require('express-session');
-//const MongoStore = require('connect-mongo');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const validator = require('validator');
@@ -15,14 +15,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-const API_BASE_URL = 'https://hellograde.onrender.com';
 
 // Security middleware
 app.use(helmet());
 
 // Configure CORS appropriately
 //app.use(cors({
-//    origin: ['https://hellograde.onrender.com', 'http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:3000', 'https://4hprojects.github.io'],
+//    origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:3000/', 'https://4hprojects.github.io'],
 //    methods: ['GET', 'POST'],
 //    credentials: true
 //}));
@@ -32,18 +31,18 @@ const client = new MongoClient(mongoUri);
 let usersCollection;
 
 // Session management with MongoDB store
-//app.use(session({
-//    secret: process.env.SESSION_SECRET,
-//    resave: false,
- //   saveUninitialized: false,
- //   store: MongoStore.create({ mongoUrl: mongoUri }),
-  //  cookie: {
-   //     secure: true, // Set to true only if using HTTPS
-   //     httpOnly: true,
-   //     sameSite: 'none', // Adjust sameSite setting for better compatibility
-   //     maxAge: 30 * 60 * 1000 // 30 minutes session expiry
-    //}
-//}));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: mongoUri }),
+    cookie: {
+        secure: false, // Set to true only if using HTTPS
+        httpOnly: true,
+        sameSite: 'lax', // Adjust sameSite setting for better compatibility
+        maxAge: 30 * 60 * 1000 // 30 minutes session expiry
+    }
+}));
 
 // Helper Functions
 function hashPassword(password) {
@@ -176,81 +175,72 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-const jwt = require('jsonwebtoken');
-const SECRET_KEY = process.env.SESSION_SECRET; // Use SESSION_SECRET for JWT signing
+
     // Login Route with Rate Limiting
-// Login Route with Rate Limiting
-app.post('/login', loginLimiter, async (req, res) => {
-    const { email, password } = req.body;
+    app.post('/login', loginLimiter, async (req, res) => {
+        const { email, password } = req.body;
 
-    try {
-        if (!email || !password) {
-            return res.status(400).json({ success: false, message: 'Email and password are required.' });
-        }
+        try {
+            if (!email || !password) {
+                return res.status(400).json({ success: false, message: 'Email and password are required.' });
+            }
 
-        const user = await usersCollection.findOne({ emaildb: email });
-        if (!user) {
-            return res.status(400).json({ success: false, message: 'Invalid email or password.' });
-        }
-
-        // Check if account is locked
-        if (user.accountLockedUntil && user.accountLockedUntil > new Date()) {
-            const remainingTime = Math.ceil((user.accountLockedUntil - new Date()) / 60000);
-            return res.status(403).json({ success: false, message: `Account is locked. Try again in ${remainingTime} minutes.` });
-        }
-
-        const passwordMatch = await bcrypt.compare(password, user.password);
-
-        if (!passwordMatch) {
-            // Increment invalid login attempts
-            let invalidAttempts = (user.invalidLoginAttempts || 0) + 1;
-
-            let updateFields = { invalidLoginAttempts: invalidAttempts };
-
-            if (invalidAttempts >= 3) {
-                // Lock the account for 30 minutes
-                updateFields.accountLockedUntil = new Date(Date.now() + 30 * 60 * 1000);
-                updateFields.invalidLoginAttempts = 0; // Reset attempts after locking
-
-                await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
-
-                // Send account lock email
-                const emailContent = `
-                    <p>Dear User,</p>
-                    <p>Your account has been locked due to multiple unsuccessful login attempts. Please wait 30 minutes before trying again or reset your password if you've forgotten it.</p>
-                    <p>Best regards,<br/>HelloGrade Student Portal Team</p>
-                `;
-                await sendEmail(user.emaildb, 'Account Locked', emailContent);
-
-                return res.status(403).json({ success: false, message: 'Account is locked due to multiple failed login attempts. An email has been sent with further instructions.' });
-            } else {
-                await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
-
+            const user = await usersCollection.findOne({ emaildb: email });
+            if (!user) {
                 return res.status(400).json({ success: false, message: 'Invalid email or password.' });
             }
-        }
 
-        // Reset invalid login attempts on successful login
-        await usersCollection.updateOne(
-            { _id: user._id },
-            { $set: { invalidLoginAttempts: 0, accountLockedUntil: null } }
-        );
+            
+            // Check if account is locked
+            if (user.accountLockedUntil && user.accountLockedUntil > new Date()) {
+                const remainingTime = Math.ceil((user.accountLockedUntil - new Date()) / 60000);
+                return res.status(403).json({ success: false, message: `Account is locked. Try again in ${remainingTime} minutes.` });
+            }
 
-        // Create JWT with user info
-        const token = jwt.sign(
-            { userId: user._id, email: user.emaildb, role: user.role },
-            SECRET_KEY,
-            { expiresIn: '1h' }
-        );
+            const passwordMatch = await bcrypt.compare(password, user.password);
 
-        // Set up session (if using sessions)
-        req.session.userId = user._id;
-        req.session.email = user.emaildb;
-        req.session.role = user.role;
-        req.session.studentIDNumber = user.studentIDNumber;
-        console.log('Session user ID set:', req.session.userId);
+            if (!passwordMatch) {
+                // Increment invalid login attempts
+                let invalidAttempts = (user.invalidLoginAttempts || 0) + 1;
 
-        // Save the session using a Promise (if necessary)
+                let updateFields = { invalidLoginAttempts: invalidAttempts };
+
+                if (invalidAttempts >= 3) {
+                    // Lock the account for 30 minutes
+                    updateFields.accountLockedUntil = new Date(Date.now() + 30 * 60 * 1000);
+                    updateFields.invalidLoginAttempts = 0; // Reset attempts after locking
+
+                    await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
+
+                    // Send account lock email
+                    const emailContent = `
+                        <p>Dear User,</p>
+                        <p>Your account has been locked due to multiple unsuccessful login attempts. Please wait 30 minutes before trying again or reset your password if you've forgotten it.</p>
+                        <p>Best regards,<br/>HelloGrade Student Portal Team</p>
+                    `;
+                    await sendEmail(user.emaildb, 'Account Locked', emailContent);
+
+                    return res.status(403).json({ success: false, message: 'Account is locked due to multiple failed login attempts. An email has been sent with further instructions.' });
+                } else {
+                    await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
+
+                    return res.status(400).json({ success: false, message: 'Invalid email or password.' });
+                }
+            }
+
+            // Reset invalid login attempts on successful login
+            await usersCollection.updateOne(
+                { _id: user._id },
+                { $set: { invalidLoginAttempts: 0, accountLockedUntil: null } }
+            );
+
+            // Set up session
+            req.session.userId = user._id;
+            req.session.email = user.emaildb;
+            req.session.role = user.role;
+            req.session.studentIDNumber = user.studentIDNumber; // Store studentIDNumber in the session
+            console.log('Session user ID set:', req.session.userId); // Debug log
+        // Save the session using a Promise
         await new Promise((resolve, reject) => {
             req.session.save((err) => {
                 if (err) return reject(err);
@@ -258,21 +248,23 @@ app.post('/login', loginLimiter, async (req, res) => {
             });
         });
 
-        // Update last login time
+
+        // After successful authentication
         await usersCollection.updateOne(
             { _id: user._id },
-            { $set: { lastlogintime: new Date() } }
+            { $set: { 
+                lastlogintime: new Date()
+             } }
         );
-
-        // Return response with user role and token
-        res.json({ success: true, role: user.role, token, message: 'Login successful!' });
-
-    } catch (error) {
-        console.error('Error during login:', error);
-        res.status(500).json({ success: false, message: 'Error during login.' });
-    }
-});
-
+        
+        // Return response with user role
+        res.json({ success: true, role: user.role, message: 'Login successful!' });
+        
+        } catch (error) {
+            console.error('Error during login:', error);
+            res.status(500).json({ success: false, message: 'Error during login.' });
+        }
+    });
 
     // Logout Route
     app.post('/logout', async (req, res) => {
@@ -456,43 +448,23 @@ app.post('/reset-password', async (req, res) => {
         });
     }
 });
-// Middleware to verify JWT token
-function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-
-    if (!token) {
-        return res.status(401).json({ success: false, message: 'Unauthorized access.' });
-    }
-
-    jwt.verify(token, SECRET_KEY, (err, user) => {
-        if (err) {
-            return res.status(403).json({ success: false, message: 'Token is not valid.' });
-        }
-        req.user = user; // Attach decoded user info to req
-        next();
-    });
-}
 
 // Fetch user details route
-app.get('/user-details', authenticateToken, async (req, res) => {
+app.get('/user-details', isAuthenticated, async (req, res) => {
     console.log("Session in /user-details:", req.session);
     try {
         // Find the user by session ID
-        const user = await usersCollection.findOne(
-            { _id: req.user.userId },
-            { projection: { firstName: 1, lastName: 1, studentIDNumber: 1 } }
-        );
+        const email = req.session.email;
         
-        if (!user) {
-            return res.status(401).json({ success: false, message: 'User not found.' });
+        if (!email) {
+            return res.status(401).json({ success: false, message: 'Unauthorized access.' });
         }
 
         // Fetch user details from the database
-      //  const user = await usersCollection.findOne(
-        //    { emaildb: email }, 
-          //  { projection: { firstName: 1, lastName: 1, studentIDNumber: 1 } }
-       // );
+        const user = await usersCollection.findOne(
+            { emaildb: email }, 
+            { projection: { firstName: 1, lastName: 1, studentIDNumber: 1 } }
+        );
 
         if (!user) {
             console.error('User not found in tblUser:', email); // Debug log
