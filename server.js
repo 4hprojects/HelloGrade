@@ -10,6 +10,9 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const validator = require('validator');
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); 
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -449,6 +452,42 @@ app.post('/reset-password', async (req, res) => {
     }
 });
 
+app.post('/upload-grades', isAuthenticated, isAdmin, upload.single('gradesFile'), async (req, res) => {
+    try {
+        const gradesFile = req.file; // Check if file was uploaded
+        if (!gradesFile) {
+            console.error("File upload error: No file was uploaded.");
+            return res.status(400).json({ success: false, message: 'No file uploaded' });
+        }
+
+ // Ensure that parsing is awaited and errors are logged if they occur
+ const gradesData = await parseGradesFile(gradesFile.path);
+        
+ if (!Array.isArray(gradesData)) {
+     console.error("Parsing error: gradesData is not an array.");
+     return res.status(500).json({ success: false, message: 'Parsing error: gradesData is not an array' });
+ }
+
+ const gradesCollection = client.db('myDatabase').collection('tblGrades');
+
+ for (const grade of gradesData) {
+     const { studentIDNumber, CourseID, midtermGrade, finalGrade, ...otherFields } = grade;
+
+     await gradesCollection.updateOne(
+         { studentIDNumber: studentIDNumber, CourseID: CourseID },
+         { $set: { midtermGrade, finalGrade, ...otherFields } },
+         { upsert: true }
+     );
+ }
+
+ res.json({ success: true, message: 'Grades uploaded and stored successfully.' });
+} catch (error) {
+ console.error('Error uploading grades:', error);
+ res.status(500).json({ success: false, message: 'An internal server error occurred while uploading grades.' });
+}
+});
+
+
 // Fetch user details route
 app.get('/user-details', isAuthenticated, async (req, res) => {
     console.log("Session in /user-details:", req.session);
@@ -494,6 +533,40 @@ app.get('/session-check', (req, res) => {
     }
   });
   
+  function isAdmin(req, res, next) {
+    // Assuming user role is stored in the session after login
+    if (req.session && req.session.role === 'admin') {
+        return next(); // User is an admin, allow access to the route
+    } else {
+        return res.status(403).json({ success: false, message: 'Forbidden: Admins only' });
+    }
+}
+
+const fs = require('fs');
+const csv = require('csv-parser'); // Ensure csv-parser is installed
+
+function parseGradesFile(filePath) {
+    return new Promise((resolve, reject) => {
+        const results = [];
+        
+        fs.createReadStream(filePath)
+            .pipe(csv())
+            .on('data', (data) => {
+                console.log('Parsed Row:', data); // Log each parsed row
+                results.push(data);
+            })
+            .on('end', () => {
+                console.log('All Parsed Results:', results); // Log entire array after parsing
+                resolve(results);
+            })
+            .on('error', (error) => {
+                console.error('Error parsing CSV:', error);
+                reject(error);
+            });
+    });
+}
+
+
 
 
     // Middleware to check if user is authenticated
@@ -512,41 +585,41 @@ app.get('/session-check', (req, res) => {
         res.sendFile(__dirname + '/public/dashboard.html');
     });
 
-    // Fetch student grades by studentIDNumber
     app.get('/get-grades/:studentIDNumber', isAuthenticated, async (req, res) => {
         const studentIDNumber = req.params.studentIDNumber;
         console.log('/get-grades/', studentIDNumber);
         try {
-            // Query the tblGrades collection for the student
-            const grades = await client.db('myDatabase').collection('tblGrades').findOne({ studentIDNumber: studentIDNumber });
-
-            if (!grades) {
-                return res.status(404).json({ success: false, message: 'Grades not found for the specified student ID.' });
+            const grades = await client.db('myDatabase').collection('tblGrades')
+                .find({ studentIDNumber: studentIDNumber }).toArray();
+    
+            if (grades.length === 0) {
+                return res.status(404).json({ success: false, message: 'No grades found for this student ID.' });
             }
-
-            // Construct the response with the required grade fields
-            const gradeData = {
-                midtermAttendance: grades.MA || 'N/A',
-                finalsAttendance: grades.FA || 'N/A',
-                midtermClassStanding: grades.MCS || 'N/A',
-                finalsClassStanding: grades.FCS || 'N/A',
-                midtermExam: grades.ME || 'N/A',
-                finalExam: grades.FE || 'N/A',
-                midtermGrade: grades.MG || 'N/A',
-                finalGrade: grades.FG || 'N/A',
-                transmutedMidtermGrade: grades.TMG || 'N/A',
-                transmutedFinalGrade: grades.TFG || 'N/A',
-                courseID: grades.CourseID || 'N/A', // Include CourseID
-                courseDescription: grades.CourseDescription || 'N/A' // Include CourseDescription
-            };
-
-            // Send the grade data as JSON
-            res.json({ success: true, gradeData });
-        } catch (error) {
-            console.error('Error fetching grades:', error);
-            res.status(500).json({ success: false, message: 'An error occurred while fetching grades.' });
-        }
+    
+            // Map the results to a standardized array format
+        const gradeDataArray = grades.map(grade => ({
+            midtermAttendance: grade.MA || 'N/A',
+            finalsAttendance: grade.FA || 'N/A',
+            midtermClassStanding: grade.MCS || 'N/A',
+            finalsClassStanding: grade.FCS || 'N/A',
+            midtermExam: grade.ME || 'N/A',
+            finalExam: grade.FE || 'N/A',
+            midtermGrade: grade.MG || 'N/A',
+            finalGrade: grade.FG || 'N/A',
+            transmutedMidtermGrade: grade.TMG || 'N/A',
+            transmutedFinalGrade: grade.TFG || 'N/A',
+            courseID: grade.CourseID || 'N/A',
+            courseDescription: grade.CourseDescription || 'N/A'
+        }));
+    
+    // Return the array of grade data for each course
+    res.json({ success: true, gradeDataArray });
+    } catch (error) {
+        console.error('Error fetching grades:', error);
+        res.status(500).json({ success: false, message: 'An error occurred while fetching grades.' });
+    }
     });
+    
 
     // Search for students based on different criteria
 // Search for students based on different criteria
