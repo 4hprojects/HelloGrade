@@ -140,6 +140,18 @@
             margin: 0 auto; /* Center the container horizontally */
             text-align: center; /* Center text content */
         }
+
+        .course-grade
+        {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 800px; /* Set max-width for better readability */
+            margin: 0 auto; /* Center the container horizontally */
+            text-align: center; /* Center text content */
+        }
     
         .content-inner h2, .content-inner h3 {
             margin: 10px 0;
@@ -149,8 +161,48 @@
         .table-container {
             width: 100%;
             margin-top: 20px;
+            overflow-x: auto; 
         }
     
+        /* Table Layout */
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Consistent Header Styling */
+        .table-container thead th {
+            background-color: #4A90E2;
+            color: #fff;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600; /* Enhance header font weight */
+            font-size: 1em; /* Adjust font size for uniformity */
+
+        }
+
+        /* Consistent Body Cell Styling */
+        .table-container tbody td {
+            padding: 12px;
+            color: #fff;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.9em; /* Set consistent font size */
+        }
+
+        /* Alternating Row Background */
+        .table-container tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Table Row Hover Effect */
+        .table-container tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -219,7 +271,10 @@
                 justify-content: center;
                 align-items: center;
             }
-    
+
+            .table-container table {
+                font-size: 0.85em; /* Reduce font size for smaller screens */
+            }
             .content-inner {
                 width: 95%;
             }
@@ -430,12 +485,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>Attendance</td><td>${courseData.midtermAttendance}</td><td>${courseData.finalsAttendance}</td></tr>
-                            <tr><td>Class Standing</td><td>${courseData.midtermClassStanding}</td><td>${courseData.finalsClassStanding}</td></tr>
-                            <tr><td>Exams</td><td>${courseData.midtermExam}</td><td>${courseData.finalExam}</td></tr>
-                            <tr><td>Midterm Grade</td><td>${courseData.midtermGrade}</td><td rowspan="2">${courseData.finalGrade}</td></tr>
-                            <tr><td>Transmuted Midterm Grade</td><td>${courseData.transmutedMidtermGrade}</td></tr>
-                            <tr><td>Transmuted Final Grade</td><td colspan="2">${courseData.transmutedFinalGrade}</td></tr>
+                            <tr><td>Attendance</td><td>${courseData.midtermAttendance || 'No entry'}</td><td>${courseData.finalsAttendance || 'No entry'}</td></tr>
+                            <tr><td>Class Standing</td><td>${courseData.midtermClassStanding || 'No entry'}</td><td>${courseData.finalsClassStanding || 'No entry'}</td></tr>
+                            <tr><td>Exams</td><td>${courseData.midtermExam || 'No entry'}</td><td>${courseData.finalExam || 'No entry'}</td></tr>
+                            <tr><td>Midterm Grade</td><td>${courseData.midtermGrade || 'No entry'}</td><td rowspan="2">${courseData.finalGrade || 'No entry'}</td></tr>
+                            <tr><td>Transmuted Midterm Grade</td><td>${courseData.transmutedMidtermGrade || 'No entry'}</td></tr>
+                            <tr><td>Transmuted Final Grade</td><td colspan="2">${courseData.transmutedFinalGrade || 'No entry'}</td></tr>
                         </tbody>
                     </table>
                 </div>
