@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
+//const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const sgMail = require('@sendgrid/mail');
 const bcrypt = require('bcrypt');
