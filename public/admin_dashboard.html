@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" content="Track academic progress effortlessly with this personal grade management project, built to provide students, and educators with secure, user-friendly access to grades, and performance insights.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>HelloGrade Admin Dashboard</title>
     
         <!-- Global Styles -->
@@ -259,8 +259,6 @@
             }
         }
         </style>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-     crossorigin="anonymous"></script>
     </head>
     <body>
         <header>
@@ -276,6 +274,7 @@
         <!-- Main Content -->
         <main>
             <div class="content">
+
                 <div class="content-inner">
                     <div></div>
                     <div class="search-container">
@@ -301,7 +300,7 @@
             </div>
             </div>
             </div>
-    <!-- Google AdSense Ad Code Above Footer -->
+                        <!-- Google AdSense Ad Code Above Footer -->
     <div class="ad-above-footer" style="text-align: center; margin: 20px 0;">
         <!-- left panel -->
         <ins class="adsbygoogle"
@@ -322,6 +321,10 @@
                 <p id="studentID" style="font-size: 0.9em; color: #ccc; margin-top: 5px;">[Admin ID]</p>
             </div>
                 <!-- Sidebar Navigation -->
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <input type="file" name="gradesFile" accept=".csv, .xlsx" required />
+                    <button type="submit">Upload Grades</button>
+                </form>
                 <ul class="sidebar-nav">
                     <li><a href="#">Dashboard</a></li>
                     <li><a href="#">Classes</a></li>
@@ -464,6 +467,60 @@
                 console.error('Error during logout:', error);
             });
         });
+
+        document.getElementById('uploadForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/upload-grades', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Grades uploaded successfully.');
+                // Optionally, you can refresh the page or clear the form
+            } else {
+                alert('Failed to upload grades: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error uploading grades:', error);
+        });
+    });
+
+    async function uploadGrades(file) {
+    try {
+        const formData = new FormData();
+        formData.append('gradesFile', file);
+
+        const response = await fetch('/upload-grades', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include' // Include cookies for session-based auth
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('Upload response:', result);
+
+        if (result.success) {
+            alert('Grades uploaded successfully!');
+        } else {
+            console.error('Failed to upload grades:', result.message);
+        }
+    } catch (error) {
+        console.error('Error uploading grades:', error);
+    }
+}
+
+
     </script>
     
 </body>
