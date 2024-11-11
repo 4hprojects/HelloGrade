@@ -23,13 +23,27 @@
             transform: translateY(-50%);
             cursor: pointer;
         }
-        
+        .back-home {
+            color: #4A90E2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-home:hover {
+            text-decoration: underline;
+        }
+                
     </style>
 </head>
 <body>
+    <!-- Back to Home Link -->
+<p style="text-align: center; margin-top: 20px;">
+    <a href="index.html" class="back-home">← Back to Home</a>
+</p>
     <div class="background">
         <div class="shape"></div>
         <div class="shape"></div>
+        
         <form id="loginForm" action="/login" method="post" class="form-container">
             <h3>Login</h3>
 
@@ -93,7 +107,7 @@
                 return;
             }
 
-            fetch('http://localhost:3000/login', {
+            fetch('/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password }),

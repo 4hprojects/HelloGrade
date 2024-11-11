@@ -1,0 +1,61 @@
+studentIDNumber,CourseID,CourseDescription,StudentName,MA,MCS,ME,MG,TMG,FA,FCS,FE,FG,TFG
+2201938,IT 135,Networking 2 - Lecture,"Acbaya-an, Jeana Marie",100,78.25,69.74,1.75,1.75,80.56,100,69.7,1.61,1.5
+2200136,IT 136,Networking 2 - Lecture,"Amdengan, Fatima",100,100,98.68,1.02,1,100,100,98.7,1.02,1
+2200303,IT 137,Networking 2 - Lecture,"Apostol, Jonamae",87.5,100,77.63,1.43,1.5,88.89,100,77.6,1.42,1.5
+2200322,IT 138,Networking 2 - Lecture,"Apostol, Justine",87.5,76.62,53.95,2.12,2,88.89,100,53.9,1.73,1.75
+2200349,IT 139,Networking 2 - Lecture,"Avelino, Jorelle Mae",100,75.97,72.37,1.75,1.75,94.44,100,72.4,1.43,1.5
+2201176,IT 140,Networking 2 - Lecture,"Ay-ayac, Loreil",93.75,80.52,80.26,1.64,1.75,88.89,100,80.3,1.38,1.5
+2201244,IT 141,Networking 2 - Lecture,"Badian, Kathrin Angel",87.5,64.22,80.26,1.97,2,61.11,97.38,80.3,1.72,1.75
+2103433,IT 142,Networking 2 - Lecture,"Badol, Analyn Mae",93.75,96.62,94.74,1.19,1.25,88.89,100,94.7,1.19,1.25
+2200547,IT 143,Networking 2 - Lecture,"Bautista, Inger Eisen",100,96.1,65.79,1.52,1.5,88.89,100,65.8,1.57,1.5
+2200341,IT 144,Networking 2 - Lecture,"Bie, Carl Allister",100,100,96.05,1.05,1,88.89,100,96.1,1.17,1.25
+2201722,IT 145,Networking 2 - Lecture,"Bot-ogan, Eleazar",87.5,66.88,93.42,1.75,1.75,88.89,100,93.4,1.21,1.25
+2100452,IT 146,Networking 2 - Lecture,"Briones, Brennan",100,89.61,73.68,1.52,1.5,69.44,95.6,73.7,1.75,1.75
+2200357,IT 147,Networking 2 - Lecture,"Busilan, Lara",93.75,73.38,81.58,1.74,1.75,72.22,75.89,81.6,1.93,2
+2200475,IT 148,Networking 2 - Lecture,"Campala, Rhon",100,100,96.05,1.05,1,88.89,100,96.1,1.17,1.25
+2201197,IT 149,Networking 2 - Lecture,"Cañero, Erika",100,96.75,68.42,1.47,1.5,100,100,68.4,1.42,1.5
+2200457,IT 150,Networking 2 - Lecture,"Caoili, Jay-ann",100,86.36,82.89,1.45,1.5,72.22,100,82.9,1.52,1.5
+2001425,IT 151,Networking 2 - Lecture,"Cauan, Brix Allen",100,100,85.53,1.19,1.25,77.78,100,85.5,1.43,1.5
+2203592,IT 152,Networking 2 - Lecture,"Copsiyan, Aldrich Kyle",100,100,96.05,1.05,1,77.78,100,96.1,1.29,1.25
+2201361,IT 153,Networking 2 - Lecture,"Culos, Kol Nidre",93.75,100,89.47,1.21,1.25,83.33,100,89.5,1.32,1.25
+2203249,IT 154,Networking 2 - Lecture,"Daplian, Diane",87.5,76.75,63.16,2,2,88.89,100,63.2,1.61,1.5
+2200787,IT 155,Networking 2 - Lecture,"Diolazo, Larry Kift",100,100,72.37,1.37,1.25,88.89,100,72.4,1.49,1.5
+2201159,IT 156,Networking 2 - Lecture,"Dipidip, Wilbel",100,84.68,100,1.25,1.25,88.89,84.11,100,1.37,1.25
+2201047,IT 157,Networking 2 - Lecture,"Fidel, Andrelle",87.5,100,93.42,1.22,1.25,88.89,100,93.4,1.21,1.25
+2200135,IT 158,Networking 2 - Lecture,"Florentino, Precious Bless",93.75,100,93.42,1.15,1.25,88.89,100,93.4,1.21,1.25
+2200148,IT 159,Networking 2 - Lecture,"Gabriel, Vergel Dominic",100,98.7,82.89,1.25,1.25,83.33,100,82.9,1.41,1.5
+2203570,IT 160,Networking 2 - Lecture,"Galwan, Abijah",93.75,92.21,100,1.19,1.25,72.22,100,100,1.3,1.25
+2202391,IT 161,Networking 2 - Lecture,"Gapad, May-Ann",100,69.16,60.53,2.02,2,88.89,95.25,60.5,1.72,1.75
+2200534,IT 162,Networking 2 - Lecture,"Jaime, Wry",100,100,90.79,1.12,1,88.89,100,90.8,1.24,1.25
+2200492,IT 163,Networking 2 - Lecture,"Joseph, Rochelle",81.25,68.05,60.53,2.24,2.25,88.89,100,60.5,1.64,1.75
+2201721,IT 164,Networking 2 - Lecture,"Langpa, Shamira",87.5,64.94,93.42,1.78,1.75,88.89,99.29,93.4,1.22,1.25
+2001501,IT 165,Networking 2 - Lecture,"Leaño, Karlo Jim Fajardo",81.25,91.56,63.16,1.83,1.75,80.56,100,63.2,1.7,1.75
+2204588,IT 166,Networking 2 - Lecture,"Licangan, Jazy Mae",87.5,72.4,88.16,1.73,1.75,38.89,93.83,88.2,1.91,2
+2202826,IT 167,Networking 2 - Lecture,"Llamas, Jay Edmar",100,100,81.58,1.25,1.25,88.89,100,81.6,1.36,1.25
+2204818,IT 168,Networking 2 - Lecture,"Longboan, Stelios Ashbeey",100,100,97.37,1.04,1,100,100,97.4,1.04,1
+2200165,IT 169,Networking 2 - Lecture,"Luyfook, Ming Xuan",100,64.29,46.05,2.29,2.25,88.89,100,46.1,1.84,1.75
+2201323,IT 170,Networking 2 - Lecture,"Macapulay, Alpha",93.75,96.1,78.95,1.41,1.5,100,100,78.9,1.28,1.25
+2101474,IT 171,Networking 2 - Lecture,"Mangiwet, Rolan",100,77.79,55.26,1.95,2,77.78,100,55.3,1.83,1.75
+2201914,IT 172,Networking 2 - Lecture,"Mapili, Ryncel Ann",100,75.32,71.05,1.78,1.75,88.89,100,71.1,1.5,1.5
+2201039,IT 173,Networking 2 - Lecture,"Marchan, Kemberly",100,100,97.37,1.04,1,80.56,100,97.4,1.24,1.25
+2100604,IT 174,Networking 2 - Lecture,"Mendoza, Sheena Mae",100,89.35,86.84,1.35,1.25,83.33,100,86.8,1.35,1.25
+2201088,IT 175,Networking 2 - Lecture,"Moltio, Arabella Jean",93.75,72.6,89.47,1.65,1.75,77.78,100,89.5,1.38,1.25
+2001851,IT 176,Networking 2 - Lecture,"Osay, Censie Roshane",93.75,75.26,48.68,2.15,2.25,83.33,73.69,48.7,2.28,2.25
+2201339,IT 177,Networking 2 - Lecture,"Pagnas, Shanna Mae",93.75,90.26,84.21,1.43,1.5,100,100,84.2,1.21,1.25
+2001513,IT 178,Networking 2 - Lecture,"Pelapil, Ernesto",100,94.81,69.74,1.49,1.5,63.89,100,69.7,1.79,1.75
+2001514,IT 179,Networking 2 - Lecture,"Peredo, Carl Nool",100,65.52,59.21,2.1,2,50,76.67,59.2,2.45,2.5
+2200318,IT 180,Networking 2 - Lecture,"Pinas, Glenyz Jon",100,100,75,1.33,1.25,88.89,100,75,1.45,1.5
+2204569,IT 181,Networking 2 - Lecture,"Quiban, Gladys",100,53.57,51.32,2.39,2.5,100,71.28,51.3,2.11,2
+2200812,IT 182,Networking 2 - Lecture,"Rafael, Bianca Rayden Liway",100,100,93.42,1.09,1,88.89,100,93.4,1.21,1.25
+2203252,IT 183,Networking 2 - Lecture,"Refuerzo, Rianne Gayle",93.75,83.12,77.63,1.64,1.75,88.89,97.87,77.6,1.45,1.5
+2201180,IT 184,Networking 2 - Lecture,"Rodriquez, Ivan James",93.75,99.35,77.63,1.38,1.25,86.11,100,77.6,1.45,1.5
+2200137,IT 185,Networking 2 - Lecture,"Roxas, Angeline",100,100,98.68,1.02,1,100,100,98.7,1.02,1
+2200664,IT 186,Networking 2 - Lecture,"Salbino, Joe Vince",75,83.64,81.58,1.77,1.75,77.78,100,81.6,1.48,1.5
+2001468,IT 187,Networking 2 - Lecture,"Santos, Jherico Mark",100,88.31,63.16,1.68,1.75,91.67,100,63.2,1.58,1.5
+2201343,IT 188,Networking 2 - Lecture,"Silverio, Jessie",75,52.86,40.79,2.81,2.75,69.44,49.36,40.8,2.93,3
+2001852,IT 189,Networking 2 - Lecture,"Soriano, Patrick Jan",87.5,72.34,51.32,2.23,2.25,77.78,100,51.3,1.89,2
+2201470,IT 190,Networking 2 - Lecture,"Ticag, Barron",81.25,64.61,78.95,2.05,2,61.11,87.59,78.9,1.89,2
+2200386,IT 191,Networking 2 - Lecture,"Villaflores, Resty Jr.",93.75,49.03,35.53,2.74,2.75,33.33,85.32,35.5,2.81,2.75
+2201178,IT 192,Networking 2 - Lecture,"Waclin, Crisjohn",84.38,98.05,86.84,1.37,1.25,88.89,100,86.8,1.29,1.25
+2001521,IT 193,Networking 2 - Lecture,"Wadingan, Bolandinah Sauyen",93.75,73.38,71.05,1.88,1.75,83.33,85.11,71.1,1.8,1.75
+2200535,IT 194,Networking 2 - Lecture,"Wangdali, Cleofy",93.75,100,82.89,1.29,1.25,83.33,100,82.9,1.41,1.5

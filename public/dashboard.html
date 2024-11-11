@@ -190,6 +190,26 @@
     tbody td[colspan="2"] {
         text-align: center;
     }
+
+    .submenu {
+            display: none;
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .submenu.active {
+            display: block;
+        }
+        
+        .submenu li {
+            padding: 8px 0;
+        }
+        
+        .submenu li a {
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+        }
     
         /* Adjustments for smaller screens */
         @media (max-width: 768px) {
@@ -232,7 +252,8 @@
         <!-- Sidebar Navigation -->
         <ul class="sidebar-nav">
             <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Classes</a></li>
+            <li><a href="#" onclick="toggleSubmenu()">Classes</a></li>
+            <ul id="classesSubmenu" class="submenu"></ul>
             <li><a href="#">Reports</a></li>            
         </ul>
 
@@ -243,10 +264,12 @@
     </div>
 
     <main>
-        <div class="content">
+        <!--div id="gradeTableContainer"></!--div-->
+
+        <div id="gradeTableContainer" class="content">
             <div class="content-inner">
                 <!-- Course Name at the Top -->
-                <h3 id="courseInfo">Course: [Course Name]</h3>
+                <h3 id="courseInfo">[Course Name]</h3>
                 
                 <!-- Grade Table -->
                 <div class="table-container">
@@ -292,9 +315,25 @@
                 </div>
             </div>
         </div>
-    </main>
+            <!-- Google AdSense Ad Code Above Footer -->
+    <div class="ad-above-footer" style="text-align: center; margin: 20px 0;">
+        <!-- left panel -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4537208011192461"
+             data-ad-slot="1206064674"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</main>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchStudentDetails();
+        });
         // Fetch student details (name and ID) from the session
         async function fetchStudentDetails() {
             try {
@@ -318,9 +357,7 @@
                                 // Update the elements with user details
                                 nameElement.textContent = `${data.user.firstName} ${data.user.lastName}`;
                                 idElement.textContent = `${data.user.studentIDNumber}`;
-
-                                // Use the student ID to fetch grades
-                                fetchGrades(data.user.studentIDNumber);
+                                fetchCourses(data.user.studentIDNumber); // Fetch courses for this student
                             } else {
                                 console.error('Failed to fetch user details:', data.message);
                             }
@@ -329,38 +366,43 @@
                             console.error('Error fetching user details:', error);
                         }
                 }
-        document.addEventListener('DOMContentLoaded', function () {
-            fetchStudentDetails();
-        });
-        // Fetch grades using student ID
-        async function fetchGrades(studentIDNumber) {
-            if (!studentIDNumber) {
-                console.error('Invalid studentIDNumber:', studentIDNumber);
-                return;
-            }
+
+
+        async function fetchCourses(studentIDNumber) {
             try {
-                console.log('Fetching grades for:', studentIDNumber); // Debug log
                 const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
                 const data = await response.json();
 
                 if (data.success) {
-                    console.log('Grade data received:', data.gradeData); // Debug log
+                    populateCourses(data.gradeDataArray);
+                } else {
+                    console.error('Failed to fetch courses:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+            }
+        }
 
-                    document.getElementById('midtermAttendance').textContent = data.gradeData.midtermAttendance;
-                    document.getElementById('finalsAttendance').textContent = data.gradeData.finalsAttendance;
-                    document.getElementById('midtermClassStanding').textContent = data.gradeData.midtermClassStanding;
-                    document.getElementById('finalsClassStanding').textContent = data.gradeData.finalsClassStanding;
-                    document.getElementById('midtermExam').textContent = data.gradeData.midtermExam;
-                    document.getElementById('finalExam').textContent = data.gradeData.finalExam;
-                    document.getElementById('midtermGrade').textContent = data.gradeData.midtermGrade;
-                    document.getElementById('finalGrade').textContent = data.gradeData.finalGrade;
-                    document.getElementById('transmutedMidtermGrade').textContent = data.gradeData.transmutedMidtermGrade;
-                    document.getElementById('transmutedFinalGrade').textContent = data.gradeData.transmutedFinalGrade;
-                
-                    // Update the course information
-                    const courseInfoElement = document.getElementById('courseInfo');
-                    courseInfoElement.textContent = `Course: ${data.gradeData.courseID} - ${data.gradeData.courseDescription}`;
+        function populateCourses(courseArray) {
+            const submenu = document.getElementById('classesSubmenu');
+            submenu.innerHTML = ''; // Clear any existing entries
+            courseArray.forEach(course => {
+                const courseItem = document.createElement('li');
+                courseItem.innerHTML = `<a href="#" onclick="fetchGradesForCourse('${course.courseID}')">${course.courseID}</a>`;
+                submenu.appendChild(courseItem);
+            });
+        }
 
+        async function fetchGradesForCourse(courseID) {
+            const studentIDNumber = document.getElementById('studentID').textContent;
+
+            try {
+                const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
+                const data = await response.json();
+
+                if (data.success) {
+                    const courseData = data.gradeDataArray.find(course => course.courseID === courseID);
+                    if (courseData) displayGrades(courseData);
                 } else {
                     console.error('Failed to fetch grades:', data.message);
                 }
@@ -369,6 +411,36 @@
             }
         }
 
+        function toggleSubmenu() {
+            const submenu = document.getElementById('classesSubmenu');
+            submenu.classList.toggle('active');
+        }
+
+        function displayGrades(courseData) {
+            const gradeTableContainer = document.getElementById('gradeTableContainer');
+            gradeTableContainer.innerHTML = `
+                <div class="course-grade">
+                    <h3 align="center">${courseData.courseID} - ${courseData.courseDescription}</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Grade Category</th>
+                                <th>Midterm</th>
+                                <th>Finals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Attendance</td><td>${courseData.midtermAttendance}</td><td>${courseData.finalsAttendance}</td></tr>
+                            <tr><td>Class Standing</td><td>${courseData.midtermClassStanding}</td><td>${courseData.finalsClassStanding}</td></tr>
+                            <tr><td>Exams</td><td>${courseData.midtermExam}</td><td>${courseData.finalExam}</td></tr>
+                            <tr><td>Midterm Grade</td><td>${courseData.midtermGrade}</td><td rowspan="2">${courseData.finalGrade}</td></tr>
+                            <tr><td>Transmuted Midterm Grade</td><td>${courseData.transmutedMidtermGrade}</td></tr>
+                            <tr><td>Transmuted Final Grade</td><td colspan="2">${courseData.transmutedFinalGrade}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
 
 // Fetch student details (name and ID) from the session
 //
@@ -400,9 +472,9 @@
         // Fetch user details when the page loads
         document.addEventListener('DOMContentLoaded', function () {
             fetchStudentDetails();
-            //const email = 'idiommah@gmail.com';
 
-            fetch('http://localhost:3000/user-details?email=${encodeURIComponent(email)}', {
+
+            fetch('/user-details?email=${encodeURIComponent(email)}', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include' // Ensure credentials are included to send session cookie

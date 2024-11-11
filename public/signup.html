@@ -117,7 +117,7 @@
 </head>
 <body>
     <div class="form-container">
-        <form id="signupForm" action="http://localhost:3000/signup" method="post">
+        <form id="signupForm" action="/signup" method="post">
             <h3>Create an Account</h3>
 
             <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
@@ -206,7 +206,7 @@
         studentIDNumber: document.getElementById('studentIDNumber').value
     };
 
-    fetch('http://localhost:3000/signup', {
+    fetch('/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
