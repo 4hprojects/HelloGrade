@@ -2,291 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to HelloGrade - Your Student Grading Portal</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- Include Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <style>
-        /* Existing styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background-color: #f5f5f5; /* Light grey background */
-            color: #333333; /* Dark grey text for readability */
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Header Styling */
-        .header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: #4A90E2; /* White background to stand out */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-        }
-
-        .header-content h1 {
-            color: #2c3e50;
-            font-size: 1.5em;
-        }
-
-        .header-content p {
-            font-size: 1em;
-            color: #555555;
-        }
-        .h1-hello {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Aligns text to the left */
-            margin-left: 10px; /* Adds spacing between the icon and the text */
-        }
-
-        /* Navigation Links */
-        .nav a {
-            text-decoration: none;
-            color: #ccd6e2;
-            margin-left: 15px;
-            font-weight: bold;
-        }
-
-        .nav a:hover {
-            color: #357ABD;
-        }
-
-        .header-content {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start; /* Aligns content to the left */
-        }
-        .header h1, .header p {
-            text-align: left; /* Ensures text is aligned left */
-            margin: 0; /* Removes default margin */
-        }
-
-        .header-icon {
-            width: 50px; /* Adjust size as needed */
-            height: auto;
-            margin-right: 10px;
-        }
-
-        .title-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Navigation Links - Styled as Buttons */
-    .nav .btn {
-        padding: 10px 20px;
-        margin-left: 15px;
-        border-radius: 5px;
-        font-weight: bold;
-        text-decoration: none;
-        font-size: 1em;
-    }
-
-    /* Login Button */
-    .nav .login-btn {
-        background-color: #4A90E2; /* Blue background for contrast */
-        color: #ffffff; /* White text */
-    }
-
-    .nav .login-btn:hover {
-        background-color: #357ABD; /* Darker shade on hover */
-    }
-
-    /* Sign Up Button */
-    .nav .signup-btn {
-        background-color: #E94A4A; /* Red background for emphasis */
-        color: #ffffff; /* White text */
-    }
-
-    .nav .signup-btn:hover {
-        background-color: #c0392b; /* Darker red on hover */
-    }
-
-
-        /* Main Content */
-        main {
-            padding: 20px;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #e0e0e0;
-            color: #333333;
-            margin-top: 20px;
-        }
-
-        header h1 {
-            color: #2c3e50; /* Darker blue-grey for the header title */
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        header p {
-            color: #555555; /* Medium grey for subtitle */
-            text-align: center;
-            font-size: 1.2em;
-            margin-top: 5px;
-        }
-
-        section h2 {
-            color: #2c3e50; /* Consistent color for section titles */
-            margin-bottom: 10px;
-        }
-
-        section p, section li {
-            color: #333333; /* Dark grey for body text */
-            font-size: 1em;
-        }
-
-        ul {
-            list-style-type: disc;
-            padding-left: 20px;
-        }
-
-        header {
-            background-color: #4A90E2;
-            color: #fff;
-            padding: 0;
-            text-align: center;
-        }
-        nav {
-            background-color: #4A90E2;
-            text-align: center;
-        }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            display: inline-flex;
-        }
-        nav ul li {
-            margin: 0;
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            padding: 14px 20px;
-            font-weight: bold;
-            display: inline-block;
-        }
-        nav ul li a:hover {
-            background-color: #357ABD;
-        }
-        main {
-            padding: 0;
-            text-align: center;
-        }
-        main h2 {
-            color: #4A90E2;
-            margin-top: 0;
-        }
-        main p {
-            font-size: 18px;
-            color: #555;
-            max-width: 800px;
-            margin: 20px auto;
-            line-height: 1.6;
-        }
-        main ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        main ul li {
-            font-size: 18px;
-            color: #555;
-            margin: 10px 0;
-        }
-        footer {
-            background-color: #4A90E2;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-        .cta-button {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 30px;
-            background-color: #4A90E2;
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .cta-button:hover {
-            background-color: #357ABD;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
 </head>
-<body>
-    <header class="header">
-        <div class="header-content">
-            <img src="images/icon.png" alt="HelloGrade Icon" class="header-icon">
-            <div class="h1-hello">
-            <h1>HelloGrade by 4HProjects</h1>
-            <div>
-            <p>Transforming Student Grading with Efficiency and Precision</p>
+<body class="bg-gray-50 text-gray-800 font-poppins">
+
+<!-- Header with Sticky Navigation -->
+<header class="bg-blue-600 shadow-md sticky top-0 z-50">
+    <div class="container mx-auto flex items-center justify-between px-6 py-4">
+        <div class="flex items-center">
+            <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
+            <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
         </div>
-        </div>
-        </div>
-        <nav class="nav">
-            <a href="login.html">Login</a>
-            <a href="signup.html">Sign Up</a>
+        <nav class="flex items-center space-x-4">
+            <a href="login.html" class="bg-white text-blue-600 font-bold px-4 py-2 rounded-lg">Login</a>
+            <a href="signup.html" class="bg-red-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-red-600">Sign Up</a>
         </nav>
-    </header>
-    <main>
+    </div>
+</header>
 
-
-    <section id="introduction">
-        <!--h2>Welcome to HelloGrade</-h2--->
-        <p>HelloGrade is an innovative, easy-to-use grading system designed by 4HProjects, tailored to enhance the student and teacher experience in educational institutions. Created as a personal project, HelloGrade bridges the gap between manual grading processes and digital accuracy, providing a seamless experience for students, teachers, and administrators.</p>
-    </section>
-    <section id="features">
-        <h2>What HelloGrade Offers</h2>
-        <ul>
-            <li><strong>Efficient Grade Management:</strong> HelloGrade simplifies the process of recording, calculating, and distributing grades. Teachers can easily input grades, track student progress, and make real-time adjustments, reducing the time spent on administrative tasks.</li>
-            <li><strong>Real-Time Student Access:</strong> Students can access their grades instantly, providing them with transparency and allowing them to track their academic performance across subjects. This instant access promotes responsibility and helps students set realistic goals based on their current standings.</li>
-            <li><strong>Customizable Grading Criteria:</strong> Teachers can customize grading criteria to fit specific academic requirements or standards. Whether it's a point-based system, percentage-based grading, or custom scales, the system adapts to your institution’s grading policies.</li>
-            <li><strong>Data Security and Privacy:</strong> Built with security as a priority, HelloGrade uses advanced data encryption and secure sessions to protect user information. Students’ academic data remains confidential and accessible only to authorized users, ensuring compliance with data privacy standards.</li>
-            <li><strong>Seamless Integration:</strong> HelloGrade is built to integrate with common educational tools and systems. The platform supports easy data import/export functions and can work alongside other tools, simplifying the migration of student records and grade data.</li>
-            <li><strong>Insights and Reports:</strong> Teachers and administrators can generate insightful reports that highlight class performance, individual progress, and other key metrics. These reports help in making data-driven decisions to support student success.</li>
-        </ul>
+<!-- Main Content with Smooth Scrolling and Reveal Animations -->
+<main class="container mx-auto px-6 py-12">
+    <!-- Introduction Section -->
+    <section id="introduction" class="text-center mb-16 scroll-reveal">
+        <h2 class="text-3xl font-bold text-blue-600">Welcome to HelloGrade</h2>
+        <p class="text-lg mt-4 max-w-2xl mx-auto">
+            HelloGrade is an innovative, easy-to-use grading system by 4HProjects, tailored to enhance the student and teacher experience in educational institutions. It bridges the gap between manual grading processes and digital accuracy.
+        </p>
     </section>
 
-    <section id="why-choose">
-        <h2>Why Choose HelloGrade?</h2>
-        <p>HelloGrade is more than just a grading tool—it’s a comprehensive solution designed to support educators and empower students. With HelloGrade, institutions can simplify grade management, enhance transparency, and foster a proactive learning environment.</p>
-        <p>Developed with attention to detail and an understanding of educational needs, HelloGrade is here to support teachers, inspire students, and transform how grades are managed in today’s schools.</p>
+    <!-- Features Section with Grid Layout -->
+    <section id="features" class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Efficient Grade Management</h3>
+            <p>Teachers can input grades, track student progress, and make real-time adjustments, reducing administrative tasks.</p>
+        </div>
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Real-Time Student Access</h3>
+            <p>Students can access their grades instantly, promoting responsibility and goal setting.</p>
+        </div>
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Customizable Grading Criteria</h3>
+            <p>Supports point-based, percentage, and custom grading scales to match academic standards.</p>
+        </div>
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Data Security and Privacy</h3>
+            <p>Ensures secure data handling with encryption and limited access to protect user information.</p>
+        </div>
+    </section>
+    
+    <!-- Advertisement Section -->
+        <div class="text-center my-8">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+                crossorigin="anonymous"></script>
+            <!-- HelloGrade Responsive Ad -->
+            <ins class="adsbygoogle"
+                style="display:inline-block;width:728px;height:90px"
+                data-ad-client="ca-pub-4537208011192461"
+                data-ad-slot="7121468855"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+    <!-- Why Choose Section -->
+    <section id="why-choose" class="text-center mb-16 scroll-reveal">
+        <h2 class="text-3xl font-bold text-blue-600">Why Choose HelloGrade?</h2>
+        <p class="text-lg mt-4 max-w-2xl mx-auto">
+            HelloGrade is more than just a grading tool—it’s a comprehensive solution designed to support educators and empower students. With HelloGrade, institutions can simplify grade management, enhance transparency, and foster a proactive learning environment.
+        </p>
+        <p class="text-lg mt-4 max-w-2xl mx-auto">
+            Developed with attention to detail and an understanding of educational needs, HelloGrade is here to support teachers, inspire students, and transform how grades are managed in today’s schools.
+        </p>
     </section>
 </main>
-    <div style="text-align: center; margin: 20px 0;">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-        crossorigin="anonymous"></script>
-        <!-- HelloGrade Responsive Ad -->
-        <ins class="adsbygoogle"
-        style="display:inline-block;width:728px;height:90px"
-        data-ad-client="ca-pub-4537208011192461"
-        data-ad-slot="7121468855"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
 
-    <footer>
-        <p>&copy; 2024 HelloGrade. All rights reserved.</p>
-    </footer>
+<!-- Footer -->
+<footer class="bg-blue-600 text-white py-4">
+    <div class="text-center">&copy; 2024 HelloGrade. All rights reserved.</div>
+</footer>
+
+<!-- Login Modal using Flowbite -->
+<div id="loginModal" tabindex="-1" class="fixed inset-0 z-50 hidden overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 space-y-4">
+            <h3 class="text-2xl font-semibold text-blue-600">Log In to HelloGrade</h3>
+            <form>
+                <label for="username" class="block text-gray-600">Username</label>
+                <input type="text" id="username" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                <label for="password" class="block mt-4 text-gray-600">Password</label>
+                <input type="password" id="password" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                <div class="flex justify-end mt-4">
+                    <button type="button" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500">Log In</button>
+                </div>
+            </form>
+            <button data-modal-hide="loginModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
+        </div>
+    </div>
+</div>
+
+<!-- Scroll Reveal and Smooth Scrolling -->
+<script src="https://unpkg.com/scrollreveal"></script>
+<script>
+    // ScrollReveal configuration
+    ScrollReveal().reveal('.scroll-reveal', { duration: 1200, origin: 'bottom', distance: '30px' });
+
+    
+
+</script>
 </body>
 </html>
