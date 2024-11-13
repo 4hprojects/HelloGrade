@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-//const cors = require('cors');
+
 const { MongoClient } = require('mongodb');
 const sgMail = require('@sendgrid/mail');
 const bcrypt = require('bcrypt');
@@ -456,59 +456,6 @@ app.post('/reset-password', async (req, res) => {
         });
     }
 });
-
-app.post('/upload-grades', isAuthenticated, isAdmin, upload.single('gradesFile'), async (req, res) => {
-    try {
-        const gradesFile = req.file; // Check if file was uploaded
-        if (!gradesFile) {
-            console.error("File upload error: No file was uploaded.");
-            return res.status(400).json({ success: false, message: 'No file uploaded' });
-        }
-
-        // Ensure that parsing is awaited and errors are logged if they occur
-        const gradesData = await parseGradesFile(gradesFile.path);
-
-        if (!Array.isArray(gradesData)) {
-            console.error("Parsing error: gradesData is not an array.");
-            fs.unlink(gradesFile.path, (err) => {
-                if (err) console.error('Error deleting uploaded file:', err);
-            });
-            return res.status(500).json({ success: false, message: 'Parsing error: gradesData is not an array' });
-        }
-
-        const gradesCollection = client.db('myDatabase').collection('tblGrades');
-
-        for (const grade of gradesData) {
-            const { studentIDNumber, CourseID, midtermGrade, finalGrade, ...otherFields } = grade;
-
-            await gradesCollection.updateOne(
-                { studentIDNumber: studentIDNumber, CourseID: CourseID },
-                { $set: { midtermGrade, finalGrade, ...otherFields } },
-                { upsert: true }
-            );
-        }
-
-        // Delete the uploaded file after successful processing
-        fs.unlink(gradesFile.path, (err) => {
-            if (err) console.error('Error deleting uploaded file:', err);
-        });
-
-        res.json({ success: true, message: 'Grades uploaded and stored successfully.' });
-    } catch (error) {
-        console.error('Error uploading grades:', error);
-
-        // Ensure the file is deleted even if an error occurs
-        if (req.file) {
-            fs.unlink(req.file.path, (err) => {
-                if (err) console.error('Error deleting uploaded file:', err);
-            });
-        }
-
-        res.status(500).json({ success: false, message: 'An internal server error occurred while uploading grades.' });
-    }
-});
-
-
 
 // Fetch user details route
 app.get('/user-details', isAuthenticated, async (req, res) => {

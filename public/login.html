@@ -59,80 +59,27 @@
             margin-top: 20px;
             font-size: 16px;
         }
-
-        .footer p {
-            font-size: 14px;
+        .password-toggle-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
         }
-
-        /* Placeholder color adjustment */
-        ::placeholder {
-            color: rgba(231, 5, 5, 0.6); /* Darker gray for readability */
-        }
-
-        [data-theme="dark"] ::placeholder {
-            color: rgba(255, 255, 255, 0.7); /* Lighter gray for readability in dark theme */
-        }
-
-            :root {
-    --bg-color: #f9fafb;
-    --text-color: #111827;
-    --header-bg: #2563eb;
-    --button-bg: #083da5;
-    --button-text: #374151;
-    -moz-text-decoration-line: var(--link-hover-bg);
-    --link-hover-bg: #29ce7c;
-    }
-
-    [data-theme="dark"] {
-        --bg-color: #111827;
-        --text-color: #f9fafb;
-        --header-bg: #1f2937;
-        --button-bg: #374151;
-        --button-text: #f9fafb;
-        --link-hover-bg: #29ce7c;
-    }
-    .fixed-size {
-            width: 48px; /* Fixed width */
-            height: 48px; /* Fixed height */
-            object-fit: contain; /* Ensures the image fits within the fixed size */
-        }
+        
     </style>
 
 </head>
 <body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <form id="loginForm" action="/login" method="post" class="form-container">
+            <h3>Login</h3>
 
-<!-- Header with Sticky Navigation -->
-<header class="bg-blue-600 shadow-md sticky top-0 z-50">
-    <div class="container mx-auto flex items-center justify-between px-6 py-4">
-        <!-- Left Side: Hamburger Menu and Icon -->
-        <div class="flex items-center space-x-4">
-          
-            <a href="https://hellograde.onrender.com/">
-                <img src="images/icon.png" alt="HelloGrade Icon" class="fixed-size">
-            </a>
-            <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
-        </div>
-        <nav class="space-x-4">
-            <a href="about.html" class="text-white">About Us</a>
-            <a href="contact.html" class="text-white">Contact Us</a>
-            <a href="privacy-policy.html" class="text-white">Privacy Policy</a>
-            <a href="terms-and-conditions.html" class="text-white">Terms</a>
-        </nav>
-        <!-- Right Side: Login, Signup, and Dark Mode -->
-        <div class="flex items-center space-x-4">
-            <a href="login.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
-            <a href="signup.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
-            <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
-        </div>
-    </div>
-</header>
-
-<!-- Main Content with Login Form -->
-<main class="main-container">
-    <form id="loginForm" action="/login" method="post" class="form-container">
-        <h3>Login</h3>
-        <input type="email" placeholder="Email" id="email" name="email" required>
-        <div id="emailError" class="error-message"></div>
+            <label for="email">Email</label>
+            <input type="email" placeholder="Email" id="email" name="email" required>
+            <div id="emailError" class="error-message"></div>
 
         <div class="password-toggle">
             <input type="password" placeholder="Password" id="password" name="password" required>

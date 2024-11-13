@@ -146,18 +146,6 @@
             margin: 0 auto; /* Center the container horizontally */
             text-align: center; /* Center text content */
         }
-
-        .course-grade
-        {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 800px; /* Set max-width for better readability */
-            margin: 0 auto; /* Center the container horizontally */
-            text-align: center; /* Center text content */
-        }
     
         .content-inner h2, .content-inner h3 {
             margin: 10px 0;
@@ -167,47 +155,6 @@
         .table-container {
             width: 100%;
             margin-top: 20px;
-            overflow-x: auto; 
-        }
-    
-        /* Table Layout */
-        .table-container table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        /* Consistent Header Styling */
-        .table-container thead th {
-            background-color: #4A90E2;
-            color: #130b20;
-            padding: 12px;
-            text-align: center;
-            font-weight: 600; /* Enhance header font weight */
-            font-size: 1em; /* Adjust font size for uniformity */
-
-        }
-
-        /* Consistent Body Cell Styling */
-        .table-container tbody td {
-            padding: 12px;
-            color: #130b20;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            font-size: 0.9em; /* Set consistent font size */
-        }
-
-        /* Alternating Row Background */
-        .table-container tbody tr:nth-child(even) {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #130b20;
-        }
-
-        /* Table Row Hover Effect */
-        .table-container tbody tr:hover {
-            background-color: rgba(255, 255, 255, 0.15);
         }
 
         table {
@@ -252,93 +199,7 @@
 
     tbody td[colspan="2"] {
         text-align: center;
-        color: #130b20;
     }
-
-    .submenu {
-            display: none;
-            list-style-type: none;
-            padding-left: 20px;
-        }
-        
-        .submenu.active {
-            display: block;
-        }
-        
-        .submenu li {
-            padding: 8px 0;
-        }
-        
-        .submenu li a {
-            color: #fff;
-            font-size: 16px;
-            text-decoration: none;
-        }
-
-        /* Light Mode Styles */
-        .light-mode {
-            background-color: #e4ebf3; /* Light background */
-            color: #000000; /* Dark text for contrast */
-        }
-
-        .light-mode header {
-            background-color: #4A90E2; /* Light blue-grey for header */
-            color: #000000; /* Dark text */
-        }
-
-        .light-mode .sidebar {
-            background-color: #4A90E2; /* Light blue-grey for sidebar */
-            color: #000000; /* Dark text */
-        }
-
-        .light-mode .sidebar-nav li a {
-            color: #000000; /* Dark links */
-        }
-
-        .light-mode .sidebar-nav li a:hover {
-            background-color: rgba(0, 0, 0, 0.05); /* Light hover effect */
-        }
-
-        .light-mode .content-inner {
-            background-color: #4A90E2; /* Neutral light grey for content boxes */
-            color: #000000; /* Dark text */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-        }
-
-        .light-mode .table-container thead th {
-            background-color: #4A90E2; /* Light blue for table header */
-            color: #000000; /* Dark text */
-        }
-
-        .light-mode .table-container tbody td {
-            color: #000000; /* Dark text for table rows */
-            background-color: #4A90E2; /* White background for rows */
-        }
-
-        .light-mode .table-container tbody tr:nth-child(even) {
-            background-color: #4A90E2; /* Light grey for alternating rows */
-        }
-
-        /* Optional: Adjust hover effects for table rows */
-        .light-mode .table-container tbody tr:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-        /* Light Mode - Submenu Styles */
-        .light-mode .submenu {
-            background-color: #4A90E2; /* Match content background */
-            color: #000000; /* Dark text */
-        }
-
-        .light-mode .submenu li a {
-            color: #000000; /* Dark links */
-        }
-
-        .light-mode .submenu li a:hover {
-            background-color: rgba(0, 0, 0, 0.05); /* Light hover effect */
-        }
-
-
-
     
         /* Adjustments for smaller screens */
         @media (max-width: 768px) {
@@ -464,30 +325,6 @@
 </main>
 
     <script>
-
-        document.getElementById('themeToggle').addEventListener('click', function () {
-            const body = document.body;
-            const submenu = document.getElementById('classesSubmenu');
-            const themeIcon = document.getElementById('themeIcon');
-
-            if (body.classList.contains('light-mode')) {
-                body.classList.remove('light-mode');
-                body.classList.add('dark-mode');
-                submenu.classList.remove('light-mode'); // Remove light mode from submenu
-                themeIcon.textContent = 'wb_sunny'; // Change to sun for light mode
-            } else {
-                body.classList.remove('dark-mode');
-                body.classList.add('light-mode');
-                submenu.classList.add('light-mode'); // Add light mode to submenu
-                themeIcon.textContent = 'brightness_2'; // Change to crescent moon for dark mode
-            }
-        });
-
-
-
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchStudentDetails();
-        });
         // Fetch student details (name and ID) from the session
         async function fetchStudentDetails() {
             try {
@@ -520,44 +357,17 @@
                             console.error('Error fetching user details:', error);
                         }
                 }
-
-
-        async function fetchCourses(studentIDNumber) {
-            try {
-                const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
-                const data = await response.json();
-
-                if (data.success) {
-                    populateCourses(data.gradeDataArray);
-                } else {
-                    console.error('Failed to fetch courses:', data.message);
-                }
-            } catch (error) {
-                console.error('Error fetching courses:', error);
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchStudentDetails();
+        });
+        // Fetch grades using student ID
+        async function fetchGrades(studentIDNumber) {
+            if (!studentIDNumber) {
+                console.error('Invalid studentIDNumber:', studentIDNumber);
+                return;
             }
-        }
-
-        function populateCourses(courseArray) {
-            const submenu = document.getElementById('classesSubmenu');
-            submenu.innerHTML = ''; // Clear any existing entries
-
-            courseArray.forEach(course => {
-                const courseItem = document.createElement('li');
-                courseItem.innerHTML = `<a href="#" onclick="fetchGradesForCourse('${course.courseID}')">${course.courseID}</a>`;
-                submenu.appendChild(courseItem);
-            });
-
-            // Apply the light-mode class if it is active
-            if (document.body.classList.contains('light-mode')) {
-                submenu.classList.add('light-mode');
-            }
-        }
-
-
-        async function fetchGradesForCourse(courseID) {
-            const studentIDNumber = document.getElementById('studentID').textContent;
-
             try {
+                console.log('Fetching grades for:', studentIDNumber); // Debug log
                 const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
                 const data = await response.json();
 

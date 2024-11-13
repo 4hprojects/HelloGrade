@@ -160,33 +160,20 @@
         .password-toggle-icon {
             font-size: 0.9em; /* Smaller icon size */
         }
-
-        .password-criteria {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            font-size: 0.75em; /* Smaller font */
+                /* Styling for the message label */
+                .error-message {
+            font-size: 0.9em;
+            margin-top: 10px;
+            text-align: center;
+            display: none; /* Initially hidden */
         }
 
-        .password-criteria p {
-            width: 48%;
-            margin: 1px 0;
+        .error-message.error {
+            color: red; /* Red for errors */
         }
 
-        .compact-form button {
-            padding: 10px; /* Reduced padding */
-            font-size: 0.95em; /* Slightly smaller font */
-        }
-
-        .footer {
-            font-size: 0.8em; /* Smaller footer text */
-            margin-top: 5px; /* Reduced margin */
-        }
-
-        .fixed-size {
-            width: 48px; /* Fixed width */
-            height: 48px; /* Fixed height */
-            object-fit: contain; /* Ensures the image fits within the fixed size */
+        .error-message.success {
+            color: green; /* Green for success */
         }
 
 
@@ -196,35 +183,10 @@
 
 
 <body>
-    
-    <header class="bg-blue-600 shadow-md sticky top-0 z-50">
-        <div class="container mx-auto flex items-center justify-between px-6 py-4">
-            <!-- Left Side: Hamburger Menu and Icon -->
-            <div class="flex items-center space-x-4">
-              
-                <a href="https://hellograde.onrender.com/">
-                    <img src="images/icon.png" alt="HelloGrade Icon" class="fixed-size">
-                </a>
-                <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
-            </div>
-            <nav class="space-x-4">
-                <a href="about.html" class="text-white">About Us</a>
-                <a href="contact.html" class="text-white">Contact Us</a>
-                <a href="privacy-policy.html" class="text-white">Privacy Policy</a>
-                <a href="terms-and-conditions.html" class="text-white">Terms</a>
-            </nav>
-            <!-- Right Side: Login, Signup, and Dark Mode -->
-            <div class="flex items-center space-x-4">
-                <a href="login.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
-                <a href="signup.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
-                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
-            </div>
-        </div>
-    </header>
-    <main class="background flex-grow">
-        <form id="signupForm" action="/signup" method="post" class="form-container compact-form">
-            <h2 align="center">Create an Account</h2>
-    
+    <div class="form-container">
+        <form id="signupForm" action="http://localhost:3000/signup" method="post">
+            <h3>Create an Account</h3>
+
             <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
             <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
             <input type="text" id="studentIDNumber" name="studentIDNumber" placeholder="Student ID Number" required pattern="\d{1,7}" maxlength="7">

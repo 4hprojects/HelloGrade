@@ -6,174 +6,268 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to HelloGrade - Your Student Grading Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="css/styles.css">
-
     <style>
         button:hover {
             background: #357ABD;
         }
-        #scrollToTopBtn {
-        display: none; /* Initially hidden */
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 40px;
-        height: 40px;
-        background-color: #4A90E2; /* Blue color */
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    #scrollToTopBtn:hover {
-        background-color: #357ABD; /* Darker blue on hover */
-    }
-
-    :root {
-    --bg-color: #f9fafb;
-    --text-color: #111827;
-    --header-bg: #2563eb;
-    --button-bg: #e5e7eb;
-    --button-text: #374151;
-    --link-hover-bg: #1d4ed8;
-    }
-
-    [data-theme="dark"] {
-        --bg-color: #111827;
-        --text-color: #f9fafb;
-        --header-bg: #1f2937;
-        --button-bg: #374151;
-        --button-text: #f9fafb;
-        --link-hover-bg: #1d4ed8;
-    }
-
-    body {
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        font-family: 'Poppins', sans-serif;
-
-    }
-
-    header {
-        background-color: var(--header-bg);
-    }
-
-    button, .bg-white, .text-gray-800, .bg-gray-50 {
-        background-color: var(--button-bg) !important;
-        color: var(--button-text) !important;
-    }
-
-    .bg-blue-600 {
-        background-color: var(--header-bg) !important;
-    }
-
-    a:hover {
-        background-color: var(--link-hover-bg);
-        color: var(--button-text);
-    }
-
-    [data-theme="dark"] .hover\:bg-blue-600:hover {
-    background-color: #1d4ed8; /* Darker shade of blue for dark mode */
-    }
-
-    [data-theme="dark"] .hover\:bg-red-500:hover {
-        background-color: #dc2626; /* Darker shade of red for dark mode */
-    }
-
-    [data-theme="dark"] .hover\:bg-gray-500:hover {
-        background-color: #4b5563; /* Darker shade of gray for the theme toggle button */
-    }
-
-    #navMenu {
-    display: none; /* Hidden by default */
-    flex-direction: column;
-    z-index: 10;
-}
-
-#navMenu.show {
-    display: block;
-}
-
-/* Ensure seamless alignment */
-.fixed-size {
-    width: 48px; /* Fixed width */
-    height: 48px; /* Fixed height */
-    object-fit: contain; /* Ensures the image fits within the fixed size */
-}
-
-.hamburger-menu {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-
-
-.hamburger-menu:hover {
-    background-color: #1d4ed8 /* Optional: Adds a subtle hover effect */
-}
-
-#navMenu {
-    display: none; /* Hidden by default */
-    flex-direction: column;
-    z-index: 10;
-}
-
-#navMenu.show {
-    display: block; /* Show when toggled */
-}
-
-.active-nav {
-            font-weight: bold;
-            background-color: #1d4ed8;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
+        main {
+            padding: 0;
+            text-align: center;
+        }
+        main h2 {
+            color: #4A90E2;
+            margin-top: 0;
+        }
+        main p {
+            font-size: 18px;
+            color: #555;
+            max-width: 800px;
+            margin: 20px auto;
+            line-height: 1.6;
+        }
+        main ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        main ul li {
+            font-size: 18px;
+            color: #555;
+            margin: 10px 0;
+        }
+        footer {
+            background-color: #4A90E2;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .cta-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background-color: #4A90E2;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .cta-button:hover {
+            background-color: #357ABD;
         }
 
-@media (min-width: 1024px) {
-    #navMenu {
-        position: absolute;
-        display: none; /* Hidden by default */
-    }
-}
+          /* Styles for the sliding panels */
+          .overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: right 0.5s ease-in-out;
+            display: flex;
+            justify-content: flex-end;
+            z-index: 1000;
+        }
+        .overlay.active {
+            right: 0;
+        }
+        .panel {
+            background-color: #080710;
+            width: 400px;
+            max-width: 80%;
+            height: 100%;
+            padding: 20px;
+            position: relative;
+            overflow-y: auto;
+        }
+        .panel .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+        }
+        /* Form styles */
+        .form-container {
+            width: 100%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+        }
+        .form-container h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1em;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4A90E2;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #357ABD;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .footer-links a {
+            color: #4A90E2;
+            text-decoration: none;
+        }
+        /* New styles for input pairs */
+        .input-pair {
+            display: flex;
+            gap: 10px;
+        }
+        .input-pair input {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 0.9em;
+        }
+        /* Password criteria and checkbox container */
+        .password-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+        .password-criteria {
+            flex: 1;
+        }
+        .password-criteria p {
+            font-size: 0.8em;
+            margin: 2px 0;
+        }
+        .show-password {
+            display: flex;
+            align-items: center;
+            font-size: 0.8em;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .show-password input[type="checkbox"] {
+            display: none; /* Hide default checkbox */
+        }
+
+        /* Custom checkbox style */
+        .show-password .custom-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #4A90E2;
+            border-radius: 3px;
+            position: relative;
+            display: inline-block;
+            background-color: transparent;
+            margin-right: 5px;
+        }
+
+        /* Checkbox checked state with a checkmark */
+        .show-password input[type="checkbox"]:checked + .custom-checkbox {
+            background-color: #4A90E2;
+        }
+
+        .show-password input[type="checkbox"]:checked + .custom-checkbox::after {
+            /*content: '✔';*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            color: white;
+        }
+        /* Button adjustments */
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 12px; /* Reduced space above button */
+            background-color: #4A90E2;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #357ABD;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .panel {
+                width: 100%;
+            }
+            .input-pair input, 
+            .form-container input {
+                width: 100%;
+                padding: 10px;
+                background-color: rgba(255, 255, 255, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 5px;
+                color: #ffffff;
+                font-size: 0.9em;
+                margin-bottom: 8px; /* Consistent space between all input fields */
+            }
+            .password-section {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-top: 8px; /* Less space above this section */
+            }
+            .show-password {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+
     </style>
     
 
 </head>
-<body class="bg-gray-50 text-gray-800 font-poppins">
-
-    <header class="bg-blue-600 shadow-md sticky top-0 z-50">
-        <div class="container mx-auto flex items-center justify-between px-6 py-4">
-            <!-- Left Side: Hamburger Menu and Icon -->
-            <div class="flex items-center space-x-4">
-              
-                <a href="https://hellograde.onrender.com/">
-                    <img src="images/icon.png" alt="HelloGrade Icon" class="fixed-size">
-                </a>
-                <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
-            </div>
-            <nav class="space-x-4">
-                <a href="about.html" class="text-white">About Us</a>
-                <a href="contact.html" class="text-white">Contact Us</a>
-                <a href="privacy-policy.html" class="text-white">Privacy Policy</a>
-                <a href="terms-and-conditions.html" class="text-white">Terms</a>
-            </nav>
-            <!-- Right Side: Login, Signup, and Dark Mode -->
-            <div class="flex items-center space-x-4">
-                <a href="login.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
-                <a href="signup.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
-                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
-            </div>
-        </div>
+<body>
+    <header>
+        <h1>Welcome to HelloGrade</h1>
+        <nav>
+            <ul>
+                <li><a href="#" id="loginLink">Login</a></li>
+                <li><a href="#" id="signupLink">Sign Up</a></li>
+            </ul>
+        </nav>
     </header>
     
 
@@ -270,215 +364,131 @@
                             With additional grading points, this system provides a more comprehensive picture of student achievement, supporting in-depth discussions between educators, students, and parents about progress, focus areas, and strategies for growth.
                         </p>
                     </div>
-                </div>
-            </div>
-    
-            <!-- Right Section: Grading Table -->
-            <div class="relative overflow-x-auto mt-0 sm:mt-10 hidden sm:block">
-                <table class="w-full text-sm text-left text-gray-500 content3_4">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-100/20 text-center">
-                        <tr>
-                            <th scope="col" class="px-3 py-2 font-semibold text-gray-700">
-                               Grade
-                            </th>
-                            <th scope="col" class="px-3 py-2 font-semibold text-gray-700">
-                                Grade Percentage Equivalent
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                1.00
-                            </td>
-                            <td class="px-3 py-1">
-                                98-100
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                1.25
-                            </td>
-                            <td class="px-3 py-1">
-                                95-97
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                1.50
-                            </td>
-                            <td class="px-3 py-1">
-                               92-94
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                1.75
-                            </td>
-                            <td class="px-3 py-1">
-                               89-91
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                2.00
-                            </td>
-                            <td class="px-3 py-1">
-                               86-88
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                2.25
-                            </td>
-                            <td class="px-3 py-1">
-                               83-85
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                2.50
-                            </td>
-                            <td class="px-3 py-1">
-                               80-82
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                2.75
-                            </td>
-                            <td class="px-3 py-1">
-                                77-79
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                3.00
-                            </td>
-                            <td class="px-3 py-1">
-                               75-76
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                5.00
-                            </td>
-                            <td class="px-3 py-1">
-                               Below 75
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                INC
-                            </td>
-                            <td class="px-3 py-1">
-                               Incomplete
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                OD
-                            </td>
-                            <td class="px-3 py-1">
-                               Officially Dropped
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                UD
-                            </td>
-                            <td class="px-3 py-1">
-                               Unofficially Dropped
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                W
-                            </td>
-                            <td class="px-3 py-1">
-                               Withdrawn
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-    </section>
+                </form>
+            `;
+            attachSignupEvents();
+        }
 
-    <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-blue-500 text-white hover:bg-blue-600 flex items-center justify-center shadow-lg hidden">
-        <span class="material-icons">arrow_upward</span>
-    </button>
-</main>
+        // Function to open the overlay and load the appropriate form
+        function openOverlay(formType) {
+            const overlay = document.getElementById('overlay');
+            overlay.classList.add('active');
+            if (formType === 'login') {
+                loadLoginForm();
+            } else if (formType === 'signup') {
+                loadSignupForm();
+            }
+        }
 
-<!-- Footer -->
-<footer class="bg-blue-600 text-white py-4">
-    <div class="text-center">&copy; 2024 HelloGrade. All rights reserved.</div>
-</footer>
+        // Function to close the overlay
+        function closeOverlay() {
+            const overlay = document.getElementById('overlay');
+            overlay.classList.remove('active');
+        }
 
-<!-- Scroll Reveal and Smooth Scrolling -->
-<script src="https://unpkg.com/scrollreveal"></script>
-<script>
+        // Attach events for login form
+        function attachLoginEvents() {
+            // Close button event
+            document.getElementById('closeBtn').addEventListener('click', closeOverlay);
 
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
+            // Switch to Sign Up
+            document.getElementById('switchToSignup').addEventListener('click', function () {
+                loadSignupForm();
             });
-        });
-    });
 
+            // Password visibility toggle
+            document.getElementById('togglePassword').addEventListener('click', function () {
+                const passwordInput = document.getElementById('password');
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.textContent = type === 'password' ? '👁️' : '🙈';
+            });
 
-
-    // ScrollReveal configuration
-    ScrollReveal().reveal('.scroll-reveal', { duration: 1200, origin: 'bottom', distance: '30px' });
-
-    // Get the button
-    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-
-    // Function to show the button when scrolling down
-    window.onscroll = function() {
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-            scrollToTopBtn.style.display = "flex";
-        } else {
-            scrollToTopBtn.style.display = "none";
+            // Login form submission
+            document.getElementById('loginForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                // Include the same validation and submission code from login.html
+                // ...
+            });
         }
-    };
 
-    // Scroll to the top smoothly when the button is clicked
-    scrollToTopBtn.addEventListener("click", function() {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    });
+        // Attach events for sign-up form
+        function attachSignupEvents() {
+            // Close button event
+            document.getElementById('closeBtn').addEventListener('click', closeOverlay);
 
+            // Switch to Login
+            document.getElementById('switchToLogin').addEventListener('click', function () {
+                loadLoginForm();
+            });
 
+            // Show Password checkbox toggle
+            const showPasswordCheckbox = document.getElementById('showPasswordCheckbox');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
 
-    const themeToggle = document.getElementById("themeToggle");
+            showPasswordCheckbox.addEventListener('change', function () {
+                const type = this.checked ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                confirmPasswordInput.setAttribute('type', type);
+            });
 
-    // Apply saved theme preference
-    if (localStorage.getItem("theme") === "dark") {
-        document.documentElement.setAttribute("data-theme", "dark");
-        themeToggle.textContent = "☀︎";
-    }
+            // Real-time password validation
+            document.getElementById('password').addEventListener('input', function () {
+                const password = this.value;
+                const hasUppercase = /[A-Z]/.test(password);
+                const hasLowercase = /[a-z]/.test(password);
+                const hasNumber = /\d/.test(password);
+                const noSpecialChar = /^[A-Za-z\d]*$/.test(password);
+                const hasMinLength = password.length >= 8;
+                updateCriteriaLabel('uppercase', hasUppercase);
+                updateCriteriaLabel('lowercase', hasLowercase);
+                updateCriteriaLabel('number', hasNumber);
+                updateCriteriaLabel('special', noSpecialChar);
+                updateCriteriaLabel('length', hasMinLength);
+            });
 
-    themeToggle.addEventListener("click", () => {
-        // Toggle the theme
-        if (document.documentElement.getAttribute("data-theme") === "dark") {
-            document.documentElement.setAttribute("data-theme", "light");
-            themeToggle.textContent = "☾";
-            localStorage.setItem("theme", "light");
-        } else {
-            document.documentElement.setAttribute("data-theme", "dark");
-            themeToggle.textContent = "☀︎";
-            localStorage.setItem("theme", "dark");
+            function updateCriteriaLabel(elementId, isValid) {
+                const element = document.getElementById(elementId);
+                if (isValid) {
+                    element.classList.add('valid');
+                    element.style.color = 'green';
+                } else {
+                    element.classList.remove('valid');
+                    element.style.color = 'red';
+                }
+            }
+
+            // Sign-up form submission
+            document.getElementById('signupForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                // Include the same validation and submission code from signup.html
+                // ...
+            });
         }
-    });
 
+        // Event listeners for main navigation
+        document.getElementById('loginLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            openOverlay('login');
+        });
 
+        document.getElementById('signupLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            openOverlay('signup');
+        });
 
-</script>
+        document.getElementById('signupButton').addEventListener('click', function (event) {
+            event.preventDefault();
+            openOverlay('signup');
+        });
 
-
+        // Close overlay when clicking outside the panel
+        document.getElementById('overlay').addEventListener('click', function (event) {
+            if (event.target === this) {
+                closeOverlay();
+            }
+        });
+    </script>
 </body>
 </html>

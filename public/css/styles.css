@@ -8,53 +8,9 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/* Default light theme */
-:root {
-    --bg-color: #f9fafb;
-    --text-color: #111827;
-    --header-bg: #2563eb;
-    --button-bg: #083da5;
-    --button-text: #ffffff;
-    --link-hover-bg: #29ce7c;
-}
-
-/* Dark theme */
-[data-theme="dark"] {
-    --bg-color: #111827;
-    --text-color: #f9fafb;
-    --header-bg: #1f2937;
-    --button-bg: #374151;
-    --button-text: #f9fafb;
-    --link-hover-bg: #29ce7c;
-}
-
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Poppins', sans-serif;
-}
-
-header {
-    background-color: var(--header-bg);
-}
-
-button, .bg-white, .text-gray-800 {
-    background-color: var(--button-bg);
-    color: var(--button-text);
-}
-
-a:hover {
-    background-color: var(--link-hover-bg);
-    color: var(--button-text);
-}
-
-/* Optional: Placeholder color adjustment */
-::placeholder {
-    color: rgba(131, 131, 131, 0.8);
-}
-
-[data-theme="dark"] ::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    background-color: #080710;
+    color: #ffffff;
 }
 
 
