@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - HelloGrade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        .active-nav {
+            font-weight: bold;
+            background-color: #1d4ed8;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .fixed-size {
+            width: 48px; /* Fixed width */
+            height: 48px; /* Fixed height */
+            object-fit: contain; /* Ensures the image fits within the fixed size */
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-blue-600 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+            <a href="https://hellograde.onrender.com/">
+                <img src="images/icon.png" alt="HelloGrade Icon" class="fixed-size">
+            </a>
+            <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+            </div>
+            <nav class="space-x-4">
+                <a href="about.html" class="text-white">About Us</a>
+                <a href="contact.html" class="text-white active-nav">Contact Us</a>
+                <a href="privacy-policy.html" class="text-white">Privacy Policy</a>
+                <a href="terms-and-conditions.html" class="text-white">Terms</a>
+            </nav>
+            <!-- Right Side: Login, Signup, and Dark Mode -->
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
+                <a href="signup.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
+                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
+            </div>
+        </div>
+    </header>
+    <main class="container mx-auto px-6 py-12">
+        <h1 class="text-3xl font-bold text-blue-600 mb-4">Contact Us</h1>
+        <p>We value your feedback and inquiries. Feel free to reach out to us through any of the following channels:</p>
+        <ul class="mt-4 list-disc pl-6">
+            <li><strong>Email:</strong> <a href="mailto:4hprojects@proton.me">4hprojects@proton.me</a></li>
+            <li><strong>Address:</strong> La Trinidad, Benguet, Philippines</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Contact Form</h2>
+        <p class="mt-2">Alternatively, you can fill out our contact form below:</p>
+        <form action="https://formspree.io/f/xgveynqq" method="POST" class="mt-6 space-y-4">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="name" name="name" class="border border-gray-300 rounded px-4 py-2 w-full" required>
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" name="email" class="border border-gray-300 rounded px-4 py-2 w-full" required>
+            </div>
+            <div>
+                <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                <textarea id="message" name="message" rows="4" class="border border-gray-300 rounded px-4 py-2 w-full" required></textarea>
+            </div>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800">Submit</button>
+        </form>
+        <div id="responseMessage" class="mt-4 text-green-600 hidden">Your message has been sent. Thank you!</div>
+            </main>
+    <footer class="bg-blue-600 text-white py-4">
+        <div class="text-center">&copy; 2024 HelloGrade. All rights reserved.</div>
+    </footer>
+
+    <script>
+
+const themeToggle = document.getElementById("themeToggle");
+    
+    // Apply saved theme preference
+    if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        themeToggle.textContent = "☀︎";
+    }
+
+    themeToggle.addEventListener("click", () => {
+        // Toggle the theme
+        if (document.documentElement.getAttribute("data-theme") === "dark") {
+            document.documentElement.setAttribute("data-theme", "light");
+            themeToggle.textContent = "☾";
+            localStorage.setItem("theme", "light");
+        } else {
+            document.documentElement.setAttribute("data-theme", "dark");
+            themeToggle.textContent = "☀︎";
+            localStorage.setItem("theme", "dark");
+        }
+    });
+
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission behavior
+    
+            const form = e.target;
+    
+            // Use Formspree to send the email
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form),
+                headers: {
+                    Accept: 'application/json',
+                },
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        // Show confirmation message
+                        document.getElementById('responseMessage').classList.remove('hidden');
+    
+                        // Clear the form fields
+                        form.reset();
+                    } else {
+                        // Handle errors (e.g., display an error message)
+                        alert('Oops! Something went wrong.');
+                    }
+                })
+                .catch(() => {
+                    // Handle errors (e.g., network issues)
+                    alert('There was an error submitting the form. Please try again.');
+                });
+        });
+
+        </script>
+
+
+</body>
+</html>

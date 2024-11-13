@@ -8,10 +8,55 @@
     font-family: 'Poppins', sans-serif;
 }
 
-body {
-    background-color: #080710;
-    color: #ffffff;
+/* Default light theme */
+:root {
+    --bg-color: #f9fafb;
+    --text-color: #111827;
+    --header-bg: #2563eb;
+    --button-bg: #083da5;
+    --button-text: #ffffff;
+    --link-hover-bg: #29ce7c;
 }
+
+/* Dark theme */
+[data-theme="dark"] {
+    --bg-color: #111827;
+    --text-color: #f9fafb;
+    --header-bg: #1f2937;
+    --button-bg: #374151;
+    --button-text: #f9fafb;
+    --link-hover-bg: #29ce7c;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    background-color: var(--header-bg);
+}
+
+button, .bg-white, .text-gray-800 {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}
+
+a:hover {
+    background-color: var(--link-hover-bg);
+    color: var(--button-text);
+}
+
+/* Optional: Placeholder color adjustment */
+::placeholder {
+    color: rgba(131, 131, 131, 0.8);
+}
+
+[data-theme="dark"] ::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
 
 .background {
     display: flex;
@@ -44,18 +89,16 @@ body {
     width: 100%;
     max-width: 400px;
     padding: 50px 35px;
-    background-color: rgba(255, 255, 255, 0.13);
+    background-color: var(--form-bg);
     border-radius: 10px;
     backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--form-border);
     box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-    position: relative;
 }
 
 .form-container h3 {
     font-size: 32px;
     font-weight: 500;
-    line-height: 42px;
     text-align: center;
 }
 
@@ -76,7 +119,7 @@ body {
     margin-top: 8px;
     font-size: 14px;
     font-weight: 300;
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 .form-container ::placeholder {
@@ -86,22 +129,24 @@ body {
 .form-container button {
     margin-top: 50px;
     width: 100%;
-    background-color: #ffffff;
-    color: #080710;
+    background-color: var(--button-bg);
+    color: #ffffff;
     padding: 15px 0;
     font-size: 18px;
     font-weight: 600;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.footer {
-    text-align: center;
-    margin-top: 30px;
+.form-container button:hover {
+    background-color: var(--button-hover-bg);
 }
+
+
 
 .footer a {
-    color: #ffffff;
+    color: var(--link-color);
     text-decoration: none;
     font-weight: bold;
 }
@@ -110,34 +155,61 @@ body {
     text-decoration: underline;
 }
 
-input[disabled] {
-    background-color: #e9ecef; /* Light gray background */
-    color: #6c757d; /* Gray text */
-    cursor: not-allowed; /* Not allowed cursor */
+/* Compact Form Styling */
+.form-container.compact {
+    padding: 30px 20px; /* Reduce padding */
+    max-width: 350px; /* Slightly smaller width */
 }
-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    background: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
+
+.form-container h3 {
+    font-size: 24px; /* Smaller heading */
+    margin-bottom: 20px; /* Less space below heading */
+}
+
+.form-container label {
+    margin-top: 20px; /* Less vertical spacing */
+    font-size: 14px;
+}
+
+.form-container input {
+    height: 40px; /* Reduce height */
+    font-size: 14px;
+    padding: 0 8px; /* Less padding */
+}
+
+/* Container for password input and toggle icon */
+.password-toggle {
+    position: relative;
+}
+
+/* Adjust the position of the eye icon */
+.password-toggle-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust as needed to align it properly within the input */
+    transform: translateY(-50%);
     cursor: pointer;
-    font-size: 1em;
+    color: var(--text-color);
+    font-size: 1.2em;
+    pointer-events: all;
+    z-index: 10;
 }
-button:hover {
-    background: #357ABD;
+
+/* Adjust padding on the input field to prevent overlap with the icon */
+.password-toggle input {
+    padding-right: 30px; /* Add space to the right for the icon */
 }
+
+.form-container button {
+    padding: 10px 0; /* Reduce padding */
+    font-size: 16px;
+    margin-top: 20px; /* Reduce space above button */
+}
+
 .footer {
-    margin-top: 10px;
-    text-align: center;
-    font-size: 0.9em;
+    margin-top: 15px; /* Less space above footer */
 }
-.footer a {
-    color: #4CAF50;
-    text-decoration: none;
-}
-.footer a:hover {
-    text-decoration: underline;
+
+.footer p, .footer a {
+    font-size: 0.85em; /* Smaller text */
 }

@@ -1,124 +1,484 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth;">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to HelloGrade - Your Student Grading Portal</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- Include Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/styles.css">
+
     <style>
-        /* Existing styles */
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+        button:hover {
+            background: #357ABD;
         }
-        header {
-            background-color: #4A90E2;
-            color: #fff;
-            padding: 0;
-            text-align: center;
-        }
-        nav {
-            background-color: #4A90E2;
-            text-align: center;
-        }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            display: inline-flex;
-        }
-        nav ul li {
-            margin: 0;
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            padding: 14px 20px;
+        #scrollToTopBtn {
+        display: none; /* Initially hidden */
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        background-color: #4A90E2; /* Blue color */
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #scrollToTopBtn:hover {
+        background-color: #357ABD; /* Darker blue on hover */
+    }
+
+    :root {
+    --bg-color: #f9fafb;
+    --text-color: #111827;
+    --header-bg: #2563eb;
+    --button-bg: #e5e7eb;
+    --button-text: #374151;
+    --link-hover-bg: #1d4ed8;
+    }
+
+    [data-theme="dark"] {
+        --bg-color: #111827;
+        --text-color: #f9fafb;
+        --header-bg: #1f2937;
+        --button-bg: #374151;
+        --button-text: #f9fafb;
+        --link-hover-bg: #1d4ed8;
+    }
+
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: 'Poppins', sans-serif;
+
+    }
+
+    header {
+        background-color: var(--header-bg);
+    }
+
+    button, .bg-white, .text-gray-800, .bg-gray-50 {
+        background-color: var(--button-bg) !important;
+        color: var(--button-text) !important;
+    }
+
+    .bg-blue-600 {
+        background-color: var(--header-bg) !important;
+    }
+
+    a:hover {
+        background-color: var(--link-hover-bg);
+        color: var(--button-text);
+    }
+
+    [data-theme="dark"] .hover\:bg-blue-600:hover {
+    background-color: #1d4ed8; /* Darker shade of blue for dark mode */
+    }
+
+    [data-theme="dark"] .hover\:bg-red-500:hover {
+        background-color: #dc2626; /* Darker shade of red for dark mode */
+    }
+
+    [data-theme="dark"] .hover\:bg-gray-500:hover {
+        background-color: #4b5563; /* Darker shade of gray for the theme toggle button */
+    }
+
+    #navMenu {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    z-index: 10;
+}
+
+#navMenu.show {
+    display: block;
+}
+
+/* Ensure seamless alignment */
+.fixed-size {
+    width: 48px; /* Fixed width */
+    height: 48px; /* Fixed height */
+    object-fit: contain; /* Ensures the image fits within the fixed size */
+}
+
+.hamburger-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+
+.hamburger-menu:hover {
+    background-color: #1d4ed8 /* Optional: Adds a subtle hover effect */
+}
+
+#navMenu {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    z-index: 10;
+}
+
+#navMenu.show {
+    display: block; /* Show when toggled */
+}
+
+.active-nav {
             font-weight: bold;
-            display: inline-block;
+            background-color: #1d4ed8;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
         }
-        nav ul li a:hover {
-            background-color: #357ABD;
-        }
-        main {
-            padding: 0;
-            text-align: center;
-        }
-        main h2 {
-            color: #4A90E2;
-            margin-top: 0;
-        }
-        main p {
-            font-size: 18px;
-            color: #555;
-            max-width: 800px;
-            margin: 20px auto;
-            line-height: 1.6;
-        }
-        main ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        main ul li {
-            font-size: 18px;
-            color: #555;
-            margin: 10px 0;
-        }
-        footer {
-            background-color: #4A90E2;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-        .cta-button {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 30px;
-            background-color: #4A90E2;
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .cta-button:hover {
-            background-color: #357ABD;
-        }
+
+@media (min-width: 1024px) {
+    #navMenu {
+        position: absolute;
+        display: none; /* Hidden by default */
+    }
+}
     </style>
+    
+
 </head>
-<body>
-    <header>
-        <h1>Welcome to HelloGrade</h1>
-        <nav>
-            <ul>
-                <li><a href="login.html" id="loginLink">Login</a></li>
-                <li><a href="signup.html" id="signupLink">Sign Up</a></li>
-            </ul>
-        </nav>
+<body class="bg-gray-50 text-gray-800 font-poppins">
+
+    <header class="bg-blue-600 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between px-6 py-4">
+            <!-- Left Side: Hamburger Menu and Icon -->
+            <div class="flex items-center space-x-4">
+              
+                <a href="https://hellograde.onrender.com/">
+                    <img src="images/icon.png" alt="HelloGrade Icon" class="fixed-size">
+                </a>
+                <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+            </div>
+            <nav class="space-x-4">
+                <a href="about.html" class="text-white">About Us</a>
+                <a href="contact.html" class="text-white">Contact Us</a>
+                <a href="privacy-policy.html" class="text-white">Privacy Policy</a>
+                <a href="terms-and-conditions.html" class="text-white">Terms</a>
+            </nav>
+            <!-- Right Side: Login, Signup, and Dark Mode -->
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
+                <a href="signup.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
+                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
+            </div>
+        </div>
     </header>
+    
 
-    <main>
-        <h2>Your Comprehensive Student Grading Solution</h2>
-        <p>Welcome to HelloGrade!</p>
-    </main>
-    <div style="text-align: center; margin: 20px 0;">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-        crossorigin="anonymous"></script>
-        <!-- HelloGrade Responsive Ad -->
-        <ins class="adsbygoogle"
-        style="display:inline-block;width:728px;height:90px"
-        data-ad-client="ca-pub-4537208011192461"
-        data-ad-slot="7121468855"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
 
-    <footer>
-        <p>&copy; 2024 HelloGrade. All rights reserved.</p>
-    </footer>
+
+<!-- Main Content with Smooth Scrolling and Reveal Animations -->
+<main class="container mx-auto px-6 py-12">
+    <!-- Introduction Section -->
+    <section id="introduction" class="text-center mb-16 scroll-reveal">
+        <h2 class="text-3xl font-bold text-blue-600">Welcome to HelloGrade</h2>
+        <p class="text-lg mt-4 max-w-2xl mx-auto">
+            HelloGrade is an innovative, easy-to-use grading system by 4HProjects, tailored to enhance the student and teacher experience in educational institutions. It bridges the gap between manual grading processes and digital accuracy.
+        </p>
+    </section>
+
+    <!-- Features Section with Grid Layout -->
+    <section id="features" class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Efficient Grade Management</h3>
+            <p>Teachers can input grades, track student progress, and make real-time adjustments, reducing administrative tasks.</p>
+        </div>
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Real-Time Student Access</h3>
+            <p>Students can access their grades instantly, promoting responsibility and goal setting.</p>
+        </div>
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Customizable Grading Criteria</h3>
+            <p>Supports point-based, percentage, and custom grading scales to match academic standards.</p>
+        </div>
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Data Security and Privacy</h3>
+            <p>Ensures secure data handling with encryption and limited access to protect user information.</p>
+        </div>
+    </section>
+    
+    <!-- Advertisement Section -->
+        <div class="text-center my-8">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+                crossorigin="anonymous"></script>
+            <!-- HelloGrade Responsive Ad -->
+            <ins class="adsbygoogle"
+                style="display:inline-block;width:728px;height:90px"
+                data-ad-client="ca-pub-4537208011192461"
+                data-ad-slot="7121468855"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+    <!-- Why Choose Section -->
+    <section id="why-choose" class="text-center mb-16 scroll-reveal">
+        <h2 class="text-3xl font-bold text-blue-600">Why Choose HelloGrade?</h2>
+        <p class="text-lg mt-4 max-w-2xl mx-auto">
+            HelloGrade is more than just a grading tool—it’s a comprehensive solution designed to support educators and empower students. With HelloGrade, institutions can simplify grade management, enhance transparency, and foster a proactive learning environment.
+        </p>
+        <p class="text-lg mt-4 max-w-2xl mx-auto">
+            Developed with attention to detail and an understanding of educational needs, HelloGrade is here to support teachers, inspire students, and transform how grades are managed in today’s schools.
+        </p>
+    </section>
+    <!-- Determine Proficiency Section -->
+    <section id="determine-proficiency" class="bg-white p-8 rounded-lg shadow-md my-16">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Determine Proficiency</h2>
+        <h3 class="text-2xl font-semibold text-gray-700 mb-6">Systematic Grading</h3>
+        <p class="text-lg text-gray-600 mb-8">
+            The 11-point grading system is a comprehensive method of evaluating academic performance using a range of predefined grade values.
+        </p>
+    
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Left Section: Descriptions -->
+            <div class="space-y-8">
+                <div class="flex items-start">
+                    <span class="material-icons text-indigo-600 mr-2"></span>
+                    <div>
+                        <h4 class="font-semibold text-gray-700">Enhanced Precision</h4>
+                        <p class="text-gray-600">
+                            The expanded range of grade points allows educators to make finer distinctions in student performance, giving a more detailed assessment of students' knowledge and skill levels.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="material-icons text-indigo-600 mr-2"></span>
+                    <div>
+                        <h4 class="font-semibold text-gray-700">Improved Differentiation</h4>
+                        <p class="text-gray-600">
+                            This grading system highlights and rewards incremental progress, offering a clearer reflection of each student’s unique strengths and areas for development.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="material-icons text-indigo-600 mr-2"></span>
+                    <div>
+                        <h4 class="font-semibold text-gray-700">Clearer Communication</h4>
+                        <p class="text-gray-600">
+                            With additional grading points, this system provides a more comprehensive picture of student achievement, supporting in-depth discussions between educators, students, and parents about progress, focus areas, and strategies for growth.
+                        </p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Right Section: Grading Table -->
+            <div class="relative overflow-x-auto mt-0 sm:mt-10 hidden sm:block">
+                <table class="w-full text-sm text-left text-gray-500 content3_4">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-100/20 text-center">
+                        <tr>
+                            <th scope="col" class="px-3 py-2 font-semibold text-gray-700">
+                               Grade
+                            </th>
+                            <th scope="col" class="px-3 py-2 font-semibold text-gray-700">
+                                Grade Percentage Equivalent
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                1.00
+                            </td>
+                            <td class="px-3 py-1">
+                                98-100
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                1.25
+                            </td>
+                            <td class="px-3 py-1">
+                                95-97
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                1.50
+                            </td>
+                            <td class="px-3 py-1">
+                               92-94
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                1.75
+                            </td>
+                            <td class="px-3 py-1">
+                               89-91
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                2.00
+                            </td>
+                            <td class="px-3 py-1">
+                               86-88
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                2.25
+                            </td>
+                            <td class="px-3 py-1">
+                               83-85
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                2.50
+                            </td>
+                            <td class="px-3 py-1">
+                               80-82
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                2.75
+                            </td>
+                            <td class="px-3 py-1">
+                                77-79
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                3.00
+                            </td>
+                            <td class="px-3 py-1">
+                               75-76
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                5.00
+                            </td>
+                            <td class="px-3 py-1">
+                               Below 75
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                INC
+                            </td>
+                            <td class="px-3 py-1">
+                               Incomplete
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                OD
+                            </td>
+                            <td class="px-3 py-1">
+                               Officially Dropped
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                UD
+                            </td>
+                            <td class="px-3 py-1">
+                               Unofficially Dropped
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                W
+                            </td>
+                            <td class="px-3 py-1">
+                               Withdrawn
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </section>
+
+    <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-blue-500 text-white hover:bg-blue-600 flex items-center justify-center shadow-lg hidden">
+        <span class="material-icons">arrow_upward</span>
+    </button>
+</main>
+
+<!-- Footer -->
+<footer class="bg-blue-600 text-white py-4">
+    <div class="text-center">&copy; 2024 HelloGrade. All rights reserved.</div>
+</footer>
+
+<!-- Scroll Reveal and Smooth Scrolling -->
+<script src="https://unpkg.com/scrollreveal"></script>
+<script>
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+
+
+    // ScrollReveal configuration
+    ScrollReveal().reveal('.scroll-reveal', { duration: 1200, origin: 'bottom', distance: '30px' });
+
+    // Get the button
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    // Function to show the button when scrolling down
+    window.onscroll = function() {
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            scrollToTopBtn.style.display = "flex";
+        } else {
+            scrollToTopBtn.style.display = "none";
+        }
+    };
+
+    // Scroll to the top smoothly when the button is clicked
+    scrollToTopBtn.addEventListener("click", function() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+
+
+
+    const themeToggle = document.getElementById("themeToggle");
+
+    // Apply saved theme preference
+    if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        themeToggle.textContent = "☀︎";
+    }
+
+    themeToggle.addEventListener("click", () => {
+        // Toggle the theme
+        if (document.documentElement.getAttribute("data-theme") === "dark") {
+            document.documentElement.setAttribute("data-theme", "light");
+            themeToggle.textContent = "☾";
+            localStorage.setItem("theme", "light");
+        } else {
+            document.documentElement.setAttribute("data-theme", "dark");
+            themeToggle.textContent = "☀︎";
+            localStorage.setItem("theme", "dark");
+        }
+    });
+
+
+
+</script>
+
+
 </body>
 </html>

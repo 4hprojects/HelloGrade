@@ -13,8 +13,14 @@
 
     <!-- Font Awesome Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 
     <style>
+        .dark-mode {
+            background-color: #121212; /* Dark background */
+            color: #ffffff; /* Light text */
+        }
+
         /* Body and Container Setup */
         body {
             display: flex;
@@ -140,6 +146,18 @@
             margin: 0 auto; /* Center the container horizontally */
             text-align: center; /* Center text content */
         }
+
+        .course-grade
+        {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 800px; /* Set max-width for better readability */
+            margin: 0 auto; /* Center the container horizontally */
+            text-align: center; /* Center text content */
+        }
     
         .content-inner h2, .content-inner h3 {
             margin: 10px 0;
@@ -149,14 +167,56 @@
         .table-container {
             width: 100%;
             margin-top: 20px;
+            overflow-x: auto; 
         }
     
+        /* Table Layout */
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Consistent Header Styling */
+        .table-container thead th {
+            background-color: #4A90E2;
+            color: #130b20;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600; /* Enhance header font weight */
+            font-size: 1em; /* Adjust font size for uniformity */
+
+        }
+
+        /* Consistent Body Cell Styling */
+        .table-container tbody td {
+            padding: 12px;
+            color: #130b20;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.9em; /* Set consistent font size */
+        }
+
+        /* Alternating Row Background */
+        .table-container tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #130b20;
+        }
+
+        /* Table Row Hover Effect */
+        .table-container tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             background-color: rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             overflow: hidden;
+            color: #130b20;
         }
     
         thead th {
@@ -176,19 +236,23 @@
     /* Right-align Grade Category column */
     tbody td:first-child {
         text-align: right;
+        color: #130b20;
     }
 
     /* Center-align Midterm and Finals columns */
     tbody td:not(:first-child) {
         text-align: center;
+        color: #130b20;
     }
 
     tbody tr:nth-child(even) {
         background-color: rgba(255, 255, 255, 0.1);
+        color: #130b20;
     }
 
     tbody td[colspan="2"] {
         text-align: center;
+        color: #130b20;
     }
 
     .submenu {
@@ -210,6 +274,71 @@
             font-size: 16px;
             text-decoration: none;
         }
+
+        /* Light Mode Styles */
+        .light-mode {
+            background-color: #e4ebf3; /* Light background */
+            color: #000000; /* Dark text for contrast */
+        }
+
+        .light-mode header {
+            background-color: #4A90E2; /* Light blue-grey for header */
+            color: #000000; /* Dark text */
+        }
+
+        .light-mode .sidebar {
+            background-color: #4A90E2; /* Light blue-grey for sidebar */
+            color: #000000; /* Dark text */
+        }
+
+        .light-mode .sidebar-nav li a {
+            color: #000000; /* Dark links */
+        }
+
+        .light-mode .sidebar-nav li a:hover {
+            background-color: rgba(0, 0, 0, 0.05); /* Light hover effect */
+        }
+
+        .light-mode .content-inner {
+            background-color: #4A90E2; /* Neutral light grey for content boxes */
+            color: #000000; /* Dark text */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+
+        .light-mode .table-container thead th {
+            background-color: #4A90E2; /* Light blue for table header */
+            color: #000000; /* Dark text */
+        }
+
+        .light-mode .table-container tbody td {
+            color: #000000; /* Dark text for table rows */
+            background-color: #4A90E2; /* White background for rows */
+        }
+
+        .light-mode .table-container tbody tr:nth-child(even) {
+            background-color: #4A90E2; /* Light grey for alternating rows */
+        }
+
+        /* Optional: Adjust hover effects for table rows */
+        .light-mode .table-container tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        /* Light Mode - Submenu Styles */
+        .light-mode .submenu {
+            background-color: #4A90E2; /* Match content background */
+            color: #000000; /* Dark text */
+        }
+
+        .light-mode .submenu li a {
+            color: #000000; /* Dark links */
+        }
+
+        .light-mode .submenu li a:hover {
+            background-color: rgba(0, 0, 0, 0.05); /* Light hover effect */
+        }
+
+
+
     
         /* Adjustments for smaller screens */
         @media (max-width: 768px) {
@@ -219,7 +348,10 @@
                 justify-content: center;
                 align-items: center;
             }
-    
+
+            .table-container table {
+                font-size: 0.85em; /* Reduce font size for smaller screens */
+            }
             .content-inner {
                 width: 95%;
             }
@@ -235,6 +367,7 @@
         <h1>HelloGrade Dashboard</h1>
         <nav>
             <ul>
+                <li><a id="themeToggle" class=" hover:bg-gray-500 hover:text-white"><span class="material-icons" id="themeIcon">wb_sunny</span></a></li>
                 <li><a href="#" title="Account Settings"><span class="material-icons">settings</span></a></li>
                 <li><a href="#" title="Help"><span class="material-icons">help_outline</span></a></li>
                 <li><a href="#" id="logoutLink" title="Logout"><span class="material-icons">logout</span></a></li>
@@ -251,7 +384,7 @@
 
         <!-- Sidebar Navigation -->
         <ul class="sidebar-nav">
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="#" onclick="toggleSubmenu()">Classes</a></li>
             <ul id="classesSubmenu" class="submenu"></ul>
             <li><a href="#">Reports</a></li>            
@@ -331,6 +464,27 @@
 </main>
 
     <script>
+
+        document.getElementById('themeToggle').addEventListener('click', function () {
+            const body = document.body;
+            const submenu = document.getElementById('classesSubmenu');
+            const themeIcon = document.getElementById('themeIcon');
+
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                submenu.classList.remove('light-mode'); // Remove light mode from submenu
+                themeIcon.textContent = 'wb_sunny'; // Change to sun for light mode
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                submenu.classList.add('light-mode'); // Add light mode to submenu
+                themeIcon.textContent = 'brightness_2'; // Change to crescent moon for dark mode
+            }
+        });
+
+
+
         document.addEventListener('DOMContentLoaded', () => {
             fetchStudentDetails();
         });
@@ -386,12 +540,19 @@
         function populateCourses(courseArray) {
             const submenu = document.getElementById('classesSubmenu');
             submenu.innerHTML = ''; // Clear any existing entries
+
             courseArray.forEach(course => {
                 const courseItem = document.createElement('li');
                 courseItem.innerHTML = `<a href="#" onclick="fetchGradesForCourse('${course.courseID}')">${course.courseID}</a>`;
                 submenu.appendChild(courseItem);
             });
+
+            // Apply the light-mode class if it is active
+            if (document.body.classList.contains('light-mode')) {
+                submenu.classList.add('light-mode');
+            }
         }
+
 
         async function fetchGradesForCourse(courseID) {
             const studentIDNumber = document.getElementById('studentID').textContent;
@@ -430,12 +591,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>Attendance</td><td>${courseData.midtermAttendance}</td><td>${courseData.finalsAttendance}</td></tr>
-                            <tr><td>Class Standing</td><td>${courseData.midtermClassStanding}</td><td>${courseData.finalsClassStanding}</td></tr>
-                            <tr><td>Exams</td><td>${courseData.midtermExam}</td><td>${courseData.finalExam}</td></tr>
-                            <tr><td>Midterm Grade</td><td>${courseData.midtermGrade}</td><td rowspan="2">${courseData.finalGrade}</td></tr>
-                            <tr><td>Transmuted Midterm Grade</td><td>${courseData.transmutedMidtermGrade}</td></tr>
-                            <tr><td>Transmuted Final Grade</td><td colspan="2">${courseData.transmutedFinalGrade}</td></tr>
+                            <tr><td>Attendance</td><td>${courseData.midtermAttendance || 'No entry'}</td><td>${courseData.finalsAttendance || 'No entry'}</td></tr>
+                            <tr><td>Class Standing</td><td>${courseData.midtermClassStanding || 'No entry'}</td><td>${courseData.finalsClassStanding || 'No entry'}</td></tr>
+                            <tr><td>Exams</td><td>${courseData.midtermExam || 'No entry'}</td><td>${courseData.finalExam || 'No entry'}</td></tr>
+                            <tr><td>Midterm Grade</td><td>${courseData.midtermGrade || 'No entry'}</td><td rowspan="2">${courseData.finalGrade || 'No entry'}</td></tr>
+                            <tr><td>Transmuted Midterm Grade</td><td>${courseData.transmutedMidtermGrade || 'No entry'}</td></tr>
+                            <tr><td>Transmuted Final Grade</td><td colspan="2">${courseData.transmutedFinalGrade || 'No entry'}</td></tr>
                         </tbody>
                     </table>
                 </div>

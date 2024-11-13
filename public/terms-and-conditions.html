@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions - HelloGrade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        .active-nav {
+            font-weight: bold;
+            background-color: #1d4ed8;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .fixed-size {
+            width: 48px; /* Fixed width */
+            height: 48px; /* Fixed height */
+            object-fit: contain; /* Ensures the image fits within the fixed size */
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-blue-600 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+            <a href="https://hellograde.onrender.com/">
+                <img src="images/icon.png" alt="HelloGrade Icon" class="fixed-size">
+            </a>
+            <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+        </div>
+            <nav class="space-x-4">
+                <a href="about.html" class="text-white">About Us</a>
+                <a href="contact.html" class="text-white">Contact Us</a>
+                <a href="privacy-policy.html" class="text-white">Privacy Policy</a>
+                <a href="terms-and-conditions.html" class="text-white active-nav">Terms</a>
+            </nav>
+            <!-- Right Side: Login, Signup, and Dark Mode -->
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
+                <a href="signup.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
+                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <h1 class="text-3xl font-bold text-blue-600 mb-4">Terms and Conditions</h1>
+        <p>These Terms and Conditions govern your use of the HelloGrade platform. By accessing or using our services, you agree to comply with these terms.</p>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">User Responsibilities</h2>
+        <ul class="list-disc pl-6 mt-4">
+            <li>Provide accurate and up-to-date information.</li>
+            <li>Maintain the confidentiality of login credentials.</li>
+            <li>Ensure compliance with applicable laws while using our platform.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Prohibited Activities</h2>
+        <ul class="list-disc pl-6 mt-4">
+            <li>Misuse of the platform for unlawful purposes.</li>
+            <li>Attempting to compromise the security or functionality of the platform.</li>
+            <li>Engaging in activities that could harm the platform or its users.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Limitation of Liability</h2>
+        <p class="mt-4">HelloGrade is not liable for any damages arising from the use or inability to use our platform, including but not limited to direct, indirect, incidental, or consequential damages.</p>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Modification of Terms</h2>
+        <p class="mt-4">We reserve the right to update or modify these Terms and Conditions at any time. Continued use of the platform constitutes acceptance of the updated terms.</p>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Governing Law</h2>
+        <p class="mt-4">These terms shall be governed and construed in accordance with the laws of the Philippines, without regard to its conflict of law provisions.</p>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Contact Us</h2>
+        <p class="mt-4">If you have any questions or concerns regarding these Terms and Conditions, please contact us at:</p>
+        <ul class="list-disc pl-6 mt-4">
+            <li><strong>Email:</strong> <a href="mailto:4hprojects@proton.me">4hprojects@proton.me</a></li>
+            <li><strong>Address:</strong> La Trinidad, Benguet, Philippines</li>
+        </ul>
+    </main>
+
+    <footer class="bg-blue-600 text-white py-4">
+        <div class="text-center">&copy; 2024 HelloGrade. All rights reserved.</div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById("themeToggle");
+    
+        // Apply saved theme preference
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+            themeToggle.textContent = "☀︎";
+        }
+    
+        themeToggle.addEventListener("click", () => {
+            // Toggle the theme
+            if (document.documentElement.getAttribute("data-theme") === "dark") {
+                document.documentElement.setAttribute("data-theme", "light");
+                themeToggle.textContent = "☾";
+                localStorage.setItem("theme", "light");
+            } else {
+                document.documentElement.setAttribute("data-theme", "dark");
+                themeToggle.textContent = "☀︎";
+                localStorage.setItem("theme", "dark");
+            }
+        });
+    </script>
+    
+</body>
+</html>

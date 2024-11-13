@@ -1,144 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
-    <title>Login - HelloGrade Student Portal</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- Include Google Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to HelloGrade - Your Student Grading Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/styles.css">
+
     <style>
-        /* Additional CSS for error messages and password toggle */
-        .error-message {
-            color: red;
-            font-size: 0.9em;
-            margin-top: 5px;
-        }
-        .password-toggle {
-            position: relative;
-        }
-        .password-toggle-icon {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-        .back-home {
-            color: #4A90E2;
-            text-decoration: none;
-            font-weight: bold;
+        /* Adjust the background to occupy full height without scroll */
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
         }
 
-        .back-home:hover {
-            text-decoration: underline;
+        /* Main container styles for centering */
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-                
+
+        /* Compact form styles */
+        .form-container {
+            width: 100%;
+            max-width: 350px;
+            padding: 30px 20px;
+            background-color: var(--form-bg);
+            border-radius: 8px;
+            border: 2px solid var(--form-border);
+            box-shadow: 0 0 20px rgba(8, 7, 16, 0.6);
+        }
+
+        .form-container h3 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .form-container label {
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .form-container input {
+            height: 40px;
+            margin-top: 5px;
+            padding: 0 8px;
+            font-size: 14px;
+        }
+
+        .form-container button {
+            height: 45px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .footer p {
+            font-size: 14px;
+        }
+
+        /* Placeholder color adjustment */
+        ::placeholder {
+            color: rgba(231, 5, 5, 0.6); /* Darker gray for readability */
+        }
+
+        [data-theme="dark"] ::placeholder {
+            color: rgba(255, 255, 255, 0.7); /* Lighter gray for readability in dark theme */
+        }
+
+            :root {
+    --bg-color: #f9fafb;
+    --text-color: #111827;
+    --header-bg: #2563eb;
+    --button-bg: #083da5;
+    --button-text: #374151;
+    -moz-text-decoration-line: var(--link-hover-bg);
+    --link-hover-bg: #29ce7c;
+    }
+
+    [data-theme="dark"] {
+        --bg-color: #111827;
+        --text-color: #f9fafb;
+        --header-bg: #1f2937;
+        --button-bg: #374151;
+        --button-text: #f9fafb;
+        --link-hover-bg: #29ce7c;
+    }
+    .fixed-size {
+            width: 48px; /* Fixed width */
+            height: 48px; /* Fixed height */
+            object-fit: contain; /* Ensures the image fits within the fixed size */
+        }
     </style>
+
 </head>
 <body>
-    <!-- Back to Home Link -->
-<p style="text-align: center; margin-top: 20px;">
-    <a href="index.html" class="back-home">← Back to Home</a>
-</p>
-    <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        
-        <form id="loginForm" action="/login" method="post" class="form-container">
-            <h3>Login</h3>
 
-            <label for="email">Email</label>
-            <input type="email" placeholder="Email" id="email" name="email" required>
-            <div id="emailError" class="error-message"></div>
-
-            <label for="password">Password</label>
-            <div class="password-toggle">
-                <input type="password" placeholder="Password" id="password" name="password" required>
-                <span id="togglePassword" class="password-toggle-icon">👁️</span>
-            </div>
-            <div id="passwordError" class="error-message"></div>
-
-            <button type="submit">Log In</button>
-
-            <div id="formError" class="error-message"></div>
-
-            <div class="footer">
-                <a href="reset-password.html">Forgot Password?</a>
-                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
-            </div>
-        </form>
+<!-- Header with Sticky Navigation -->
+<header class="bg-blue-600 shadow-md sticky top-0 z-50">
+    <div class="container mx-auto flex items-center justify-between px-6 py-4">
+        <!-- Left Side: Hamburger Menu and Icon -->
+        <div class="flex items-center space-x-4">
+          
+            <a href="https://hellograde.onrender.com/">
+                <img src="images/icon.png" alt="HelloGrade Icon" class="fixed-size">
+            </a>
+            <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+        </div>
+        <nav class="space-x-4">
+            <a href="about.html" class="text-white">About Us</a>
+            <a href="contact.html" class="text-white">Contact Us</a>
+            <a href="privacy-policy.html" class="text-white">Privacy Policy</a>
+            <a href="terms-and-conditions.html" class="text-white">Terms</a>
+        </nav>
+        <!-- Right Side: Login, Signup, and Dark Mode -->
+        <div class="flex items-center space-x-4">
+            <a href="login.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
+            <a href="signup.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
+            <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
+        </div>
     </div>
-    <script>
-        // Password visibility toggle
-        document.getElementById('togglePassword').addEventListener('click', function () {
-            const passwordInput = document.getElementById('password');
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.textContent = type === 'password' ? '👁️' : '🙈';
+</header>
+
+<!-- Main Content with Login Form -->
+<main class="main-container">
+    <form id="loginForm" action="/login" method="post" class="form-container">
+        <h3>Login</h3>
+        <input type="email" placeholder="Email" id="email" name="email" required>
+        <div id="emailError" class="error-message"></div>
+
+        <div class="password-toggle">
+            <input type="password" placeholder="Password" id="password" name="password" required>
+            <span id="togglePassword" class="password-toggle-icon">👁️</span>
+        </div>
+        <div id="passwordError" class="error-message"></div>
+
+        <button type="submit">Log In</button>
+        <div id="formError" class="error-message text-center"></div>
+        <div class="footer">
+            <a href="reset-password.html">Forgot Password?</a>
+            <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        </div>
+    </form>
+</main>
+
+<!-- Footer -->
+<footer class="bg-blue-600 text-white py-4">
+    <div class="text-center">&copy; 2024 HelloGrade. All rights reserved.</div>
+</footer>
+
+<script>
+    // Password visibility toggle
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.textContent = type === 'password' ? '👁️' : '🙈';
+    });
+
+    // Theme toggle logic
+    const themeToggle = document.getElementById("themeToggle");
+
+    if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        themeToggle.textContent = "☀︎";
+    }
+
+    themeToggle.addEventListener("click", () => {
+        if (document.documentElement.getAttribute("data-theme") === "dark") {
+            document.documentElement.setAttribute("data-theme", "light");
+            themeToggle.textContent = "☾";
+            localStorage.setItem("theme", "light");
+        } else {
+            document.documentElement.setAttribute("data-theme", "dark");
+            themeToggle.textContent = "☀︎";
+            localStorage.setItem("theme", "dark");
+        }
+    });
+
+    // Client-side form validation and fetch logic for login
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Clear previous error messages
+        document.getElementById('emailError').textContent = '';
+        document.getElementById('passwordError').textContent = '';
+        document.getElementById('formError').textContent = '';
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        let hasError = false;
+
+        // Simple email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+            hasError = true;
+        }
+
+        // Password validation (minimum 8 characters)
+        if (password.length < 8) {
+            document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long.';
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password }),
+            credentials: 'include' // Include credentials for session cookies
+        })
+        .then(response => response.json().then(data => {
+            if (!response.ok) throw new Error(data.message || 'Login failed.');
+            return data;
+        }))
+        .then(data => {
+            if (data.success) {
+                // Check user role and redirect accordingly
+                window.location.href = data.role === 'admin' ? '/admin_dashboard.html' : '/dashboard.html';
+            } else {
+                document.getElementById('formError').textContent = data.message;
+            }
+        })
+        .catch(error => {
+            console.error('Error during login:', error);
+            document.getElementById('formError').textContent = error.message || 'An error occurred during login.';
         });
-
-        // Client-side validation and form submission
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            // Clear previous error messages
-            document.getElementById('emailError').textContent = '';
-            document.getElementById('passwordError').textContent = '';
-            document.getElementById('formError').textContent = '';
-
-            var email = document.getElementById('email').value.trim();
-            var password = document.getElementById('password').value.trim();
-            var hasError = false;
-
-            // Simple email validation
-            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(email)) {
-                document.getElementById('emailError').textContent = 'Please enter a valid email address.';
-                hasError = true;
-            }
-
-            // Password validation (minimum 8 characters)
-            if (password.length < 8) {
-                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long.';
-                hasError = true;
-            }
-
-            if (hasError) {
-                return;
-            }
-
-            fetch('/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, password: password }),
-                credentials: 'include' // Include credentials for session cookies
-            })
-            .then(response => {
-                return response.json().then(data => {
-                    if (!response.ok) {
-                        throw new Error(data.message || 'Login failed.');
-                    }
-                    return data;
-                });
-            })
-            .then(data => {
-                if (data.success) {
-                    // Check user role and redirect accordingly
-                    if (data.role === 'admin') {
-                        window.location.href = '/admin_dashboard.html';
-                    } else {
-                        window.location.href = '/dashboard.html';
-                    }
-                } else {
-                    // Display error message
-                    document.getElementById('formError').textContent = data.message;
-                }
-            })
-            .catch(error => {
-                console.error('Error during login:', error);
-                document.getElementById('formError').textContent = error.message || 'An error occurred during login.';
-            });
-        });
-    </script>
+    });
+</script>
 </body>
 </html>

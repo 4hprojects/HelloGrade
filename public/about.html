@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - HelloGrade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        .active-nav {
+            font-weight: bold;
+            background-color: #1d4ed8;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .fixed-size {
+            width: 48px; /* Fixed width */
+            height: 48px; /* Fixed height */
+            object-fit: contain; /* Ensures the image fits within the fixed size */
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-blue-600 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <a href="https://hellograde.onrender.com/">
+                    <img src="images/icon.png" alt="HelloGrade Icon" class="fixed-size">
+                </a>
+                <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+            </div>
+            <nav class="space-x-4">
+                <a href="about.html" class="text-white active-nav">About Us</a>
+                <a href="contact.html" class="text-white">Contact Us</a>
+                <a href="privacy-policy.html" class="text-white">Privacy Policy</a>
+                <a href="terms-and-conditions.html" class="text-white">Terms</a>
+            </nav>
+            <!-- Right Side: Login, Signup, and Dark Mode -->
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
+                <a href="signup.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
+                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
+            </div>
+        </div>
+    
+    </header>
+    <main class="container mx-auto px-6 py-12">
+        <h1 class="text-3xl font-bold text-blue-600 mb-4">About Us</h1>
+        <p>Welcome to <strong>HelloGrade</strong>, your all-in-one solution for efficient academic management and monitoring. Our platform is designed to revolutionize the way educational institutions, teachers, students, and parents interact and collaborate to ensure seamless communication and academic success.</p>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Our Mission</h2>
+        <p>At HelloGrade, we aim to bridge the gap between educators and learners by providing a user-friendly platform that streamlines administrative processes and fosters an engaging learning environment. Our mission is to simplify grade management, attendance tracking, and academic progress monitoring with innovative digital tools.</p>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Our Vision</h2>
+        <p>We envision a future where technology empowers education, making it more accessible, transparent, and efficient for everyone involved. HelloGrade strives to be a catalyst for educational excellence by integrating cutting-edge solutions into everyday academic operations.</p>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Who We Are</h2>
+        <p>HelloGrade was developed by a dedicated team of educators and IT professionals with years of experience in teaching, software development, and project management. Led by <strong>Henson M. Sagorsor</strong>, the CIS College Co-Sports Coordinator and a passionate advocate for educational innovation, our team combines technical expertise with a deep understanding of academic needs.</p>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">What We Offer</h2>
+        <ul class="list-disc pl-6">
+            <li><strong>Grade Monitoring:</strong> A centralized platform for managing and viewing academic performance.</li>
+            <li><strong>Attendance Tracking:</strong> Tools for tracking student attendance with ease and precision.</li>
+            <li><strong>Communication Hub:</strong> Features for seamless interaction between educators, students, and parents.</li>
+            <li><strong>Customizable Tools:</strong> Flexible options to adapt to the specific needs of educational institutions.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Why Choose Us?</h2>
+        <ul class="list-disc pl-6">
+            <li><strong>User-Centric Design:</strong> HelloGrade is built with simplicity and usability in mind.</li>
+            <li><strong>Reliable and Secure:</strong> We prioritize data security and system reliability to safeguard sensitive academic information.</li>
+            <li><strong>Dedicated Support:</strong> Our team is here to assist you every step of the way, ensuring a smooth and productive experience.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Get in Touch</h2>
+        <p>We’re excited to be a part of your academic journey. For inquiries or support, please contact us:</p>
+        <ul class="list-disc pl-6">
+            <li><strong>Email:</strong> <a href="mailto:4hprojects@proton.me">4hprojects@proton.me</a></li>
+            <li><strong>Address:</strong> La Trinidad, Benguet, Philippines</li>
+        </ul>
+        <p class="mt-4">Together, let’s make education smarter and more connected with HelloGrade.</p>
+    </main>
+    <footer class="bg-blue-600 text-white py-4">
+        <div class="text-center">&copy; 2024 HelloGrade. All rights reserved.</div>
+    </footer>
+    <script>
+        const themeToggle = document.getElementById("themeToggle");
+    
+        // Apply saved theme preference
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+            themeToggle.textContent = "☀︎";
+        }
+    
+        themeToggle.addEventListener("click", () => {
+            // Toggle the theme
+            if (document.documentElement.getAttribute("data-theme") === "dark") {
+                document.documentElement.setAttribute("data-theme", "light");
+                themeToggle.textContent = "☾";
+                localStorage.setItem("theme", "light");
+            } else {
+                document.documentElement.setAttribute("data-theme", "dark");
+                themeToggle.textContent = "☀︎";
+                localStorage.setItem("theme", "dark");
+            }
+        });
+    </script>
+    
+</body>
+</html>

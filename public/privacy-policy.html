@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - HelloGrade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        .active-nav {
+            font-weight: bold;
+            background-color: #1d4ed8;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .fixed-size {
+            width: 48px; /* Fixed width */
+            height: 48px; /* Fixed height */
+            object-fit: contain; /* Ensures the image fits within the fixed size */
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-blue-600 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+            <a href="https://hellograde.onrender.com/">
+                <img src="images/icon.png" alt="HelloGrade Icon" class="fixed-size">
+            </a>
+            <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+        </div>
+            <nav class="space-x-4">
+                <a href="about.html" class="text-white">About Us</a>
+                <a href="contact.html" class="text-white">Contact Us</a>
+                <a href="privacy-policy.html" class="text-white active-nav">Privacy Policy</a>
+                <a href="terms-and-conditions.html" class="text-white ">Terms</a>
+            </nav>
+            <!-- Right Side: Login, Signup, and Dark Mode -->
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
+                <a href="signup.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
+                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
+            </div>
+        </div>
+    </header>
+    <main class="container mx-auto px-6 py-12">
+        <h1 class="text-3xl font-bold text-blue-600 mb-4">Privacy Policy</h1>
+        <p>Your privacy is important to us. This Privacy Policy outlines how we collect, use, and protect your personal information when you use HelloGrade.</p>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Information We Collect</h2>
+        <ul class="list-disc pl-6 mt-4">
+            <li><strong>Personal Information:</strong> Such as name, email address, and phone number when you contact us or create an account.</li>
+            <li><strong>Usage Data:</strong> Information on how you use our platform, including IP addresses, browser type, and interaction data.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">How We Use Your Information</h2>
+        <ul class="list-disc pl-6 mt-4">
+            <li>To provide and improve our services.</li>
+            <li>To communicate with you regarding updates and support.</li>
+            <li>To ensure the security of our platform.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Data Protection</h2>
+        <p class="mt-4">We implement industry-standard measures to safeguard your information, including encryption and secure servers. Your data will not be shared with third parties without your consent, except as required by law.</p>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Your Rights</h2>
+        <ul class="list-disc pl-6 mt-4">
+            <li>You have the right to access the personal information we hold about you.</li>
+            <li>You can request corrections to any inaccuracies in your data.</li>
+            <li>You may request the deletion of your personal information, subject to applicable laws.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Changes to This Policy</h2>
+        <p class="mt-4">We may update this Privacy Policy from time to time. Any changes will be communicated via updates on this page. We encourage you to review this policy periodically to stay informed about how we are protecting your information.</p>
+
+        <h2 class="text-2xl font-bold text-blue-600 mt-8">Contact Us</h2>
+        <p class="mt-4">If you have any questions about our Privacy Policy, please contact us at:</p>
+        <ul class="list-disc pl-6 mt-4">
+            <li><strong>Email:</strong> <a href="mailto:4hprojects@proton.me">4hprojects@proton.me</a></li>
+            <li><strong>Address:</strong> La Trinidad, Benguet, Philippines</li>
+        </ul>
+    </main>
+    <footer class="bg-blue-600 text-white py-4">
+        <div class="text-center">&copy; 2024 HelloGrade. All rights reserved.</div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById("themeToggle");
+    
+        // Apply saved theme preference
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+            themeToggle.textContent = "☀︎";
+        }
+    
+        themeToggle.addEventListener("click", () => {
+            // Toggle the theme
+            if (document.documentElement.getAttribute("data-theme") === "dark") {
+                document.documentElement.setAttribute("data-theme", "light");
+                themeToggle.textContent = "☾";
+                localStorage.setItem("theme", "light");
+            } else {
+                document.documentElement.setAttribute("data-theme", "dark");
+                themeToggle.textContent = "☀︎";
+                localStorage.setItem("theme", "dark");
+            }
+        });
+    </script>
+    
+</body>
+</html>

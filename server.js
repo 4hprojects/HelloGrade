@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
+//const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const sgMail = require('@sendgrid/mail');
 const bcrypt = require('bcrypt');
@@ -47,8 +47,16 @@ app.use(session({
     }
 }));
 
+app.post('/api/contact', (req, res) => {
+    const { name, email, message } = req.body;
+
+    // Process or save the data, then respond
+    console.log(`Contact request from ${name}: ${message} (Email: ${email})`);
+    res.status(200).send('Your message has been received. Thank you!');
+});
+
 // Helper Functions
-function hashPassword(password) {
+async function hashPassword(password) {
     const saltRounds = 10;
     return bcrypt.hashSync(password, saltRounds);
 }
@@ -93,16 +101,23 @@ const loginLimiter = rateLimit({
 // Connect to MongoDB and initialize the usersCollection
 async function connectToDatabase() {
     try {
+        // Initialize MongoDB connection monitoring
+        client.on('topologyClosed', () => console.error('MongoDB connection closed.'));
+        client.on('reconnect', () => console.log('MongoDB reconnected.'));
+
         await client.connect();
         console.log('Connected to MongoDB');
         const database = client.db('myDatabase');
         usersCollection = database.collection('tblUser');
+
+        // Initialize SendGrid with API key
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     } catch (err) {
         console.error('Failed to connect to MongoDB', err);
-        process.exit(1);
+        process.exit(1); // Exit the process if unable to connect
     }
 }
+
 
 // Call the database connection function
 connectToDatabase();
@@ -180,7 +195,7 @@ app.post('/signup', async (req, res) => {
 
 
     // Login Route with Rate Limiting
-    app.post('/login', loginLimiter, async (req, res) => {
+    app.post('/login', async (req, res) => {
         const { email, password } = req.body;
 
         try {
@@ -194,10 +209,13 @@ app.post('/signup', async (req, res) => {
             }
 
             
-            // Check if account is locked
+            // Check if the account is locked
             if (user.accountLockedUntil && user.accountLockedUntil > new Date()) {
                 const remainingTime = Math.ceil((user.accountLockedUntil - new Date()) / 60000);
-                return res.status(403).json({ success: false, message: `Account is locked. Try again in ${remainingTime} minutes.` });
+                return res.status(403).json({ 
+                    success: false, 
+                    message: `Account is locked. Try again in ${remainingTime} minutes.` 
+                });
             }
 
             const passwordMatch = await bcrypt.compare(password, user.password);
@@ -205,28 +223,29 @@ app.post('/signup', async (req, res) => {
             if (!passwordMatch) {
                 // Increment invalid login attempts
                 let invalidAttempts = (user.invalidLoginAttempts || 0) + 1;
-
                 let updateFields = { invalidLoginAttempts: invalidAttempts };
-
+    
                 if (invalidAttempts >= 3) {
                     // Lock the account for 30 minutes
                     updateFields.accountLockedUntil = new Date(Date.now() + 30 * 60 * 1000);
                     updateFields.invalidLoginAttempts = 0; // Reset attempts after locking
-
+    
                     await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
-
+    
                     // Send account lock email
                     const emailContent = `
-                        <p>Dear User,</p>
+                        <p>Dear ${user.firstName},</p>
                         <p>Your account has been locked due to multiple unsuccessful login attempts. Please wait 30 minutes before trying again or reset your password if you've forgotten it.</p>
                         <p>Best regards,<br/>HelloGrade Student Portal Team</p>
                     `;
                     await sendEmail(user.emaildb, 'Account Locked', emailContent);
-
-                    return res.status(403).json({ success: false, message: 'Account is locked due to multiple failed login attempts. An email has been sent with further instructions.' });
+    
+                    return res.status(403).json({ 
+                        success: false, 
+                        message: 'Account is locked due to multiple failed login attempts. An email has been sent with further instructions.' 
+                    });
                 } else {
                     await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
-
                     return res.status(400).json({ success: false, message: 'Invalid email or password.' });
                 }
             }
@@ -238,36 +257,22 @@ app.post('/signup', async (req, res) => {
             );
 
             // Set up session
-            req.session.userId = user._id;
-            req.session.email = user.emaildb;
-            req.session.role = user.role;
-            req.session.studentIDNumber = user.studentIDNumber; // Store studentIDNumber in the session
-            console.log('Session user ID set:', req.session.userId); // Debug log
-        // Save the session using a Promise
-        await new Promise((resolve, reject) => {
-            req.session.save((err) => {
-                if (err) return reject(err);
-                resolve();
-            });
+                req.session.userId = user._id;
+                req.session.email = user.emaildb;
+                req.session.role = user.role;
+
+                // Update last login time
+                await usersCollection.updateOne(
+                    { _id: user._id },
+                    { $set: { lastLoginTime: new Date() } }
+                );
+
+                res.json({ success: true, role: user.role, message: 'Login successful!' });
+            } catch (error) {
+                console.error('Error during login:', error);
+                res.status(500).json({ success: false, message: 'Error during login.' });
+            }
         });
-
-
-        // After successful authentication
-        await usersCollection.updateOne(
-            { _id: user._id },
-            { $set: { 
-                lastlogintime: new Date()
-             } }
-        );
-        
-        // Return response with user role
-        res.json({ success: true, role: user.role, message: 'Login successful!' });
-        
-        } catch (error) {
-            console.error('Error during login:', error);
-            res.status(500).json({ success: false, message: 'Error during login.' });
-        }
-    });
 
     // Logout Route
     app.post('/logout', async (req, res) => {
@@ -460,32 +465,49 @@ app.post('/upload-grades', isAuthenticated, isAdmin, upload.single('gradesFile')
             return res.status(400).json({ success: false, message: 'No file uploaded' });
         }
 
- // Ensure that parsing is awaited and errors are logged if they occur
- const gradesData = await parseGradesFile(gradesFile.path);
-        
- if (!Array.isArray(gradesData)) {
-     console.error("Parsing error: gradesData is not an array.");
-     return res.status(500).json({ success: false, message: 'Parsing error: gradesData is not an array' });
- }
+        // Ensure that parsing is awaited and errors are logged if they occur
+        const gradesData = await parseGradesFile(gradesFile.path);
 
- const gradesCollection = client.db('myDatabase').collection('tblGrades');
+        if (!Array.isArray(gradesData)) {
+            console.error("Parsing error: gradesData is not an array.");
+            fs.unlink(gradesFile.path, (err) => {
+                if (err) console.error('Error deleting uploaded file:', err);
+            });
+            return res.status(500).json({ success: false, message: 'Parsing error: gradesData is not an array' });
+        }
 
- for (const grade of gradesData) {
-     const { studentIDNumber, CourseID, midtermGrade, finalGrade, ...otherFields } = grade;
+        const gradesCollection = client.db('myDatabase').collection('tblGrades');
 
-     await gradesCollection.updateOne(
-         { studentIDNumber: studentIDNumber, CourseID: CourseID },
-         { $set: { midtermGrade, finalGrade, ...otherFields } },
-         { upsert: true }
-     );
- }
+        for (const grade of gradesData) {
+            const { studentIDNumber, CourseID, midtermGrade, finalGrade, ...otherFields } = grade;
 
- res.json({ success: true, message: 'Grades uploaded and stored successfully.' });
-} catch (error) {
- console.error('Error uploading grades:', error);
- res.status(500).json({ success: false, message: 'An internal server error occurred while uploading grades.' });
-}
+            await gradesCollection.updateOne(
+                { studentIDNumber: studentIDNumber, CourseID: CourseID },
+                { $set: { midtermGrade, finalGrade, ...otherFields } },
+                { upsert: true }
+            );
+        }
+
+        // Delete the uploaded file after successful processing
+        fs.unlink(gradesFile.path, (err) => {
+            if (err) console.error('Error deleting uploaded file:', err);
+        });
+
+        res.json({ success: true, message: 'Grades uploaded and stored successfully.' });
+    } catch (error) {
+        console.error('Error uploading grades:', error);
+
+        // Ensure the file is deleted even if an error occurs
+        if (req.file) {
+            fs.unlink(req.file.path, (err) => {
+                if (err) console.error('Error deleting uploaded file:', err);
+            });
+        }
+
+        res.status(500).json({ success: false, message: 'An internal server error occurred while uploading grades.' });
+    }
 });
+
 
 
 // Fetch user details route
