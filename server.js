@@ -58,8 +58,9 @@ app.post('/api/contact', (req, res) => {
 // Helper Functions
 async function hashPassword(password) {
     const saltRounds = 10;
-    return bcrypt.hashSync(password, saltRounds);
+    return await bcrypt.hash(password, saltRounds);
 }
+
 
 // Password validation function
 function isValidPassword(password) {
@@ -162,7 +163,8 @@ app.post('/signup', async (req, res) => {
         }
 
         // Hash the password
-        const hashedPassword = hashPassword(password);
+        const hashedPassword = await hashPassword(password);
+        console.log('Hashed password:', hashedPassword); // Debug hashed password
 
         // Create a new user object
         const newUser = {
@@ -208,6 +210,12 @@ app.post('/signup', async (req, res) => {
                 return res.status(400).json({ success: false, message: 'Invalid email or password.' });
             }
 
+            // Debug user password
+            console.log('User password from DB:', user.password);
+            if (typeof user.password !== 'string') {
+                console.error('Password in DB is not a string');
+                return res.status(500).json({ success: false, message: 'Internal server error.' });
+            }
             
             // Check if the account is locked
             if (user.accountLockedUntil && user.accountLockedUntil > new Date()) {
@@ -457,6 +465,64 @@ app.post('/reset-password', async (req, res) => {
     }
 });
 
+app.get('/admin_dashboard', isAuthenticated, isAdmin, (req, res) => {
+    res.sendFile(__dirname + '/public/admin_dashboard.html');
+});
+
+
+app.post('/upload-grades', isAuthenticated, isAdmin, upload.single('gradesFile'), async (req, res) => {
+    try {
+        const gradesFile = req.file; // Check if file was uploaded
+        if (!gradesFile) {
+            console.error("File upload error: No file was uploaded.");
+            return res.status(400).json({ success: false, message: 'No file uploaded' });
+        }
+
+        // Ensure that parsing is awaited and errors are logged if they occur
+        const gradesData = await parseGradesFile(gradesFile.path);
+
+        if (!Array.isArray(gradesData)) {
+            console.error("Parsing error: gradesData is not an array.");
+            fs.unlink(gradesFile.path, (err) => {
+                if (err) console.error('Error deleting uploaded file:', err);
+            });
+            return res.status(500).json({ success: false, message: 'Parsing error: gradesData is not an array' });
+        }
+
+        const gradesCollection = client.db('myDatabase').collection('tblGrades');
+
+        for (const grade of gradesData) {
+            const { studentIDNumber, CourseID, midtermGrade, finalGrade, ...otherFields } = grade;
+
+            await gradesCollection.updateOne(
+                { studentIDNumber: studentIDNumber, CourseID: CourseID },
+                { $set: { midtermGrade, finalGrade, ...otherFields } },
+                { upsert: true }
+            );
+        }
+
+        // Delete the uploaded file after successful processing
+        fs.unlink(gradesFile.path, (err) => {
+            if (err) console.error('Error deleting uploaded file:', err);
+        });
+
+        res.json({ success: true, message: 'Grades uploaded and stored successfully.' });
+    } catch (error) {
+        console.error('Error uploading grades:', error);
+
+        // Ensure the file is deleted even if an error occurs
+        if (req.file) {
+            fs.unlink(req.file.path, (err) => {
+                if (err) console.error('Error deleting uploaded file:', err);
+            });
+        }
+
+        res.status(500).json({ success: false, message: 'An internal server error occurred while uploading grades.' });
+    }
+});
+
+
+
 // Fetch user details route
 app.get('/user-details', isAuthenticated, async (req, res) => {
     console.log("Session in /user-details:", req.session);
@@ -494,20 +560,29 @@ app.get('/user-details', isAuthenticated, async (req, res) => {
     }
 });
 
-app.get('/session-check', (req, res) => {
-    if (req.session && req.session.userId) {
-        res.json({ authenticated: true, studentIDNumber: req.session.studentIDNumber });
-    } else {
-      res.status(401).json({ authenticated: false });
+app.use((req, res, next) => {
+    if (req.session && req.session.role) {
+        console.log('Session role:', req.session.role); // Debugging
     }
-  });
-  
-  function isAdmin(req, res, next) {
-    // Assuming user role is stored in the session after login
-    if (req.session && req.session.role === 'admin') {
-        return next(); // User is an admin, allow access to the route
+    next();
+});
+
+
+app.get('/session-check', (req, res) => {
+    console.log('Session data:', req.session); // Log session data for debugging
+    if (req.session && req.session.userId) {
+        res.json({ authenticated: true, role: req.session.role });
     } else {
-        return res.status(403).json({ success: false, message: 'Forbidden: Admins only' });
+        res.status(401).json({ authenticated: false });
+    }
+});
+
+  
+function isAdmin(req, res, next) {
+    if (req.session && req.session.role === 'admin') {
+        next();
+    } else {
+        res.status(403).sendFile(__dirname + '/public/403.html');
     }
 }
 
@@ -543,8 +618,7 @@ function parseGradesFile(filePath) {
         if (req.session && req.session.userId) {
             next();
         } else {
-             // Redirect to login page if not authenticated
-             res.status(401).json({ success: false, message: 'Unauthorized access.' });
+            res.status(401).sendFile(__dirname + '/public/login.html');
         }
     }
 
@@ -556,10 +630,13 @@ function parseGradesFile(filePath) {
 
     app.get('/get-grades/:studentIDNumber', isAuthenticated, async (req, res) => {
         const studentIDNumber = req.params.studentIDNumber;
-        console.log('/get-grades/', studentIDNumber);
+        console.log('/get-grades/ API called with studentIDNumber:', studentIDNumber); // Debug log
+
         try {
             const grades = await client.db('myDatabase').collection('tblGrades')
                 .find({ studentIDNumber: studentIDNumber }).toArray();
+
+            console.log('Fetched grades:', grades); // Debug log
     
             if (grades.length === 0) {
                 return res.status(404).json({ success: false, message: 'No grades found for this student ID.' });
@@ -697,6 +774,7 @@ app.use((err, req, res, next) => {
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
 });
+
 
 
 
