@@ -13,14 +13,8 @@
 
     <!-- Font Awesome Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
 
     <style>
-        .dark-mode {
-            background-color: #121212; /* Dark background */
-            color: #ffffff; /* Light text */
-        }
-
         /* Body and Container Setup */
         body {
             display: flex;
@@ -146,6 +140,18 @@
             margin: 0 auto; /* Center the container horizontally */
             text-align: center; /* Center text content */
         }
+
+        .course-grade
+        {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 800px; /* Set max-width for better readability */
+            margin: 0 auto; /* Center the container horizontally */
+            text-align: center; /* Center text content */
+        }
     
         .content-inner h2, .content-inner h3 {
             margin: 10px 0;
@@ -155,6 +161,46 @@
         .table-container {
             width: 100%;
             margin-top: 20px;
+            overflow-x: auto; 
+        }
+    
+        /* Table Layout */
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Consistent Header Styling */
+        .table-container thead th {
+            background-color: #4A90E2;
+            color: #fff;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600; /* Enhance header font weight */
+            font-size: 1em; /* Adjust font size for uniformity */
+
+        }
+
+        /* Consistent Body Cell Styling */
+        .table-container tbody td {
+            padding: 12px;
+            color: #fff;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.9em; /* Set consistent font size */
+        }
+
+        /* Alternating Row Background */
+        .table-container tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Table Row Hover Effect */
+        .table-container tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.15);
         }
 
         table {
@@ -163,7 +209,6 @@
             background-color: rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             overflow: hidden;
-            color: #130b20;
         }
     
         thead th {
@@ -183,23 +228,40 @@
     /* Right-align Grade Category column */
     tbody td:first-child {
         text-align: right;
-        color: #130b20;
     }
 
     /* Center-align Midterm and Finals columns */
     tbody td:not(:first-child) {
         text-align: center;
-        color: #130b20;
     }
 
     tbody tr:nth-child(even) {
         background-color: rgba(255, 255, 255, 0.1);
-        color: #130b20;
     }
 
     tbody td[colspan="2"] {
         text-align: center;
     }
+
+    .submenu {
+            display: none;
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .submenu.active {
+            display: block;
+        }
+        
+        .submenu li {
+            padding: 8px 0;
+        }
+        
+        .submenu li a {
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+        }
     
         /* Adjustments for smaller screens */
         @media (max-width: 768px) {
@@ -228,7 +290,6 @@
         <h1>HelloGrade Dashboard</h1>
         <nav>
             <ul>
-                <li><a id="themeToggle" class=" hover:bg-gray-500 hover:text-white"><span class="material-icons" id="themeIcon">wb_sunny</span></a></li>
                 <li><a href="#" title="Account Settings"><span class="material-icons">settings</span></a></li>
                 <li><a href="#" title="Help"><span class="material-icons">help_outline</span></a></li>
                 <li><a href="#" id="logoutLink" title="Logout"><span class="material-icons">logout</span></a></li>
@@ -325,49 +386,88 @@
 </main>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchStudentDetails();
+        });
         // Fetch student details (name and ID) from the session
         async function fetchStudentDetails() {
             try {
-                // Ensure the DOM is fully loaded
-                    const nameElement = document.getElementById('studentName');
+                const response = await fetch('/user-details', {
+                    method: 'GET',
+                    credentials: 'include' // Include session cookies
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user details. Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('User details response:', data); // Debugging
+
+                if (data.success) {
+                    const nameElement = document.querySelector('.sidebar-welcome h2');
                     const idElement = document.getElementById('studentID');
 
-                    // Check if elements exist
                     if (!nameElement || !idElement) {
-                        console.error('Required elements not found in the DOM.');
-                        return; // Exit the function if elements are missing
+                        console.error('Required DOM elements are missing.');
+                        return;
                     }
-                    const response = await fetch('/user-details', { credentials: 'include' });
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const data = await response.json();
 
+                    nameElement.textContent = `Hello, ${data.user.firstName} ${data.user.lastName}!`;
+                    idElement.textContent = data.user.studentIDNumber;
 
-                            if (data.success) {
-                                // Update the elements with user details
-                                nameElement.textContent = `${data.user.firstName} ${data.user.lastName}`;
-                                idElement.textContent = `${data.user.studentIDNumber}`;
-                                fetchCourses(data.user.studentIDNumber); // Fetch courses for this student
-                            } else {
-                                console.error('Failed to fetch user details:', data.message);
-                            }
-                        }
-                        catch(error){
-                            console.error('Error fetching user details:', error);
-                        }
+                    // Fetch courses after student details are loaded
+                    fetchCourses(data.user.studentIDNumber);
+
+                } else {
+                    console.error('Failed to fetch user details:', data.message);
                 }
-        document.addEventListener('DOMContentLoaded', function () {
-            fetchStudentDetails();
-        });
-        // Fetch grades using student ID
-        async function fetchGrades(studentIDNumber) {
-            if (!studentIDNumber) {
-                console.error('Invalid studentIDNumber:', studentIDNumber);
+            } catch (error) {
+                console.error('Error fetching user details:', error);
+            }
+        }
+
+
+
+        async function fetchCourses(studentIDNumber) {
+            console.log('Fetching courses for studentIDNumber:', studentIDNumber);
+            try {
+                const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
+                const data = await response.json();
+                console.log('Fetched courses response:', data); // Log the entire response
+                if (data.success) {
+                    populateCourses(data.gradeDataArray);
+                } else {
+                    console.error('Failed to fetch courses:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+            }
+        }
+
+        function populateCourses(courseArray) {
+            const submenu = document.getElementById('classesSubmenu');
+            console.log('Populating submenu with courses:', courseArray); // Debugging log
+         
+            if (!submenu) {
+                console.error('Submenu element not found in DOM');
                 return;
             }
+
+            submenu.innerHTML = ''; // Clear any existing entries
+            courseArray.forEach(course => {
+                const courseItem = document.createElement('li');
+                courseItem.innerHTML = `<a href="#" onclick="fetchGradesForCourse('${course.courseID}')">${course.courseID}</a>`;
+                submenu.appendChild(courseItem);
+            });
+
+            submenu.classList.add('active'); // Ensure the submenu is displayed
+        }
+
+        async function fetchGradesForCourse(courseID) {
+            const studentIDNumber = document.getElementById('studentID').textContent;
+
             try {
-                console.log('Fetching grades for:', studentIDNumber); // Debug log
                 const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
                 const data = await response.json();
 
@@ -384,8 +484,14 @@
 
         function toggleSubmenu() {
             const submenu = document.getElementById('classesSubmenu');
+            if (!submenu) {
+                console.error('Submenu element not found in DOM');
+                return;
+            }
             submenu.classList.toggle('active');
+            console.log('Toggled submenu visibility. Current class list:', submenu.classList);
         }
+
 
         function displayGrades(courseData) {
             const gradeTableContainer = document.getElementById('gradeTableContainer');
@@ -441,32 +547,77 @@
         console.error('Error fetching user details:', error);
     });
         // Fetch user details when the page loads
-        document.addEventListener('DOMContentLoaded', function () {
-            fetchStudentDetails();
-
-
-            fetch('/user-details?email=${encodeURIComponent(email)}', {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include' // Ensure credentials are included to send session cookie
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user details.');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    document.querySelector('.sidebar-welcome h2').textContent = `Hello, ${data.user.firstName} ${data.user.lastName}!`;
-                } else {
-                    console.error('Error:', data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching user details:', error);
-            });
+        document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // Session check logic
+        const sessionResponse = await fetch('/session-check', {
+            method: 'GET',
+            credentials: 'include' // Include session cookies
         });
+
+        const sessionData = await sessionResponse.json();
+        console.log('Session check response:', sessionData); // Debug response
+
+        if (!sessionResponse.ok || !sessionData.authenticated) {
+            console.error('User is not authenticated:', sessionData);
+            window.location.href = 'login.html';
+            return;
+        }
+
+        if (sessionData.role === 'admin') {
+            console.log('Redirecting to admin dashboard');
+            window.location.href = 'admin_dashboard.html';
+            return;
+        } else if (sessionData.role !== 'student') {
+            console.error('Unexpected role:', sessionData.role);
+            window.location.href = '403.html';
+            return;
+        }
+
+        // User-details fetch logic
+        fetchStudentDetails();
+    } catch (error) {
+        console.error('Error during session validation or fetching user details:', error);
+        window.location.href = 'login.html';
+    }
+});
+
+// Existing fetchStudentDetails function
+async function fetchStudentDetails() {
+    try {
+        const response = await fetch('/user-details', {
+            method: 'GET',
+            credentials: 'include' // Include session cookies
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch user details. Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('User details response:', data); // Debugging
+
+        if (data.success) {
+            // Check if DOM elements exist
+            const nameElement = document.querySelector('.sidebar-welcome h2');
+            const idElement = document.getElementById('studentID');
+
+            if (!nameElement || !idElement) {
+                console.error('Required DOM elements are missing.');
+                return;
+            }
+
+            // Populate DOM elements with user details
+            nameElement.textContent = `Hello, ${data.user.firstName} ${data.user.lastName}!`;
+            idElement.textContent = data.user.studentIDNumber;
+        } else {
+            console.error('Failed to fetch user details:', data.message);
+        }
+    } catch (error) {
+        console.error('Error fetching user details:', error);
+    }
+}
+
     document.getElementById('logoutLink').addEventListener('click', function (event) {
         event.preventDefault();
 
