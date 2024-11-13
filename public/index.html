@@ -41,7 +41,7 @@
     --header-bg: #2563eb;
     --button-bg: #e5e7eb;
     --button-text: #374151;
-    --link-hover-bg: #f87171;
+    --link-hover-bg: #1d4ed8;
     }
 
     [data-theme="dark"] {
@@ -50,7 +50,7 @@
         --header-bg: #1f2937;
         --button-bg: #374151;
         --button-text: #f9fafb;
-        --link-hover-bg: #ef4444;
+        --link-hover-bg: #1d4ed8;
     }
 
     body {
@@ -101,9 +101,23 @@
 }
 
 /* Ensure seamless alignment */
-#hamburgerMenu {
-    margin-right: 10px;
+.fixed-size {
+    width: 48px; /* Fixed width */
+    height: 48px; /* Fixed height */
+    object-fit: contain; /* Ensures the image fits within the fixed size */
+}
+
+.hamburger-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+}
+
+
+
+.hamburger-menu:hover {
+    background-color: #1d4ed8 /* Optional: Adds a subtle hover effect */
 }
 
 #navMenu {
@@ -122,9 +136,6 @@
         display: none; /* Hidden by default */
     }
 }
-
-
-
     </style>
     
 
@@ -136,11 +147,12 @@
             <!-- Left Side: Hamburger Menu and Icon -->
             <div class="flex items-center space-x-4">
                 <!-- Hamburger Menu -->
-                <button id="hamburgerMenu" class="text-white text-2xl focus:outline-none">
-                    &#9776;
-                </button>
+                <a id="hamburgerMenu" class="hamburger-menu focus:outline-none">
+                    <img src="images/hamburger-icon.png" alt="Hamburger Icon" class="fixed-size">
+                </a>
+                
                 <a href="https://hellograde.onrender.com/">
-                    <img src="images/icon.png" alt="HelloGrade Icon" class="h-12">
+                    <img src="images/icon.png" alt="HelloGrade Icon" class="fixed-size">
                 </a>
                 <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
             </div>
