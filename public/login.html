@@ -59,27 +59,64 @@
             margin-top: 20px;
             font-size: 16px;
         }
-        .password-toggle-icon {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
+
+        .footer p {
+            font-size: 14px;
         }
-        
+
+        /* Placeholder color adjustment */
+        ::placeholder {
+            color: rgba(231, 5, 5, 0.6); /* Darker gray for readability */
+        }
+
+        [data-theme="dark"] ::placeholder {
+            color: rgba(255, 255, 255, 0.7); /* Lighter gray for readability in dark theme */
+        }
+
+            :root {
+    --bg-color: #f9fafb;
+    --text-color: #111827;
+    --header-bg: #2563eb;
+    --button-bg: #083da5;
+    --button-text: #374151;
+    -moz-text-decoration-line: var(--link-hover-bg);
+    --link-hover-bg: #f87171;
+    }
+
+    [data-theme="dark"] {
+        --bg-color: #111827;
+        --text-color: #f9fafb;
+        --header-bg: #1f2937;
+        --button-bg: #374151;
+        --button-text: #f9fafb;
+        --link-hover-bg: #ef4444;
+    }
     </style>
 
 </head>
 <body>
-    <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <form id="loginForm" action="/login" method="post" class="form-container">
-            <h3>Login</h3>
 
-            <label for="email">Email</label>
-            <input type="email" placeholder="Email" id="email" name="email" required>
-            <div id="emailError" class="error-message"></div>
+<!-- Header with Sticky Navigation -->
+<header class="bg-blue-600 shadow-md sticky top-0 z-50 w-full">
+    <div class="container mx-auto flex items-center justify-between px-6 py-4">
+        <div class="flex items-center">
+            <a href="https://hellograde.onrender.com/">
+                <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
+            </a>
+            <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+        </div>
+        <nav class="flex items-center space-x-4">
+            <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content with Login Form -->
+<main class="main-container">
+    <form id="loginForm" action="/login" method="post" class="form-container">
+        <h3>Login</h3>
+        <input type="email" placeholder="Email" id="email" name="email" required>
+        <div id="emailError" class="error-message"></div>
 
         <div class="password-toggle">
             <input type="password" placeholder="Password" id="password" name="password" required>
