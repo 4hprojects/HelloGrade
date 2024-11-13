@@ -631,11 +631,11 @@ function parseGradesFile(filePath) {
     app.get('/get-grades/:studentIDNumber', isAuthenticated, async (req, res) => {
         const studentIDNumber = req.params.studentIDNumber;
         console.log('/get-grades/ API called with studentIDNumber:', studentIDNumber); // Debug log
-
+    
         try {
             const grades = await client.db('myDatabase').collection('tblGrades')
                 .find({ studentIDNumber: studentIDNumber }).toArray();
-
+    
             console.log('Fetched grades:', grades); // Debug log
     
             if (grades.length === 0) {
@@ -643,28 +643,29 @@ function parseGradesFile(filePath) {
             }
     
             // Map the results to a standardized array format
-        const gradeDataArray = grades.map(grade => ({
-            midtermAttendance: grade.MA || 'N/A',
-            finalsAttendance: grade.FA || 'N/A',
-            midtermClassStanding: grade.MCS || 'N/A',
-            finalsClassStanding: grade.FCS || 'N/A',
-            midtermExam: grade.ME || 'N/A',
-            finalExam: grade.FE || 'N/A',
-            midtermGrade: grade.MG || 'N/A',
-            finalGrade: grade.FG || 'N/A',
-            transmutedMidtermGrade: grade.TMG || 'N/A',
-            transmutedFinalGrade: grade.TFG || 'N/A',
-            courseID: grade.CourseID || 'N/A',
-            courseDescription: grade.CourseDescription || 'N/A'
-        }));
+            const gradeDataArray = grades.map(grade => ({
+                midtermAttendance: grade.MA || 'N/A',
+                finalsAttendance: grade.FA || 'N/A',
+                midtermClassStanding: grade.MCS || 'N/A',
+                finalsClassStanding: grade.FCS || 'N/A',
+                midtermExam: grade.ME || 'N/A',
+                finalExam: grade.FE || 'N/A',
+                midtermGrade: grade.MG || 'N/A',
+                finalGrade: grade.FG || 'N/A',
+                transmutedMidtermGrade: grade.TMG || 'N/A',
+                transmutedFinalGrade: grade.TFG || 'N/A',
+                courseID: grade.CourseID || 'N/A',
+                courseDescription: grade.CourseDescription || 'N/A'
+            }));
     
-    // Return the array of grade data for each course
-    res.json({ success: true, gradeDataArray });
-    } catch (error) {
-        console.error('Error fetching grades:', error);
-        res.status(500).json({ success: false, message: 'An error occurred while fetching grades.' });
-    }
+            // Return the array of grade data for each course
+            res.json({ success: true, gradeDataArray });
+        } catch (error) {
+            console.error('Error fetching grades:', error);
+            res.status(500).json({ success: false, message: 'An error occurred while fetching grades.' });
+        }
     });
+    
     
 
     // Search for students based on different criteria
