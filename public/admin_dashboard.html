@@ -13,8 +13,6 @@
     
         <!-- Font Awesome Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="css/styles.css">
-
         <style>
             /* Global Styles for Consistency */
             body {
@@ -340,50 +338,39 @@
     <script>
         // Fetch user details on page load
         document.addEventListener('DOMContentLoaded', async () => {
-        try {
-            // Check session validity first
-            const sessionResponse = await fetch('/session-check', {
-                method: 'GET',
-                credentials: 'include' // Include cookies for session-based authentication
-            });
+            try {
+                const sessionResponse = await fetch('/session-check', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
 
-            // Redirect to login.html if session is invalid
-            if (!sessionResponse.ok) {
+                const sessionData = await sessionResponse.json();
+                console.log('Session check response:', sessionData); // Debug
+
+                if (!sessionResponse.ok || !sessionData.authenticated || sessionData.role !== 'admin') {
+                    console.error('Access denied:', sessionData);
+                    window.location.href = sessionData.authenticated ? '403.html' : 'login.html';
+                    return;
+                }
+
+                const userDetailsResponse = await fetch('/user-details', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                const userDetails = await userDetailsResponse.json();
+                if (userDetails.success) {
+                    document.getElementById('studentName').textContent = `${userDetails.user.firstName} ${userDetails.user.lastName}`;
+                    document.getElementById('studentID').textContent = userDetails.user.studentIDNumber;
+                } else {
+                    console.error('Failed to fetch user details:', userDetails.message);
+                }
+            } catch (error) {
+                console.error('Error during validation or fetching user details:', error);
                 window.location.href = 'login.html';
-                return;
             }
+        });
 
-            const sessionData = await sessionResponse.json();
-            if (!sessionData.loggedIn) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            // Fetch user details if session is valid
-            const userResponse = await fetch('/user-details', {
-                method: 'GET',
-                credentials: 'include' // Include credentials for session handling
-            });
-
-            if (!userResponse.ok) {
-                throw new Error('Failed to fetch user details.');
-            }
-
-            const userData = await userResponse.json();
-
-            if (userData.success) {
-                // Display user details in the sidebar
-                document.getElementById('studentName').textContent = `${userData.user.firstName} ${userData.user.lastName}`;
-                document.getElementById('studentID').textContent = userData.user.studentIDNumber;
-            } else {
-                console.error('User details could not be fetched:', userData.message);
-            }
-        } catch (error) {
-            console.error('Error fetching user details or session:', error);
-            // Redirect to login.html on error as a fallback
-            window.location.href = 'login.html';
-        }
-    });
 
         // Perform search
         async function performSearch() {
@@ -420,23 +407,25 @@
                     console.error('Error performing search:', error);
                 }
             }
-    /*
-            try {
-                // Fetch search results, including all records if query is '*'
-                const response = await fetch(`/search?query=${encodeURIComponent(query)}`, { credentials: 'include' });
-                const data = await response.json();
-    
-                if (data.success) {
-                    displayResults(data.students, data.grades);
+  
+
+            function isAuthenticated(req, res, next) {
+                if (req.session && req.session.userId) {
+                    next(); // User is authenticated; proceed to the next middleware/route handler
                 } else {
-                    document.getElementById('searchResults').innerHTML = `<p class="no-results">${data.message}</p>`;
+                    res.status(401).sendFile(__dirname + '/public/login.html'); // Redirect to login page
                 }
-            } catch (error) {
-                console.error('Error performing search:', error);
-                document.getElementById('searchResults').innerHTML = '<p class="no-results">An error occurred during the search.</p>';
             }
-        }
-    */
+
+            function isAdmin(req, res, next) {
+                if (req.session && req.session.role === 'admin') {
+                    next(); // User is an admin; proceed
+                } else {
+                    res.status(403).sendFile(__dirname + '/public/403.html'); // Show "Access Denied" page
+                }
+            }
+
+
         // Event listeners for search button and Enter key
         document.getElementById('searchButton').addEventListener('click', performSearch);
         document.getElementById('searchInput').addEventListener('keydown', function(e) {
