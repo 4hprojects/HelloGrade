@@ -90,6 +90,40 @@
         background-color: #4b5563; /* Darker shade of gray for the theme toggle button */
     }
 
+    #navMenu {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    z-index: 10;
+}
+
+#navMenu.show {
+    display: block;
+}
+
+/* Ensure seamless alignment */
+#hamburgerMenu {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#navMenu {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    z-index: 10;
+}
+
+#navMenu.show {
+    display: block; /* Show when toggled */
+}
+
+@media (min-width: 1024px) {
+    #navMenu {
+        position: absolute;
+        display: none; /* Hidden by default */
+    }
+}
+
+
 
     </style>
     
@@ -97,24 +131,38 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-poppins">
 
-<!-- Header with Sticky Navigation -->
-<header class="bg-blue-600 shadow-md sticky top-0 z-50">
-    <div class="container mx-auto flex items-center justify-between px-6 py-4">
-        <div class="flex items-center">
-            <a href="https://hellograde.onrender.com/">
-                <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
-            </a>            
-            <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+    <header class="bg-blue-600 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between px-6 py-4">
+            <!-- Left Side: Hamburger Menu and Icon -->
+            <div class="flex items-center space-x-4">
+                <!-- Hamburger Menu -->
+                <button id="hamburgerMenu" class="text-white text-2xl focus:outline-none">
+                    &#9776;
+                </button>
+                <a href="https://hellograde.onrender.com/">
+                    <img src="images/icon.png" alt="HelloGrade Icon" class="h-12">
+                </a>
+                <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+            </div>
+    
+            <!-- Right Side: Login, Signup, and Dark Mode -->
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
+                <a href="signup.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
+                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
+            </div>
         </div>
-        <nav class="flex items-center space-x-4">
-
-            <a href="login.html" class="bg-blue-300 text-white-600 font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
-            <a href="signup.html" class="bg-blue-300 text-white-600 font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
-            <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
-            
+    
+        <!-- Dropdown Navigation Links -->
+        <nav id="navMenu" class="hidden absolute bg-blue-600 text-white w-full left-0 top-[70px]">
+            <a href="#about-us" class="block px-6 py-4 hover:bg-blue-800">About Us</a>
+            <a href="#contact-us" class="block px-6 py-4 hover:bg-blue-800">Contact Us</a>
+            <a href="#privacy-policy" class="block px-6 py-4 hover:bg-blue-800">Privacy Policy</a>
+            <a href="#terms" class="block px-6 py-4 hover:bg-blue-800">Terms</a>
         </nav>
-    </div>
-</header>
+    </header>
+    
+
 
 
 <!-- Main Content with Smooth Scrolling and Reveal Animations -->
@@ -355,6 +403,27 @@
 <!-- Scroll Reveal and Smooth Scrolling -->
 <script src="https://unpkg.com/scrollreveal"></script>
 <script>
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+
+    const hamburgerMenu = document.getElementById("hamburgerMenu");
+    const navMenu = document.getElementById("navMenu");
+
+    hamburgerMenu.addEventListener("click", () => {
+        navMenu.classList.toggle("show");
+    });
+
+
+
+
     // ScrollReveal configuration
     ScrollReveal().reveal('.scroll-reveal', { duration: 1200, origin: 'bottom', distance: '30px' });
 
