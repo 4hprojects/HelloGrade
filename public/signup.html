@@ -160,20 +160,27 @@
         .password-toggle-icon {
             font-size: 0.9em; /* Smaller icon size */
         }
-                /* Styling for the message label */
-                .error-message {
-            font-size: 0.9em;
-            margin-top: 10px;
-            text-align: center;
-            display: none; /* Initially hidden */
+
+        .password-criteria {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            font-size: 0.75em; /* Smaller font */
         }
 
-        .error-message.error {
-            color: red; /* Red for errors */
+        .password-criteria p {
+            width: 48%;
+            margin: 1px 0;
         }
 
-        .error-message.success {
-            color: green; /* Green for success */
+        .compact-form button {
+            padding: 10px; /* Reduced padding */
+            font-size: 0.95em; /* Slightly smaller font */
+        }
+
+        .footer {
+            font-size: 0.8em; /* Smaller footer text */
+            margin-top: 5px; /* Reduced margin */
         }
 
 
@@ -183,10 +190,25 @@
 
 
 <body>
-    <div class="form-container">
-        <form id="signupForm" action="http://localhost:3000/signup" method="post">
-            <h3>Create an Account</h3>
-
+    
+    <!-- Header with Sticky Navigation -->
+    <header class="bg-blue-600 shadow-md sticky top-0 z-50 w-full">
+        <div class="container mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center">
+                <a href="https://hellograde.onrender.com/">
+                    <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
+                </a>
+                <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+            </div>
+            <nav class="flex items-center space-x-4">
+                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
+            </nav>
+        </div>
+    </header>
+    <main class="background flex-grow">
+        <form id="signupForm" action="/signup" method="post" class="form-container compact-form">
+            <h2 align="center">Create an Account</h2>
+    
             <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
             <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
             <input type="text" id="studentIDNumber" name="studentIDNumber" placeholder="Student ID Number" required pattern="\d{1,7}" maxlength="7">
