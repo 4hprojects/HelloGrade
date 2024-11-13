@@ -8,11 +8,245 @@
     font-family: 'Poppins', sans-serif;
 }
 
-body {
-    background-color: #080710;
-    color: #ffffff;
+/* Default light theme */
+:root {
+    --bg-color: #f9fafb;
+    --text-color: #111827;
+    --header-bg: #2563eb;
+    --button-bg: #083da5;
+    --button-text: #ffffff;
+    --link-hover-bg: #29ce7c;
 }
 
+/* Dark theme */
+[data-theme="dark"] {
+    --bg-color: #111827;
+    --text-color: #f9fafb;
+    --header-bg: #1f2937;
+    --button-bg: #374151;
+    --button-text: #f9fafb;
+    --link-hover-bg: #29ce7c;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    background-color: var(--header-bg);
+}
+
+button, .bg-white, .text-gray-800 {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}
+
+a:hover {
+    background-color: var(--link-hover-bg);
+    color: var(--button-text);
+}
+
+/* Optional: Placeholder color adjustment */
+::placeholder {
+    color: rgba(131, 131, 131, 0.8);
+}
+
+[data-theme="dark"] ::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+.background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+.background .shape {
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.shape:first-child {
+    background: linear-gradient(#004cff, #dadada);
+    left: -80px;
+    top: -80px;
+}
+
+.shape:last-child {
+    background: linear-gradient(to right, #1100ff, #e4e0dc);
+    right: -30px;
+    bottom: -80px;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 50px 35px;
+    background-color: var(--form-bg);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--form-border);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+}
+
+.form-container h3 {
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.form-container label {
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.form-container input {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-color);
+}
+
+.form-container ::placeholder {
+    color: #e5e5e5;
+}
+
+.form-container button {
+    margin-top: 50px;
+    width: 100%;
+    background-color: var(--button-bg);
+    color: #ffffff;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: var(--button-hover-bg);
+}
+
+
+
+.footer a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Compact Form Styling */
+.form-container.compact {
+    padding: 30px 20px; /* Reduce padding */
+    max-width: 350px; /* Slightly smaller width */
+}
+
+.form-container h3 {
+    font-size: 24px; /* Smaller heading */
+    margin-bottom: 20px; /* Less space below heading */
+}
+
+.form-container label {
+    margin-top: 20px; /* Less vertical spacing */
+    font-size: 14px;
+}
+
+.form-container input {
+    height: 40px; /* Reduce height */
+    font-size: 14px;
+    padding: 0 8px; /* Less padding */
+}
+
+/* Container for password input and toggle icon */
+.password-toggle {
+    position: relative;
+}
+
+/* Adjust the position of the eye icon */
+.password-toggle-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust as needed to align it properly within the input */
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 1.2em;
+    pointer-events: all;
+    z-index: 10;
+}
+
+/* Adjust padding on the input field to prevent overlap with the icon */
+.password-toggle input {
+    padding-right: 30px; /* Add space to the right for the icon */
+}
+
+.form-container button {
+    padding: 10px 0; /* Reduce padding */
+    font-size: 16px;
+    margin-top: 20px; /* Reduce space above button */
+}
+
+.footer {
+    margin-top: 15px; /* Less space above footer */
+}
+
+.footer p, .footer a {
+    font-size: 0.85em; /* Smaller text */
+}
+/* Global styles */
+*,
+*:before,
+*:after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --bg-color: #080710;
+    --text-color: #ffffff;
+    --button-bg: #4CAF50;
+    --button-hover-bg: #357ABD;
+    --link-color: #4CAF50;
+    --form-bg: rgba(255, 255, 255, 0.13);
+    --form-border: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] {
+    --bg-color: #f9fafb;
+    --text-color: #080710;
+    --button-bg: #4A90E2;
+    --button-hover-bg: #357ABD;
+    --link-color: #4A90E2;
+    --form-bg: rgba(255, 255, 255, 0.9);
+    --form-border: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
 
 .background {
     display: flex;
