@@ -125,9 +125,20 @@ connectToDatabase();
 
 // Place all route definitions here
 
+app.get('/login.html', (req, res) => {
+    res.sendFile(__dirname + '/public/login.html');
+});
+
+
 // Sign Up Route
 app.post('/signup', async (req, res) => {
-    const { firstName, lastName, email, password , studentIDNumber} = req.body;
+    const { firstName, lastName, email, password, studentIDNumber, termsCheckbox } = req.body;
+    console.log('Signup request received:', req.body);
+    console.log('Signup response sent:', { success: true });
+        // Check if terms are agreed
+        if (!termsCheckbox) {
+            return res.status(400).json({ success: false, message: 'You must agree to the Terms and Conditions.' });
+        }
 
     try {
         // Input validation
@@ -186,6 +197,7 @@ app.post('/signup', async (req, res) => {
 
         if (insertResult.acknowledged) {
             res.json({ success: true, message: 'Account created successfully!' });
+
         } else {
             res.status(500).json({ success: false, message: 'Failed to create account.' });
         }
@@ -198,17 +210,17 @@ app.post('/signup', async (req, res) => {
 
     // Login Route with Rate Limiting
     app.post('/login', async (req, res) => {
-        const { email, password } = req.body;
+        const { studentIDNumber, password } = req.body;
 
         try {
-            if (!email || !password) {
-                return res.status(400).json({ success: false, message: 'Email and password are required.' });
+            if (!studentIDNumber || !password) {
+                return res.status(400).json({ success: false, message: 'Student ID and password are required.' });
             }
 
-            const user = await usersCollection.findOne({ emaildb: email });
-            if (!user) {
-                return res.status(400).json({ success: false, message: 'Invalid email or password.' });
-            }
+            const user = await usersCollection.findOne(
+                { studentIDNumber: studentIDNumber },
+                { projection: { firstName: 1, lastName: 1, studentIDNumber: 1, password: 1, role: 1, invalidLoginAttempts: 1, accountLockedUntil: 1, emaildb: 1 } }
+            );
 
             // Debug user password
             console.log('User password from DB:', user.password);
@@ -225,6 +237,14 @@ app.post('/signup', async (req, res) => {
                     message: `Account is locked. Try again in ${remainingTime} minutes.` 
                 });
             }
+
+            const sanitizedStudentIDNumber = validator.trim(studentIDNumber);
+
+
+            if (!/^\d{7}$/.test(studentIDNumber)) {
+                return res.status(400).json({ success: false, message: 'Student ID must be exactly 7 digits.' });
+            }
+            
 
             const passwordMatch = await bcrypt.compare(password, user.password);
 
@@ -265,9 +285,10 @@ app.post('/signup', async (req, res) => {
             );
 
             // Set up session
-                req.session.userId = user._id;
-                req.session.email = user.emaildb;
-                req.session.role = user.role;
+            req.session.userId = user._id;
+            req.session.studentIDNumber = user.studentIDNumber;
+            req.session.role = user.role;
+            
 
                 // Update last login time
                 await usersCollection.updateOne(
@@ -373,7 +394,7 @@ app.post('/signup', async (req, res) => {
             const user = await usersCollection.findOne({ emaildb: email });
     
             if (!user) {
-                return res.status(400).json({ success: false, message: 'Email not found in database.' });
+                return res.status(400).json({ success: false, message: 'Invalid credentials.' });
             }
     
             // Check if the reset code matches and is not expired
@@ -528,21 +549,21 @@ app.get('/user-details', isAuthenticated, async (req, res) => {
     console.log("Session in /user-details:", req.session);
     try {
         // Find the user by session ID
-        const email = req.session.email;
+        const studentIDNumber = req.session.studentIDNumber;
         
-        if (!email) {
+        if (!studentIDNumber) {
             return res.status(401).json({ success: false, message: 'Unauthorized access.' });
         }
 
         // Fetch user details from the database
         const user = await usersCollection.findOne(
-            { emaildb: email }, 
-            { projection: { firstName: 1, lastName: 1, studentIDNumber: 1 } }
+            { studentIDNumber: studentIDNumber }, 
+            { projection: { firstName: 1, lastName: 1, studentIDNumber: 1, password: 1 } }
         );
 
         if (!user) {
-            console.error('User not found in tblUser:', email); // Debug log
-            return res.status(404).json({ success: false, message: 'User not found.' });
+            console.error('User not found in tblUser:', studentIDNumber); // Debug log
+            return res.status(404).json({ success: false, message: 'Invalid student ID or password.' });
         }        
         console.log('User Details:', user);
         // Return only necessary details (e.g., firstName and lastName)
@@ -564,7 +585,12 @@ app.use((req, res, next) => {
     if (req.session && req.session.role) {
         console.log('Session role:', req.session.role); // Debugging
     }
+    res.set('Cache-Control', 'no-store');
     next();
+});
+
+app.get('/signup', (req, res) => {
+    res.redirect('/signup.html'); // Replace with your actual signup page
 });
 
 
@@ -767,17 +793,15 @@ app.get('/search', isAuthenticated, async (req, res) => {
 
 // Error handler should be placed after all routes
 app.use((err, req, res, next) => {
-    console.error('Unhandled error:', err);
+    console.error(err.stack);
     res.status(500).json({ success: false, message: 'Internal server error.' });
 });
+
 
 // Serve 404 page for non-existent routes
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
 });
-
-
-
 
 // Start the server after defining routes and middleware
 const PORT = process.env.PORT || 3000;
