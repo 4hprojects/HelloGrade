@@ -9,6 +9,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="dist/output.css">
+    
+
+
 
     <style>
         /* Adjust the background to occupy full height without scroll */
@@ -16,6 +20,12 @@
             height: 100%;
             margin: 0;
             overflow: hidden;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
         }
 
         /* Main container styles for centering */
@@ -115,7 +125,7 @@
 <main class="main-container">
     <form id="loginForm" action="/login" method="post" class="form-container">
         <h3>Login</h3>
-        <input type="email" placeholder="Email" id="email" name="email" required>
+        <input type="text" placeholder="Student ID Number" id="studentIDNumber" name="studentIDNumber" maxlength="7" pattern="\d{7}" title="Student ID Number must be 7 digits" required>
         <div id="emailError" class="error-message"></div>
 
         <div class="password-toggle">
@@ -167,6 +177,14 @@
         }
     });
 
+    document.getElementById('studentIDNumber').addEventListener('input', function () {
+        const input = this.value;
+        if (!/^\d{0,7}$/.test(input)) {
+            this.value = input.slice(0, 7).replace(/\D/g, ''); // Trim excess or invalid characters
+        }
+    });
+
+
     // Client-side form validation and fetch logic for login
     document.getElementById('loginForm').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -176,16 +194,23 @@
         document.getElementById('passwordError').textContent = '';
         document.getElementById('formError').textContent = '';
 
-        const email = document.getElementById('email').value.trim();
+        const studentIDNumber = document.getElementById('studentIDNumber').value.trim();
         const password = document.getElementById('password').value.trim();
         let hasError = false;
 
         // Simple email validation
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(email)) {
-            document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+        //const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        //if (!emailPattern.test(email)) {
+        //    document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+        //    hasError = true;
+        //}
+
+        // New validation for student ID number
+        if (!/^\d{1,7}$/.test(studentIDNumber)) {
+            document.getElementById('studentIDError').textContent = 'Please enter a valid student ID number.';
             hasError = true;
         }
+
 
         // Password validation (minimum 8 characters)
         if (password.length < 8) {
@@ -198,9 +223,10 @@
         fetch('/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email, password: password }),
-            credentials: 'include' // Include credentials for session cookies
+            body: JSON.stringify({ studentIDNumber: studentIDNumber, password: password }),
+            credentials: 'include'
         })
+
         .then(response => response.json().then(data => {
             if (!response.ok) throw new Error(data.message || 'Login failed.');
             return data;
@@ -218,6 +244,63 @@
             document.getElementById('formError').textContent = error.message || 'An error occurred during login.';
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const studentIDInput = document.getElementById('studentIDNumber');
+    if (studentIDInput) {
+        studentIDInput.addEventListener('input', function () {
+            const input = this.value;
+            if (!/^\d{0,7}$/.test(input)) {
+                this.value = input.slice(0, 7).replace(/\D/g, '');
+            }
+        });
+    } else {
+        console.error('Element with ID "studentIDNumber" not found');
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const studentIDNumber = studentIDInput.value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            // Validation logic
+            if (!/^\d{7}$/.test(studentIDNumber)) {
+                alert('Student ID must be exactly 7 digits.');
+                return;
+            }
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long.');
+                return;
+            }
+
+            // Proceed with form submission
+            fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ studentIDNumber, password }),
+                credentials: 'include',
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        window.location.href = data.role === 'admin' ? '/admin_dashboard.html' : '/dashboard.html';
+                    } else {
+                        alert(data.message || 'Login failed.');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error during login:', error);
+                    alert('An error occurred during login.');
+                });
+        });
+    }
+});
+
+
 </script>
+<script src="js/theme-toggle.js"></script>
 </body>
 </html>
