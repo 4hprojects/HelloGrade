@@ -10,12 +10,52 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/styles.css">
     <style>
+        .flex-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.flex-container input {
+    width: 48%; /* Ensures both fields are equally sized */
+}
+
+/* Terms checkbox alignment */
+.terms {
+    display: flex;
+    align-items: center; /* Aligns the checkbox and text vertically */
+    font-size: 0.85em;
+    margin: 10px 0;
+}
+
+.terms input[type="checkbox"] {
+    width: 16px; /* Standard checkbox size */
+    height: 16px; /* Standard checkbox size */
+    margin-right: 10px; /* Space between checkbox and text */
+    vertical-align: middle; /* Aligns checkbox with text */
+}
+
+.terms label {
+    display: flex;
+    align-items: center; /* Aligns the text with the checkbox */
+}
+
+.terms a {
+    color: var(--link-color);
+    text-decoration: underline;
+    margin-left: 5px; /* Optional spacing for better readability */
+}
+
+.terms a:hover {
+    text-decoration: none;
+}
+
+
 
         /* Ensure full viewport height and remove scroll */
         html, body {
             height: 100%;
             margin: 0;
-            overflow: hidden; /* Disable scrolling */
             align-items: center;
             justify-content: center;
             background-color: var(--bg-color);
@@ -208,22 +248,26 @@
     <main class="background flex-grow">
         <form id="signupForm" action="/signup" method="post" class="form-container compact-form">
             <h2 align="center">Create an Account</h2>
-    
-            <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
-            <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+        
+            <!-- First Name and Last Name -->
+            <div class="flex-container">
+                <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+                <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+            </div>
+        
             <input type="text" id="studentIDNumber" name="studentIDNumber" placeholder="Student ID Number" required pattern="\d{1,7}" maxlength="7">
             <input type="email" id="email" name="email" placeholder="Email" required>
-    
+        
             <div class="password-toggle">
                 <input type="password" id="password" name="password" placeholder="Password" required>
                 <span id="togglePassword" class="password-toggle-icon">👁️</span>
             </div>
-    
+        
             <div class="password-toggle">
                 <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
                 <span id="toggleConfirmPassword" class="password-toggle-icon">👁️</span>
             </div>
-    
+        
             <div class="password-criteria">
                 <p id="uppercase">○ one uppercase letter</p>
                 <p id="number">○ one number</p>
@@ -231,16 +275,25 @@
                 <p id="length">○ at least 8 characters</p>
                 <p id="special">○ no special characters</p>
             </div>
-    
+        
+            <!-- Terms and Conditions -->
+            <div class="terms">
+                <input type="checkbox" id="termsCheckbox" name="termsCheckbox" required>
+                <label for="termsCheckbox">
+                    I agree to the <a href="terms-and-conditions.html" target="_blank">Terms and Conditions</a>
+                </label>
+            </div>
+        
             <div id="errorMessage" class="error-message"></div>
             
             <button type="submit">Sign Up</button>
-    
+        
             <div class="footer mt-4 text-center">
                 <p>Already have an account? <a href="login.html">Login here</a></p>
                 <p>or <a href="reset-password.html">Forgot Password?</a></p>
             </div>
         </form>
+        
     </main>
     
 <!-- Footer -->
@@ -306,13 +359,23 @@
     document.getElementById('signupForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent default form submission
 
+    // Check if terms are agreed
+    const termsCheckbox = document.getElementById('termsCheckbox');
+    if (!termsCheckbox.checked) {
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.textContent = 'You must agree to the Terms and Conditions.';
+        errorMessage.style.display = 'block';
+        return;
+    }
+
     // Collect form data
     const formData = {
         firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
+        studentIDNumber: document.getElementById('studentIDNumber').value,
         email: document.getElementById('email').value,
         password: document.getElementById('password').value,
-        studentIDNumber: document.getElementById('studentIDNumber').value
+        termsCheckbox: termsCheckbox.checked
     };
 
     fetch('/signup', {
