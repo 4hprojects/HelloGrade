@@ -1,9 +1,12 @@
 const themeToggle = document.getElementById("themeToggle");
 
-// Apply saved theme preference
-if (localStorage.getItem("theme") === "dark") {
+// Set default theme to dark
+if (!localStorage.getItem("theme") || localStorage.getItem("theme") === "dark") {
     document.documentElement.setAttribute("data-theme", "dark");
     themeToggle.textContent = "☀︎";
+} else {
+    document.documentElement.setAttribute("data-theme", "light");
+    themeToggle.textContent = "☾";
 }
 
 themeToggle.addEventListener("click", () => {
