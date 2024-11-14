@@ -9,13 +9,16 @@
 }
 
 /* Default light theme */
+/* Light mode theme */
 :root {
-    --bg-color: #f9fafb;
-    --text-color: #111827;
-    --header-bg: #2563eb;
-    --button-bg: #083da5;
-    --button-text: #ffffff;
-    --link-hover-bg: #29ce7c;
+    --bg-color: #ffffff; /* Pure white for background */
+    --text-color: #222222; /* Darker text for better contrast */
+    --header-bg: #1976d2; /* Stronger blue for header */
+    --button-bg: #0d47a1; /* Rich blue for buttons */
+    --button-text: #ffffff; /* White for button text */
+    --link-hover-bg: #1565c0; /* Medium blue for hover effects */
+    --form-bg: rgba(250, 250, 250, 0.95); /* Softer form background */
+    --form-border: rgba(0, 0, 0, 0.2); /* Subtle border for forms */
 }
 
 /* Dark theme */
@@ -25,13 +28,37 @@
     --header-bg: #1f2937;
     --button-bg: #374151;
     --button-text: #f9fafb;
-    --link-hover-bg: #29ce7c;
+    --link-hover-bg: #1d4ed8;
+    --form-bg: rgba(255, 255, 255, 0.13);
+    --form-border: rgba(255, 255, 255, 0.1);
+    --button-hover-bg: #357ABD;
+    --link-color: #4CAF50;
 }
 
+
+/* Shared Styles for Improved Readability */
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: 'Poppins', sans-serif;
+}
+
+button {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}
+
+button:hover {
+    background-color: var(--button-hover-bg);
+}
+
+/* Placeholder text for light mode */
+::placeholder {
+    color: rgba(100, 100, 100, 0.8);
+}
+
+[data-theme="dark"] ::placeholder {
+    color: rgba(200, 200, 200, 0.8);
 }
 
 header {
@@ -221,16 +248,6 @@ a:hover {
     margin: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-}
-
-:root {
-    --bg-color: #080710;
-    --text-color: #ffffff;
-    --button-bg: #4CAF50;
-    --button-hover-bg: #357ABD;
-    --link-color: #4CAF50;
-    --form-bg: rgba(255, 255, 255, 0.13);
-    --form-border: rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="light"] {
