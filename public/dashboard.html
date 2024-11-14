@@ -6,7 +6,7 @@
     <title>HelloGrade Dashboard</title>
 
     <!-- Global Styles -->
-    <link rel="stylesheet" href="css/styles.css">
+    <!--link rel="stylesheet" href="css/styles.css"-->
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
@@ -15,7 +15,40 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <style>
-        /* Body and Container Setup */
+        /* Theme Variables */
+        :root {
+            --bg-color: #f9fafb;          /* Light mode background */
+            --text-color: #111827;        /* Light mode text */
+            --header-bg: #2563eb;         /* Light mode header background */
+            --button-bg: #e5e7eb;         /* Light mode button background */
+            --button-text: #374151;       /* Light mode button text */
+            --link-hover-bg: #1d4ed8;     /* Light mode link hover background */
+            --sidebar-bg: #e5e7eb;        /* Light mode sidebar background */
+            --sidebar-text: #374151;      /* Light mode sidebar text */
+            --content-bg: #ffffff;        /* Light mode content background */
+            --content-text: #111827;      /* Light mode content text */
+            --table-header-bg: #2563eb;   /* Light mode table header background */
+            --table-row-bg: #f3f4f6;      /* Light mode table row background */
+            --secondary-bg-color: #e5e7eb;
+        }
+    
+        [data-theme="dark"] {
+            --bg-color: #111827;          /* Dark mode background */
+            --text-color: #f9fafb;        /* Dark mode text */
+            --header-bg: #1f2937;         /* Dark mode header background */
+            --button-bg: #374151;         /* Dark mode button background */
+            --button-text: #f9fafb;       /* Dark mode button text */
+            --link-hover-bg: #1d4ed8;     /* Dark mode link hover background */
+            --sidebar-bg: #1f2937;        /* Dark mode sidebar background */
+            --sidebar-text: #f9fafb;      /* Dark mode sidebar text */
+            --content-bg: #1e293b;        /* Dark mode content background */
+            --content-text: #f9fafb;      /* Dark mode content text */
+            --table-header-bg: #2563eb;   /* Dark mode table header background */
+            --table-row-bg: #1f2937;      /* Dark mode table row background */
+            --secondary-bg-color: #374151;
+        }
+    
+        /* Apply Variables to Elements */
         body {
             display: flex;
             margin: 0;
@@ -23,69 +56,10 @@
             font-family: 'Poppins', sans-serif;
             height: 100vh;
             overflow: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
         }
     
-        .sidebar {
-            width: 200px;
-            background-color: #4A90E2;
-            color: #fff;
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            padding-top: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Space between items to move the footer to the bottom */
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar-welcome h2 {
-        padding: 20px;
-        text-align: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        border-top: 1px solid rgba(255, 255, 255, 0.3);
-    }
-    
-    .sidebar-nav {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .sidebar-nav li {
-        margin: 10px 0; /* Reduce margin for compact look */
-        padding-left: 20px;
-    }
-
-    .sidebar-nav li a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 18px;
-        display: block;
-        padding: 10px;
-    }
-
-    .sidebar-nav li a:hover {
-        text-align: center;
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .sidebar-footer {
-        padding: 10px 20px;
-        text-align: center;
-        color: #fff;
-        font-size: 0.9em;
-        border-top: 1px solid rgba(255, 255, 255, 0.3);
-    }
-    #studentID {
-    text-align: center;
-    font-size: 0.9em;
-    color: #ccc;
-    margin-top: 5px;
-    display: block; /* Ensure it takes up the full line for centering */
-    }
-
         header {
             background-color: #4A90E2;
             color: #fff;
@@ -120,14 +94,80 @@
             text-decoration: none;
         }
     
+        .sidebar {
+            width: 200px;
+            background-color: #2563EB;
+            color: var(--sidebar-text);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        .sidebar-welcome h2 {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--sidebar-text);
+        }
+    
+        #studentID {
+            text-align: center;
+            font-size: 0.9em;
+            color: var(--button-text);
+            margin-top: 5px;
+            display: block;
+        }
+    
+        .sidebar-nav {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .sidebar-nav li {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+    
+        .sidebar-nav li a {
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+        }
+    
+        .sidebar-nav li a:hover {
+            text-align: center;
+            background-color: var(--link-hover-bg);
+            color: var(--button-text);
+        }
+    
+        .sidebar-footer {
+            padding: 10px 20px;
+            text-align: center;
+            color: var(--sidebar-text);
+            font-size: 0.9em;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    
         .content {
             margin-left: 200px;
-            width: calc(100% - 200px); /* Adjust for sidebar */
+            width: calc(100% - 200px);
             padding-top: 80px;
             display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            height: calc(100vh - 80px); /* Adjust for header */
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 80px);
+            background-color: var(--content-bg);
+            color: var(--content-text);
         }
     
         .content-inner {
@@ -140,22 +180,10 @@
             margin: 0 auto; /* Center the container horizontally */
             text-align: center; /* Center text content */
         }
-
-        .course-grade
-        {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 800px; /* Set max-width for better readability */
-            margin: 0 auto; /* Center the container horizontally */
-            text-align: center; /* Center text content */
-        }
     
         .content-inner h2, .content-inner h3 {
             margin: 10px 0;
-            color: #fff;
+            color: var(--content-text);
         }
     
         .table-container {
@@ -164,106 +192,61 @@
             overflow-x: auto; 
         }
     
-        /* Table Layout */
+        /* Table Styles */
         .table-container table {
             width: 100%;
             border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: var(--table-row-bg);
             border-radius: 8px;
             overflow: hidden;
         }
-
-        /* Consistent Header Styling */
+    
         .table-container thead th {
-            background-color: #4A90E2;
-            color: #fff;
+            background-color: var(--table-header-bg);
+            color: var(--button-text);
             padding: 12px;
             text-align: center;
-            font-weight: 600; /* Enhance header font weight */
-            font-size: 1em; /* Adjust font size for uniformity */
-
+            font-weight: 600;
+            font-size: 1em;
         }
-
-        /* Consistent Body Cell Styling */
+    
         .table-container tbody td {
             padding: 12px;
-            color: #fff;
+            color: var(--content-text);
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            font-size: 0.9em; /* Set consistent font size */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 0.9em;
         }
-
-        /* Alternating Row Background */
+    
         .table-container tbody tr:nth-child(even) {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: var(--content-bg);
         }
-
-        /* Table Row Hover Effect */
+    
         .table-container tbody tr:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            overflow: hidden;
+            background-color: var(--secondary-bg-color);
+            color: var(--button-text);
         }
     
-        thead th {
-            background-color: #4A90E2;
-            color: #fff;
-            padding: 12px;
-            text-align: center; /* Center column headers */
+        /* Submenu Styles */
+        .submenu {
+            display: none;
+            list-style-type: none;
+            padding-left: 20px;
         }
     
-        tbody td {
-            padding: 12px;
-            color: #fff;
-           /* text-align: center; /* Center table cells */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        .submenu.active {
+            display: block;
         }
     
-    /* Right-align Grade Category column */
-    tbody td:first-child {
-        text-align: right;
-    }
-
-    /* Center-align Midterm and Finals columns */
-    tbody td:not(:first-child) {
-        text-align: center;
-    }
-
-    tbody tr:nth-child(even) {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    tbody td[colspan="2"] {
-        text-align: center;
-    }
-
-    /* Submenu Styles */
-    .submenu {
-        display: none;
-        list-style-type: none;
-        padding-left: 20px;
-    }
-
-    .submenu.active {
-        display: block;
-    }
-
-    .submenu li {
-        padding: 8px 0;
-    }
-
-    .submenu li a {
-        color: #fff;
-        font-size: 16px;
-        text-decoration: none;
-    }
-
+        .submenu li {
+            padding: 8px 0;
+        }
+    
+        .submenu li a {
+            color: var(--sidebar-text);
+            font-size: 16px;
+            text-decoration: none;
+        }
     
         /* Adjustments for smaller screens */
         @media (max-width: 768px) {
@@ -273,10 +256,11 @@
                 justify-content: center;
                 align-items: center;
             }
-
+    
             .table-container table {
-                font-size: 0.85em; /* Reduce font size for smaller screens */
+                font-size: 0.85em;
             }
+    
             .content-inner {
                 width: 95%;
             }
@@ -285,18 +269,26 @@
                 font-size: 1.2em;
             }
         }
-    </style>    
+
+        
+    </style>
+     
 </head>
 <body>
     <header>
         <h1>HelloGrade Dashboard</h1>
         <nav>
             <ul>
+                <li><a href="#" id="themeToggle" title="Toggle Theme"><span class="material-icons" id="themeIcon">brightness_4</span></a></li>
                 <li><a href="#" title="Account Settings"><span class="material-icons">settings</span></a></li>
                 <li><a href="#" title="Help"><span class="material-icons">help_outline</span></a></li>
+
                 <li><a href="#" id="logoutLink" title="Logout"><span class="material-icons">logout</span></a></li>
+                <li><a href="#" id="logoutLink" title=""><span class="material-icons"></span></a></li>
+                <li><a href="#" id="logoutLink" title=""><span class="material-icons"></span></a></li>
             </ul>
         </nav>
+
     </header>
     
     <div class="sidebar">
@@ -388,46 +380,59 @@
 </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchStudentDetails();
+        document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // Session check logic
+        const sessionResponse = await fetch('/session-check', {
+            method: 'GET',
+            credentials: 'include' // Include session cookies
         });
-        // Fetch student details (name and ID) from the session
-        async function fetchStudentDetails() {
-            try {
-                const response = await fetch('/user-details', {
-                    method: 'GET',
-                    credentials: 'include' // Include session cookies
-                });
 
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch user details. Status: ${response.status}`);
-                }
+        const sessionData = await sessionResponse.json();
+        console.log('Session check response:', sessionData); // Debug response
 
-                const data = await response.json();
-                console.log('User details response:', data); // Debugging
-
-                if (data.success) {
-                    const nameElement = document.querySelector('.sidebar-welcome h2');
-                    const idElement = document.getElementById('studentID');
-
-                    if (!nameElement || !idElement) {
-                        console.error('Required DOM elements are missing.');
-                        return;
-                    }
-
-                    nameElement.textContent = `Hello, ${data.user.firstName} ${data.user.lastName}!`;
-                    idElement.textContent = data.user.studentIDNumber;
-
-                    // Fetch courses after student details are loaded
-                    fetchCourses(data.user.studentIDNumber);
-
-                } else {
-                    console.error('Failed to fetch user details:', data.message);
-                }
-            } catch (error) {
-                console.error('Error fetching user details:', error);
-            }
+        if (!sessionResponse.ok || !sessionData.authenticated) {
+            console.error('User is not authenticated:', sessionData);
+            window.location.href = 'login.html';
+            return;
         }
+
+        if (sessionData.role === 'admin') {
+            console.log('Redirecting to admin dashboard');
+            window.location.href = 'admin_dashboard.html';
+            return;
+        } else if (sessionData.role !== 'student') {
+            console.error('Unexpected role:', sessionData.role);
+            window.location.href = '403.html';
+            return;
+        }
+
+        // Fetch user details after successful session validation
+        await fetchStudentDetails();
+    } catch (error) {
+        console.error('Error during session validation or fetching user details:', error);
+        window.location.href = 'login.html';
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+
+    // Set default theme based on localStorage or default to light
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeIcon.textContent = savedTheme === 'dark' ? 'brightness_7' : 'brightness_4';
+
+    // Toggle theme and update localStorage
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        themeIcon.textContent = newTheme === 'dark' ? 'brightness_7' : 'brightness_4';
+        localStorage.setItem('theme', newTheme);
+    });
+});
 
 
 
@@ -536,10 +541,6 @@
 // Fetch student details (name and ID) from the session
 //
 
-// Fetch student details on page load
-//document.addEventListener('DOMContentLoaded', function () {
- //   fetchStudentDetails();
-    //});
 
         fetch('/session-check', { credentials: 'include' })
             .then(response => {
@@ -560,41 +561,7 @@
     .catch(error => {
         console.error('Error fetching user details:', error);
     });
-        // Fetch user details when the page loads
-        document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        // Session check logic
-        const sessionResponse = await fetch('/session-check', {
-            method: 'GET',
-            credentials: 'include' // Include session cookies
-        });
 
-        const sessionData = await sessionResponse.json();
-        console.log('Session check response:', sessionData); // Debug response
-
-        if (!sessionResponse.ok || !sessionData.authenticated) {
-            console.error('User is not authenticated:', sessionData);
-            window.location.href = 'login.html';
-            return;
-        }
-
-        if (sessionData.role === 'admin') {
-            console.log('Redirecting to admin dashboard');
-            window.location.href = 'admin_dashboard.html';
-            return;
-        } else if (sessionData.role !== 'student') {
-            console.error('Unexpected role:', sessionData.role);
-            window.location.href = '403.html';
-            return;
-        }
-
-        // User-details fetch logic
-        fetchStudentDetails();
-    } catch (error) {
-        console.error('Error during session validation or fetching user details:', error);
-        window.location.href = 'login.html';
-    }
-});
 
 // Existing fetchStudentDetails function
 async function fetchStudentDetails() {
@@ -612,7 +579,6 @@ async function fetchStudentDetails() {
         console.log('User details response:', data); // Debugging
 
         if (data.success) {
-            // Check if DOM elements exist
             const nameElement = document.querySelector('.sidebar-welcome h2');
             const idElement = document.getElementById('studentID');
 
@@ -621,7 +587,6 @@ async function fetchStudentDetails() {
                 return;
             }
 
-            // Populate DOM elements with user details
             nameElement.textContent = `Hello, ${data.user.firstName} ${data.user.lastName}!`;
             idElement.textContent = data.user.studentIDNumber;
 
@@ -634,6 +599,7 @@ async function fetchStudentDetails() {
         console.error('Error fetching user details:', error);
     }
 }
+
 
     document.getElementById('logoutLink').addEventListener('click', function (event) {
         event.preventDefault();
