@@ -1,50 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - HelloGrade</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/styles.css">
-
-    <style>
-        .active-nav {
-            font-weight: bold;
-            background-color: #1d4ed8;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-        }
-        .fixed-size {
-            width: 48px; /* Fixed width */
-            height: 48px; /* Fixed height */
-            object-fit: contain; /* Ensures the image fits within the fixed size */
-        }
-    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/ustyles.css">
 </head>
 <body>
-    <header class="bg-blue-600 shadow-md sticky top-0 z-50">
-        <div class="container mx-auto flex items-center justify-between px-6 py-4">
-            <div class="flex items-center space-x-4">
-                <a href="https://hellograde.onrender.com/">
-                    <img src="images/icon.png" alt="HelloGrade Icon" class="fixed-size">
-                </a>
-                <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
-            </div>
-            <nav class="space-x-4">
-                <a href="about.html" class="text-white active-nav">About Us</a>
-                <a href="contact.html" class="text-white">Contact Us</a>
-                <a href="privacy-policy.html" class="text-white">Privacy Policy</a>
-                <a href="terms-and-conditions.html" class="text-white">Terms</a>
-            </nav>
-            <!-- Right Side: Login, Signup, and Dark Mode -->
-            <div class="flex items-center space-x-4">
-                <a href="login.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Login</a>
-                <a href="signup.html" class="bg-blue-300 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Sign Up</a>
-                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
-            </div>
+    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-blue-600 text-white">
+        <div class="flex items-center">
+            <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
+            <h1 class="text-xl font-bold">HelloGrade</h1>
         </div>
-    
+        <nav>
+            <ul id="navMenu" class="flex flex-row gap-4">             
+                <li><a href="#" title="Account Settings"><span class="material-icons">settings</span></a></li>
+                <li><a href="#" title="Help"><span class="material-icons">help_outline</span></a></li>
+                <li><a href="login.html" title="Sign In"><span class="material-icons">login</span></a></li>
+            </ul>
+        </nav>
     </header>
     <main class="container mx-auto px-6 py-12">
         <h1 class="text-3xl font-bold text-blue-600 mb-4">About Us</h1>
@@ -81,32 +58,17 @@
             <li><strong>Address:</strong> La Trinidad, Benguet, Philippines</li>
         </ul>
         <p class="mt-4">Together, let’s make education smarter and more connected with HelloGrade.</p>
+        <p class="mt-2">We appreciate your feedback.</p>
+        
+        
+        <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-blue-500 text-white hover:bg-blue-600 flex items-center justify-center shadow-lg">
+            <span class="material-icons">arrow_upward</span>
+        </button>
     </main>
-    <footer class="bg-blue-600 text-white py-4">
-        <div class="text-center">&copy; 2024 HelloGrade. All rights reserved.</div>
-    </footer>
-    <script>
-        const themeToggle = document.getElementById("themeToggle");
-    
-        // Apply saved theme preference
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.setAttribute("data-theme", "dark");
-            themeToggle.textContent = "☀︎";
-        }
-    
-        themeToggle.addEventListener("click", () => {
-            // Toggle the theme
-            if (document.documentElement.getAttribute("data-theme") === "dark") {
-                document.documentElement.setAttribute("data-theme", "light");
-                themeToggle.textContent = "☾";
-                localStorage.setItem("theme", "light");
-            } else {
-                document.documentElement.setAttribute("data-theme", "dark");
-                themeToggle.textContent = "☀︎";
-                localStorage.setItem("theme", "dark");
-            }
-        });
-    </script>
+
+<!-- Footer -->
+<div id="footerContainer"></div>
+<script src="js/uscripts.js"></script>
     
 </body>
 </html>
