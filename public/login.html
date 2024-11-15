@@ -107,19 +107,21 @@
 <body>
 
 <!-- Header with Sticky Navigation -->
-<header class="bg-blue-600 shadow-md sticky top-0 z-50 w-full">
-    <div class="container mx-auto flex items-center justify-between px-6 py-4">
+    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-blue-600 text-white">
         <div class="flex items-center">
             <a href="https://hellograde.onrender.com/">
                 <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
             </a>
-            <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+            <h1 class="text-xl font-bold">HelloGrade</h1>
         </div>
-        <nav class="flex items-center space-x-4">
-            <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
+        <nav>
+            <ul id="navMenu" class="flex flex-row gap-4">             
+                <li><a href="index.html" title="Home"><span class="material-icons">home</span></a></li>
+                <li><a href="help.html" title="Help"><span class="material-icons">help_outline</span></a></li>
+                <li><a href="login.html" title="Sign In"><span class="material-icons">login</span></a></li>
+            </ul>
         </nav>
-    </div>
-</header>
+    </header>
 
 <!-- Main Content with Login Form -->
 <main class="main-container">
