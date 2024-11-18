@@ -5,443 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HelloGrade Dashboard</title>
 
-    <!-- Global Styles -->
-    <!--link rel="stylesheet" href="css/styles.css"-->
-
-    <!-- Google Fonts -->
+    <!-- Google Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <style>
-        /* Theme Variables */
-        :root {
-            --bg-color: #f9fafb;          /* Light mode background */
-            --text-color: #111827;        /* Light mode text */
-            --header-bg: #2563eb;         /* Light mode header background */
-            --button-bg: #e5e7eb;         /* Light mode button background */
-            --button-text: #374151;       /* Light mode button text */
-            --link-hover-bg: #1d4ed8;     /* Light mode link hover background */
-            --sidebar-bg: #e5e7eb;        /* Light mode sidebar background */
-            --sidebar-text: #374151;      /* Light mode sidebar text */
-            --content-bg: #ffffff;        /* Light mode content background */
-            --content-text: #111827;      /* Light mode content text */
-            --table-header-bg: #2563eb;   /* Light mode table header background */
-            --table-row-bg: #f3f4f6;      /* Light mode table row background */
-            --secondary-bg-color: #e5e7eb;
-        }
-    
-        [data-theme="dark"] {
-            --bg-color: #111827;          /* Dark mode background */
-            --text-color: #f9fafb;        /* Dark mode text */
-            --header-bg: #1f2937;         /* Dark mode header background */
-            --button-bg: #374151;         /* Dark mode button background */
-            --button-text: #f9fafb;       /* Dark mode button text */
-            --link-hover-bg: #1d4ed8;     /* Dark mode link hover background */
-            --sidebar-bg: #1f2937;        /* Dark mode sidebar background */
-            --sidebar-text: #f9fafb;      /* Dark mode sidebar text */
-            --content-bg: #1e293b;        /* Dark mode content background */
-            --content-text: #f9fafb;      /* Dark mode content text */
-            --table-header-bg: #2563eb;   /* Dark mode table header background */
-            --table-row-bg: #1f2937;      /* Dark mode table row background */
-            --secondary-bg-color: #374151;
-        }
-    
-        /* Apply Variables to Elements */
-        body {
-            display: flex;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            height: 100vh;
-            overflow: hidden;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-    
-        header {
-            background-color: #4A90E2;
-            color: #fff;
-            width: calc(100% - 200px); /* Adjust for sidebar width */
-            margin-left: 200px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            position: fixed;
-            top: 0;
-            height: 60px;
-            z-index: 1000;
-        }
-    
-        header h1 {
-            font-size: 1.5em;
-            margin: 0;
-        }
-    
-        header nav ul {
-            list-style-type: none;
-            display: flex;
-            gap: 15px;
-            margin: 0;
-            padding: 0;
-        }
-    
-        header nav ul li a {
-            color: #fff;
-            font-size: 1.5em;
-            text-decoration: none;
-        }
-    
-        .sidebar {
-            width: 200px;
-            background-color: #2563EB;
-            color: var(--sidebar-text);
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            padding-top: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        }
-    
-        .sidebar-welcome h2 {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            color: var(--sidebar-text);
-        }
-    
-        #studentID {
-            text-align: center;
-            font-size: 0.9em;
-            color: var(--button-text);
-            margin-top: 5px;
-            display: block;
-        }
-    
-        .sidebar-nav {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-    
-        .sidebar-nav li {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-    
-        .sidebar-nav li a {
-            color: var(--sidebar-text);
-            text-decoration: none;
-            font-size: 18px;
-            display: block;
-            padding: 10px;
-        }
-    
-        .sidebar-nav li a:hover {
-            text-align: center;
-            background-color: var(--link-hover-bg);
-            color: var(--button-text);
-        }
-    
-        .sidebar-footer {
-            padding: 10px 20px;
-            text-align: center;
-            color: var(--sidebar-text);
-            font-size: 0.9em;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-        }
-    
-        .content {
-            margin-left: 200px;
-            width: calc(100% - 200px);
-            padding-top: 80px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 80px);
-            background-color: var(--content-bg);
-            color: var(--content-text);
-        }
-    
-        .content-inner {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 800px; /* Set max-width for better readability */
-            margin: 0 auto; /* Center the container horizontally */
-            text-align: center; /* Center text content */
-        }
-    
-        .content-inner h2, .content-inner h3 {
-            margin: 10px 0;
-            color: var(--content-text);
-        }
-    
-        .table-container {
-            width: 100%;
-            margin-top: 20px;
-            overflow-x: auto; 
-        }
-    
-        /* Table Styles */
-        .table-container table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: var(--table-row-bg);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-    
-        .table-container thead th {
-            background-color: var(--table-header-bg);
-            color: var(--button-text);
-            padding: 12px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1em;
-        }
-    
-        .table-container tbody td {
-            padding: 12px;
-            color: var(--content-text);
-            text-align: center;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            font-size: 0.9em;
-        }
-    
-        .table-container tbody tr:nth-child(even) {
-            background-color: var(--content-bg);
-        }
-    
-        .table-container tbody tr:hover {
-            background-color: var(--secondary-bg-color);
-            color: var(--button-text);
-        }
-    
-        /* Submenu Styles */
-        .submenu {
-            display: none;
-            list-style-type: none;
-            padding-left: 20px;
-        }
-    
-        .submenu.active {
-            display: block;
-        }
-    
-        .submenu li {
-            padding: 8px 0;
-        }
-    
-        .submenu li a {
-            color: var(--sidebar-text);
-            font-size: 16px;
-            text-decoration: none;
-        }
-    
-        /* Adjustments for smaller screens */
-        @media (max-width: 768px) {
-            .content {
-                margin-left: 200px;
-                padding-top: 80px;
-                justify-content: center;
-                align-items: center;
-            }
-    
-            .table-container table {
-                font-size: 0.85em;
-            }
-    
-            .content-inner {
-                width: 95%;
-            }
-    
-            header nav ul li a {
-                font-size: 1.2em;
-            }
-        }
-
-        
-    </style>
-     
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/ustyles.css">
+    <script src="js/uscripts.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <header>
-        <h1>HelloGrade Dashboard</h1>
+    <!-- Header -->
+    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-blue-600 text-white">
+        <div class="flex items-center">
+            <a href="https://hellograde.onrender.com/">
+                <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
+            </a>
+            <h1 class="text-xl font-bold">HelloGrade</h1>
+        </div>
         <nav>
-            <ul>
-                <li><a href="#" id="themeToggle" title="Toggle Theme"><span class="material-icons" id="themeIcon">brightness_4</span></a></li>
-                <li><a href="#" title="Account Settings"><span class="material-icons">settings</span></a></li>
-                <li><a href="#" title="Help"><span class="material-icons">help_outline</span></a></li>
-
-                <li><a href="#" id="logoutLink" title="Logout"><span class="material-icons">logout</span></a></li>
-                <li><a href="#" id="logoutLink" title=""><span class="material-icons"></span></a></li>
-                <li><a href="#" id="logoutLink" title=""><span class="material-icons"></span></a></li>
+            <ul id="navMenu" class="flex flex-row gap-4">             
+                <li><a href="dashboard.html" title="Dashboard"><span class="material-icons">dashboard</span></a></li>
+                <li><a href="settings.html" title="Settings"><span class="material-icons">settings</span></a></li>
+                <li><a href="help.html" title="Help"><span class="material-icons">help_outline</span></a></li>
+                <li><a href="login.html" title="Sign In"><span class="material-icons">login</span></a></li>
             </ul>
         </nav>
-
     </header>
-    
-    <div class="sidebar">
-        <!-- Welcome Message at the Top of Sidebar -->
-        <div class="sidebar-welcome">
-            <h2>Hello, <span id="studentName">[User's Name]</span>!</h2>
-            <p id="studentID" style="font-size: 0.9em; color: #ccc; margin-top: 5px;">[Student ID]</p>
-        </div>
 
-        <!-- Sidebar Navigation -->
-        <ul class="sidebar-nav">
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="#" onclick="toggleSubmenu()">Classes</a></li>
-            <ul id="classesSubmenu" class="submenu"></ul>
-            <li><a href="#">Reports</a></li>            
-        </ul>
-
-        <!-- Footer in the Sidebar -->
-        <div class="sidebar-footer">
-            <p>&copy; 2024 HelloGrade</p>
-        </div>
-    </div>
-
-    <main>
-        <!--div id="gradeTableContainer"></!--div-->
-
-        <div id="gradeTableContainer" class="content">
-            <div class="content-inner">
-                <!-- Course Name at the Top -->
-                <h3 id="courseInfo">[Course Name]</h3>
-                
-                <!-- Grade Table -->
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Grade Category</th>
-                                <th>Midterm</th>
-                                <th>Finals</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Attendance</td>
-                                <td id="midtermAttendance">No entry</td>
-                                <td id="finalsAttendance">No entry</td>
-                            </tr>
-                            <tr>
-                                <td>Class Standing</td>
-                                <td id="midtermClassStanding">No entry</td>
-                                <td id="finalsClassStanding">No entry</td>
-                            </tr>
-                            <tr>
-                                <td>Exams</td>
-                                <td id="midtermExam">No entry</td>
-                                <td id="finalExam">No entry</td>
-                            </tr>
-                            <tr>
-                                <td>Midterm Grade</td>
-                                <td id="midtermGrade">No entry</td>
-                                <td rowspan="2" id="finalGrade">No entry</td>
-                            </tr>
-                            <tr>
-                                <td>Transmuted Grade</td>
-                                <td id="transmutedMidtermGrade">No entry</td>
-                            </tr>
-                            <tr>
-                                <td>Transmuted Final Grade</td>
-                                <td colspan="2" id="transmutedFinalGrade">No entry</td>
-                            </tr>
-                        </tbody>
-                    </table>
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+        <h2>Welcome, <span id="studentName">[User's Name]</span>!</h2>
+        <p id="studentID">Student ID: <span>[Student ID]</span></p>
+                <!-- Dropdown Menu for Classes -->
+                <div class="classes-dropdown">
+                    <label for="classesSelect">Select a Class:</label>
+                    <select id="classesSelect" onchange="fetchGradesForCourse(this.value)">
+                        <!-- Options will be populated dynamically -->
+                    </select>
                 </div>
-            </div>
-        </div>
-            <!-- Google AdSense Ad Code Above Footer -->
-    <div class="ad-above-footer" style="text-align: center; margin: 20px 0;">
-        <!-- left panel -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-4537208011192461"
-             data-ad-slot="1206064674"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-</main>
+    </section>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        // Session check logic
-        const sessionResponse = await fetch('/session-check', {
-            method: 'GET',
-            credentials: 'include' // Include session cookies
+    <!-- Main Content -->
+    <main>
+        <section class="grades-section">
+
+
+            <!-- Grade Table Container -->
+            <div id="gradeTableContainer" class="content">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </section>
+    </main>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white text-center py-3">
+        <p>&copy; 2024 HelloGrade. All Rights Reserved.</p>
+    </footer>
+
+     <!-- Scripts -->
+     <script>
+        // Theme Toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+
+            // Set default theme based on localStorage or default to light
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeIcon.textContent = savedTheme === 'dark' ? 'brightness_7' : 'brightness_4';
+
+            // Toggle theme and update localStorage
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                themeIcon.textContent = newTheme === 'dark' ? 'brightness_7' : 'brightness_4';
+                localStorage.setItem('theme', newTheme);
+            });
         });
 
-        const sessionData = await sessionResponse.json();
-        console.log('Session check response:', sessionData); // Debug response
+        // Session Validation and Fetch User Details
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Session validation
+                const sessionResponse = await fetch('/session-check', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
 
-        if (!sessionResponse.ok || !sessionData.authenticated) {
-            console.error('User is not authenticated:', sessionData);
-            window.location.href = 'login.html';
-            return;
+                const sessionData = await sessionResponse.json();
+
+                if (!sessionResponse.ok || !sessionData.authenticated) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                if (sessionData.role === 'admin') {
+                    window.location.href = 'admin_dashboard.html';
+                    return;
+                } else if (sessionData.role !== 'student') {
+                    window.location.href = '403.html';
+                    return;
+                }
+
+                // Fetch user details after session validation
+                await fetchStudentDetails();
+            } catch (error) {
+                console.error('Error during session validation:', error);
+                window.location.href = 'login.html';
+            }
+        });
+
+        async function fetchStudentDetails() {
+            try {
+                const response = await fetch('/user-details', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user details. Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('studentName').textContent = `${data.user.firstName} ${data.user.lastName}`;
+                    document.getElementById('studentID').textContent = data.user.studentIDNumber;
+
+                    // Fetch and display courses
+                    await fetchCourses(data.user.studentIDNumber);
+                } else {
+                    console.error('Failed to fetch user details:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching user details:', error);
+            }
         }
 
-        if (sessionData.role === 'admin') {
-            console.log('Redirecting to admin dashboard');
-            window.location.href = 'admin_dashboard.html';
-            return;
-        } else if (sessionData.role !== 'student') {
-            console.error('Unexpected role:', sessionData.role);
-            window.location.href = '403.html';
-            return;
-        }
-
-        // Fetch user details after successful session validation
-        await fetchStudentDetails();
-    } catch (error) {
-        console.error('Error during session validation or fetching user details:', error);
-        window.location.href = 'login.html';
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-
-    // Set default theme based on localStorage or default to light
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    themeIcon.textContent = savedTheme === 'dark' ? 'brightness_7' : 'brightness_4';
-
-    // Toggle theme and update localStorage
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        themeIcon.textContent = newTheme === 'dark' ? 'brightness_7' : 'brightness_4';
-        localStorage.setItem('theme', newTheme);
-    });
-});
-
-
-
+        // Fetch Courses and Populate Dropdown
         async function fetchCourses(studentIDNumber) {
-            console.log('Fetching courses for studentIDNumber:', studentIDNumber);
             try {
                 const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
                 const data = await response.json();
-                console.log('Fetched courses response:', data); // Log the entire response
+
                 if (data.success) {
                     populateCourses(data.gradeDataArray);
                 } else {
@@ -453,30 +162,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function populateCourses(courseArray) {
-            const submenu = document.getElementById('classesSubmenu');
-            console.log('Populating submenu with courses:', courseArray); // Debugging log
-         
-            if (!submenu) {
-                console.error('Submenu element not found in DOM');
+            const classesSelect = document.getElementById('classesSelect');
+
+            if (!classesSelect) {
+                console.error('Classes select element not found in DOM');
                 return;
             }
 
-            submenu.innerHTML = ''; // Clear any existing entries
-            courseArray.forEach((course, index) => {
-                const courseItem = document.createElement('li');
-                courseItem.innerHTML = `<a href="#" onclick="fetchGradesForCourse('${course.courseID}')">${course.courseID}</a>`;
-                submenu.appendChild(courseItem);
+            classesSelect.innerHTML = ''; // Clear existing options
+
+            courseArray.forEach((course) => {
+                const option = document.createElement('option');
+                option.value = course.courseID;
+                option.textContent = `${course.courseID} - ${course.courseDescription}`;
+                classesSelect.appendChild(option);
             });
 
-            submenu.classList.add('active'); // Ensure the submenu is displayed
-        
             // Display grades for the first course by default
             if (courseArray.length > 0) {
                 fetchGradesForCourse(courseArray[0].courseID);
             }
-
         }
 
+        // Fetch Grades for Selected Course
         async function fetchGradesForCourse(courseID) {
             const studentIDNumber = document.getElementById('studentID').textContent;
 
@@ -495,131 +203,57 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function toggleSubmenu() {
-            const submenu = document.getElementById('classesSubmenu');
-            if (!submenu) {
-                console.error('Submenu element not found in DOM');
-                return;
-            }
-            submenu.classList.toggle('active');
-            console.log('Toggled submenu visibility. Current class list:', submenu.classList);
-        }
-
-
-
+        // Display Grades in the Grade Table Container
         function displayGrades(courseData) {
             const gradeTableContainer = document.getElementById('gradeTableContainer');
             gradeTableContainer.innerHTML = `
-<div class="content-inner">
-            <!-- Course Name at the Top -->
-            <h3 id="courseInfo">${courseData.courseID} - ${courseData.courseDescription}</h3>
-            
-            <!-- Grade Table -->
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Grade Category</th>
-                            <th>Midterm</th>
-                            <th>Finals</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Attendance</td><td>${courseData.midtermAttendance || 'No entry'}</td><td>${courseData.finalsAttendance || 'No entry'}</td></tr>
-                        <tr><td>Class Standing</td><td>${courseData.midtermClassStanding || 'No entry'}</td><td>${courseData.finalsClassStanding || 'No entry'}</td></tr>
-                        <tr><td>Exams</td><td>${courseData.midtermExam || 'No entry'}</td><td>${courseData.finalExam || 'No entry'}</td></tr>
-                        <tr><td>Midterm Grade</td><td>${courseData.midtermGrade || 'No entry'}</td><td rowspan="2">${courseData.finalGrade || 'No entry'}</td></tr>
-                        <tr><td>Transmuted Midterm Grade</td><td>${courseData.transmutedMidtermGrade || 'No entry'}</td></tr>
-                        <tr><td>Transmuted Final Grade</td><td colspan="2">${courseData.transmutedFinalGrade || 'No entry'}</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                <div class="content-inner">
+                    <!-- Course Name at the Top -->
+                    <h3 id="courseInfo">${courseData.courseID} - ${courseData.courseDescription}</h3>
+                    
+                    <!-- Grade Table -->
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Grade Category</th>
+                                    <th>Midterm</th>
+                                    <th>Finals</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Attendance</td><td>${courseData.midtermAttendance || 'No entry'}</td><td>${courseData.finalsAttendance || 'No entry'}</td></tr>
+                                <tr><td>Class Standing</td><td>${courseData.midtermClassStanding || 'No entry'}</td><td>${courseData.finalsClassStanding || 'No entry'}</td></tr>
+                                <tr><td>Exams</td><td>${courseData.midtermExam || 'No entry'}</td><td>${courseData.finalExam || 'No entry'}</td></tr>
+                                <tr><td>Midterm Grade</td><td>${courseData.midtermGrade || 'No entry'}</td><td rowspan="2">${courseData.finalGrade || 'No entry'}</td></tr>
+                                <tr><td>Transmuted Midterm Grade</td><td>${courseData.transmutedMidtermGrade || 'No entry'}</td></tr>
+                                <tr><td>Transmuted Final Grade</td><td colspan="2">${courseData.transmutedFinalGrade || 'No entry'}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             `;
         }
 
-// Fetch student details (name and ID) from the session
-//
+        // Logout Functionality
+        document.getElementById('logoutLink').addEventListener('click', function (event) {
+            event.preventDefault();
 
-
-        fetch('/session-check', { credentials: 'include' })
+            fetch('/logout', {
+                method: 'POST',
+                credentials: 'include',
+            })
             .then(response => {
-                if (!response.ok) {
-                window.location.href = '/login.html';
+                if (response.ok) {
+                    window.location.href = 'index.html';
+                } else {
+                    console.error('Logout failed');
                 }
+            })
+            .catch(error => {
+                console.error('Error during logout:', error);
             });
-            fetch('/user-details', { credentials: 'include' })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Process data
-    })
-    .catch(error => {
-        console.error('Error fetching user details:', error);
-    });
-
-
-// Existing fetchStudentDetails function
-async function fetchStudentDetails() {
-    try {
-        const response = await fetch('/user-details', {
-            method: 'GET',
-            credentials: 'include' // Include session cookies
         });
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch user details. Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('User details response:', data); // Debugging
-
-        if (data.success) {
-            const nameElement = document.querySelector('.sidebar-welcome h2');
-            const idElement = document.getElementById('studentID');
-
-            if (!nameElement || !idElement) {
-                console.error('Required DOM elements are missing.');
-                return;
-            }
-
-            nameElement.textContent = `Hello, ${data.user.firstName} ${data.user.lastName}!`;
-            idElement.textContent = data.user.studentIDNumber;
-
-            // Fetch courses after student details are loaded
-            fetchCourses(data.user.studentIDNumber);
-        } else {
-            console.error('Failed to fetch user details:', data.message);
-        }
-    } catch (error) {
-        console.error('Error fetching user details:', error);
-    }
-}
-
-
-    document.getElementById('logoutLink').addEventListener('click', function (event) {
-        event.preventDefault();
-
-        fetch('/logout', {
-            method: 'POST',
-            credentials: 'include' // Include credentials for session handling
-        })
-        .then(response => {
-            if (response.ok) {
-                // Redirect to login page after successful logout
-                window.location.href = 'index.html';
-            } else {
-                console.error('Logout failed');
-            }
-        })
-        .catch(error => {
-            console.error('Error during logout:', error);
-        });
-    });
     </script>
 </body>
 </html>
