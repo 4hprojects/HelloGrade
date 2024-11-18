@@ -808,7 +808,7 @@ app.use((err, req, res, next) => {
 
 // Serve 404 page for non-existent routes
 app.use((req, res) => {
-    res.status(404).sendFile('/public/404.html'); // Ensure the file path is correct
+    res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
 });
 
 // Start the server after defining routes and middleware
