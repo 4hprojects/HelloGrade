@@ -141,6 +141,11 @@ app.post('/signup', async (req, res) => {
         }
 
     try {
+
+        if (!user) {
+            return res.status(400).json({ success: false, message: 'Invalid credentials.' });
+        }
+
         // Input validation
         if (!firstName || !lastName || !email || !password || !studentIDNumber) {
             return res.status(400).json({ success: false, message: 'All fields are required.' });
@@ -165,6 +170,7 @@ app.post('/signup', async (req, res) => {
         const existingStudentID = await usersCollection.findOne({ studentIDNumber });
         if (existingStudentID) {
             return res.status(400).json({ success: false, message: 'Student ID already exists.' });
+            //include message that if user has an account login or if forgot password
         }
 
         // Check if the email is already registered
@@ -172,6 +178,8 @@ app.post('/signup', async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ success: false, message: 'Email already registered.' });
         }
+        // Check if user exists
+        console.log(user); // This might be the problem if 'user' was never assigned.
 
         // Hash the password
         const hashedPassword = await hashPassword(password);
@@ -379,7 +387,7 @@ app.post('/signup', async (req, res) => {
             `;
             await sendEmail(email, 'Your Password Reset Code', emailContent);
 
-            res.json({ success: true, message: 'A reset code has been sent to your email.' });
+            res.json({ success: true, message: 'If that email address is in our database, we will send you an email to reset your password.' });
         } catch (error) {
             console.error('Error processing your request:', error);
             res.status(500).json({ success: false, message: 'Error processing your request' });
@@ -461,7 +469,7 @@ app.post('/reset-password', async (req, res) => {
         }
 
         // Hash the new password before saving
-        const hashedNewPassword = hashPassword(newPassword);
+        const hashedNewPassword = await hashPassword(newPassword);
         // Update the user's password
         
         await usersCollection.updateOne(
@@ -800,7 +808,7 @@ app.use((err, req, res, next) => {
 
 // Serve 404 page for non-existent routes
 app.use((req, res) => {
-    res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
+    res.status(404).sendFile('/public/404.html'); // Ensure the file path is correct
 });
 
 // Start the server after defining routes and middleware
