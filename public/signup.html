@@ -227,24 +227,21 @@
     </style>
 </head>
 
-
-
 <body>
     
-    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-blue-600 text-white">
-        <div class="flex items-center">
-            <a href="https://hellograde.onrender.com/">
-                <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
-            </a>
-            <h1 class="text-xl font-bold">HelloGrade</h1>
+    <!-- Header with Sticky Navigation -->
+    <header class="bg-blue-600 shadow-md sticky top-0 z-50 w-full">
+        <div class="container mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center">
+                <a href="https://hellograde.onrender.com/">
+                    <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
+                </a>
+                <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
+            </div>
+            <nav class="flex items-center space-x-4">
+                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
+            </nav>
         </div>
-        <nav>
-            <ul id="navMenu" class="flex flex-row gap-4">             
-                <li><a href="index.html" title="Home"><span class="material-icons">home</span></a></li>
-                <li><a href="help.html" title="Help"><span class="material-icons">help_outline</span></a></li>
-                <li><a href="login.html" title="Sign In"><span class="material-icons">login</span></a></li>
-            </ul>
-        </nav>
     </header>
     <main class="background flex-grow">
         <form id="signupForm" action="/signup" method="post" class="form-container compact-form">
@@ -301,125 +298,6 @@
 <footer class="bg-blue-600 text-white py-4">
     <div class="text-center">&copy; 2024 HelloGrade. All rights reserved.</div>
 </footer>
-    <script>
-        // Password visibility toggle
-        document.querySelectorAll('.password-toggle-icon').forEach(icon => {
-            icon.addEventListener('click', function () {
-                const input = this.previousElementSibling;
-                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-                input.setAttribute('type', type);
-                this.textContent = type === 'password' ? '👁️' : '🙈';
-            });
-        });
-
-         // Theme toggle logic
-        const themeToggle = document.getElementById("themeToggle");
-
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.setAttribute("data-theme", "dark");
-            themeToggle.textContent = "☀︎";
-        }
-
-        themeToggle.addEventListener("click", () => {
-            if (document.documentElement.getAttribute("data-theme") === "dark") {
-                document.documentElement.setAttribute("data-theme", "light");
-                themeToggle.textContent = "☾";
-                localStorage.setItem("theme", "light");
-            } else {
-                document.documentElement.setAttribute("data-theme", "dark");
-                themeToggle.textContent = "☀︎";
-                localStorage.setItem("theme", "dark");
-            }
-        });
-
-        // Real-time password validation
-        document.getElementById('password').addEventListener('input', function () {
-            const password = this.value;
-
-            const hasUppercase = /[A-Z]/.test(password);
-            const hasLowercase = /[a-z]/.test(password);
-            const hasNumber = /\d/.test(password);
-            const noSpecialChar = /^[A-Za-z\d]*$/.test(password); // Ensures no special characters
-            const hasMinLength = password.length >= 8;
-
-            updateCriteriaLabel('uppercase', hasUppercase);
-            updateCriteriaLabel('lowercase', hasLowercase);
-            updateCriteriaLabel('number', hasNumber);
-            updateCriteriaLabel('special', noSpecialChar);
-            updateCriteriaLabel('length', hasMinLength);
-        });
-
-        function updateCriteriaLabel(elementId, isValid) {
-            const element = document.getElementById(elementId);
-            if (isValid) {
-                element.classList.add('valid');
-            } else {
-                element.classList.remove('valid');
-            }
-        }
-    document.getElementById('signupForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    // Check if terms are agreed
-    const termsCheckbox = document.getElementById('termsCheckbox');
-    if (!termsCheckbox.checked) {
-        const errorMessage = document.getElementById('errorMessage');
-        errorMessage.textContent = 'You must agree to the Terms and Conditions.';
-        errorMessage.style.display = 'block';
-        return;
-    }
-
-    // Collect form data
-    const formData = {
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
-        studentIDNumber: document.getElementById('studentIDNumber').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
-        termsCheckbox: termsCheckbox.checked
-    };
-
-    fetch('/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Show success message
-                    errorMessage.textContent = 'Signup successful! Redirecting to login...';
-                    errorMessage.classList.remove('error');
-                    errorMessage.classList.add('success');
-                    errorMessage.style.display = 'block';
-
-                    // Redirect to login page after 3 seconds
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 3000);
-                } else {
-                    // Show error message between the Sign Up button and password criteria
-                    const errorMessage = document.getElementById('errorMessage');
-                    errorMessage.textContent = data.message;
-                    errorMessage.style.display = 'block';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                const errorMessage = document.getElementById('errorMessage');
-                errorMessage.textContent = 'An error occurred. Please try again.';
-                errorMessage.style.display = 'block';
-            });
-        });
-
-
-    </script>
-    <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-blue-500 text-white hover:bg-blue-600 flex items-center justify-center shadow-lg">
-            <span class="material-icons">arrow_upward</span>
-        </button>
-
-<!-- Footer -->
-<div id="footerContainer"></div>
-<script src="js/uscripts.js"></script>
+    <script src="js/signup.js"></script>
 </body>
 </html>
