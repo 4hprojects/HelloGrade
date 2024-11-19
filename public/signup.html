@@ -8,7 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/ustyles.css">
     <link rel="stylesheet" href="css/styles.css">
+
     <style>
         .flex-container {
     display: flex;
@@ -49,9 +51,6 @@
 .terms a:hover {
     text-decoration: none;
 }
-
-
-
         /* Ensure full viewport height and remove scroll */
         html, body {
             height: 100%;
@@ -226,22 +225,23 @@
 
     </style>
 </head>
-
 <body>
     
     <!-- Header with Sticky Navigation -->
-    <header class="bg-blue-600 shadow-md sticky top-0 z-50 w-full">
-        <div class="container mx-auto flex items-center justify-between px-6 py-4">
-            <div class="flex items-center">
-                <a href="https://hellograde.onrender.com/">
-                    <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
-                </a>
-                <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
-            </div>
-            <nav class="flex items-center space-x-4">
-                <button id="themeToggle" class="bg-gray-200 text-gray-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white">☾</button>
-            </nav>
+    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-blue-600 text-white">
+        <div class="flex items-center">
+            <a href="https://hellograde.onrender.com/">
+                <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
+            </a>
+            <h1 class="text-xl font-bold">HelloGrade</h1>
         </div>
+        <nav>
+            <ul id="navMenu" class="flex flex-row gap-4">             
+                <li><a href="index.html" title="Home"><span class="material-icons">home</span></a></li>
+                <li><a href="help.html" title="Help"><span class="material-icons">help_outline</span></a></li>
+                <li><a href="login.html" title="Sign In"><span class="material-icons">login</span></a></li>
+            </ul>
+        </nav>
     </header>
     <main class="background flex-grow">
         <form id="signupForm" action="/signup" method="post" class="form-container compact-form">
@@ -257,12 +257,12 @@
             <input type="email" id="email" name="email" placeholder="Email" required>
         
             <div class="password-toggle">
-                <input type="password" id="password" name="password" placeholder="Password" required>
+                <input type="password" id="password" name="password" placeholder="Password" required maxlength="16">
                 <span id="togglePassword" class="password-toggle-icon">👁️</span>
             </div>
         
             <div class="password-toggle">
-                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required maxlength="16">
                 <span id="toggleConfirmPassword" class="password-toggle-icon">👁️</span>
             </div>
         
@@ -282,8 +282,8 @@
                 </label>
             </div>
         
-            <div id="errorMessage" class="error-message"></div>
-            
+            <div id="errorMessage" class="notification" aria-live="polite"></div>
+          
             <button type="submit">Sign Up</button>
         
             <div class="footer mt-4 text-center">
@@ -294,10 +294,63 @@
         
     </main>
     
-<!-- Footer -->
-<footer class="bg-blue-600 text-white py-4">
-    <div class="text-center">&copy; 2024 HelloGrade. All rights reserved.</div>
-</footer>
+    <!-- Footer -->
+    <footer>
+        <ul>
+            <li><a href="about.html" title="About Us"><span class="material-icons">info</span></a></li>
+            <li><a href="contact.html" title="Contact Us"><span class="material-icons">mail_outline</span></a></li>
+            <li><a href="privacy-policy.html" title="Privacy Policy"><span class="material-icons">privacy_tip</span></a></li>
+            <li><a href="terms-and-conditions.html" title="Terms"><span class="material-icons">gavel</span></a></li>
+        </ul>
+        <p>&copy; 2024 HelloGrade. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Custom JavaScript -->  
+    <script src="js/utils.js"></script>
     <script src="js/signup.js"></script>
+    <script>
+        function showNotification(type, message) {
+            const notification = document.getElementById('errorMessage');
+            notification.className = `notification ${type}`; // Apply the appropriate type (error, success, warning)
+            notification.textContent = message;
+            notification.style.display = 'block';
+
+            // Auto-hide the notification after 5 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+        // Real-time password validation
+            document.getElementById('password').addEventListener('input', function () {
+                const password = this.value;
+
+                const hasUppercase = /[A-Z]/.test(password);
+                const hasLowercase = /[a-z]/.test(password);
+                const hasNumber = /\d/.test(password);
+                const noSpecialChar = /^[A-Za-z\d]*$/.test(password); // Ensures no special characters
+                const hasMinLength = password.length >= 8;
+
+                updateCriteriaLabel('uppercase', hasUppercase);
+                updateCriteriaLabel('lowercase', hasLowercase);
+                updateCriteriaLabel('number', hasNumber);
+                updateCriteriaLabel('special', noSpecialChar);
+                updateCriteriaLabel('length', hasMinLength);
+            });
+
+        function updateCriteriaLabel(criteriaId, isValid) {
+        const element = document.getElementById(criteriaId);
+        if (isValid) {
+            element.classList.add('valid');
+            element.textContent = element.textContent.replace('○', '✓');
+        } else {
+            element.classList.remove('valid');
+            element.textContent = element.textContent.replace('✓', '○');
+        }
+    }
+
+    </script>
+
+
 </body>
 </html>
