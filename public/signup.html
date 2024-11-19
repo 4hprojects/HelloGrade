@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/ustyles.css">
-    <link rel="stylesheet" href="css/styles.css">
+
 
     <style>
         .flex-container {
@@ -31,8 +31,8 @@
 }
 
 .terms input[type="checkbox"] {
-    width: 16px; /* Standard checkbox size */
-    height: 16px; /* Standard checkbox size */
+    width: 15px; /* Standard checkbox size */
+    height: 15px; /* Standard checkbox size */
     margin-right: 10px; /* Space between checkbox and text */
     vertical-align: middle; /* Aligns checkbox with text */
 }
@@ -57,17 +57,17 @@
             margin: 0;
             align-items: center;
             justify-content: center;
-            background-color: var(--bg-color);
+            background-color: rgba(164, 230, 241, 0.1);
         }
 
         :root {
-            --bg-color: #f9fafb;
-            --text-color: #0e40ac;
-            --header-bg: #2563eb;
-            --button-bg: #4A90E2;
-            --link-color: #4A90E2;
-            --form-bg: rgba(255, 255, 255, 0.1);
-            --placeholder-color: rgba(13, 197, 89, 0.7);
+            --bg-color: #0a0a0a; /* Dark background color */
+            --text-color: #ffffff; /* White text for contrast */
+            --header-bg: #1f2937; /* Darker header background */
+            --button-bg: #4A90E2; /* Bright blue for buttons */
+            --link-color: #4A90E2; /* Matching blue for links */
+            --form-bg: rgba(255, 255, 255, 0.1); /* Semi-transparent for forms */
+            --placeholder-color: rgba(200, 200, 200, 0.7); /* Light gray for placeholders */
         }
 
         [data-theme="dark"] {
@@ -131,16 +131,16 @@
         }
 
         button {
-            width: 100%;
-            padding: 12px;
-            background: var(--button-bg);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+        width: 100%;
+        padding: 12px;
+        background-color: var(--button-bg);
+        color: var(--text-color);
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
         button:hover {
             background-color: #357ABD;
@@ -265,7 +265,7 @@
                 <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required maxlength="16">
                 <span id="toggleConfirmPassword" class="password-toggle-icon">👁️</span>
             </div>
-        
+            <p id="errorMessage" class="notification error" style="display:none;"></p>
             <div class="password-criteria">
                 <p id="uppercase">○ one uppercase letter</p>
                 <p id="number">○ one number</p>
@@ -291,12 +291,9 @@
                 <p>or <a href="reset-password.html">Forgot Password?</a></p>
             </div>
         </form>
-        
     </main>
-    
     <!-- Footer -->
     <footer>
-
         <p>&copy; 2024 HelloGrade. All rights reserved.</p>
     </footer>
 
@@ -345,7 +342,5 @@
     }
 
     </script>
-
-
 </body>
 </html>
