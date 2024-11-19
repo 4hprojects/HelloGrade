@@ -132,24 +132,25 @@ app.get('/login.html', (req, res) => {
 
 // Sign Up Route
 app.post('/signup', async (req, res) => {
-    const { firstName, lastName, email, password, studentIDNumber, termsCheckbox } = req.body;
-    console.log('Signup request received:', req.body);
-    console.log('Signup response sent:', { success: true });
-        // Check if terms are agreed
-        if (!termsCheckbox) {
-            return res.status(400).json({ success: false, message: 'You must agree to the Terms and Conditions.' });
-        }
+    console.log('Received signup request:', req.body);
+    const { firstName, lastName, email, password, confirmPassword, studentIDNumber, termsCheckbox } = req.body;
+
+    // Check if terms are agreed
+    if (!termsCheckbox) {
+        return res.status(400).json({ success: false, message: 'You must agree to the Terms and Conditions.' });
+    }
 
     try {
-
-        if (!user) {
-            return res.status(400).json({ success: false, message: 'Invalid credentials.' });
-        }
-
         // Input validation
-        if (!firstName || !lastName || !email || !password || !studentIDNumber) {
+        if (!firstName || !lastName || !email || !password || !confirmPassword || !studentIDNumber) {
             return res.status(400).json({ success: false, message: 'All fields are required.' });
         }
+        
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            return res.status(400).json({ success: false, message: 'Passwords do not match.' });
+        }
+        
 
         // Validate email format
         if (!validator.isEmail(email)) {
@@ -161,34 +162,36 @@ app.post('/signup', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Password must meet all criteria.' });
         }
 
-        // Validate studentIDNumber (must be numeric and max 7 digits)
+        // Validate studentIDNumber
         if (!/^\d{1,7}$/.test(studentIDNumber)) {
             return res.status(400).json({ success: false, message: 'Student ID must be a number with up to 7 digits.' });
         }
 
-        // Check if the student ID is already registered
-        const existingStudentID = await usersCollection.findOne({ studentIDNumber });
-        if (existingStudentID) {
-            return res.status(400).json({ success: false, message: 'Student ID already exists.' });
-            //include message that if user has an account login or if forgot password
+        // Check if email already exists
+        const existingEmail = await usersCollection.findOne({ emaildb: email });
+        if (existingEmail) {
+            return res.status(400).json({
+                success: false,
+                message: 'The email is already registered. Please log in or reset your password.'
+            });
         }
 
-        // Check if the email is already registered
-        const existingUser = await usersCollection.findOne({ emaildb: email });
-        if (existingUser) {
-            return res.status(400).json({ success: false, message: 'Email already registered.' });
+        // Check if student ID already exists
+        const existingStudentID = await usersCollection.findOne({ studentIDNumber });
+        if (existingStudentID) {
+            return res.status(400).json({
+                success: false,
+                message: 'Student ID already exists. If you think this is a mistake, please contact support.'
+            });
         }
-        // Check if user exists
-        console.log(user); // This might be the problem if 'user' was never assigned.
 
         // Hash the password
         const hashedPassword = await hashPassword(password);
-        console.log('Hashed password:', hashedPassword); // Debug hashed password
 
         // Create a new user object
         const newUser = {
-            firstName: firstName,
-            lastName: lastName,
+            firstName,
+            lastName,
             emaildb: email,
             password: hashedPassword,
             createdAt: new Date(),
@@ -197,7 +200,7 @@ app.post('/signup', async (req, res) => {
             invalidResetAttempts: 0,
             accountDisabled: false,
             role: "student",
-            studentIDNumber: studentIDNumber
+            studentIDNumber
         };
 
         // Insert the new user into the database
@@ -205,7 +208,6 @@ app.post('/signup', async (req, res) => {
 
         if (insertResult.acknowledged) {
             res.json({ success: true, message: 'Account created successfully!' });
-
         } else {
             res.status(500).json({ success: false, message: 'Failed to create account.' });
         }
@@ -214,6 +216,7 @@ app.post('/signup', async (req, res) => {
         res.status(500).json({ success: false, message: 'An internal server error occurred.' });
     }
 });
+
 
 
     // Login Route with Rate Limiting
