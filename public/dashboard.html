@@ -20,9 +20,7 @@
             <a href="https://hellograde.onrender.com/">
                 <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
             </a>
-            <h2 class="text-xl sm:text-2xl font-semibold text-blue-white text-center">
-                Hello, <span id="studentName">[User's Name]</span>!
-            </h2>
+            <h1 class="text-xl font-bold">HelloGrade</h1>
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">             
@@ -37,15 +35,17 @@
     <section class="welcome-section bg-white shadow-md p-4 rounded-lg mx-auto my-4 max-w-md">
         <!-- Combined Welcome and Dropdown -->
         <div class="welcome-dropdown">
-
+            <p class="text-xl sm:text-2xl font-semibold text-blue-white text-center">
+                Hello, <span id="studentName">[User's Name]</span>!
+            </p>
             <p class="text-gray-600 text-center mb-4">
                 Student ID: <span id="studentID">[Student ID]</span>
             </p>
+
             <select id="classesSelect" class="w-full mt-2 mb-4 p-2 border border-gray-300 rounded">
                 <!-- Options will be dynamically populated -->
             </select>
         </div>
-
     </section>
     <section class="grades-section">
         <!-- Grade Table Container -->
@@ -54,7 +54,6 @@
             <div id="accordionContainer" class="accordion-container">
                 <!-- Dynamically populated accordion -->
             </div>
-            
         </div>
     </section>
 
