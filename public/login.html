@@ -2,18 +2,15 @@
 <html lang="en" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="Login to HelloGrade to view your grades, track academic performance, and stay updated on your progress. Simple, secure, and student-focused access anytime.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to HelloGrade - Your Student Grading Portal</title>
+    <title>Login to HelloGrade</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="dist/output.css">
-    
 
-
-
+    <link rel="stylesheet" href="css/ustyles.css">
     <style>
         /* Adjust the background to occupy full height without scroll */
         html, body {
@@ -83,54 +80,164 @@
             color: rgba(255, 255, 255, 0.7); /* Lighter gray for readability in dark theme */
         }
 
-            :root {
-    --bg-color: #f9fafb;
-    --text-color: #111827;
-    --header-bg: #2563eb;
-    --button-bg: #083da5;
-    --button-text: #374151;
-    -moz-text-decoration-line: var(--link-hover-bg);
-    --link-hover-bg: #374151;
+        :root {
+            --bg-color: #0a0a0a; /* Dark background color */
+            --text-color: #ffffff; /* White text for contrast */
+            --header-bg: #1f2937; /* Darker header background */
+            --button-bg: #4A90E2; /* Bright blue for buttons */
+            --link-color: #4A90E2; /* Matching blue for links */
+            --form-bg: rgba(255, 255, 255, 0.1); /* Semi-transparent for forms */
+            --placeholder-color: rgba(200, 200, 200, 0.7); /* Light gray for placeholders */
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --header-bg: #1f2937;
+            --button-bg: #374151;
+            --placeholder-color: rgba(216, 21, 21, 0.7);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 350px;
+            padding: 5px;
+            background-color: var(--form-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 50px auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 5px;
+            margin: 1px 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 1px;
+            color: var(--text-color);
+        }
+
+        ::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .password-criteria p {
+            color: red;
+            font-size: 0.8em;
+        }
+
+        .password-criteria p.valid {
+            color: green;
+        }
+
+        button {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--button-bg);
+        color: var(--text-color);
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
     }
 
-    [data-theme="dark"] {
-        --bg-color: #111827;
-        --text-color: #f9fafb;
-        --header-bg: #1f2937;
-        --button-bg: #374151;
-        --button-text: #f9fafb;
-        --link-hover-bg: #374151;;
-    }
+        button:hover {
+            background-color: #357ABD;
+        }
+
+        .footer a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            font-size: 0.9em;
+            display: none;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .compact-form {
+            width: 100%;
+            max-width: 320px;
+            padding: 15px; /* Reduced padding */
+            background-color: var(--form-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 30px auto; /* Reduced margin */
+        }
+
+        .compact-form h3 {
+            font-size: 1.2em; /* Smaller font */
+            margin-bottom: 10px; /* Reduced margin */
+        }
+
+        .compact-form input {
+            width: 100%;
+            padding: 7px; /* Reduced padding */
+            margin: 2px 0; /* Reduced margin */
+            font-size: 0.8em; /* Slightly smaller font */
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            color: var(--text-color);
+        }
+
     </style>
-
 </head>
-<body>
-
 <!-- Header with Sticky Navigation -->
-<header class="bg-blue-600 shadow-md sticky top-0 z-50 w-full">
-    <div class="container mx-auto flex items-center justify-between px-6 py-4">
-        <div class="flex items-center">
-            <a href="https://hellograde.onrender.com/">
-                <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
-            </a>
-            <h1 class="text-2xl font-semibold text-white">HelloGrade by 4HProjects</h1>
-        </div>
-            <nav>
-                <ul id="navMenu" class="flex flex-row gap-4">
-                    <li><a href="#" id="themeToggle" title="Toggle Theme"><span class="material-icons" id="themeIcon">brightness_4</span></a></li>        
-                    <li><a href="index.html" title="Home"><span class="material-icons">home</span></a></li>
-                    <li><a href="help.html" title="Help"><span class="material-icons">help_outline</span></a></li>
-                    <li><a href="login.html" title="Sign In"><span class="material-icons">login</span></a></li>
-                </ul>
-            </nav>
+<header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-blue-600 text-white">
+    <div class="flex items-center">
+        <a href="https://hellograde.onrender.com/">
+            <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
+        </a>
+        <h1 class="text-xl font-bold">HelloGrade</h1>
     </div>
+    <nav>
+        <ul id="navMenu" class="flex flex-row gap-4">             
+            <li><a href="index.html" title="Home"><span class="material-icons">home</span></a></li>
+            <li><a href="help.html" title="Help"><span class="material-icons">help_outline</span></a></li>
+            <li><a href="login.html" title="Sign In"><span class="material-icons">login</span></a></li>
+        </ul>
+    </nav>
 </header>
 
+<body>
+
 <!-- Main Content with Login Form -->
-<main class="main-container">
+<main>
     <form id="loginForm" action="/login" method="post" class="form-container">
-        <h3>Login</h3>
-        <input type="text" placeholder="Student ID Number" id="studentIDNumber" name="studentIDNumber" maxlength="7" pattern="\d{7}" title="Student ID Number must be 7 digits" required>
+        <h3 align="center">Login</h3>
+        <input type="text" placeholder="Student ID Number" id="studentIDNumber" name="studentIDNumber" maxlength="7" pattern="\d{7}" required>
         <div id="emailError" class="error-message"></div>
 
         <div class="password-toggle">
@@ -140,9 +247,9 @@
         <div id="passwordError" class="error-message"></div>
 
         <button type="submit">Log In</button>
-        <div id="formError" class="error-message text-center"></div>
+        <div class="error-message" id="formError"></div>
         <div class="footer">
-            <a href="reset-password.html">Forgot Password?</a>
+            <p><a href="reset-password.html">Forgot Password?</a></p>
             <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
         </div>
     </form>
@@ -154,33 +261,14 @@
 </footer>
 
 <script>
-    // Password visibility toggle
-    document.getElementById('togglePassword').addEventListener('click', function () {
-        const passwordInput = document.getElementById('password');
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        this.textContent = type === 'password' ? '👁️' : '🙈';
-    });
+        // Password visibility toggle
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.textContent = type === 'password' ? '👁️' : '🙈';
+        });
 
-    // Theme toggle logic
-    const themeToggle = document.getElementById("themeToggle");
-
-    if (localStorage.getItem("theme") === "dark") {
-        document.documentElement.setAttribute("data-theme", "dark");
-        themeToggle.textContent = "☀︎";
-    }
-
-    themeToggle.addEventListener("click", () => {
-        if (document.documentElement.getAttribute("data-theme") === "dark") {
-            document.documentElement.setAttribute("data-theme", "light");
-            themeToggle.textContent = "☾";
-            localStorage.setItem("theme", "light");
-        } else {
-            document.documentElement.setAttribute("data-theme", "dark");
-            themeToggle.textContent = "☀︎";
-            localStorage.setItem("theme", "dark");
-        }
-    });
 
     document.getElementById('studentIDNumber').addEventListener('input', function () {
         const input = this.value;
@@ -202,13 +290,6 @@
         const studentIDNumber = document.getElementById('studentIDNumber').value.trim();
         const password = document.getElementById('password').value.trim();
         let hasError = false;
-
-        // Simple email validation
-        //const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        //if (!emailPattern.test(email)) {
-        //    document.getElementById('emailError').textContent = 'Please enter a valid email address.';
-        //    hasError = true;
-        //}
 
         // New validation for student ID number
         if (!/^\d{1,7}$/.test(studentIDNumber)) {
@@ -241,6 +322,7 @@
                 // Check user role and redirect accordingly
                 window.location.href = data.role === 'admin' ? '/admin_dashboard.html' : '/dashboard.html';
             } else {
+                alert(data.message || 'Login failed.');
                 document.getElementById('formError').textContent = data.message;
             }
         })
@@ -306,6 +388,5 @@
 
 
 </script>
-<script src="js/theme-toggle.js"></script>
 </body>
 </html>
