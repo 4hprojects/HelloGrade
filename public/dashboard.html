@@ -20,7 +20,9 @@
             <a href="https://hellograde.onrender.com/">
                 <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
             </a>
-            <h1 class="text-xl font-bold">HelloGrade</h1>
+            <h2 class="text-xl sm:text-2xl font-semibold text-blue-white text-center">
+                Hello, <span id="studentName">[User's Name]</span>!
+            </h2>
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">             
@@ -33,31 +35,29 @@
     </header>
 
     <!-- Welcome Section -->
-    <section class="welcome-section">
-        <h2>Welcome, <span id="studentName">[User's Name]</span>!</h2>
-        <p id="studentID">Student ID: <span>[Student ID]</span></p>
-                <!-- Dropdown Menu for Classes -->
-                <div class="classes-dropdown">
-                    <label for="classesSelect">Select a Class:</label>
-                    <select id="classesSelect" onchange="fetchGradesForCourse(this.value)">
-                        <!-- Options will be populated dynamically -->
-                    </select>
-                </div>
+    <section class="welcome-section bg-white shadow-md p-4 rounded-lg mx-auto my-4 max-w-md">
+        <!-- Combined Welcome and Dropdown -->
+        <div class="welcome-dropdown">
+
+            <p class="text-gray-600 text-center mb-4">
+                Student ID: <span id="studentID">[Student ID]</span>
+            </p>
+            <select id="classesSelect" class="w-full mt-2 mb-4 p-2 border border-gray-300 rounded">
+                <!-- Options will be dynamically populated -->
+            </select>
+        </div>
+
     </section>
-
-    <!-- Main Content -->
-    <main>
-        <section class="grades-section">
-
-
-            <!-- Grade Table Container -->
-            <div id="gradeTableContainer" class="content">
-                <!-- Content will be dynamically inserted here -->
+    <section class="grades-section">
+        <!-- Grade Table Container -->
+        <div id="gradeTableContainer" class="content overflow-x-auto">
+            <!-- Content will be dynamically inserted here -->
+            <div id="accordionContainer" class="accordion-container">
+                <!-- Dynamically populated accordion -->
             </div>
-        </section>
-    </main>
-
-
+            
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="bg-blue-600 text-white text-center py-3">
@@ -66,25 +66,26 @@
 
      <!-- Scripts -->
      <script>
-        // Theme Toggle
-        document.addEventListener('DOMContentLoaded', () => {
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = document.getElementById('themeIcon');
-
-            // Set default theme based on localStorage or default to light
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            themeIcon.textContent = savedTheme === 'dark' ? 'brightness_7' : 'brightness_4';
-
-            // Toggle theme and update localStorage
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                themeIcon.textContent = newTheme === 'dark' ? 'brightness_7' : 'brightness_4';
-                localStorage.setItem('theme', newTheme);
-            });
+        document.getElementById('classesSelect').addEventListener('change', function () {
+            const selectedCourseID = this.value;
+            fetchGradesForCourse(selectedCourseID);
         });
+
+        // Fetch Courses and Populate Dropdown
+        async function fetchCourses(studentIDNumber) {
+            try {
+                const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
+                const data = await response.json();
+
+                if (data.success) {
+                    populateCourses(data.gradeDataArray);
+                } else {
+                    console.error('Failed to fetch courses:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+            }
+        }
 
         // Session Validation and Fetch User Details
         document.addEventListener('DOMContentLoaded', async () => {
@@ -163,15 +164,9 @@
 
         function populateCourses(courseArray) {
             const classesSelect = document.getElementById('classesSelect');
+            classesSelect.innerHTML = ''; // Clear options
 
-            if (!classesSelect) {
-                console.error('Classes select element not found in DOM');
-                return;
-            }
-
-            classesSelect.innerHTML = ''; // Clear existing options
-
-            courseArray.forEach((course) => {
+            courseArray.forEach(course => {
                 const option = document.createElement('option');
                 option.value = course.courseID;
                 option.textContent = `${course.courseID} - ${course.courseDescription}`;
@@ -203,37 +198,60 @@
             }
         }
 
-        // Display Grades in the Grade Table Container
+        // Display Grades in Table and Accordion
         function displayGrades(courseData) {
             const gradeTableContainer = document.getElementById('gradeTableContainer');
+            const accordionContainer = document.getElementById('accordionContainer');
+
+            // Display Grades in Table View
             gradeTableContainer.innerHTML = `
                 <div class="content-inner">
-                    <!-- Course Name at the Top -->
-                    <h3 id="courseInfo">${courseData.courseID} - ${courseData.courseDescription}</h3>
-                    
-                    <!-- Grade Table -->
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Grade Category</th>
-                                    <th>Midterm</th>
-                                    <th>Finals</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Attendance</td><td>${courseData.midtermAttendance || 'No entry'}</td><td>${courseData.finalsAttendance || 'No entry'}</td></tr>
-                                <tr><td>Class Standing</td><td>${courseData.midtermClassStanding || 'No entry'}</td><td>${courseData.finalsClassStanding || 'No entry'}</td></tr>
-                                <tr><td>Exams</td><td>${courseData.midtermExam || 'No entry'}</td><td>${courseData.finalExam || 'No entry'}</td></tr>
-                                <tr><td>Midterm Grade</td><td>${courseData.midtermGrade || 'No entry'}</td><td rowspan="2">${courseData.finalGrade || 'No entry'}</td></tr>
-                                <tr><td>Transmuted Midterm Grade</td><td>${courseData.transmutedMidtermGrade || 'No entry'}</td></tr>
-                                <tr><td>Transmuted Final Grade</td><td colspan="2">${courseData.transmutedFinalGrade || 'No entry'}</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <h3 class="text-lg font-semibold text-blue-600 mb-4">${courseData.courseID} - ${courseData.courseDescription}</h3>
+                    <table class="w-full bg-white border border-gray-200 text-center">
+                        <thead class="bg-blue-600 text-white font-semibold">
+                            <tr>
+                                <th class="py-2">Category</th>
+                                <th class="py-2">Midterm</th>
+                                <th class="py-2">Finals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Attendance</td><td>${courseData.midtermAttendance || 'No entry'}</td><td>${courseData.finalsAttendance || 'No entry'}</td></tr>
+                            <tr><td>Class Standing</td><td>${courseData.midtermClassStanding || 'No entry'}</td><td>${courseData.finalsClassStanding || 'No entry'}</td></tr>
+                            <tr><td>Exams</td><td>${courseData.midtermExam || 'No entry'}</td><td>${courseData.finalExam || 'No entry'}</td></tr>
+                            <tr><td>Midterm Grade</td><td>${courseData.midtermGrade || 'No entry'}</td><td>${courseData.finalGrade || 'No entry'}</td></tr>
+                            <tr><td>Transmuted Grade</td><td>${courseData.transmutedMidtermGrade || 'No entry'}</td><td>${courseData.transmutedFinalGrade || 'No entry'}</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             `;
+
+            // Populate Accordion View for Mobile
+            accordionContainer.innerHTML = `
+                ${['Attendance', 'Class Standing', 'Exams', 'Grades'].map(category => `
+                    <div class="accordion">
+                        <div class="accordion-header">${category}</div>
+                        <div class="accordion-body">
+                            <p>Details for ${category}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+
+            // Accordion Toggle
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const body = header.nextElementSibling;
+                    body.classList.toggle('visible');
+                });
+            });
         }
+
+        // Event Listener for Dropdown Change
+        document.getElementById('classesSelect').addEventListener('change', function () {
+            fetchGradesForCourse(this.value);
+        });
+
 
         // Logout Functionality
         document.getElementById('logoutLink').addEventListener('click', function (event) {
@@ -254,6 +272,8 @@
                 console.error('Error during logout:', error);
             });
         });
+
+        
     </script>
 </body>
 </html>
