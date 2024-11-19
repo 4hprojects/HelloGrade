@@ -2,10 +2,30 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.getElementById('signupForm');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const errorMessage = document.getElementById('errorMessage');
     console.log('Signup form:', signupForm);
+
+        // Real-time password matching validation
+        confirmPasswordInput.addEventListener('input', () => {
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                errorMessage.textContent = 'Passwords do not match!';
+                errorMessage.className = 'notification error';
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.textContent = '';
+                errorMessage.style.display = 'none';
+            }
+        });
 
     signupForm.addEventListener('submit', async (event) => {
         event.preventDefault(); // Prevent the default form submission
+
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            showNotification('error', 'Passwords do not match!');
+            return;
+        }
 
         const formData = new FormData(signupForm);
         const data = Object.fromEntries(formData.entries());
