@@ -714,6 +714,15 @@ footer ul {
     z-index: 1000;
 }
 
+    /* In ustyles.css or within a <style> tag */
+    .table th, .table td {
+        border: 1px solid #e2e8f0;
+        padding: 8px;
+    }
+    .table th {
+        background-color: #edf2f7;
+    }
+
 
 /* Fade-in and Slide-down Animation */
 @keyframes fadeInSlideDown {
