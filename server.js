@@ -691,6 +691,7 @@ function parseGradesFile(filePath) {
                 finalGrade: grade.FG || 'N/A',
                 transmutedMidtermGrade: grade.TMG || 'N/A',
                 transmutedFinalGrade: grade.TFG || 'N/A',
+                totalFinalGrade: grade.TFG || 'N/A',
                 courseID: grade.CourseID || 'N/A',
                 courseDescription: grade.CourseDescription || 'N/A'
             }));
