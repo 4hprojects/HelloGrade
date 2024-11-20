@@ -690,7 +690,7 @@ function parseGradesFile(filePath) {
                 midtermGrade: grade.MG || 'N/A',
                 finalGrade: grade.FG || 'N/A',
                 transmutedMidtermGrade: grade.TMG || 'N/A',
-                transmutedFinalGrade: grade.TFG || 'N/A',
+                transmutedFinalGrade: grade.MFG || 'N/A',
                 totalFinalGrade: grade.TFG || 'N/A',
                 courseID: grade.CourseID || 'N/A',
                 courseDescription: grade.CourseDescription || 'N/A'
