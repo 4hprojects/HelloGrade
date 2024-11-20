@@ -124,6 +124,7 @@
             overflow: auto;
             flex-direction: column;
             justify-content: flex-start;
+            flex-wrap: wrap;
             align-items: flex-start; /* Align items to the top */
             overflow-y: auto; /* Allow scrolling if content overflows */
             background-color: #f4f4f4; /* Light background for contrast */
@@ -139,58 +140,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }      
 
-        /* Adjust search-container to be responsive */
-        .search-container {
-            display: flex;
-            justify-content: flex-end; /* Aligns to the right */
-            align-items: center; /* Align vertically */
-            width: 100%;
-            margin: 20px 0; /* Space around the container */
-            margin-top: 30px;
-        }
-        .search-input:focus {
-            outline: none;
-            border-color: #2563EB; /* Change border color on focus */
-        }
-
-        .search-input {
-            flex-grow: 1;
-            padding: 8px 12px;
-            border: 1px solid #ccc;
-            border-right: none;
-            border-radius: 10px 0 0 10px; /* Rounded corners on the left */
-            font-size: 1em;
-            max-width: 100%; /* Set maximum width */
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            transition: all 0.3s ease-in-out; /* Smooth focus effect */
-            height: 40px; /* Match input height */
-            vertical-align: middle;
-    
-        }
-
-        .search-button {
-            padding: 8px 12px;
-            background-color: #2563EB; /* Button color */
-            color: white;
-            vertical-align:middle;
-            border: none;
-            font-size: 1em;
-            border-radius: 0 10px 10px 0; /* Rounded corners on the right */
-            font-size: 0.9em;
-            cursor: pointer;
-            height: 40px; /* Match input height */
-            display: flex;
-            max-width: 20%;
-            align-items: center; /* Center text vertically */
-            justify-content: center; /* Center text horizontally */
-            margin-left: -4px; /* Slight overlap for seamless join */
-            margin-top: auto; /*this is the solution for alignment*/
-            transition: background-color 0.2s; /* Smooth hover effect */
-        }
-
-        .search-button:hover {
-            background-color: #1D4ED8; /* Darker blue on hover */
-        }
+        
             
             .table-container {
                 overflow-x: auto;
@@ -274,12 +224,11 @@
         <!-- Main Content -->
         <main>
             <div class="content">
-
                 <div class="content-inner">
-                    <div></div>
+                    <div style="height: 50px;"></div> <!-- Spacer div -->
                     <div class="search-container">
                         <input type="text" id="searchInput" class="search-input" placeholder="Search by student ID, name, course ID, etc.">
-                        <button id="searchButton" class="search-button">Search</button>    
+                        <button id="searchButton" class="search-button">Search</button> 
                     </div>
             <div class="table-container">
                 <table class="results-table">
@@ -320,11 +269,14 @@
                 <h2>Hello, <span id="studentName">[User's Name]</span>!</h2>
                 <p id="studentID" style="font-size: 0.9em; color: #ccc; margin-top: 5px;">[Admin ID]</p>
             </div>
+
                 <!-- Sidebar Navigation -->
                 <form id="uploadForm" enctype="multipart/form-data">
                     <input type="file" name="gradesFile" accept=".csv, .xlsx" required />
                     <button type="submit">Upload Grades</button>
+                    <div class="pagination" id="pagination"></div>
                 </form>
+                
                 <ul class="sidebar-nav">
                     <li><a href="#">Dashboard</a></li>
                     <li><a href="#">Classes</a></li>
@@ -374,6 +326,7 @@
 
         // Perform search
         async function performSearch() {
+            currentPage = 1; // Reset to the first page on a new search
             const searchInput = document.getElementById('searchInput').value;
             const searchQuery = searchInput.trim();
             
@@ -531,6 +484,85 @@
         console.error('Error uploading grades:', error);
     }
 }
+
+let currentPage = 1;
+const rowsPerPage = 5; // Adjust the number of rows per page as needed
+let searchResultsData = [];
+
+function displayPage(page) {
+    const tableBody = document.getElementById('searchResults');
+    tableBody.innerHTML = '';
+
+    const startIndex = (page - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    const paginatedResults = searchResultsData.slice(startIndex, endIndex);
+
+    if (paginatedResults.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="6" class="no-results">No results found.</td></tr>';
+        return;
+    }
+
+    paginatedResults.forEach(result => {
+        const row = `<tr>
+            <td>${escapeHTML(result.studentIDNumber) || 'N/A'}</td>
+            <td>${escapeHTML(result.firstName)} ${escapeHTML(result.lastName)}</td>
+            <td>${escapeHTML(result.CourseID) || 'N/A'}</td>
+            <td>${escapeHTML(result.CourseDescription) || 'N/A'}</td>
+            <td>${escapeHTML(result.MG) || 'N/A'}</td>
+            <td>${escapeHTML(result.FG) || 'N/A'}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+    });
+}
+
+function setupPagination(results) {
+    const paginationContainer = document.getElementById('pagination');
+    paginationContainer.innerHTML = '';
+
+    const pageCount = Math.ceil(results.length / rowsPerPage);
+
+    for (let i = 1; i <= pageCount; i++) {
+        const btn = paginationButton(i);
+        paginationContainer.appendChild(btn);
+    }
+}
+
+function paginationButton(page) {
+    const button = document.createElement('button');
+    button.innerText = page;
+
+    if (currentPage === page) button.classList.add('active');
+
+    button.addEventListener('click', function () {
+        currentPage = page;
+        displayPage(currentPage);
+
+        const currentBtn = document.querySelector('.pagination button.active');
+        if (currentBtn) currentBtn.classList.remove('active');
+
+        button.classList.add('active');
+    });
+
+    return button;
+}
+
+// Function to escape HTML to prevent XSS
+function escapeHTML(text) {
+    if (!text) return text;
+    return text.replace(/[&<>"'`=\/]/g, function (char) {
+        return {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '/': '&#x2F;',
+            '`': '&#x60;',
+            '=': '&#x3D;'
+        }[char];
+    });
+}
+
 
 
     </script>
