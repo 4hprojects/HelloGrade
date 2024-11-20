@@ -1,422 +1,147 @@
-/* Global styles */
-*,
-*:before,
-*:after {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Default light theme */
-/* Light mode theme */
-:root {
-    --bg-color: #ffffff; /* Pure white for background */
-    --text-color: #222222; /* Darker text for better contrast */
-    --header-bg: #1976d2; /* Stronger blue for header */
-    --button-bg: #0d47a1; /* Rich blue for buttons */
-    --button-text: #ffffff; /* White for button text */
-    --link-hover-bg: #1565c0; /* Medium blue for hover effects */
-    --form-bg: rgba(250, 250, 250, 0.95); /* Softer form background */
-    --form-border: rgba(0, 0, 0, 0.2); /* Subtle border for forms */
-}
-
-/* Dark theme */
-[data-theme="dark"] {
-    --bg-color: #111827;
-    --text-color: #f9fafb;
-    --header-bg: #1f2937;
-    --button-bg: #374151;
-    --button-text: #f9fafb;
-    --link-hover-bg: #1d4ed8;
-    --form-bg: rgba(255, 255, 255, 0.13);
-    --form-border: rgba(255, 255, 255, 0.1);
-    --button-hover-bg: #357ABD;
-    --link-color: #4CAF50;
-}
-
-
-/* Shared Styles for Improved Readability */
+/* General Styles */
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    background-color: #f0f0f0;
+    color: #000;
     font-family: 'Poppins', sans-serif;
-}
-
-button {
-    background-color: var(--button-bg);
-    color: var(--button-text);
-}
-
-button:hover {
-    background-color: var(--button-hover-bg);
-}
-
-/* Placeholder text for light mode */
-::placeholder {
-    color: rgba(100, 100, 100, 0.8);
-}
-
-[data-theme="dark"] ::placeholder {
-    color: rgba(200, 200, 200, 0.8);
+    margin: 0;
+    padding: 0;
 }
 
 header {
-    background-color: var(--header-bg);
-}
-
-button, .bg-white, .text-gray-800 {
-    background-color: var(--button-bg);
-    color: var(--button-text);
-}
-
-a:hover {
-    background-color: var(--link-hover-bg);
-    color: var(--button-text);
-}
-
-/* Optional: Placeholder color adjustment */
-::placeholder {
-    color: rgba(131, 131, 131, 0.8);
-}
-
-[data-theme="dark"] ::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-
-.background {
+    background-color: #1E3A8A;
+    color: #fff;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    min-height: 100vh;
-    position: relative;
+    padding: 15px 20px;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    width: calc(100% - 200px);
+    margin-left: 200px;
+    z-index: 1000;
 }
 
-.background .shape {
-    height: 200px;
+/* Sidebar */
+.sidebar {
+    background-color: #1E3A8A;
     width: 200px;
-    position: absolute;
-    border-radius: 50%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fff;
 }
 
-.shape:first-child {
-    background: linear-gradient(#004cff, #dadada);
-    left: -80px;
-    top: -80px;
-}
-
-.shape:last-child {
-    background: linear-gradient(to right, #1100ff, #e4e0dc);
-    right: -30px;
-    bottom: -80px;
-}
-
-.form-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 50px 35px;
-    background-color: var(--form-bg);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    border: 2px solid var(--form-border);
-    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-}
-
-.form-container h3 {
-    font-size: 32px;
-    font-weight: 500;
+.sidebar-welcome {
+    padding: 20px;
     text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.form-container label {
-    display: block;
-    margin-top: 30px;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.form-container input {
-    display: block;
-    height: 50px;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.07);
-    border-radius: 3px;
-    padding: 0 10px;
-    margin-top: 8px;
-    font-size: 14px;
-    font-weight: 300;
-    color: var(--text-color);
-}
-
-.form-container ::placeholder {
-    color: #e5e5e5;
-}
-
-.form-container button {
-    margin-top: 50px;
-    width: 100%;
-    background-color: var(--button-bg);
-    color: #ffffff;
-    padding: 15px 0;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.form-container button:hover {
-    background-color: var(--button-hover-bg);
-}
-
-
-
-.footer a {
-    color: var(--link-color);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.footer a:hover {
-    text-decoration: underline;
-}
-
-/* Compact Form Styling */
-.form-container.compact {
-    padding: 30px 20px; /* Reduce padding */
-    max-width: 350px; /* Slightly smaller width */
-}
-
-.form-container h3 {
-    font-size: 24px; /* Smaller heading */
-    margin-bottom: 20px; /* Less space below heading */
-}
-
-.form-container label {
-    margin-top: 20px; /* Less vertical spacing */
-    font-size: 14px;
-}
-
-.form-container input {
-    height: 40px; /* Reduce height */
-    font-size: 14px;
-    padding: 0 8px; /* Less padding */
-}
-
-/* Container for password input and toggle icon */
-.password-toggle {
-    position: relative;
-}
-
-/* Adjust the position of the eye icon */
-.password-toggle-icon {
-    position: absolute;
-    top: 50%;
-    right: 10px; /* Adjust as needed to align it properly within the input */
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: var(--text-color);
-    font-size: 1.2em;
-    pointer-events: all;
-    z-index: 10;
-}
-
-/* Adjust padding on the input field to prevent overlap with the icon */
-.password-toggle input {
-    padding-right: 30px; /* Add space to the right for the icon */
-}
-
-.form-container button {
-    padding: 10px 0; /* Reduce padding */
-    font-size: 16px;
-    margin-top: 20px; /* Reduce space above button */
-}
-
-.footer {
-    margin-top: 15px; /* Less space above footer */
-}
-
-.footer p, .footer a {
-    font-size: 0.85em; /* Smaller text */
-}
-/* Global styles */
-*,
-*:before,
-*:after {
-    padding: 0;
-    margin: 0;
+/* Content */
+.content {
+    margin-left: 200px;
+    padding: 20px;
+    width: calc(100% - 200px);
+    background-color: #f4f4f4;
+    min-height: 100vh;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 
-[data-theme="light"] {
-    --bg-color: #f9fafb;
-    --text-color: #080710;
-    --button-bg: #4A90E2;
-    --button-hover-bg: #357ABD;
-    --link-color: #4A90E2;
-    --form-bg: rgba(255, 255, 255, 0.9);
-    --form-border: rgba(0, 0, 0, 0.1);
+.search-container {
+    order: 2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 95%;
+    margin: 30px 0; /* Existing margins */
+    
 }
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
+
+.search-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
 }
 
-.background {
+.search-button {
+    padding: 10px 15px;
+    background-color: #2563EB;
+    color: #fff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.table-container {
+    max-height: 400px; /* Set the desired maximum height */
+    overflow-y: auto;  /* Enable vertical scrolling */
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.results-table th, .results-table td {
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+
+.loading {
+    display: none;
+    text-align: center;
+    margin: 20px;
+    color: #555;
+}
+
+/* Grid.js Customization */
+#grid {
+    margin-top: 20px;
+}
+
+.gridjs-container {
+    overflow-x: auto;
+}
+
+.gridjs-table {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.pagination {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    position: relative;
+    margin-top: 20px;
 }
 
-.background .shape {
-    height: 200px;
-    width: 200px;
-    position: absolute;
-    border-radius: 50%;
-}
-
-.shape:first-child {
-    background: linear-gradient(#004cff, #dadada);
-    left: -80px;
-    top: -80px;
-}
-
-.shape:last-child {
-    background: linear-gradient(to right, #1100ff, #e4e0dc);
-    right: -30px;
-    bottom: -80px;
-}
-
-.form-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 50px 35px;
-    background-color: var(--form-bg);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    border: 2px solid var(--form-border);
-    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-}
-
-.form-container h3 {
-    font-size: 32px;
-    font-weight: 500;
-    text-align: center;
-}
-
-.form-container label {
-    display: block;
-    margin-top: 30px;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.form-container input {
-    display: block;
-    height: 50px;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.07);
-    border-radius: 3px;
-    padding: 0 10px;
-    margin-top: 8px;
-    font-size: 14px;
-    font-weight: 300;
-    color: var(--text-color);
-}
-
-.form-container ::placeholder {
-    color: #e5e5e5;
-}
-
-.form-container button {
-    margin-top: 50px;
-    width: 100%;
-    background-color: var(--button-bg);
-    color: #ffffff;
-    padding: 15px 0;
-    font-size: 18px;
-    font-weight: 600;
+.pagination button {
+    background-color: #2563EB;
+    color: white;
+    border: none;
+    margin: 0 5px;
+    padding: 8px 12px;
+    cursor: pointer;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 1em;
 }
 
-.form-container button:hover {
-    background-color: var(--button-hover-bg);
+.pagination button.active {
+    background-color: #1D4ED8;
 }
 
-
-
-.footer a {
-    color: var(--link-color);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.footer a:hover {
-    text-decoration: underline;
-}
-
-/* Compact Form Styling */
-.form-container.compact {
-    padding: 30px 20px; /* Reduce padding */
-    max-width: 350px; /* Slightly smaller width */
-}
-
-.form-container h3 {
-    font-size: 24px; /* Smaller heading */
-    margin-bottom: 20px; /* Less space below heading */
-}
-
-.form-container label {
-    margin-top: 20px; /* Less vertical spacing */
-    font-size: 14px;
-}
-
-.form-container input {
-    height: 40px; /* Reduce height */
-    font-size: 14px;
-    padding: 0 8px; /* Less padding */
-}
-
-/* Container for password input and toggle icon */
-.password-toggle {
-    position: relative;
-}
-
-/* Adjust the position of the eye icon */
-.password-toggle-icon {
-    position: absolute;
-    top: 50%;
-    right: 10px; /* Adjust as needed to align it properly within the input */
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: var(--text-color);
-    font-size: 1.2em;
-    pointer-events: all;
-    z-index: 10;
-}
-
-/* Adjust padding on the input field to prevent overlap with the icon */
-.password-toggle input {
-    padding-right: 30px; /* Add space to the right for the icon */
-}
-
-.form-container button {
-    padding: 10px 0; /* Reduce padding */
-    font-size: 16px;
-    margin-top: 20px; /* Reduce space above button */
-}
-
-.footer {
-    margin-top: 15px; /* Less space above footer */
-}
-
-.footer p, .footer a {
-    font-size: 0.85em; /* Smaller text */
+.pagination button:hover {
+    background-color: #1E40AF;
 }
