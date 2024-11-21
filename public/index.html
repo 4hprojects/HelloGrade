@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth;">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HelloGrade Dashboard</title>
-
-    <!-- Google Fonts & Icons -->
+    <meta name="description" content="Welcome to HelloGrade, your one-stop student grading portal. Simplify grade management, enhance transparency, and access grades efficiently on any device.">
+    <title>Welcome to HelloGrade - Your Student Grading Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/ustyles.css">
-    <script src="js/uscripts.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/ustyles.css">
+    <!-- Scroll Reveal and Smooth Scrolling -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="js/uscripts.js"></script>
+    <link rel="stylesheet" href="dist/output.css">
+
 </head>
 <body>
-    <!-- Header -->
     <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
             <a href="https://hellograde.onrender.com/">
@@ -24,255 +27,267 @@
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">             
-                <li><a href="dashboard.html" title="Dashboard"><span class="material-icons">dashboard</span></a></li>
-
+                <li><a href="index.html" title="Home"><span class="material-icons">home</span></a></li>
+                <li><a href="help.html" title="Help"><span class="material-icons">help_outline</span></a></li>
                 <li><a href="login.html" title="Sign In"><span class="material-icons">login</span></a></li>
             </ul>
         </nav>
     </header>
+    
+<!-- Main Content with Smooth Scrolling and Reveal Animations -->
+<main class="container mx-auto px-4 py-8">
+    <!-- Introduction Section -->
+    <h2 class="text-3xl font-bold text-center mb-4">Welcome to HelloGrade</h2>
+    <p class="text-center">Your one-stop portal for managing student grades efficiently and securely.</p>
 
-    <!-- Welcome Section -->
-    <section class="welcome-section bg-white shadow-md p-4 rounded-lg mx-auto my-4 max-w-md">
-        <!-- Combined Welcome and Dropdown -->
-        <div class="welcome-dropdown">
-            <p class="text-xl sm:text-2xl font-semibold text-green-white text-center">
-                Hello, <span id="studentName">[User's Name]</span>!
-            </p>
-            <p class="text-gray-600 text-center mb-4">
-                Student ID: <span id="studentID">[Student ID]</span>
-            </p>
-
-            <select id="classesSelect" class="w-full mt-2 mb-4 p-2 border border-gray-300 rounded">
-                <!-- Options will be dynamically populated -->
-            </select>
+    <!-- Features Section with Grid Layout -->
+    <section id="features" class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Efficient Grade Management</h3>
+            <p>Teachers can input grades, track student progress, and make real-time adjustments, reducing administrative tasks.</p>
+        </div>
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Real-Time Student Access</h3>
+            <p>Students can access their grades instantly, promoting responsibility and goal setting.</p>
+        </div>
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Customizable Grading Criteria</h3>
+            <p>Supports point-based, percentage, and custom grading scales to match academic standards.</p>
+        </div>
+        <div class="scroll-reveal">
+            <h3 class="text-2xl font-bold text-blue-600">Data Security and Privacy</h3>
+            <p>Ensures secure data handling with encryption and limited access to protect user information.</p>
         </div>
     </section>
-    <section class="grades-section">
-        <!-- Grade Table Container -->
-        <div id="gradeTableContainer" class="content overflow-x-auto">
-            <!-- Content will be dynamically inserted here -->
-            <div id="accordionContainer" class="accordion-container">
-                <!-- Dynamically populated accordion -->
+    
+    <!-- Advertisement Section -->
+        <div class="text-center my-8">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+                crossorigin="anonymous"></script>
+            <!-- HelloGrade Responsive Ad -->
+            <ins class="adsbygoogle"
+                style="display:inline-block;width:728px;height:90px"
+                data-ad-client="ca-pub-4537208011192461"
+                data-ad-slot="7121468855"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+    <!-- Why Choose Section -->
+    <section id="why-choose" class="text-center mb-16 scroll-reveal">
+        <h2 class="text-3xl font-bold text-blue-600">Why Choose HelloGrade?</h2>
+        <p class="text-lg mt-4 max-w-2xl mx-auto">
+            HelloGrade is more than just a grading tool—it’s a comprehensive solution designed to support educators and empower students. With HelloGrade, institutions can simplify grade management, enhance transparency, and foster a proactive learning environment.
+        </p>
+        <p class="text-lg mt-4 max-w-2xl mx-auto">
+            Developed with attention to detail and an understanding of educational needs, HelloGrade is here to support teachers, inspire students, and transform how grades are managed in today’s schools.
+        </p>
+    </section>
+    <!-- Determine Proficiency Section -->
+    <section id="determine-proficiency" class="bg-white p-8 rounded-lg shadow-md my-16">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Determine Proficiency</h2>
+        <h3 class="text-2xl font-semibold text-gray-700 mb-6">Systematic Grading</h3>
+        <p class="text-lg text-gray-600 mb-8">
+            The 11-point grading system is a comprehensive method of evaluating academic performance using a range of predefined grade values.
+        </p>
+    
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Left Section: Descriptions -->
+            <div class="space-y-8">
+                <div class="flex items-start">
+                    <span class="material-icons text-indigo-600 mr-2"></span>
+                    <div>
+                        <h4 class="font-semibold text-gray-700">Enhanced Precision</h4>
+                        <p class="text-gray-600">
+                            The expanded range of grade points allows educators to make finer distinctions in student performance, giving a more detailed assessment of students' knowledge and skill levels.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="material-icons text-indigo-600 mr-2"></span>
+                    <div>
+                        <h4 class="font-semibold text-gray-700">Improved Differentiation</h4>
+                        <p class="text-gray-600">
+                            This grading system highlights and rewards incremental progress, offering a clearer reflection of each student’s unique strengths and areas for development.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="material-icons text-indigo-600 mr-2"></span>
+                    <div>
+                        <h4 class="font-semibold text-gray-700">Clearer Communication</h4>
+                        <p class="text-gray-600">
+                            With additional grading points, this system provides a more comprehensive picture of student achievement, supporting in-depth discussions between educators, students, and parents about progress, focus areas, and strategies for growth.
+                        </p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-green-600 text-white text-center py-3">
-        <p>&copy; 2024 HelloGrade. All Rights Reserved.</p>
-    </footer>
-
-     <!-- Scripts -->
-     <script>
-        document.getElementById('classesSelect').addEventListener('change', function () {
-            const selectedCourseID = this.value;
-            fetchGradesForCourse(selectedCourseID);
-        });
-
-        // Fetch Courses and Populate Dropdown
-        async function fetchCourses(studentIDNumber) {
-            try {
-                const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
-                const data = await response.json();
-
-                if (data.success) {
-                    populateCourses(data.gradeDataArray);
-                } else {
-                    console.error('Failed to fetch courses:', data.message);
-                }
-            } catch (error) {
-                console.error('Error fetching courses:', error);
-            }
-        }
-
-        // Session Validation and Fetch User Details
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                // Session validation
-                const sessionResponse = await fetch('/session-check', {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-
-                const sessionData = await sessionResponse.json();
-
-                if (!sessionResponse.ok || !sessionData.authenticated) {
-                    window.location.href = 'login.html';
-                    return;
-                }
-
-                if (sessionData.role === 'admin') {
-                    window.location.href = 'admin_dashboard.html';
-                    return;
-                } else if (sessionData.role !== 'student') {
-                    window.location.href = '403.html';
-                    return;
-                }
-
-                // Fetch user details after session validation
-                await fetchStudentDetails();
-            } catch (error) {
-                console.error('Error during session validation:', error);
-                window.location.href = 'login.html';
-            }
-        });
-
-        async function fetchStudentDetails() {
-            try {
-                const response = await fetch('/user-details', {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch user details. Status: ${response.status}`);
-                }
-
-                const data = await response.json();
-
-                if (data.success) {
-                    document.getElementById('studentName').textContent = `${data.user.firstName} ${data.user.lastName}`;
-                    document.getElementById('studentID').textContent = data.user.studentIDNumber;
-
-                    // Fetch and display courses
-                    await fetchCourses(data.user.studentIDNumber);
-                } else {
-                    console.error('Failed to fetch user details:', data.message);
-                }
-            } catch (error) {
-                console.error('Error fetching user details:', error);
-            }
-        }
-
-        // Fetch Courses and Populate Dropdown
-        async function fetchCourses(studentIDNumber) {
-            try {
-                const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
-                const data = await response.json();
-
-                if (data.success) {
-                    populateCourses(data.gradeDataArray);
-                } else {
-                    console.error('Failed to fetch courses:', data.message);
-                }
-            } catch (error) {
-                console.error('Error fetching courses:', error);
-            }
-        }
-
-        function populateCourses(courseArray) {
-            const classesSelect = document.getElementById('classesSelect');
-            classesSelect.innerHTML = ''; // Clear options
-
-            courseArray.forEach(course => {
-                const option = document.createElement('option');
-                option.value = course.courseID;
-                option.textContent = `${course.courseID} - ${course.courseDescription}`;
-                classesSelect.appendChild(option);
-            });
-
-            // Display grades for the first course by default
-            if (courseArray.length > 0) {
-                fetchGradesForCourse(courseArray[0].courseID);
-            }
-        }
-
-        // Fetch Grades for Selected Course
-        async function fetchGradesForCourse(courseID) {
-            const studentIDNumber = document.getElementById('studentID').textContent;
-
-            try {
-                const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
-                const data = await response.json();
-
-                if (data.success) {
-                    const courseData = data.gradeDataArray.find(course => course.courseID === courseID);
-                    if (courseData) displayGrades(courseData);
-                } else {
-                    console.error('Failed to fetch grades:', data.message);
-                }
-            } catch (error) {
-                console.error('Error fetching grades:', error);
-            }
-        }
-
-        // Display Grades in Table and Accordion
-        function displayGrades(courseData) {
-            const gradeTableContainer = document.getElementById('gradeTableContainer');
-            const accordionContainer = document.getElementById('accordionContainer');
-
-            // Display Grades in Table View
-            gradeTableContainer.innerHTML = `
-            <div class="content-inner mb-6">
-                <h3 class="text-lg font-semibold text-green-600 mb-4">${courseData.courseID} - ${courseData.courseDescription}</h3>
-                <table class="w-full bg-white border border-gray-200 text-center">
-                    <thead class="bg-green-600 text-white font-semibold">
+    
+            <!-- Right Section: Grading Table -->
+            <div class="relative overflow-x-auto mt-0 sm:mt-10 hidden sm:block">
+                <table class="w-full text-sm text-left text-gray-500 content3_4">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-100/20 text-center">
                         <tr>
-                            <th class="py-2">Category</th>
-                            <th class="py-2">Midterm</th>
-                            <th class="py-2">Finals</th>
+                            <th scope="col" class="px-3 py-2 font-semibold text-gray-700">
+                               Grade
+                            </th>
+                            <th scope="col" class="px-3 py-2 font-semibold text-gray-700">
+                                Grade Percentage Equivalent
+                            </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr><td>Attendance</td><td>${courseData.midtermAttendance || 'No entry'}</td><td>${courseData.finalsAttendance || 'No entry'}</td></tr>
-                        <tr><td>Class Standing</td><td>${courseData.midtermClassStanding || 'No entry'}</td><td>${courseData.finalsClassStanding || 'No entry'}</td></tr>
-                        <tr><td>Exams</td><td>${courseData.midtermExam || 'No entry'}</td><td>${courseData.finalExam || 'No entry'}</td></tr>
-                        <tr class="bg-gray-100 font-semibold"><td>Computed Grade</td><td>${courseData.midtermGrade || 'No entry'}</td><td>${courseData.finalGrade || 'No entry'}</td></tr>
-                        <tr class="bg-gray-200 font-bold"><td>Transmuted Grade</td><td>${courseData.transmutedMidtermGrade || 'No entry'}</td><td>${courseData.transmutedFinalGrade || 'No entry'}</td></tr>
-                        <tr class="bg-green-100 font-bold"><td colspan="3">Final Grade: ${courseData.totalFinalGrade || 'No entry'}</td></tr>
+                    <tbody class="text-center">
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                1.00
+                            </td>
+                            <td class="px-3 py-1">
+                                98-100
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                1.25
+                            </td>
+                            <td class="px-3 py-1">
+                                95-97
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                1.50
+                            </td>
+                            <td class="px-3 py-1">
+                               92-94
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                1.75
+                            </td>
+                            <td class="px-3 py-1">
+                               89-91
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                2.00
+                            </td>
+                            <td class="px-3 py-1">
+                               86-88
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                2.25
+                            </td>
+                            <td class="px-3 py-1">
+                               83-85
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                2.50
+                            </td>
+                            <td class="px-3 py-1">
+                               80-82
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                2.75
+                            </td>
+                            <td class="px-3 py-1">
+                                77-79
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                3.00
+                            </td>
+                            <td class="px-3 py-1">
+                               75-76
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                5.00
+                            </td>
+                            <td class="px-3 py-1">
+                               Below 75
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                INC
+                            </td>
+                            <td class="px-3 py-1">
+                               Incomplete
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                OD
+                            </td>
+                            <td class="px-3 py-1">
+                               Officially Dropped
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                UD
+                            </td>
+                            <td class="px-3 py-1">
+                               Unofficially Dropped
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-300">
+                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
+                                W
+                            </td>
+                            <td class="px-3 py-1">
+                               Withdrawn
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-            `;
+    </section>
 
-            // Populate Accordion View for Mobile
-            accordionContainer.innerHTML = `
-                ${['Attendance', 'Class Standing', 'Exams', 'Grades'].map(category => `
-                    <div class="accordion">
-                        <div class="accordion-header">${category}</div>
-                        <div class="accordion-body">
-                            <p>Details for ${category}</p>
-                        </div>
-                    </div>
-                `).join('')}
-            `;
+    <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
+        <span class="material-icons">arrow_upward</span>
+    </button>
+</main>
 
-            // Accordion Toggle
-            document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    const body = header.nextElementSibling;
-                    body.classList.toggle('visible');
-                });
-            });
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+            // Scroll to the top smoothly when the button is clicked
+            scrollToTopBtn.addEventListener("click", function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });            });
+        });
+
+    // ScrollReveal configuration
+    ScrollReveal().reveal('.scroll-reveal', { duration: 1200, origin: 'bottom', distance: '30px' });
+
+    // Get the button
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    // Function to show the button when scrolling down
+    window.onscroll = function() {
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            scrollToTopBtn.style.display = "flex";
+        } else {
+            scrollToTopBtn.style.display = "none";
         }
-
-        // Event Listener for Dropdown Change
-        document.getElementById('classesSelect').addEventListener('change', function () {
-            fetchGradesForCourse(this.value);
-        });
-
-
-        // Logout Functionality
-        document.getElementById('logoutLink').addEventListener('click', function (event) {
-            event.preventDefault();
-
-            fetch('/logout', {
-                method: 'POST',
-                credentials: 'include',
-            })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = 'index.html';
-                } else {
-                    console.error('Logout failed');
-                }
-            })
-            .catch(error => {
-                console.error('Error during logout:', error);
-            });
-        });
-
-        
-    </script>
+    };
+</script>
+<!-- Footer -->
+<div id="footerContainer"></div>
 </body>
 </html>
