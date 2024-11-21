@@ -43,7 +43,7 @@ app.use(session({
         secure: false, // Set to true only if using HTTPS
         httpOnly: true,
         sameSite: 'lax', // Adjust sameSite setting for better compatibility
-        maxAge: 30 * 60 * 1000 // 30 minutes session expiry
+        maxAge: 1 * 60 * 1000 // 30 minutes session expiry
     }
 }));
 
