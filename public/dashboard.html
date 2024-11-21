@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="Access your academic dashboard on HelloGrade, a secure platform for students to view grades, attendance, and course details. Manage your academic records effortlessly with real-time updates and intuitive navigation. Designed for seamless student experience and data privacy compliance." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HelloGrade Dashboard</title>
 
@@ -15,7 +16,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-blue-600 text-white">
+    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
             <a href="https://hellograde.onrender.com/">
                 <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
@@ -35,7 +36,7 @@
     <section class="welcome-section bg-white shadow-md p-4 rounded-lg mx-auto my-4 max-w-md">
         <!-- Combined Welcome and Dropdown -->
         <div class="welcome-dropdown">
-            <p class="text-xl sm:text-2xl font-semibold text-blue-white text-center">
+            <p class="text-xl sm:text-2xl font-semibold text-green-white text-center">
                 Hello, <span id="studentName">[User's Name]</span>!
             </p>
             <p class="text-gray-600 text-center mb-4">
@@ -58,7 +59,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-blue-600 text-white text-center py-3">
+    <footer class="bg-green-600 text-white text-center py-3">
         <p>&copy; 2024 HelloGrade. All Rights Reserved.</p>
     </footer>
 
@@ -204,9 +205,9 @@
             // Display Grades in Table View
             gradeTableContainer.innerHTML = `
             <div class="content-inner mb-6">
-                <h3 class="text-lg font-semibold text-blue-600 mb-4">${courseData.courseID} - ${courseData.courseDescription}</h3>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">${courseData.courseID} - ${courseData.courseDescription}</h3>
                 <table class="w-full bg-white border border-gray-200 text-center">
-                    <thead class="bg-blue-600 text-white font-semibold">
+                    <thead class="bg-green-600 text-white font-semibold">
                         <tr>
                             <th class="py-2">Category</th>
                             <th class="py-2">Midterm</th>
@@ -219,7 +220,7 @@
                         <tr><td>Exams</td><td>${courseData.midtermExam || 'No entry'}</td><td>${courseData.finalExam || 'No entry'}</td></tr>
                         <tr class="bg-gray-100 font-semibold"><td>Computed Grade</td><td>${courseData.midtermGrade || 'No entry'}</td><td>${courseData.finalGrade || 'No entry'}</td></tr>
                         <tr class="bg-gray-200 font-bold"><td>Transmuted Grade</td><td>${courseData.transmutedMidtermGrade || 'No entry'}</td><td>${courseData.transmutedFinalGrade || 'No entry'}</td></tr>
-                        <tr class="bg-blue-100 font-bold"><td colspan="3">Final Grade: ${courseData.totalFinalGrade || 'No entry'}</td></tr>
+                        <tr class="bg-green-100 font-bold"><td colspan="3">Final Grade: ${courseData.totalFinalGrade || 'No entry'}</td></tr>
                     </tbody>
                 </table>
             </div>
