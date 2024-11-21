@@ -1,13 +1,15 @@
 // tailwind.config.js
 module.exports = {
-  darkMode: ['attribute', 'data-theme="dark"'],
-    content: [
-      './public/**/*.{html,js}',
-      // Add other paths as needed
-    ],
-    theme: {
-      extend: {},
+  content: ['./public/**/*.html', './public/**/*.js'],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#28a745',
+          dark: '#218838',
+        },
+      },
     },
-    plugins: [],
-  }
-  
+  },
+  plugins: [],
+};
