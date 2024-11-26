@@ -1,977 +1,983 @@
-require('dotenv').config();
-const express = require('express');
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HelloGrade Admin Dashboard</title>
+    
+        <!-- Global Styles -->
+        <link rel="stylesheet" href="css/styles.css">
+    
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    
+        <!-- Font Awesome Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <style>
+            /* General Upload Section Styles */
 
-const { MongoClient } = require('mongodb');
-const sgMail = require('@sendgrid/mail');
-const bcrypt = require('bcrypt');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
-const rateLimit = require('express-rate-limit');
-const helmet = require('helmet');
-const validator = require('validator');
+            #progressContainer {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
 
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); 
+progress {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #f3f3f3;
+}
 
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/public'));
-const { ObjectId } = require('mongodb');
+progress::-webkit-progress-bar {
+    background-color: #f3f3f3;
+}
 
+progress::-webkit-progress-value {
+    background-color: #2563EB;
+}
 
-// Security middleware
-app.use(helmet());
+progress::-moz-progress-bar {
+    background-color: #2563EB;
+}
 
-// Configure CORS appropriately
-//app.use(cors({
-//    origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:3000/', 'https://4hprojects.github.io'],
-//    methods: ['GET', 'POST'],
-//    credentials: true
-//}));
+.upload-section {
+    margin: 20px;
+    font-family: 'Poppins', sans-serif;
+}
 
-const mongoUri = process.env.MONGODB_URI;
-const client = new MongoClient(mongoUri);
-let usersCollection;
+/* Tab Navigation Styles */
+.tabs {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 2px solid #ccc;
+}
 
-// Session management with MongoDB store
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: mongoUri }),
-    cookie: {
-        secure: false, // Set to true only if using HTTPS
-        httpOnly: true,
-        sameSite: 'lax', // Adjust sameSite setting for better compatibility
-        maxAge: 15 * 60 * 1000 // 30 minutes session expiry
-    }
-}));
+.tabs .tab-link {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #f8f8f8;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+}
 
-app.post('/api/contact', (req, res) => {
-    const { name, email, message } = req.body;
+.tabs .tab-link.active {
+    background-color: #2563EB;
+    color: white;
+    border-bottom: 2px solid white;
+}
 
-    // Process or save the data, then respond
-    console.log(`Contact request from ${name}: ${message} (Email: ${email})`);
-    res.status(200).send('Your message has been received. Thank you!');
-});
+/* Tab Content Styles */
+.tab-content {
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
 
-// Helper Functions
-async function hashPassword(password) {
-    const saltRounds = 10;
-    return await bcrypt.hash(password, saltRounds);
+.tab {
+    display: none;
+}
+
+.tab.active {
+    display: block;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    padding: 10px;
+    background-color: #2563EB;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1D4ED8;
+}
+
+input[type="file"] {
+    padding: 5px;
 }
 
 
-// Password validation function
-function isValidPassword(password) {
-    // Requires at least one uppercase letter, one lowercase letter, one number, and at least 8 characters
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    return passwordRegex.test(password);
-}
+            /* Global Styles for Consistency */
+            body {
+                background-color: #f0f0f0; /* Set to your desired background color */
+                color: #000; /* Set to your desired text color */
+                padding: 0;
+                margin: 0;
+                font-family: 'Poppins', sans-serif;
+                height: 100vh;
+                overflow: hidden;
+            }
+                
+            .sidebar {
+                background-color: #1E3A8A; /* Sidebar color */
+                width: 200px;
+                color: #fff;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                padding-top: 60px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between; /* Space between items to move the footer to the bottom */
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                z-index: 10;
+            }
+    
+            .sidebar-welcome h2 {
+                padding: 20px;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+                border-top: 1px solid rgba(255, 255, 255, 0.3);
+            }
 
-async function sendEmail(to, subject, htmlContent) {
-    const msg = {
-        to: to,
-        from: process.env.SENDER_EMAIL,
-        subject: subject,
-        html: htmlContent
-    };
+            .sidebar-nav {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
 
-    try {
-        await sgMail.send(msg);
-        console.log('Email sent to ' + to);
-    } catch (error) {
-        console.error('Error sending email:', error);
-    }
-}
+            .sidebar-nav li {
+                margin: 10px 0; /* Reduce margin for compact look */
+                padding-left: 20px;
+            }
 
-function generateOTP() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-}
+            .sidebar-nav li a {
+                color: #fff;
+                text-decoration: none;
+                font-size: 18px;
+                display: block;
+                padding: 10px;
+            }
 
-// Rate limiting middleware for login route
-const loginLimiter = rateLimit({
-    windowMs: 30 * 60 * 1000, // 30 minutes
-    max: 5, // Limit each IP to 5 requests per windowMs
-    message: 'Too many login attempts, please try again after 30 minutes.',
-    handler: function (req, res, next, options) {
-        res.status(options.statusCode).json({ success: false, message: options.message });
-    }
-});
+            .hidden {
+                display: none;
+            }
 
-// Connect to MongoDB and initialize the usersCollection
-async function connectToDatabase() {
-    try {
-        // Initialize MongoDB connection monitoring
-        client.on('topologyClosed', () => console.error('MongoDB connection closed.'));
-        client.on('reconnect', () => console.log('MongoDB reconnected.'));
-
-        await client.connect();
-        console.log('Connected to MongoDB');
-        const database = client.db('myDatabase');
-        usersCollection = database.collection('tblUser');
-
-        // Initialize SendGrid with API key
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    } catch (err) {
-        console.error('Failed to connect to MongoDB', err);
-        process.exit(1); // Exit the process if unable to connect
-    }
-}
-
-
-// Call the database connection function
-connectToDatabase();
-
-// Place all route definitions here
-
-app.get('/login.html', (req, res) => {
-    res.sendFile(__dirname + '/public/login.html');
-});
+            .sidebar-nav li a.active {
+                background-color: #2563EB;
+                color: white;
+            }
 
 
-// Sign Up Route
-app.post('/signup', async (req, res) => {
-    console.log('Received signup request:', req.body);
-    const { firstName, lastName, email, password, confirmPassword, studentIDNumber, termsCheckbox } = req.body;
+            .sidebar-nav li a:hover {
+                text-align: center;
+                background-color: rgba(255, 255, 255, 0.2);
+            }
 
-    // Check if terms are agreed
-    if (!termsCheckbox) {
-        return res.status(400).json({ success: false, message: 'You must agree to the Terms and Conditions.' });
-    }
+            .sidebar-footer {
+                padding: 10px 20px;
+                text-align: center;
+                color: #fff;
+                font-size: 0.9em;
+                border-top: 1px solid rgba(255, 255, 255, 0.3);
+            }
 
-    try {
-        // Input validation
-        if (!firstName || !lastName || !email || !password || !confirmPassword || !studentIDNumber) {
-            return res.status(400).json({ success: false, message: 'All fields are required.' });
+        header {
+            background-color: #1E3A8A;
+            color: #fff;
+            width: calc(100% - 200px); /* Adjust for sidebar width */
+            margin-left: 200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            height: 60px;
+            z-index: 1000;
         }
+    
+        header h1 {
+            font-size: 1.5em;
+            margin: 0;
+        }
+    
+        header nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            padding: 0;
+        }
+    
+        header nav ul li a {
+            color: #fff;
+            font-size: 1.5em;
+            text-decoration: none;
+        }
+    
+        .content {
+            margin-left: auto; /* Sidebar width */
+            padding: 20px;
+            width: calc(100% - 200px); /* Full width minus sidebar */
+            min-height: calc(100vh - 60px); /* Account for header height */
+            display: flex;
+            box-sizing: border-box;
+            overflow: auto;
+            flex-direction: column;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            align-items: flex-start; /* Align items to the top */
+            overflow-y: auto; /* Allow scrolling if content overflows */
+            background-color: #f4f4f4; /* Light background for contrast */
+        }
+        /* Add a container for centering content */
+        .content-inner {
+            margin-block-end: auto;
+            width: 100%;
+            max-width: 1200px; /* Restrict maximum width for readability */
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }      
+
+        /* General Styling for Main Content Sections */
+main,
+.content-section {
+    margin-left: 200px; /* Adjust for sidebar width */
+    padding: 20px;
+    width: calc(100% - 200px); /* Full width minus sidebar */
+    min-height: calc(100vh - 60px); /* Account for header height */
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    background-color: #f4f4f4; /* Light background for contrast */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a slight shadow for visual depth */
+}
+
+/* Inner Content Wrapper for Consistent Padding */
+.content-inner {
+    width: 100%;
+    max-width: 1200px; /* Restrict maximum width for readability */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Hidden Class for Hiding Sections */
+.hidden {
+    display: none;
+}
+
+            
+            .table-container {
+                overflow-x: auto;
+                width: 100%;
+                margin-top: 10px; /* Align the table closely with the search bar */
+            }
+    
+            .results-table {
+                width: 100%;
+                border-collapse: collapse;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+            }
+    
+            .results-table th, .results-table td {
+                padding: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                text-align: center;
+            }
+    
+            .results-table th {
+                background-color: #2563EB;
+                color: #fff;
+            }
+    
+        /* Alternating row colors */
+        .results-table tr:nth-child(odd) {
+            background-color: #f2f2f2; /* Light grey */
+        }
+
+        .results-table tr:nth-child(even) {
+            background-color: #e0e7ff; /* Light blue */
+        }
+    
+            .no-results {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 1.2em;
+                color: #888;
+            }
+            #studentID {
+                text-align: center;
+                font-size: 0.9em;
+                color: #ccc;
+                margin-top: 5px;
+                display: block; /* Ensure it takes up the full line for centering */
+                }
+
+
+             /* Adjustments for smaller screens */
+    @media (max-width: 768px) {
+            .search-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-input {
+                max-width: 100%; /* Full width on smaller screens */
+                border-radius: 25px; /* Full rounded corners */
+                margin-bottom: 8px; /* Space below input */
+            }
+
+            .search-button {
+                max-width: 100%; /* Full width on smaller screens */
+                border-radius: 25px; /* Full rounded corners */
+            }
+
+            .pagination {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+
+            .pagination button {
+                background-color: #2563EB;
+                color: white;
+                border: none;
+                margin: 0 5px;
+                padding: 8px 12px;
+                cursor: pointer;
+                border-radius: 5px;
+                font-size: 1em;
+            }
+
+            .pagination button.active {
+                background-color: #1D4ED8;
+            }
+
+            .pagination button:hover {
+                background-color: #1E40AF;
+            }
+
+            .pagination button[disabled] {
+                background-color: #CCCCCC;
+                cursor: not-allowed;
+            }
+
+        }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>HelloGrade Admin Dashboard</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" title="Account Settings"><span class="material-icons">settings</span></a></li>
+                    <li><a href="#" title="Help"><span class="material-icons">help_outline</span></a></li>
+                    <li><a href="#" id="logoutLink" title="Logout"><span class="material-icons">logout</span></a></li>
+                    <li><a href="#" id="" title="Logout"><span class="material-icons">logout</span></a></li>
+                </ul>
+            </nav>
+            
+        </header>
+        <!-- Main Content -->
+        <main id="dashboardSection">
+            <div class="content">
+                <div class="content-inner">
+                    <div style="height: 50px;"></div> <!-- Spacer div -->
+                    <h2>Dashboard</h2>
+                    <div class="search-container">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search by student ID, name, course ID, etc.">
+                        <button id="searchButton" class="search-button">Search</button> 
+                        <p>Welcome to the Dashboard!</p>
+                    </div>
+            <div class="table-container">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Course ID</th>
+                            <th>Course Description</th>
+                            <th>Midterm Grade</th>
+                            <th>Transmuted Midterm Grade</th> <!-- New Column -->
+                            <th>Final Grade</th>
+                            <th>Total Final Grade</th> <!-- New Column -->
+                        </tr>
+                    </thead>
+                    <tbody id="searchResults">
+                        <!-- Dynamic Results Here -->
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            <div class="pagination" id="pagination"></div>
+            </div>
+                        <!-- Google AdSense Ad Code Above Footer -->
+    <div class="ad-above-footer" style="text-align: center; margin: 20px 0;">
+        <!-- left panel -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4537208011192461"
+             data-ad-slot="1206064674"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+    </div>
+
+        </main>
+
+        <div id="addGradesSection" class="content-section hidden">
+            <div class="content-inner">
+                <h2>Add Grades</h2>
+                <div class="upload-section">
+                    <!-- Tab Navigation -->
+                    <ul class="tabs">
+                        <li class="tab-link active" data-tab="grades-upload">Grades</li>
+                        <li class="tab-link" data-tab="attendance-upload">Attendance</li>
+                        <li class="tab-link" data-tab="classstanding-upload">Class Standing</li>
+                    </ul>
         
-        // Check if passwords match
-        if (password !== confirmPassword) {
-            return res.status(400).json({ success: false, message: 'Passwords do not match.' });
-        }
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        <div id="grades-upload" class="tab active">
+                            <h3>Upload Grades</h3>
+                            <form id="uploadForm" enctype="multipart/form-data">
+                                <input type="file" name="gradesFile" accept=".csv, .xlsx" required />
+                                <button type="submit">Upload Grades</button>
+                            </form>
+                            <div id="progressContainer" style="display: none; margin-top: 10px;">
+                                <progress id="uploadProgress" value="0" max="100" style="width: 100%;"></progress>
+                                <p id="progressText" style="text-align: center; margin-top: 5px;">0%</p>
+                            </div>
+                        </div>
+                        <div id="attendance-upload" class="tab">
+                            <h3>Upload Attendance</h3>
+                            <form id="attendanceUploadForm" enctype="multipart/form-data">
+                                <input type="file" name="attendanceFile" accept=".csv, .xlsx" required />
+                                <button type="submit">Upload Attendance</button>
+                            </form>
+                            <div id="attendanceProgressContainer" style="display: none; margin-top: 10px;">
+                                <progress id="attendanceUploadProgress" value="0" max="100" style="width: 100%;"></progress>
+                                <p id="attendanceProgressText" style="text-align: center; margin-top: 5px;">0%</p>
+                            </div>
+                        </div>
+                        
+                        <div id="classstanding-upload" class="tab">
+                            <h3>Upload Class Standing</h3>
+                            <form id="classStandingUploadForm" enctype="multipart/form-data">
+                                <input type="file" name="classStandingFile" accept=".csv, .xlsx" required />
+                                <button type="submit">Upload Class Standing</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
+        <div id="reportsSection" class="content-section hidden">
+            <div class="content-inner">
+                <h2>Reports</h2>
+                <p>View reports here.</p>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <!-- Welcome Message at the Top of Sidebar -->
+            <div class="sidebar-welcome">
+                <h2>Hello, <span id="studentName">[User's Name]</span>!</h2>
+                <p id="studentID" style="font-size: 0.9em; color: #ccc; margin-top: 5px;">[Admin ID]</p>
+            </div>
 
-        // Validate email format
-        if (!validator.isEmail(email)) {
-            return res.status(400).json({ success: false, message: 'Invalid email format.' });
+                <ul class="sidebar-nav">
+                    <li><a href="#" id="dashboardLink">Dashboard</a></li>
+                    <li><a href="#" id="addGradesLink">Add Grades</a></li>
+                    <li><a href="#" id="reportsLink">Reports</a></li>       
+                </ul>
+                
+                 <!-- Footer in the Sidebar -->
+        <div class="sidebar-footer">
+            
+            <p>&copy; 2024 HelloGrade</p>
+        </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            await fetchGrades();
+            await initializePage();
+        });
+
+        async function initializePage() {
+            try {
+                const sessionResponse = await fetch('/session-check', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                const sessionData = await sessionResponse.json();
+                console.log('Session check response:', sessionData); // Debug
+
+                if (!sessionResponse.ok || !sessionData.authenticated || sessionData.role !== 'admin') {
+                    console.error('Access denied:', sessionData);
+                    window.location.href = sessionData.authenticated ? '403.html' : 'login.html';
+                    return;
+                }
+
+                const userDetailsResponse = await fetch('/user-details', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                const userDetails = await userDetailsResponse.json();
+                if (userDetails.success) {
+                    document.getElementById('studentName').textContent = `${userDetails.user.firstName} ${userDetails.user.lastName}`;
+                    document.getElementById('studentID').textContent = userDetails.user.studentIDNumber;
+                    // Define studentIDNumber for use in fetchGrades()
+                    window.studentIDNumber = userDetails.user.studentIDNumber;
+                } else {
+                    console.error('Failed to fetch user details:', userDetails.message);
+                }
+            } catch (error) {
+                console.error('Error during validation or fetching user details:', error);
+                window.location.href = 'login.html';
+            }
         }
 
-        // Validate password criteria
-        if (!isValidPassword(password)) {
-            return res.status(400).json({ success: false, message: 'Password must meet all criteria.' });
+        document.addEventListener('DOMContentLoaded', () => {
+            const dashboardLink = document.getElementById('dashboardLink');
+            const addGradesLink = document.getElementById('addGradesLink');
+            const reportsLink = document.getElementById('reportsLink');
+
+            const dashboardSection = document.getElementById('dashboardSection');
+            const addGradesSection = document.getElementById('addGradesSection');
+            const reportsSection = document.getElementById('reportsSection');
+
+            // Tab switching functionality
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabs = document.querySelectorAll('.tab');
+
+            tabLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const tabId = link.getAttribute('data-tab');
+
+                    // Remove active class from all tab links
+                    tabLinks.forEach(link => link.classList.remove('active'));
+
+                    // Add active class to clicked tab link
+                    link.classList.add('active');
+
+                    // Hide all tabs
+                    tabs.forEach(tab => tab.classList.remove('active'));
+
+                    // Show selected tab
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Function to switch sections
+            function switchSection(activeLink, activeSection) {
+                // Remove active class from all links
+                document.querySelectorAll('.sidebar-nav li a').forEach(link => link.classList.remove('active'));
+
+                // Hide all sections
+                dashboardSection.classList.add('hidden');
+                addGradesSection.classList.add('hidden');
+                reportsSection.classList.add('hidden');
+
+                // Activate selected link and show selected section
+                activeLink.classList.add('active');
+                activeSection.classList.remove('hidden');
+            }
+
+            // Event listeners for sidebar links
+            dashboardLink.addEventListener('click', () => switchSection(dashboardLink, dashboardSection));
+            addGradesLink.addEventListener('click', () => switchSection(addGradesLink, addGradesSection));
+            reportsLink.addEventListener('click', () => switchSection(reportsLink, reportsSection));
+        });
+
+
+                // dashboard.html or your JavaScript fi
+        async function fetchGrades() {
+            try {
+                const response = await fetch('/get-grades/' + encodeURIComponent(studentIDNumber), {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    displayGrades(data.gradeDataArray);
+                } else {
+                    console.error('Failed to fetch grades:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching grades:', error);
+            }
         }
 
-        // Validate studentIDNumber
-        if (!/^\d{1,7}$/.test(studentIDNumber)) {
-            return res.status(400).json({ success: false, message: 'Student ID must be a number with up to 7 digits.' });
-        }
+        function displayGrades(gradeDataArray) {
+            const gradesTableBody = document.getElementById('gradesTableBody');
+            gradesTableBody.innerHTML = '';
 
-        // Check if email already exists
-        const existingEmail = await usersCollection.findOne({ emaildb: email });
-        if (existingEmail) {
-            return res.status(400).json({
-                success: false,
-                message: 'The email is already registered. Please log in or reset your password.'
+            gradeDataArray.forEach(grade => {
+                const row = `<tr>
+                <td>${escapeHTML(grade.courseID)}</td>
+                <td>${escapeHTML(grade.courseDescription)}</td>
+                <td>${escapeHTML(grade.midtermGrade)}</td>
+                <td>${escapeHTML(grade.transmutedMidtermGrade)}</td>
+                <td>${escapeHTML(grade.finalGrade)}</td>
+                <td>${escapeHTML(grade.totalFinalGrade)}</td>
+                </tr>`;
+                gradesTableBody.innerHTML += row;
             });
         }
 
-        // Check if student ID already exists
-        const existingStudentID = await usersCollection.findOne({ studentIDNumber });
-        if (existingStudentID) {
-            return res.status(400).json({
-                success: false,
-                message: 'Student ID already exists. If you think this is a mistake, please contact support.'
+        // Perform search
+        async function performSearch() {
+            currentPage = 1; // Reset to the first page on a new search
+            const searchInput = document.getElementById('searchInput').value;
+            const searchQuery = searchInput.trim();
+            
+            // Check if the search query is empty
+            if (!searchQuery) {
+                alert('Please enter a search query.');
+                return;
+            }
+            try {
+                    // Send search request to the server
+                    const response = await fetch(`/search?query=${encodeURIComponent(searchQuery)}`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include' // Include credentials for session handling
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to perform search.');
+                    }
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Update the table with results
+                        displayResults(data.results);
+                        setupPagination(searchResultsData);
+                        displayPage(currentPage);
+                    } else {
+                        console.error('No results found:', data.message);
+                        document.getElementById('searchResults').innerHTML = `<p class="no-results">${data.message}</p>`;
+                    }
+                } catch (error) {
+                    console.error('Error performing search:', error);
+                }
+            }
+  
+
+
+
+
+        // Event listeners for search button and Enter key
+        document.getElementById('searchButton').addEventListener('click', performSearch);
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Display search results in a table
+        function displayResults(results) {
+            searchResultsData = results; // Store results for pagination
+            setupPagination(results);
+            displayPage(currentPage);
+        }
+
+        function displayPage(page) {
+            const tableBody = document.getElementById('searchResults');
+            tableBody.innerHTML = '';
+
+            const startIndex = (page - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const paginatedResults = searchResultsData.slice(startIndex, endIndex);
+
+            if (paginatedResults.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="8" class="no-results">No results found.</td></tr>';
+                return;
+            }
+
+            paginatedResults.forEach(result => {
+                const row = `<tr>
+            <td>${escapeHTML(result.studentIDNumber) || 'N/A'}</td>
+            <td>${escapeHTML(result.firstName)} ${escapeHTML(result.lastName)}</td>
+            <td>${escapeHTML(result.CourseID) || 'N/A'}</td>
+            <td>${escapeHTML(result.CourseDescription) || 'N/A'}</td>
+            <td>${escapeHTML(result.MG) || 'N/A'}</td>
+            <td>${escapeHTML(result.transmutedMidtermGrade) || 'N/A'}</td>
+            <td>${escapeHTML(result.FG) || 'N/A'}</td>
+            <td>${escapeHTML(result.totalFinalGrade) || 'N/A'}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
             });
         }
 
-        // Hash the password
-        const hashedPassword = await hashPassword(password);
+    
+        // Logout functionality
+        document.getElementById('logoutLink').addEventListener('click', function (event) {
+            event.preventDefault();
+    
+            fetch('/logout', {
+                method: 'POST',
+                credentials: 'include' // Include credentials for session handling
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'login.html'; // Redirect to login page
+                } else {
+                    console.error('Logout failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error during logout:', error);
+            });
+        });
 
-        // Create a new user object
-        const newUser = {
-            firstName,
-            lastName,
-            emaildb: email,
-            password: hashedPassword,
-            createdAt: new Date(),
-            invalidLoginAttempts: 0,
-            accountLockedUntil: null,
-            invalidResetAttempts: 0,
-            accountDisabled: false,
-            role: "student",
-            studentIDNumber
+        document.getElementById('uploadForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            
+        const formData = new FormData(this);
+        const xhr = new XMLHttpRequest();
+
+        // Show the progress bar
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('uploadProgress');
+        const progressText = document.getElementById('progressText');
+        progressContainer.style.display = 'block';
+
+        xhr.open('POST', '/upload-grades', true);
+
+        // Monitor progress
+        xhr.upload.addEventListener('progress', function (event) {
+            if (event.lengthComputable) {
+                const percentComplete = Math.round((event.loaded / event.total) * 100);
+                progressBar.value = percentComplete;
+                progressText.textContent = `${percentComplete}%`;
+            }
+        });
+
+        // Handle completion
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    alert('Grades uploaded successfully!');
+                } else {
+                    alert('Failed to upload grades: ' + response.message);
+                }
+            } else {
+                alert('An error occurred during the upload.');
+            }
+            // Reset progress bar
+            progressBar.value = 0;
+            progressText.textContent = '0%';
+            progressContainer.style.display = 'none';
         };
 
-        // Insert the new user into the database
-        const insertResult = await usersCollection.insertOne(newUser);
+        // Handle errors
+        xhr.onerror = function () {
+            alert('An error occurred during the upload.');
+            progressBar.value = 0;
+            progressText.textContent = '0%';
+            progressContainer.style.display = 'none';
+        };
 
-        if (insertResult.acknowledged) {
-            res.json({ success: true, message: 'Account created successfully!' });
-        } else {
-            res.status(500).json({ success: false, message: 'Failed to create account.' });
-        }
-    } catch (error) {
-        console.error('Error creating account:', error);
-        res.status(500).json({ success: false, message: 'An internal server error occurred.' });
-    }
-});
+        // Send the form data
+        xhr.send(formData);
 
 
-
-    // Login Route with Rate Limiting
-    app.post('/login', async (req, res) => {
-        const { studentIDNumber, password } = req.body;
-
-        try {
-            if (!studentIDNumber || !password) {
-                return res.status(400).json({ success: false, message: 'Student ID and password are required.' });
-            }
-
-            const user = await usersCollection.findOne(
-                { studentIDNumber: studentIDNumber },
-                { projection: { firstName: 1, lastName: 1, studentIDNumber: 1, password: 1, role: 1, invalidLoginAttempts: 1, accountLockedUntil: 1, emaildb: 1 } }
-            );
-
-            // Debug user password
-            console.log('User password from DB:', user.password);
-            if (typeof user.password !== 'string') {
-                console.error('Password in DB is not a string');
-                return res.status(500).json({ success: false, message: 'Internal server error.' });
-            }
-            
-            // Check if the account is locked
-            if (user.accountLockedUntil && user.accountLockedUntil > new Date()) {
-                const remainingTime = Math.ceil((user.accountLockedUntil - new Date()) / 60000);
-                return res.status(403).json({ 
-                    success: false, 
-                    message: `Account is locked. Try again in ${remainingTime} minutes.` 
+            try {
+                const response = await fetch('/upload-grades', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include' // Ensure session is maintained
                 });
-            }
 
-            const sanitizedStudentIDNumber = validator.trim(studentIDNumber);
+                const result = await response.json();
 
-
-            if (!/^\d{7}$/.test(studentIDNumber)) {
-                return res.status(400).json({ success: false, message: 'Student ID must be exactly 7 digits.' });
-            }
-            
-
-            const passwordMatch = await bcrypt.compare(password, user.password);
-
-            if (!passwordMatch) {
-                // Increment invalid login attempts
-                let invalidAttempts = (user.invalidLoginAttempts || 0) + 1;
-                let updateFields = { invalidLoginAttempts: invalidAttempts };
-    
-                if (invalidAttempts >= 3) {
-                    // Lock the account for 30 minutes
-                    updateFields.accountLockedUntil = new Date(Date.now() + 30 * 60 * 1000);
-                    updateFields.invalidLoginAttempts = 0; // Reset attempts after locking
-    
-                    await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
-    
-                    // Send account lock email
-                    const emailContent = `
-                        <p>Dear ${user.firstName},</p>
-                        <p>Your account has been locked due to multiple unsuccessful login attempts. Please wait 30 minutes before trying again or reset your password if you've forgotten it.</p>
-                        <p>Best regards,<br/>HelloGrade Student Portal Team</p>
-                    `;
-                    await sendEmail(user.emaildb, 'Account Locked', emailContent);
-    
-                    return res.status(403).json({ 
-                        success: false, 
-                        message: 'Account is locked due to multiple failed login attempts. An email has been sent with further instructions.' 
-                    });
+                if (result.success) {
+                    alert('Grades uploaded successfully!');
                 } else {
-                    await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
-                    return res.status(400).json({ success: false, message: 'Invalid email or password.' });
+                    alert('Failed to upload grades: ' + result.message);
                 }
-            }
-
-            // Reset invalid login attempts on successful login
-            await usersCollection.updateOne(
-                { _id: user._id },
-                { $set: { invalidLoginAttempts: 0, accountLockedUntil: null } }
-            );
-
-            // Set up session
-            req.session.userId = user._id;
-            req.session.studentIDNumber = user.studentIDNumber;
-            req.session.role = user.role;
-            
-
-                // Update last login time
-                await usersCollection.updateOne(
-                    { _id: user._id },
-                    { $set: { lastLoginTime: new Date() } }
-                );
-
-                res.json({ success: true, role: user.role, message: 'Login successful!' });
             } catch (error) {
-                console.error('Error during login:', error);
-                res.status(500).json({ success: false, message: 'Error during login.' });
+                console.error('Error uploading grades:', error);
+                alert('An error occurred while uploading grades.');
             }
         });
 
-    // Logout Route
-    app.post('/logout', async (req, res) => {
-        const userId = req.session.userId; // Store user ID before destroying the session
-        if (!userId) {
-            return res.status(400).json({ success: false, message: 'No user is logged in.' });
-        }
-
-       // console.log('Logging out user ID:', userId);
-        
-        try {
-            
-            req.session.destroy(err => {
-                if (err) {
-                    console.error('Error destroying session:', err);
-                    return res.status(500).json({ success: false, message: 'Logout failed.' });
-                }
-    
-                res.clearCookie('connect.sid');
-    
-                // Set headers to prevent caching
-                res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-                res.setHeader('Pragma', 'no-cache');
-                res.setHeader('Expires', '0');
-                res.setHeader('Surrogate-Control', 'no-store');
-    
-                // Redirect to index.html after logout
-                return res.redirect('/index.html');
-            });
-        } catch (error) {
-            console.error('Error during logout:', error);
-            return res.status(500).json({ success: false, message: 'Failed to update loginstatus.' });
-        }
-        console.log('Logging out user ID:', userId);
-    });
-    
-    
-
-    // Send Password Reset Email with Lockout Check
-    app.post('/send-password-reset', async (req, res) => {
-        const { email } = req.body;
-
-        try {
-            const user = await usersCollection.findOne({ emaildb: email });
-            if (!user) {
-                // Different response to indicate the email doesn't exist (for testing purposes only)
-                return res.status(404).json({ 
-                    success: false, 
-                    message: 'If that email address is in our database, we will send you an email to reset your password.' 
-                });
-            }
-
-            // Proceed with sending reset code if email exists
-            const resetCode = generateOTP();
-            const resetExpires = new Date(Date.now() + 3600000); // Expires in 1 hour
-
-            await usersCollection.updateOne(
-                { emaildb: email },
-                {
-                    $set: {
-                        resetCode,
-                        resetExpires,
-                        invalidResetAttempts: 0,
-                        resetCodeLockUntil: null
-                    }
-                }
-            );
-
-            // Send reset code email
-            const emailContent = `
-                <p>Dear User,</p>
-                <p>Your password reset code is: <strong>${resetCode}</strong>.</p>
-                <p>This code will expire in 1 hour.</p>
-                <p>Best regards,<br/>HelloGrade Student Portal Team</p>
-            `;
-            await sendEmail(email, 'Your Password Reset Code', emailContent);
-
-            res.json({ success: true, message: 'If that email address is in our database, we will send you an email to reset your password.' });
-        } catch (error) {
-            console.error('Error processing your request:', error);
-            res.status(500).json({ success: false, message: 'Error processing your request' });
-        }
-    });
-
-
-    app.post('/verify-reset-code', async (req, res) => {
-        const { email, resetCode } = req.body;
-    
-        try {
-            const user = await usersCollection.findOne({ emaildb: email });
-    
-            if (!user) {
-                return res.status(400).json({ success: false, message: 'Invalid credentials.' });
-            }
-    
-            // Check if the reset code matches and is not expired
-            if (user.resetCode !== resetCode || user.resetExpires <= new Date()) {
-                let invalidAttempts = (user.invalidResetAttempts || 0) + 1;
-                let attemptsLeft = 3 - invalidAttempts;
-    
-                let updateFields = { invalidResetAttempts: invalidAttempts };
-    
-                if (invalidAttempts >= 3) {
-                    updateFields.resetCodeLockUntil = new Date(Date.now() + 60 * 1000); // Lock for 60 seconds
-                    updateFields.invalidResetAttempts = 0; // Reset attempts after lock
-                    updateFields.resetCode = null; // Clear reset code
-                    updateFields.resetExpires = null; // Clear expiration
-    
-                    await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
-                    return res.status(429).json({ 
-                        success: false, 
-                        message: 'Too many invalid attempts. Please request a new reset code after 60 seconds.', 
-                        attemptsLeft: 0 
-                    });
-                } else {
-                    await usersCollection.updateOne({ _id: user._id }, { $set: updateFields });
-                    return res.status(400).json({ 
-                        success: false, 
-                        message: 'Invalid or expired reset code.', 
-                        attemptsLeft: attemptsLeft 
-                    });
-                }
-            }
-    
-            // Mark the reset code as verified
-            await usersCollection.updateOne(
-                { _id: user._id },
-                { $set: { resetCodeVerified: true, invalidResetAttempts: 0, resetCodeLockUntil: null } }
-            );
-    
-            res.json({ success: true, message: 'Reset code verified.' });
-        } catch (error) {
-            console.error('Error verifying reset code:', error);
-            res.status(500).json({ success: false, message: 'An internal error occurred.' });
-        }
-    });
-    
-
-
-
-// Reset Password Endpoint
-app.post('/reset-password', async (req, res) => {
-    const { email, newPassword } = req.body;
-
+    async function uploadGrades(file) {
     try {
-        // Find the user by email and ensure reset code is verified
-        const user = await usersCollection.findOne({
-            emaildb: email,
-            resetCodeVerified: true, // Ensure the reset code was verified
+        const formData = new FormData();
+        formData.append('gradesFile', file);
+
+        const response = await fetch('/upload-grades', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include' // Include cookies for session-based auth
         });
 
-        if (!user) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid request or account is disabled.',
-            });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Hash the new password before saving
-        const hashedNewPassword = await hashPassword(newPassword);
-        // Update the user's password
-        
-        await usersCollection.updateOne(
-            { _id: user._id },
-            {
-                $set: {
-                    password: hashedNewPassword,
-                    resetCode: null,           // Clear the reset code
-                    resetExpires: null,        // Clear the expiration
-                    resetCodeVerified: false,  // Reset verification status
-                },
-            }
-        );
+        const result = await response.json();
+        console.log('Upload response:', result);
 
-        res.json({ success: true, message: 'Password has been reset successfully.' });
-    } catch (error) {
-        console.error('Error resetting password:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Error resetting password.',
-        });
-    }
-});
-
-app.get('/admin_dashboard', isAuthenticated, isAdmin, (req, res) => {
-    res.sendFile(__dirname + '/public/admin_dashboard.html');
-});
-
-
-app.post('/upload-grades', isAuthenticated, isAdmin, upload.single('gradesFile'), async (req, res) => {
-    try {
-        const gradesFile = req.file; // Check if file was uploaded
-        if (!gradesFile) {
-            console.error("File upload error: No file was uploaded.");
-            return res.status(400).json({ success: false, message: 'No file uploaded' });
+        if (result.success) {
+            alert('Grades uploaded successfully!');
+        } else {
+            console.error('Failed to upload grades:', result.message);
         }
-
-        // Ensure that parsing is awaited and errors are logged if they occur
-        const gradesData = await parseCSVFile(gradesFile.path);
-
-        if (!Array.isArray(gradesData)) {
-            console.error("Parsing error: gradesData is not an array.");
-            fs.unlink(gradesFile.path, (err) => {
-                if (err) console.error('Error deleting uploaded file:', err);
-            });
-            return res.status(500).json({ success: false, message: 'Parsing error: gradesData is not an array' });
-        }
-
-        const gradesCollection = client.db('myDatabase').collection('tblGrades');
-
-        for (const grade of gradesData) {
-            const { studentIDNumber, CourseID, midtermGrade, finalGrade, ...otherFields } = grade;
-
-            await gradesCollection.updateOne(
-                { studentIDNumber: studentIDNumber, CourseID: CourseID },
-                { $set: { midtermGrade, finalGrade, ...otherFields } },
-                { upsert: true }
-            );
-        }
-
-        // Delete the uploaded file after successful processing
-        fs.unlink(gradesFile.path, (err) => {
-            if (err) console.error('Error deleting uploaded file:', err);
-        });
-
-        res.json({ success: true, message: 'Grades uploaded and stored successfully.' });
     } catch (error) {
         console.error('Error uploading grades:', error);
-
-        // Ensure the file is deleted even if an error occurs
-        if (req.file) {
-            fs.unlink(req.file.path, (err) => {
-                if (err) console.error('Error deleting uploaded file:', err);
-            });
-        }
-
-        res.status(500).json({ success: false, message: 'An internal server error occurred while uploading grades.' });
-    }
-});
-
-app.post('/upload-attendance', isAuthenticated, isAdmin, upload.single('attendanceFile'), async (req, res) => {
-    try {
-        const attendanceFile = req.file;
-        if (!attendanceFile) {
-            console.error("File upload error: No file was uploaded.");
-            return res.status(400).json({ success: false, message: 'No file uploaded' });
-        }
-
-        const attendanceData = await parseCSVFile(attendanceFile.path);
-
-        if (!Array.isArray(attendanceData)) {
-            console.error("Parsing error: attendanceData is not an array.");
-            fs.unlink(attendanceFile.path, (err) => {
-                if (err) console.error('Error deleting uploaded file:', err);
-            });
-            return res.status(500).json({ success: false, message: 'Parsing error: attendanceData is not an array' });
-        }
-
-        const attendanceCollection = client.db('myDatabase').collection('tblAttendance');
-
-        for (const record of attendanceData) {
-            const {
-                studentIDNumber,
-                courseID,
-                courseDescription,
-                attDate,
-                attTime,
-                attStatus,
-                attRemarks
-            } = record;
-
-            await attendanceCollection.updateOne(
-                {
-                    studentIDNumber: studentIDNumber,
-                    courseID: courseID,
-                    attDate: attDate,
-                    attTime: attTime
-                },
-                {
-                    $set: {
-                        courseDescription,
-                        attStatus,
-                        attRemarks
-                    }
-                },
-                { upsert: true }
-            );
-        }
-
-        // Delete the uploaded file after successful processing
-        fs.unlink(attendanceFile.path, (err) => {
-            if (err) console.error('Error deleting uploaded file:', err);
-        });
-
-        res.json({ success: true, message: 'Attendance uploaded and stored successfully.' });
-    } catch (error) {
-        console.error('Error uploading attendance:', error);
-
-        // Ensure the file is deleted even if an error occurs
-        if (req.file) {
-            fs.unlink(req.file.path, (err) => {
-                if (err) console.error('Error deleting uploaded file:', err);
-            });
-        }
-
-        res.status(500).json({ success: false, message: 'An internal server error occurred while uploading attendance.' });
-    }
-});
-
-
-
-
-// Fetch user details route
-app.get('/user-details', isAuthenticated, async (req, res) => {
-    console.log("Session in /user-details:", req.session);
-    try {
-        // Find the user by session ID
-        const studentIDNumber = req.session.studentIDNumber;
-        
-        if (!studentIDNumber) {
-            return res.status(401).json({ success: false, message: 'Unauthorized access.' });
-        }
-
-        // Fetch user details from the database
-        const user = await usersCollection.findOne(
-            { studentIDNumber: studentIDNumber }, 
-            { projection: { firstName: 1, lastName: 1, studentIDNumber: 1, password: 1 } }
-        );
-
-        if (!user) {
-            console.error('User not found in tblUser:', studentIDNumber); // Debug log
-            return res.status(404).json({ success: false, message: 'Invalid student ID or password.' });
-        }        
-        console.log('User Details:', user);
-        // Return only necessary details (e.g., firstName and lastName)
-        res.json({
-            success: true,
-            user: {
-                firstName: user.firstName,
-                lastName: user.lastName,
-                studentIDNumber: user.studentIDNumber
-            }
-        });
-    } catch (error) {
-        console.error('Error fetching user details(server/user-details):', error);
-        res.status(500).json({ success: false, message: 'Error fetching user details.' });
-    }
-});
-
-app.use((req, res, next) => {
-    if (req.session && req.session.role) {
-        console.log('Session role:', req.session.role); // Debugging
-    }
-    res.set('Cache-Control', 'no-store');
-    next();
-});
-
-app.get('/signup', (req, res) => {
-    res.redirect('/signup.html'); // Replace with your actual signup page
-});
-
-
-app.get('/session-check', (req, res) => {
-    console.log('Session data:', req.session); // Log session data for debugging
-    if (req.session && req.session.userId) {
-        res.json({ authenticated: true, role: req.session.role });
-    } else {
-        res.status(401).json({ authenticated: false });
-    }
-});
-
-  
-function isAdmin(req, res, next) {
-    if (req.session && req.session.role === 'admin') {
-        next();
-    } else {
-        res.status(403).sendFile(__dirname + '/public/403.html');
     }
 }
 
-const fs = require('fs');
-const csv = require('csv-parser'); // Ensure csv-parser is installed
+    let currentPage = 1;
+    const rowsPerPage = 5; // Adjust as needed
+    let searchResultsData = [];
 
-function parseCSVFile(filePath) {
-    return new Promise((resolve, reject) => {
-        const results = [];
-        
-        fs.createReadStream(filePath)
-            .pipe(csv())
-            .on('data', (data) => {
-                console.log('Parsed Row:', data); // Log each parsed row
-                results.push(data);
-            })
-            .on('end', () => {
-                console.log('All Parsed Results:', results); // Log entire array after parsing
-                resolve(results);
-            })
-            .on('error', (error) => {
-                console.error('Error parsing CSV:', error);
-                reject(error);
-            });
+
+
+    function setupPagination(results) {
+    const paginationContainer = document.getElementById('pagination');
+    paginationContainer.innerHTML = ''; // Clear previous buttons
+
+    const totalPages = Math.ceil(results.length / rowsPerPage);
+
+    // Create First Button
+    const firstButton = createPaginationButton('First', 1, currentPage === 1);
+    paginationContainer.appendChild(firstButton);
+
+    // Create Previous Button
+    const prevButton = createPaginationButton('Previous', currentPage - 1, currentPage === 1);
+    paginationContainer.appendChild(prevButton);
+
+    // Create Next Button
+    const nextButton = createPaginationButton('Next', currentPage + 1, currentPage === totalPages);
+    paginationContainer.appendChild(nextButton);
+
+    // Create Last Button
+    const lastButton = createPaginationButton('Last', totalPages, currentPage === totalPages);
+    paginationContainer.appendChild(lastButton);
+}
+
+function createPaginationButton(label, targetPage, disabled) {
+    const button = document.createElement('button');
+    button.textContent = label;
+    button.disabled = disabled;
+
+    button.addEventListener('click', () => {
+        if (!disabled) {
+            currentPage = targetPage;
+            displayPage(currentPage); // Update displayed results
+            setupPagination(searchResultsData); // Update button states
+        }
+    });
+
+    return button;
+}
+
+// Function to escape HTML to prevent XSS
+function escapeHTML(text) {
+    if (!text) return text;
+    return text.replace(/[&<>"'`=\/]/g, function (char) {
+        return {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '/': '&#x2F;',
+            '`': '&#x60;',
+            '=': '&#x3D;'
+        }[char];
     });
 }
 
+document.getElementById('attendanceUploadForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
 
+    const formData = new FormData(this);
+    const xhr = new XMLHttpRequest();
 
+    // Show the progress bar (you can implement a separate progress bar for attendance if needed)
+    const progressContainer = document.getElementById('attendanceProgressContainer');
+    const progressBar = document.getElementById('attendanceUploadProgress');
+    const progressText = document.getElementById('attendanceProgressText');
+    progressContainer.style.display = 'block';
 
+    xhr.open('POST', '/upload-attendance', true);
 
-    // Middleware to check if user is authenticated
-    function isAuthenticated(req, res, next) {
-        if (req.session && req.session.userId) {
-            next();
-        } else {
-            res.status(401).sendFile(__dirname + '/public/login.html');
-        }
-    }
-
-
-    // Protect the dashboard route
-    app.get('/dashboard', isAuthenticated, (req, res) => {
-        res.sendFile(__dirname + '/public/dashboard.html');
-    });
-
-    app.get('/get-grades/:studentIDNumber', isAuthenticated, async (req, res) => {
-        const studentIDNumber = req.params.studentIDNumber;
-        console.log('/get-grades/ API called with studentIDNumber:', studentIDNumber); // Debug log
-    
-        try {
-            const grades = await client.db('myDatabase').collection('tblGrades')
-                .find({ studentIDNumber: studentIDNumber }).toArray();
-    
-            console.log('Fetched grades:', grades); // Debug log
-    
-            if (grades.length === 0) {
-                return res.status(404).json({ success: false, message: 'No grades found for this student ID.' });
-            }
-    
-            // Map the results to a standardized array format
-            const gradeDataArray = grades.map(grade => ({
-                midtermAttendance: grade.MA || 'N/A',
-                finalsAttendance: grade.FA || 'N/A',
-                midtermClassStanding: grade.MCS || 'N/A',
-                finalsClassStanding: grade.FCS || 'N/A',
-                midtermExam: grade.ME || 'N/A',
-                finalExam: grade.FE || 'N/A',
-                midtermGrade: grade.MG || 'N/A',
-                finalGrade: grade.FG || 'N/A',
-                transmutedMidtermGrade: grade.TMG || 'N/A',
-                transmutedFinalGrade: grade.MFG || 'N/A',
-                totalFinalGrade: grade.TFG || 'N/A',
-                courseID: grade.CourseID || 'N/A',
-                courseDescription: grade.CourseDescription || 'N/A'
-            }));
-    
-            // Return the array of grade data for each course
-            res.json({ success: true, gradeDataArray });
-        } catch (error) {
-            console.error('Error fetching grades:', error);
-            res.status(500).json({ success: false, message: 'An error occurred while fetching grades.' });
+    // Monitor progress
+    xhr.upload.addEventListener('progress', function (event) {
+        if (event.lengthComputable) {
+            const percentComplete = Math.round((event.loaded / event.total) * 100);
+            progressBar.value = percentComplete;
+            progressText.textContent = `${percentComplete}%`;
         }
     });
-    
-    
 
-    // Search for students based on different criteria
-// Search for students based on different criteria
-app.get('/search', isAuthenticated, async (req, res) => {
-    
-    try {
-        const { query } = req.query; // Get search query from request
-
-
-            // Ensure query is provided
-        if (!query) {
-            return res.status(400).json({ success: false, message: 'Search query is required.' });
-        }
-
-
-        let userCriteria = {};
-        let gradeCriteria = {};
-
-        // If query is '*', fetch all records
-        if (query === '*') {
-            userCriteria = {}; // Match all documents
-            gradeCriteria = {}; // Match all grades
-        } else {
-            // Define search criteria to check multiple fields
-            userCriteria = {
-                $or: [
-                    { studentIDNumber: { $regex: query, $options: 'i' } },
-                    { emaildb: { $regex: query, $options: 'i' } },
-                    { firstName: { $regex: query, $options: 'i' } },
-                    { lastName: { $regex: query, $options: 'i' } }
-                ]
-            };
-
-            gradeCriteria = {
-                $or: [
-                    { studentIDNumber: { $regex: query, $options: 'i' } },
-                    { CourseID: { $regex: query, $options: 'i' } },
-                    { CourseDescription: { $regex: query, $options: 'i' } }
-                ]
-            };
-        }
-    
-          // Fetch matching users
-        const users = await client.db('myDatabase').collection('tblUser').find(userCriteria).toArray();
-
-          // Fetch matching grades
-        const grades = await client.db('myDatabase').collection('tblGrades').find(gradeCriteria).toArray();
-/*
-          if (query === '*') {
-              gradeCriteria = {}; // Match all grades
-          } else {
-              gradeCriteria = {
-                  $or: [
-                      { studentIDNumber: { $regex: query, $options: 'i' } },
-                      { CourseID: { $regex: query, $options: 'i' } },
-                      { CourseDescription: { $regex: query, $options: 'i' } }
-                  ]
-              };
-          }
- */ 
-  
-          // Associate users with grades
-          const results = users.map(user => {
-              const userGrades = grades.filter(g => g.studentIDNumber === user.studentIDNumber);
-              return userGrades.length > 0 ? userGrades.map(grade => ({
-                  studentIDNumber: user.studentIDNumber,
-                  firstName: user.firstName,
-                  lastName: user.lastName,
-                  CourseID: grade.CourseID || 'N/A',
-                  CourseDescription: grade.CourseDescription || 'N/A',
-                  MG: grade.MG || 'N/A',
-                  FG: grade.FG || 'N/A'
-              })) : [{
-                  studentIDNumber: user.studentIDNumber,
-                  firstName: user.firstName,
-                  lastName: user.lastName,
-                  CourseID: 'N/A',
-                  CourseDescription: 'N/A',
-                  MG: 'N/A',
-                  FG: 'N/A'
-              }];
-          }).flat(); // Flatten the array of arrays
-  
-          if (results.length === 0) {
-              return res.json({ success: false, message: 'No matching records found.' });
-          }
-        
-          //const users = await client.db('myDatabase').collection('tblUser').find(userCriteria).toArray();
-          // Send the results
-          res.json({ success: true, results });
-      } catch (error) {
-          console.error('Error performing search:', error);
-          res.status(500).json({ success: false, message: 'An error occurred while searching.' });
-      }
-  });
-
-
-
-// Error handler should be placed after all routes
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ success: false, message: 'Internal server error.' });
-});
-
-
-// Fetch Courses for a Student
-app.get('/get-courses/:studentIDNumber', isAuthenticated, async (req, res) => {
-    const studentIDNumber = req.params.studentIDNumber;
-    console.log('/get-courses/ API called with studentIDNumber:', studentIDNumber); // Debug log
-
-    try {
-        // Fetch distinct course IDs and descriptions from tblGrades or tblAttendance
-        const coursesFromGrades = await client.db('myDatabase').collection('tblGrades')
-            .find({ studentIDNumber: studentIDNumber })
-            .project({ courseID: 1, courseDescription: 1 })
-            .toArray();
-
-        const coursesFromAttendance = await client.db('myDatabase').collection('tblAttendance')
-            .find({ studentIDNumber: studentIDNumber })
-            .project({ courseID: 1, courseDescription: 1 })
-            .toArray();
-
-        // Combine and remove duplicates
-        const courses = [...coursesFromGrades, ...coursesFromAttendance];
-        const uniqueCourses = [];
-        const courseMap = new Map();
-
-        courses.forEach(course => {
-            if (!courseMap.has(course.courseID)) {
-                courseMap.set(course.courseID, true);
-                uniqueCourses.push({
-                    courseID: course.courseID,
-                    courseDescription: course.courseDescription
-                });
+    // Handle completion
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                alert('Attendance uploaded successfully!');
+            } else {
+                alert('Failed to upload attendance: ' + response.message);
             }
-        });
-
-        if (uniqueCourses.length === 0) {
-            return res.status(404).json({ success: false, message: 'No courses found for this student ID.' });
+        } else {
+            alert('An error occurred during the upload.');
         }
+        // Reset progress bar
+        progressBar.value = 0;
+        progressText.textContent = '0%';
+        progressContainer.style.display = 'none';
+    };
 
-        res.json({ 
-            success: true, 
-            courseDataArray: uniqueCourses.map(course => ({
-                courseID: course.courseID || "", // Default to empty string
-                courseDescription: course.courseDescription || "" // Default to empty string
-            }))
-        });
-    } catch (error) {
-        console.error('Error fetching courses:', error);
-        res.status(500).json({ success: false, message: 'An error occurred while fetching courses.' });
-    }
+    // Handle errors
+    xhr.onerror = function () {
+        alert('An error occurred during the upload.');
+        progressBar.value = 0;
+        progressText.textContent = '0%';
+        progressContainer.style.display = 'none';
+    };
+
+    // Send the form data
+    xhr.send(formData);
+
+    
 });
 
-// Fetch Attendance Data for a Student and Course
-app.get('/get-attendance/:studentIDNumber/:courseID', isAuthenticated, async (req, res) => {
-    const studentIDNumber = req.params.studentIDNumber;
-    const courseID = req.params.courseID;
-    console.log('/get-attendance/ API called with studentIDNumber:', studentIDNumber, 'courseID:', courseID); // Debug log
 
-    try {
-        const attendanceRecords = await client.db('myDatabase').collection('tblAttendance')
-            .find({ studentIDNumber: studentIDNumber, courseID: courseID })
-            .project({ _id: 0, attDate: 1, attTime: 1, attStatus: 1, attRemarks: 1 })
-            .sort({ attDate: 1, attTime: 1 })
-            .toArray();
-
-        if (attendanceRecords.length === 0) {
-            return res.json({ success: true, attendanceDataArray: [] });
-        }
-
-        res.json({ 
-            success: true, 
-            attendanceDataArray: attendanceRecords.map(record => ({
-                attDate: record.attDate || "", // Default to empty string
-                attTime: record.attTime || "", // Default to empty string
-                attStatus: record.attStatus || "", // Default to empty string
-                attRemarks: record.attRemarks || "" // Default to empty string
-            }))
-        });
-        
-    } catch (error) {
-        console.error('Error fetching attendance:', error);
-        res.status(500).json({ success: false, message: 'An error occurred while fetching attendance.' });
-    }
-});
-
-// Serve 404 page for non-existent routes
-app.use((req, res) => {
-    res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
-});
-
-// Start the server after defining routes and middleware
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
-
+    </script>
+    
+</body>
+</html>
