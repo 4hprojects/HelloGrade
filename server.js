@@ -17,6 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
+const { ObjectId } = require('mongodb');
 
 
 // Security middleware
@@ -810,6 +811,88 @@ app.use((err, req, res, next) => {
 });
 
 
+// Fetch Courses for a Student
+app.get('/get-courses/:studentIDNumber', isAuthenticated, async (req, res) => {
+    const studentIDNumber = req.params.studentIDNumber;
+    console.log('/get-courses/ API called with studentIDNumber:', studentIDNumber); // Debug log
+
+    try {
+        // Fetch distinct course IDs and descriptions from tblGrades or tblAttendance
+        const coursesFromGrades = await client.db('myDatabase').collection('tblGrades')
+            .find({ studentIDNumber: studentIDNumber })
+            .project({ courseID: 1, courseDescription: 1 })
+            .toArray();
+
+        const coursesFromAttendance = await client.db('myDatabase').collection('tblAttendance')
+            .find({ studentIDNumber: studentIDNumber })
+            .project({ courseID: 1, courseDescription: 1 })
+            .toArray();
+
+        // Combine and remove duplicates
+        const courses = [...coursesFromGrades, ...coursesFromAttendance];
+        const uniqueCourses = [];
+        const courseMap = new Map();
+
+        courses.forEach(course => {
+            if (!courseMap.has(course.courseID)) {
+                courseMap.set(course.courseID, true);
+                uniqueCourses.push({
+                    courseID: course.courseID,
+                    courseDescription: course.courseDescription
+                });
+            }
+        });
+
+        if (uniqueCourses.length === 0) {
+            return res.status(404).json({ success: false, message: 'No courses found for this student ID.' });
+        }
+
+        res.json({ 
+            success: true, 
+            courseDataArray: uniqueCourses.map(course => ({
+                courseID: course.courseID || "", // Default to empty string
+                courseDescription: course.courseDescription || "" // Default to empty string
+            }))
+        });
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).json({ success: false, message: 'An error occurred while fetching courses.' });
+    }
+});
+
+// Fetch Attendance Data for a Student and Course
+app.get('/get-attendance/:studentIDNumber/:courseID', isAuthenticated, async (req, res) => {
+    const studentIDNumber = req.params.studentIDNumber;
+    const courseID = req.params.courseID;
+    console.log('/get-attendance/ API called with studentIDNumber:', studentIDNumber, 'courseID:', courseID); // Debug log
+
+    try {
+        const attendanceRecords = await client.db('myDatabase').collection('tblAttendance')
+            .find({ studentIDNumber: studentIDNumber, courseID: courseID })
+            .project({ _id: 0, attDate: 1, attTime: 1, attStatus: 1, attRemarks: 1 })
+            .sort({ attDate: 1, attTime: 1 })
+            .toArray();
+
+        if (attendanceRecords.length === 0) {
+            return res.json({ success: true, attendanceDataArray: [] });
+        }
+
+        res.json({ 
+            success: true, 
+            attendanceDataArray: attendanceRecords.map(record => ({
+                attDate: record.attDate || "", // Default to empty string
+                attTime: record.attTime || "", // Default to empty string
+                attStatus: record.attStatus || "", // Default to empty string
+                attRemarks: record.attRemarks || "" // Default to empty string
+            }))
+        });
+        
+    } catch (error) {
+        console.error('Error fetching attendance:', error);
+        res.status(500).json({ success: false, message: 'An error occurred while fetching attendance.' });
+    }
+});
+
 // Serve 404 page for non-existent routes
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
@@ -820,3 +903,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
