@@ -512,7 +512,7 @@ app.post('/upload-grades', isAuthenticated, isAdmin, upload.single('gradesFile')
         }
 
         // Ensure that parsing is awaited and errors are logged if they occur
-        const gradesData = await parseGradesFile(gradesFile.path);
+        const gradesData = await parseCSVFile(gradesFile.path);
 
         if (!Array.isArray(gradesData)) {
             console.error("Parsing error: gradesData is not an array.");
@@ -553,6 +553,76 @@ app.post('/upload-grades', isAuthenticated, isAdmin, upload.single('gradesFile')
         res.status(500).json({ success: false, message: 'An internal server error occurred while uploading grades.' });
     }
 });
+
+app.post('/upload-attendance', isAuthenticated, isAdmin, upload.single('attendanceFile'), async (req, res) => {
+    try {
+        const attendanceFile = req.file;
+        if (!attendanceFile) {
+            console.error("File upload error: No file was uploaded.");
+            return res.status(400).json({ success: false, message: 'No file uploaded' });
+        }
+
+        const attendanceData = await parseCSVFile(attendanceFile.path);
+
+        if (!Array.isArray(attendanceData)) {
+            console.error("Parsing error: attendanceData is not an array.");
+            fs.unlink(attendanceFile.path, (err) => {
+                if (err) console.error('Error deleting uploaded file:', err);
+            });
+            return res.status(500).json({ success: false, message: 'Parsing error: attendanceData is not an array' });
+        }
+
+        const attendanceCollection = client.db('myDatabase').collection('tblAttendance');
+
+        for (const record of attendanceData) {
+            const {
+                studentIDNumber,
+                courseID,
+                courseDescription,
+                attDate,
+                attTime,
+                attStatus,
+                attRemarks
+            } = record;
+
+            await attendanceCollection.updateOne(
+                {
+                    studentIDNumber: studentIDNumber,
+                    courseID: courseID,
+                    attDate: attDate,
+                    attTime: attTime
+                },
+                {
+                    $set: {
+                        courseDescription,
+                        attStatus,
+                        attRemarks
+                    }
+                },
+                { upsert: true }
+            );
+        }
+
+        // Delete the uploaded file after successful processing
+        fs.unlink(attendanceFile.path, (err) => {
+            if (err) console.error('Error deleting uploaded file:', err);
+        });
+
+        res.json({ success: true, message: 'Attendance uploaded and stored successfully.' });
+    } catch (error) {
+        console.error('Error uploading attendance:', error);
+
+        // Ensure the file is deleted even if an error occurs
+        if (req.file) {
+            fs.unlink(req.file.path, (err) => {
+                if (err) console.error('Error deleting uploaded file:', err);
+            });
+        }
+
+        res.status(500).json({ success: false, message: 'An internal server error occurred while uploading attendance.' });
+    }
+});
+
 
 
 
@@ -627,7 +697,7 @@ function isAdmin(req, res, next) {
 const fs = require('fs');
 const csv = require('csv-parser'); // Ensure csv-parser is installed
 
-function parseGradesFile(filePath) {
+function parseCSVFile(filePath) {
     return new Promise((resolve, reject) => {
         const results = [];
         
@@ -647,6 +717,7 @@ function parseGradesFile(filePath) {
             });
     });
 }
+
 
 
 
