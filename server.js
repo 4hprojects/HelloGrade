@@ -18,10 +18,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 const { ObjectId } = require('mongodb');
+const { format } = require('date-fns-tz');
 
 
 // Security middleware
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
+app.disable('x-powered-by');
+
 
 // Configure CORS appropriately
 //app.use(cors({
@@ -44,9 +47,11 @@ app.use(session({
         secure: false, // Set to true only if using HTTPS
         httpOnly: true,
         sameSite: 'lax', // Adjust sameSite setting for better compatibility
-        maxAge: 15 * 60 * 1000 // 30 minutes session expiry
+        maxAge: 2 * 60 * 60 * 1000 // 2 hours
     }
 }));
+
+
 
 app.post('/api/contact', (req, res) => {
     const { name, email, message } = req.body;
@@ -92,8 +97,8 @@ function generateOTP() {
 
 // Rate limiting middleware for login route
 const loginLimiter = rateLimit({
-    windowMs: 30 * 60 * 1000, // 30 minutes
-    max: 5, // Limit each IP to 5 requests per windowMs
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per window
     message: 'Too many login attempts, please try again after 30 minutes.',
     handler: function (req, res, next, options) {
         res.status(options.statusCode).json({ success: false, message: options.message });
@@ -566,7 +571,7 @@ app.post('/upload-attendance', isAuthenticated, isAdmin, upload.single('attendan
 
         if (!Array.isArray(attendanceData)) {
             console.error("Parsing error: attendanceData is not an array.");
-            fs.unlink(attendanceFile.path, (err) => {
+            fs.unlink(attendanceFile.path, err => {
                 if (err) console.error('Error deleting uploaded file:', err);
             });
             return res.status(500).json({ success: false, message: 'Parsing error: attendanceData is not an array' });
@@ -574,7 +579,8 @@ app.post('/upload-attendance', isAuthenticated, isAdmin, upload.single('attendan
 
         const attendanceCollection = client.db('myDatabase').collection('tblAttendance');
 
-        for (const record of attendanceData) {
+        // Prepare bulk operations
+        const bulkOps = attendanceData.map(record => {
             const {
                 studentIDNumber,
                 courseID,
@@ -582,29 +588,44 @@ app.post('/upload-attendance', isAuthenticated, isAdmin, upload.single('attendan
                 attDate,
                 attTime,
                 attStatus,
-                attRemarks
+                attRemarks,
+                term
             } = record;
 
-            await attendanceCollection.updateOne(
-                {
-                    studentIDNumber: studentIDNumber,
-                    courseID: courseID,
-                    attDate: attDate,
-                    attTime: attTime
-                },
-                {
-                    $set: {
-                        courseDescription,
-                        attStatus,
-                        attRemarks
-                    }
-                },
-                { upsert: true }
-            );
+            if (!studentIDNumber || !courseID || !attDate || !attTime || !term) {
+                console.error('Invalid record:', record);
+                return null; // Skip invalid records
+            }
+
+            return {
+                updateOne: {
+                    filter: {
+                        studentIDNumber: studentIDNumber,
+                        courseID: courseID,
+                        attDate: attDate,
+                        attTime: attTime
+                    },
+                    update: {
+                        $set: {
+                            courseDescription,
+                            attStatus,
+                            attRemarks,
+                            term
+                        }
+                    },
+                    upsert: true
+                }
+            };
+        }).filter(op => op !== null); // Remove null values
+
+        if (bulkOps.length > 0) {
+            await attendanceCollection.bulkWrite(bulkOps);
+        } else {
+            console.warn('No valid records to process.');
         }
 
-        // Delete the uploaded file after successful processing
-        fs.unlink(attendanceFile.path, (err) => {
+        // Delete the uploaded file
+        fs.unlink(attendanceFile.path, err => {
             if (err) console.error('Error deleting uploaded file:', err);
         });
 
@@ -612,9 +633,8 @@ app.post('/upload-attendance', isAuthenticated, isAdmin, upload.single('attendan
     } catch (error) {
         console.error('Error uploading attendance:', error);
 
-        // Ensure the file is deleted even if an error occurs
         if (req.file) {
-            fs.unlink(req.file.path, (err) => {
+            fs.unlink(req.file.path, err => {
                 if (err) console.error('Error deleting uploaded file:', err);
             });
         }
@@ -622,6 +642,8 @@ app.post('/upload-attendance', isAuthenticated, isAdmin, upload.single('attendan
         res.status(500).json({ success: false, message: 'An internal server error occurred while uploading attendance.' });
     }
 });
+
+
 
 
 
@@ -646,7 +668,14 @@ app.get('/user-details', isAuthenticated, async (req, res) => {
         if (!user) {
             console.error('User not found in tblUser:', studentIDNumber); // Debug log
             return res.status(404).json({ success: false, message: 'Invalid student ID or password.' });
-        }        
+        }     
+        
+
+        // Convert createdAt to Asia/Manila timezone
+        const createdAtManila = user.createdAt
+            ? format(user.createdAt, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone: 'Asia/Manila' })
+            : null;
+        
         console.log('User Details:', user);
         // Return only necessary details (e.g., firstName and lastName)
         res.json({
@@ -765,7 +794,10 @@ function parseCSVFile(filePath) {
                 transmutedFinalGrade: grade.MFG || 'N/A',
                 totalFinalGrade: grade.TFG || 'N/A',
                 courseID: grade.CourseID || 'N/A',
-                courseDescription: grade.CourseDescription || 'N/A'
+                courseDescription: grade.CourseDescription || 'N/A',
+                createdAt: grade.createdAt
+                    ? format(grade.createdAt, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone: 'Asia/Manila' })
+                    : null, // Convert to Asia/Manila timezone                
             }));
     
             // Return the array of grade data for each course
@@ -940,7 +972,7 @@ app.get('/get-attendance/:studentIDNumber/:courseID', isAuthenticated, async (re
     try {
         const attendanceRecords = await client.db('myDatabase').collection('tblAttendance')
             .find({ studentIDNumber: studentIDNumber, courseID: courseID })
-            .project({ _id: 0, attDate: 1, attTime: 1, attStatus: 1, attRemarks: 1 })
+            .project({ _id: 0, attDate: 1, attTime: 1, attStatus: 1, attRemarks: 1, term: 1 })
             .sort({ attDate: 1, attTime: 1 })
             .toArray();
 
@@ -954,7 +986,8 @@ app.get('/get-attendance/:studentIDNumber/:courseID', isAuthenticated, async (re
                 attDate: record.attDate || "", // Default to empty string
                 attTime: record.attTime || "", // Default to empty string
                 attStatus: record.attStatus || "", // Default to empty string
-                attRemarks: record.attRemarks || "" // Default to empty string
+                attRemarks: record.attRemarks || "", // Default to empty string
+                term: record.term || "" // Default to empty string
             }))
         });
         
