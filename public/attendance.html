@@ -17,37 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-    <style>
-        .export-options button:hover {
-            transition: background-color 0.2s;
-        }
-
-        .summary-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .summary-item {
-            flex: 1;
-            background-color: #ffffff;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            border-radius: 8px;
-        }
-        .summary-item h3 {
-            font-size: 1.2rem;
-            color: #4CAF50;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .summary-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/attendance.css">
     
 </head>
 <body>
@@ -81,43 +51,48 @@
                 <!-- Options will be dynamically populated -->
             </select>
         </div>
-        <div class="summary-container">
-            <section class="summary-item">
-                <h3>Midterms Attendance Summary</h3>
-                <div class="summary-grid">
-                    <div class="flex justify-between">
-                        <p>Total Classes:</p>
-                        <p id="totalClassesMidterms" class="text-xl font-bold text-green-600">0</p>
-                    </div>
-                    <div class="flex justify-between">
-                        <p>Classes Attended:</p>
-                        <p id="classesAttendedMidterms" class="text-xl font-bold text-green-600">0</p>
-                    </div>
-                    <div class="flex justify-between">
-                        <p>Attendance Percentage:</p>
-                        <p id="attendancePercentageMidterms" class="text-xl font-bold text-green-600">0%</p>
-                    </div>
-                </div>
-            </section>
+        <div class="attendance-summary">
+
         
-            <section class="summary-item">
-                <h3>Finals Attendance Summary</h3>
-                <div class="summary-grid">
-                    <div class="flex justify-between">
-                        <p>Total Classes:</p>
-                        <p id="totalClassesFinals" class="text-xl font-bold text-green-600">0</p>
+            <!-- Summary Container -->
+            <div class="summary-container">
+                <section class="summary-item">
+                    <h3>Midterms Attendance Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-row">
+                            <p>Total Classes:</p>
+                            <p id="totalClassesMidterms" class="summary-value">0</p>
+                        </div>
+                        <div class="summary-row">
+                            <p>Classes Attended:</p>
+                            <p id="classesAttendedMidterms" class="summary-value">0</p>
+                        </div>
+                        <div class="summary-row">
+                            <p>Attendance Percentage:</p>
+                            <p id="attendancePercentageMidterms" class="summary-value">0%</p>
+                        </div>
                     </div>
-                    <div class="flex justify-between">
-                        <p>Classes Attended:</p>
-                        <p id="classesAttendedFinals" class="text-xl font-bold text-green-600">0</p>
+                </section>
+                <section class="summary-item">
+                    <h3>Finals Attendance Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-row">
+                            <p>Total Classes:</p>
+                            <p id="totalClassesFinals" class="summary-value">0</p>
+                        </div>
+                        <div class="summary-row">
+                            <p>Classes Attended:</p>
+                            <p id="classesAttendedFinals" class="summary-value">0</p>
+                        </div>
+                        <div class="summary-row">
+                            <p>Attendance Percentage:</p>
+                            <p id="attendancePercentageFinals" class="summary-value">0%</p>
+                        </div>
                     </div>
-                    <div class="flex justify-between">
-                        <p>Attendance Percentage:</p>
-                        <p id="attendancePercentageFinals" class="text-xl font-bold text-green-600">0%</p>
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
+        
         
         
         
@@ -125,12 +100,13 @@
             <button id="exportPdf" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Export as PDF</button>
             <button id="exportExcel" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Export as Excel</button>
         </div>
-        
     </section>
 
 
     <!-- Attendance Table -->
     <section class="attendance-section">
+                        <!-- Center-aligned Course Title -->
+                        <h3 class="course-title text-lg font-semibold text-green-600 mb-4" id="courseTitle">Attendance Summary</h3>
         <div class="content overflow-x-auto mx-4">
             <h3 class="text-lg font-semibold text-green-600 mb-4" id="courseTitle"></h3>
             <table class="w-full bg-white border border-gray-200 text-center">
