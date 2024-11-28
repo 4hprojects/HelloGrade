@@ -1,0 +1,212 @@
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+        }
+        
+        header h1 {
+            font-size: 1.2rem;
+        }
+        
+        header img {
+            height: 40px;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 10px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        
+        /* Welcome Section */
+        .welcome-section {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .welcome-section p {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        /* Center-align the Course Title */
+        .course-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        /* Summary Container */
+        .summary-container {
+            display: flex;
+            flex-wrap: wrap; /* Allows wrapping for small screens */
+            justify-content: center; /* Centers items horizontally */
+            gap: 10px; /* Adds space between items */
+            margin: 0 auto;
+        }
+        
+        /* Summary Item */
+        .summary-item {
+            flex: 1 1 48%; /* Two items per row, adjust to 48% to leave some space between them */
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        @media (min-width: 480px) {
+            .summary-container {
+                flex-direction: row;
+                justify-content: center;
+                gap: 40px;
+            }
+            .summary-item {
+                flex: 1 1 100%; /* Stack items vertically on extremely small screens */
+            }
+        }
+        
+        /* Summary Item Styling */
+        .summary-item {
+            flex: 1;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .summary-item h3 {
+            font-size: 1rem;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+        
+        /* Summary Grid */
+        .summary-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .summary-row p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .summary-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        /* Export Options */
+        .export-options {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .export-options button {
+            flex: 1;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .export-options button:hover {
+            background-color: #357ABD;
+        }
+        
+        /* Attendance Table */
+        .attendance-section {
+            margin: 20px auto;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            text-align: center;
+        }
+        
+        thead th {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+        }
+        
+        tbody td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #4CAF50;
+            color: #fff;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1rem;
+            }
+        
+            .summary-item h3 {
+                font-size: 0.9rem;
+            }
+        
+            table th,
+            table td {
+                font-size: 0.8rem;
+            }
+        }
