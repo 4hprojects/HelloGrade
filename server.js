@@ -312,6 +312,12 @@ app.post('/signup', async (req, res) => {
                     { _id: user._id },
                     { $set: { lastLoginTime: new Date() } }
                 );
+                 // Log the login activity
+                await logsCollection.insertOne({
+                    studentIDNumber,
+                    name: `${user.firstName} ${user.lastName}`,
+                    timestamp: new Date(),
+                });
 
                 res.json({ success: true, role: user.role, message: 'Login successful!' });
             } catch (error) {
@@ -1008,3 +1014,60 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
+// Initialize tblLogs collection
+let logsCollection;
+
+async function connectToDatabase() {
+    try {
+        // Existing MongoDB connection logic...
+        await client.connect();
+        console.log('Connected to MongoDB');
+        const database = client.db('myDatabase');
+        usersCollection = database.collection('tblUser');
+        logsCollection = database.collection('tblLogs'); // Initialize tblLogs
+
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    } catch (err) {
+        console.error('Failed to connect to MongoDB', err);
+        process.exit(1);
+    }
+}
+
+// Log user activity
+app.post('/api/log-user', isAuthenticated, async (req, res) => {
+    const { studentIDNumber } = req.session; // Retrieve logged-in user's ID from session
+
+    try {
+        if (!studentIDNumber) {
+            return res.status(400).json({ success: false, message: 'Student ID is required to log user activity.' });
+        }
+
+        const user = await usersCollection.findOne(
+            { studentIDNumber },
+            { projection: { firstName: 1, lastName: 1 } }
+        );
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found.' });
+        }
+
+        // Create the log object
+        const log = {
+            studentIDNumber,
+            name: `${user.firstName} ${user.lastName}`,
+            timestamp: new Date(),
+        };
+
+        // Insert the log into tblLogs
+        const result = await logsCollection.insertOne(log);
+
+        if (result.acknowledged) {
+            res.json({ success: true, message: 'User activity logged successfully.' });
+        } else {
+            res.status(500).json({ success: false, message: 'Failed to log user activity.' });
+        }
+    } catch (error) {
+        console.error('Error logging user activity:', error);
+        res.status(500).json({ success: false, message: 'Internal server error.' });
+    }
+});
