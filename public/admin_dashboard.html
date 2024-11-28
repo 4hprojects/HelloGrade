@@ -472,6 +472,8 @@ main,
                         <div id="attendance-upload" class="tab">
                             <h3>Upload Attendance</h3>
                             <form id="attendanceUploadForm" enctype="multipart/form-data">
+                                <label for="termInput">Term:</label>
+                                <input type="text" id="termInput" name="term" placeholder="Enter term (e.g., 'Fall 2024')" required />
                                 <input type="file" name="attendanceFile" accept=".csv, .xlsx" required />
                                 <button type="submit">Upload Attendance</button>
                             </form>
@@ -480,6 +482,7 @@ main,
                                 <p id="attendanceProgressText" style="text-align: center; margin-top: 5px;">0%</p>
                             </div>
                         </div>
+                        
                         
                         <div id="classstanding-upload" class="tab">
                             <h3>Upload Class Standing</h3>
@@ -924,10 +927,11 @@ function escapeHTML(text) {
 document.getElementById('attendanceUploadForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
-    const formData = new FormData(this);
+    const formData = new FormData(this); // Automatically includes the term input
+
     const xhr = new XMLHttpRequest();
 
-    // Show the progress bar (you can implement a separate progress bar for attendance if needed)
+    // Show the progress bar
     const progressContainer = document.getElementById('attendanceProgressContainer');
     const progressBar = document.getElementById('attendanceUploadProgress');
     const progressText = document.getElementById('attendanceProgressText');
@@ -972,9 +976,8 @@ document.getElementById('attendanceUploadForm').addEventListener('submit', async
 
     // Send the form data
     xhr.send(formData);
-
-    
 });
+
 
 
     </script>
