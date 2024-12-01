@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="404 - Page Not Found. The page you are looking for does not exist. Redirecting to the homepage in 5 seconds.">
+    <meta name="description" content="Page not found on HelloGrade. Redirecting to the homepage in 5 seconds. Enhance your learning with HelloGrade today.">
     <meta name="robots" content="noindex, nofollow">
     <title>404 - Page Not Found</title>
-    <link rel="stylesheet" href="css/styles.css"> <!-- Link to your CSS -->
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Ensure this path is correct -->
     <style>
         body {
             display: flex;
@@ -14,57 +14,57 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #6c5b7b, #c06c84);
-            color: #ffffff;
-            font-family: 'Poppins', sans-serif;
+            background-color: #2aad56; /* Light grey background */
+            color: #333333; /* Dark grey text */
+            font-family: 'Arial', sans-serif; /* Default font */
             text-align: center;
         }
 
         .container {
-            max-width: 500px;
-            padding: 30px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 1s ease-in-out;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff; /* White background for content */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        p {
-            font-size: 1.2em;
+        img {
+            max-width: 120px;
             margin-bottom: 20px;
         }
 
-        a, button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 10px;
-            background-color: #f67280;
-            color: #ffffff;
-            text-decoration: none;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease;
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #0073e6; /* Primary brand color */
         }
 
-        a:hover, button:hover {
-            background-color: #c06c84;
-            transform: scale(1.05);
+        p {
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0073e6; /* Primary brand color */
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #005bb5; /* Darker shade for hover */
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: scale(0.9);
+                transform: scale(0.95);
             }
             to {
                 opacity: 1;
@@ -74,25 +74,45 @@
 
         @media (max-width: 768px) {
             h1 {
-                font-size: 2em;
+                font-size: 1.5em;
             }
 
             p {
-                font-size: 1em;
+                font-size: 0.9em;
             }
         }
     </style>
 </head>
 <body>
-  <div class="container" aria-live="polite" aria-label="404 error page">
-      <h1>Oops! Page Not Found</h1>
-      <p>We couldn't find the page you were looking for.</p>
-      <p>Redirecting to the homepage in <span id="countdown">5</span> seconds.</p>
-      <a href="index.html" aria-label="Go back to homepage immediately">Go Back to Homepage</a>
-  </div>
+    <div class="container" aria-live="polite" aria-label="404 error page">
+        <img src="/images/icon.png" alt="HelloGrade Logo"> <!-- Ensure this path is correct -->
+        <h1>Oops! Page Not Found</h1>
+        <p>We couldn't find the page you were looking for.</p>
+        <p>Redirecting to the homepage in <span id="countdown">5</span> seconds.</p>
+        <a href="/index.html" aria-label="Go back to homepage immediately">Go Back to Homepage</a>
+    </div>
 
-  <script src="js/scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let countdown = 5;
+            const countdownElement = document.getElementById('countdown');
 
+            if (countdownElement) {
+                countdownElement.textContent = countdown; // Initialize countdown display
 
+                const interval = setInterval(() => {
+                    countdown -= 1;
+                    countdownElement.textContent = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = '/index.html'; // Absolute path for redirection
+                    }
+                }, 1000);
+            } else {
+                console.error("Countdown element not found. Ensure there's an element with ID 'countdown' on the 404.html page.");
+            }
+        });
+    </script>
 </body>
 </html>
