@@ -168,20 +168,20 @@ header nav ul li a:hover {
     margin-top: 70px;
     text-align: center;
     padding: 20px 0;
-    background: linear-gradient(90deg, #28a745, #79807b);
+    background: #fefffe;
     border-bottom: 1px solid #133b8b;
 }
 
 .welcome-section h2 {
     margin: 1px 0;
     font-size: 1.5rem;
-    background: linear-gradient(90deg, #28a745, #79807b);
+    background: #fefffe;
 }
 
 .welcome-section p {
     font-size: 1rem;
     color: #6b7280;
-    background: linear-gradient(90deg, #28a745, #79807b);
+    background: #fefffe;
 }
 
 /* Main Content */
