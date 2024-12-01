@@ -10,24 +10,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="css/ustyles.css">
+    <link rel="stylesheet" href="/css/ustyles.css">
     <!-- Scroll Reveal and Smooth Scrolling -->
     <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="js/uscripts.js"></script>
-    <link rel="stylesheet" href="dist/output.css">
+    <script src="/js/uscripts.js"></script>
+    <link rel="stylesheet" href="/dist/output.css">
 
 </head>
 <body>
     <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
             <a href="https://hellograde.onrender.com/">
-                <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
+                <img src="images/icon.png" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3">
             </a>
             <h1 class="text-xl font-bold">HelloGrade</h1>
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">             
-                <li><a href="index.html" title="Home"><span class="material-icons">home</span></a></li>
+                <li><a href="index.html" title="Home" class="text-yellow-400"><span class="material-icons" >home</span></a></li>
+                <li><a href="blogs.html" title="Blogs"><span class="material-icons">article</span></a></li>
                 <li><a href="help.html" title="Help"><span class="material-icons">help_outline</span></a></li>
                 <li><a href="login.html" title="Sign In"><span class="material-icons">login</span></a></li>
             </ul>
@@ -35,10 +36,16 @@
     </header>
     
 <!-- Main Content with Smooth Scrolling and Reveal Animations -->
-<main class="container mx-auto px-4 py-8">
-    <!-- Introduction Section -->
-    <h2 class="text-3xl font-bold text-center mb-4">Welcome to HelloGrade</h2>
-    <p class="text-center">Your one-stop portal for managing student grades efficiently and securely.</p>
+<!-- Introduction Section -->
+<section class="hero bg-gray-100 text-gray-800 py-20 px-4">
+    <div class="container mx-auto text-center">
+        <h1 class="text-5xl font-bold mb-4 text-gray-800">Welcome to HelloGrade</h1>
+        <p class="text-xl mb-6 text-gray-700">Revolutionizing grade management for teachers and students.</p>
+        <a href="signup.html" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow-md">Get Started</a>
+    </div>
+</section>
+
+    
 
     <!-- Features Section with Grid Layout -->
     <section id="features" class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
@@ -84,6 +91,39 @@
             Developed with attention to detail and an understanding of educational needs, HelloGrade is here to support teachers, inspire students, and transform how grades are managed in today’s schools.
         </p>
     </section>
+
+    <!-- Blogs Section -->
+    <section id="blogs" class="my-16 px-4">
+        <h2 class="text-3xl font-bold text-center text-blue-600 mb-8">Latest Blogs</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Blog 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <img src="images/blog1.png" alt="Illustration of a modern classroom showcasing technology in education with diverse students using laptops, tablets, and interactive whiteboards, guided by a teacher holding a tablet, highlighting innovation and inclusivity in learning." class="w-full h-40 object-cover rounded-md mb-4">
+                <h3 class="text-xl font-semibold text-gray-800">The Role of Technology in Education</h3>
+                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 1, 2024</span></p>
+                <p class="text-gray-600 mt-2">Learn how technology is shaping the way educators and students interact in today's classrooms.</p>
+                <a href="blogs/blog1.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
+            </div>
+            <!-- Blog 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <img src="images/blog2.png" alt="Blog Image 2" class="w-full h-40 object-cover rounded-md mb-4">
+                <h3 class="text-xl font-semibold text-gray-800">Effective Study Techniques</h3>
+                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 1, 2024</span></p>
+                <p class="text-gray-600 mt-2">Discover effective methods for students to improve their learning and retention of concepts.</p>
+                <a href="blogs/blog2.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
+            </div>
+            <!-- Blog 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <img src="images/blog3.png" alt="Illustration of students in a classroom setting collaborating with laptops, tablets, and smartphones, guided by a teacher. The design includes icons representing cybersecurity, online communication, and digital tools, with a chalkboard displaying digital-themed diagrams like network nodes and a glowing globe." class="w-full h-40 object-cover rounded-md mb-4">
+                <h3 class="text-xl font-semibold text-gray-800">Developing Digital Literacy Skills for the 21st Century</h3>
+                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 1, 2024</span></p>
+                <p class="text-gray-600 mt-2">Empower students with essential competencies to thrive in the digital age through critical thinking, cybersecurity, and digital tools.</p>
+                <a href="blogs/blog3.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
+            </div>
+        </div>
+    </section>
+
+
     <!-- Determine Proficiency Section -->
     <section id="determine-proficiency" class="bg-white p-8 rounded-lg shadow-md my-16">
         <h2 class="text-3xl font-bold text-blue-600 mb-4">Determine Proficiency</h2>
