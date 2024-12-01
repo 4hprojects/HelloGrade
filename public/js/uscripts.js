@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("footer.html")
+    fetch("/footer.html")
         .then(response => response.text())
         .then(data => {
             document.getElementById("footerContainer").innerHTML = data;
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("header.html")
+    fetch("/header.html")
         .then(response => response.text())
         .then(data => {
             const headerContainer = document.getElementById("headerContainer");
