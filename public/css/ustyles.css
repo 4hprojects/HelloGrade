@@ -52,7 +52,7 @@ nav ul li a:hover {
 }
 
 footer {
-    background-color: #28a745;
+    background: linear-gradient(90deg, #28a745, #003f13);
     color: #ffffff;
     text-align: center;
     padding: 10px 0;
@@ -101,7 +101,7 @@ footer ul li a {
 
 /* Header Styles */
 header {
-    background-color: #28a745;
+    background: linear-gradient(90deg, #28a745, #003f13);
     color: #ffffff;
     width: 100%;
     position: fixed;
@@ -168,18 +168,20 @@ header nav ul li a:hover {
     margin-top: 70px;
     text-align: center;
     padding: 20px 0;
-    background-color: #ffffffa1;
-    border-bottom: 1px solid #e5e7eb;
+    background: linear-gradient(90deg, #28a745, #79807b);
+    border-bottom: 1px solid #133b8b;
 }
 
 .welcome-section h2 {
     margin: 1px 0;
     font-size: 1.5rem;
+    background: linear-gradient(90deg, #28a745, #79807b);
 }
 
 .welcome-section p {
     font-size: 1rem;
     color: #6b7280;
+    background: linear-gradient(90deg, #28a745, #79807b);
 }
 
 /* Main Content */
@@ -274,14 +276,6 @@ main {
     width: 100%;
     max-width: 800px;
     padding: 20px;
-}
-
-/* Footer Styles */
-footer {
-    background-color: #28a745;
-    color: #ffffff;
-    text-align: center;
-    padding: 10px 0;
 }
 
 /* Responsive Design */
@@ -479,34 +473,6 @@ footer {
     color: #ffffff;
     font-size: 16px;
     text-decoration: none;
-}
-
-/* Footer Styles */
-footer {
-    background-color: #28a745;
-    color: #ffffff;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-footer ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-footer ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 1.5rem;
 }
 
 /* Scroll to Top Button */
@@ -734,4 +700,83 @@ footer ul {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+
+.hero {
+    background-color: #f7fafc; /* Soft gray for better contrast */
+    text-align: center;
+    padding: 80px 20px;
+    color: #2d3748; /* Dark gray for readable text */
+}
+
+.hero h1 {
+    font-size: 3rem;
+    color: #2d3748; /* Dark gray */
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: #4a5568; /* Medium gray */
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.hero a {
+    background-color: #3182ce; /* Blue for the button */
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-size: 1.125rem;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.hero a:hover {
+    background-color: #2b6cb0; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+
+#features div:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}
+
+#features div {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+
+#blogs .bg-white {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#blogs .bg-white:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+.image-container {
+    width: 100%; /* Ensures it fits the parent container */
+    max-height: 300px; /* Sets a fixed height for the image container */
+    overflow: hidden; /* Crops any part of the image that doesn't fit */
+    position: relative; /* For better control of inner elements */
+}
+
+.image-container img {
+    width: 100%; /* Makes the image scale to the container width */
+    height: 100%; /* Ensures the image fills the container */
+    object-fit: cover; /* Crops the image instead of distorting it */
+    object-position: center; /* Centers the cropped area of the image */
+    display: block; /* Removes any inline spacing issues */
 }
