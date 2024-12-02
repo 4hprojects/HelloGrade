@@ -14,24 +14,23 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/js/uscripts.js"></script>
     <link rel="stylesheet" href="/dist/output.css">
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <!-- Header -->
     <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
-            <a href="https://hellograde.online/">
-                <img src="images/icon.png" alt="HelloGrade Logo" class="h-12 mr-3">
+            <a href="https://hellograde.onrender.com/">
+                <img src="/images/icon.png" alt="HelloGrade Logo" class="h-12 mr-3">
             </a>
             <h1 class="text-xl font-bold">HelloGrade</h1>
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">
-                <li><a href="index.html" title="Home"><span class="material-icons">home</span></a></li>
-                <li><a href="blogs.html" title="Blogs" class="text-yellow-400"><span class="material-icons">article</span></a></li>
-                <li><a href="help.html" title="Help"><span class="material-icons">help_outline</span></a></li>
-                <li><a href="login.html" title="Sign In"><span class="material-icons">login</span></a></li>
+                <li><a href="/index.html" title="Home"><span class="material-icons">home</span></a></li>
+                <li><a href="/blogs.html" title="Blogs" class="text-yellow-400"><span class="material-icons">article</span></a></li>
+                <li><a href="/help.html" title="Help"><span class="material-icons">help_outline</span></a></li>
+                <li><a href="/login.html" title="Sign In"><span class="material-icons">login</span></a></li>
             </ul>
         </nav>
     </header>
@@ -57,9 +56,17 @@
     <section id="blogs" class="my-16 px-4">
         <h2 class="text-3xl font-bold text-center text-blue-600 mb-8">Latest Blogs</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Blog 4 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <img src="/images/blog4.png" alt="Digital Literacy Skills" class="w-full h-40 object-cover rounded-md mb-4">
+                <h3 class="text-xl font-semibold text-gray-800">Why Every Student Should Attend Seminars and Conferences</h3>
+                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 2, 2024</span></p>
+                <p class="text-gray-600 mt-2">Discover the benefits of seminars and conferences: networking, fresh perspectives, and staying updated on trends.</p>
+                <a href="/blogs/blog4.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
+            </div>            
             <!-- Blog 1 -->
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="images/blog1.png" alt="Technology in Education" class="w-full h-40 object-cover rounded-md mb-4">
+                <img src="/images/blog1.png" alt="Technology in Education" class="w-full h-40 object-cover rounded-md mb-4">
                 <h3 class="text-xl font-semibold text-gray-800">The Role of Technology in Education</h3>
                 <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 1, 2024</span></p>
                 <p class="text-gray-600 mt-2">Learn how technology is shaping the way educators and students interact in today's classrooms.</p>
@@ -67,7 +74,7 @@
             </div>
             <!-- Blog 2 -->
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="images/blog2.png" alt="Effective Study Techniques" class="w-full h-40 object-cover rounded-md mb-4">
+                <img src="/images/blog2.png" alt="Effective Study Techniques" class="w-full h-40 object-cover rounded-md mb-4">
                 <h3 class="text-xl font-semibold text-gray-800">Effective Study Techniques</h3>
                 <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 1, 2024</span></p>
                 <p class="text-gray-600 mt-2">Discover effective methods for students to improve their learning and retention of concepts.</p>
@@ -75,7 +82,7 @@
             </div>
             <!-- Blog 3 -->
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="images/blog3.png" alt="Digital Literacy Skills" class="w-full h-40 object-cover rounded-md mb-4">
+                <img src="/images/blog3.png" alt="Digital Literacy Skills" class="w-full h-40 object-cover rounded-md mb-4">
                 <h3 class="text-xl font-semibold text-gray-800">Developing Digital Literacy Skills for the 21st Century</h3>
                 <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 1, 2024</span></p>
                 <p class="text-gray-600 mt-2">Empower students with essential competencies to thrive in the digital age.</p>
@@ -98,28 +105,8 @@
         <span class="material-icons">arrow_upward</span>
     </button>
 
-    <!-- JavaScript -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-
-            scrollToTopBtn.addEventListener("click", function () {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            });
-        });
-
-        ScrollReveal().reveal('.scroll-reveal', { duration: 1200, origin: 'bottom', distance: '30px' });
-
-        window.onscroll = function () {
-            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-            scrollToTopBtn.style.display = window.scrollY > 100 ? "flex" : "none";
-        };
-    </script>
-
     <!-- Footer -->
-    <footer class="bg-green-600 text-white py-4 text-center">
-        <p>&copy; 2024 HelloGrade. All rights reserved.</p>
-    </footer>
+    <div id="footerContainer"></div>
 </body>
 
 </html>
