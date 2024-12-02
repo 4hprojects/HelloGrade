@@ -51,6 +51,14 @@ app.use(session({
     }
 }));
 
+app.use((req, res, next) => {
+    const host = req.headers.host;
+    if (host === 'hellograde.onrender.com') {
+        return res.redirect(301, `https://hellograde.online${req.url}`);
+    }
+    next();
+});
+
 
 
 app.post('/api/contact', (req, res) => {
