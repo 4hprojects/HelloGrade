@@ -7,18 +7,26 @@ const bcrypt = require('bcrypt');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const rateLimit = require('express-rate-limit');
+const fetch = require('node-fetch'); 
+const Filter = require('bad-words');
+const filter = new Filter();
+
 const helmet = require('helmet');
 const validator = require('validator');
 
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' }); 
+const { format } = require('date-fns-tz');
+
+const fs = require('fs');
+const csv = require('csv-parser'); // Ensure csv-parser is installed
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 const { ObjectId } = require('mongodb');
-const { format } = require('date-fns-tz');
+
 
 
 // Security middleware
@@ -39,6 +47,7 @@ const client = new MongoClient(mongoUri);
 let usersCollection;
 let gradesCollection;
 let logsCollection;
+let commentsCollection; // Add this line
 
 // Call the database connection function
 connectToDatabase();
@@ -136,6 +145,7 @@ async function connectToDatabase() {
         usersCollection = database.collection('tblUser');
         gradesCollection = database.collection('tblGrades');
         logsCollection = database.collection('tblLogs');
+        commentsCollection = database.collection('tblComments'); 
 
         // Initialize SendGrid with API key
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -319,7 +329,7 @@ app.post('/signup', async (req, res) => {
             );
 
             // Set up session
-            req.session.userId = user._id;
+            req.session.userId = user._id.toString();
             req.session.studentIDNumber = user.studentIDNumber;
             req.session.role = user.role;
             
@@ -344,9 +354,12 @@ app.post('/signup', async (req, res) => {
         });
 
     // Logout Route
-    app.post('/logout', async (req, res) => {
-        const userId = req.session.userId; // Store user ID before destroying the session
-        if (!userId) {
+    app.post('/logout', (req, res) => {
+        console.log('Logout route called');
+        console.log('Session data before destroying:', req.session);
+    
+        if (!req.session.userId) {
+            console.error('No userId in session during logout');
             return res.status(400).json({ success: false, message: 'No user is logged in.' });
         }
 
@@ -746,8 +759,7 @@ function isAdmin(req, res, next) {
     }
 }
 
-const fs = require('fs');
-const csv = require('csv-parser'); // Ensure csv-parser is installed
+
 
 function parseCSVFile(filePath) {
     return new Promise((resolve, reject) => {
@@ -1020,16 +1032,8 @@ app.get('/get-attendance/:studentIDNumber/:courseID', isAuthenticated, async (re
     }
 });
 
-// Serve 404 page for non-existent routes
-app.use((req, res) => {
-    res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
-});
 
-// Start the server after defining routes and middleware
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+
 
 // Log user activity
 app.post('/api/log-user', isAuthenticated, async (req, res) => {
@@ -1068,4 +1072,111 @@ app.post('/api/log-user', isAuthenticated, async (req, res) => {
         console.error('Error logging user activity:', error);
         res.status(500).json({ success: false, message: 'Internal server error.' });
     }
+});
+
+
+// Rate limiter for comment posting
+const commentLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 5, // Limit each IP to 5 requests per windowMs
+    message: { success: false, message: 'Too many comments submitted. Please try again later.' }
+});
+
+// POST route to submit comments
+app.post('/api/comments/:blogId', commentLimiter, async (req, res) => {
+    const { blogId } = req.params;
+    const { comment, isAnonymous } = req.body;
+    const userId = req.session ? req.session.userId : null;
+    const studentIDNumber = req.session ? req.session.studentIDNumber : null;
+
+        // Log incoming data for debugging
+        console.log('Received POST request to /api/comments/:blogId');
+        console.log('blogId:', blogId);
+        console.log('comment:', comment);
+        console.log('isAnonymous:', isAnonymous);
+        console.log('userId:', userId, 'type:', typeof userId);
+        console.log('studentIDNumber:', studentIDNumber);
+
+    try {
+        if (!comment || comment.trim() === '') {
+            return res.status(400).json({ success: false, message: 'Comment cannot be empty.' });
+        }
+        // Ensure isAnonymous is a boolean
+        const isAnonymousBool = isAnonymous === true || isAnonymous === 'true';
+
+        // Sanitize the comment
+        const sanitizedComment = filter.clean(comment);
+
+        let username = 'Anonymous';
+
+        if (userId && !isAnonymousBool && ObjectId.isValid(userId)) {
+            // Fetch user details
+            const user = await usersCollection.findOne(
+                { _id: new ObjectId(userId) },
+                { projection: { firstName: 1 } }
+            );
+
+            if (user) {
+                username = user.firstName;
+            } else {
+                // User not found, handle accordingly
+                username = 'Unknown User';
+            }
+        } else if (userId && !isAnonymousBool) {
+            // Handle invalid userId, possibly return an error or set username to 'Unknown User'
+            console.error('Invalid userId:', userId);
+            return res.status(400).json({ success: false, message: 'Invalid user ID.' });
+        
+        }
+
+        const newComment = {
+            blogId,
+            userId: isAnonymousBool ? null : userId,
+            studentIDNumber: isAnonymousBool ? null : studentIDNumber, // Include studentIDNumber
+            username: validator.escape(username),
+            comment: validator.escape(sanitizedComment),
+            isAnonymous: isAnonymousBool,
+            createdAt: new Date()
+        };
+
+        const result = await commentsCollection.insertOne(newComment);
+
+        if (result.acknowledged) {
+            res.json({ success: true, message: 'Comment posted successfully.' });
+        } else {
+            res.status(500).json({ success: false, message: 'Failed to post comment.' });
+        }
+    } catch (error) {
+        console.error('Error posting comment:', error);
+        res.status(500).json({ success: false, message: 'An error occurred while posting your comment.' });
+    }
+});
+
+
+// GET route to fetch comments
+app.get('/api/comments/:blogId', async (req, res) => {
+    const { blogId } = req.params;
+
+    try {
+        // Fetch comments from the database
+        const comments = await commentsCollection.find({ blogId }).sort({ createdAt: -1 }).toArray();
+
+        res.json({ success: true, comments });
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+        res.status(500).json({ success: false, message: 'An error occurred while fetching comments.' });
+    }
+});
+
+// Serve 404 page for non-existent routes
+app.use((req, res) => {
+    res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
+});
+
+
+
+// Start the server after defining routes and middleware
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
