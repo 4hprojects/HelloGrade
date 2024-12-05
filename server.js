@@ -113,6 +113,11 @@ const loginLimiter = rateLimit({
     }
 });
 
+// Initialize tblLogs collection
+let usersCollection;
+let gradesCollection;
+let logsCollection;
+
 // Connect to MongoDB and initialize the usersCollection
 async function connectToDatabase() {
     try {
@@ -123,10 +128,15 @@ async function connectToDatabase() {
         await client.connect();
         console.log('Connected to MongoDB');
         const database = client.db('myDatabase');
+
+        // Initialize collections
         usersCollection = database.collection('tblUser');
+        gradesCollection = database.collection('tblGrades');
+        logsCollection = database.collection('tblLogs');
 
         // Initialize SendGrid with API key
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
     } catch (err) {
         console.error('Failed to connect to MongoDB', err);
         process.exit(1); // Exit the process if unable to connect
@@ -1021,25 +1031,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
-// Initialize tblLogs collection
-let logsCollection;
-
-async function connectToDatabase() {
-    try {
-        // Existing MongoDB connection logic...
-        await client.connect();
-        console.log('Connected to MongoDB');
-        const database = client.db('myDatabase');
-        usersCollection = database.collection('tblUser');
-        logsCollection = database.collection('tblLogs'); // Initialize tblLogs
-
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    } catch (err) {
-        console.error('Failed to connect to MongoDB', err);
-        process.exit(1);
-    }
-}
 
 // Log user activity
 app.post('/api/log-user', isAuthenticated, async (req, res) => {
