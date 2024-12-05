@@ -35,7 +35,15 @@ app.disable('x-powered-by');
 
 const mongoUri = process.env.MONGODB_URI;
 const client = new MongoClient(mongoUri);
+// Initialize tblLogs collection
 let usersCollection;
+let gradesCollection;
+let logsCollection;
+
+// Call the database connection function
+connectToDatabase();
+
+// Place all route definitions here
 
 // Session management with MongoDB store
 app.use(session({
@@ -113,11 +121,6 @@ const loginLimiter = rateLimit({
     }
 });
 
-// Initialize tblLogs collection
-let usersCollection;
-let gradesCollection;
-let logsCollection;
-
 // Connect to MongoDB and initialize the usersCollection
 async function connectToDatabase() {
     try {
@@ -144,10 +147,6 @@ async function connectToDatabase() {
 }
 
 
-// Call the database connection function
-connectToDatabase();
-
-// Place all route definitions here
 
 app.get('/login.html', (req, res) => {
     res.sendFile(__dirname + '/public/login.html');
