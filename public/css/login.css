@@ -1,0 +1,193 @@
+/* Full Height Background Without Scroll */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* Main Container for Centering */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: var(--bg-color);
+}
+
+/* Form Container */
+.form-container {
+    width: 100%;
+    max-width: 400px; /* Slightly wider for better UX */
+    padding: 30px 20px;
+    background-color: var(--form-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--form-border);
+    text-align: center;
+}
+
+.form-container h3 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #4A90E2;
+    font-weight: 600;
+}
+
+/* Input Fields */
+input {
+    width: 100%;
+    height: 40px;
+    margin: 12px 0;
+    padding: 14px 16px;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 24px; 
+}
+.password-toggle {
+    margin-bottom: 15px; /* Adds space below the password input field */
+}
+
+input:focus {
+    border-color: #4A90E2;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0px 0px 8px rgba(74, 144, 226, 0.5);
+}
+
+input::placeholder {
+    color: var(--placeholder-color);
+}
+
+/* Password Toggle */
+.password-toggle {
+    position: relative;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.password-toggle-icon:hover {
+    color: #4A90E2;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    height: 40px; /* Match input height */
+    margin-top: 20px;
+    padding: 14px 16px; /* Adjust padding to align with input fields */
+    font-size: 1.1rem;
+    color: #ffffff;
+    background: linear-gradient(135deg, #4A90E2, #357ABD);
+    border: 2px solid #4A90E2; /* Added border */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #357ABD, #2B5C8E);
+    border-color: #2B5C8E; /* Change border color on hover */
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 10px rgba(74, 144, 226, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Footer Links */
+.footer {
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.footer a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Error and Success Messages */
+.error-message {
+    color: red;
+    text-align: center;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.success-message {
+    color: green;
+}
+
+/* Compact Form for Smaller Layouts */
+.compact-form {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+    background-color: var(--form-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin: 30px auto;
+}
+
+.compact-form h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #4A90E2;
+}
+
+.compact-form input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    font-size: 0.9rem;
+    border-radius: 6px;
+}
+
+/* Variables for Theme */
+:root {
+    --bg-color: #0a0a0a;
+    --text-color: #ffffff;
+    --form-bg: rgba(255, 255, 255, 0.1);
+    --form-border: #444;
+    --button-bg: #4A90E2;
+    --link-color: #4A90E2;
+    --placeholder-color: rgba(200, 200, 200, 0.7);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --bg-color: #111827;
+    --text-color: #f9fafb;
+    --form-bg: rgba(255, 255, 255, 0.05);
+    --form-border: #555;
+    --button-bg: #374151;
+    --placeholder-color: rgba(216, 216, 216, 0.7);
+}
