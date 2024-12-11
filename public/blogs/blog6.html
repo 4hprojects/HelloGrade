@@ -103,7 +103,31 @@
             
                     </article>
                 </main>
-            
+
+                <div class="mt-6 flex justify-between">
+                <a href="/blogs/blog5.html" class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm hover:bg-gray-800">Previous</a>
+                <a href="/blogs.html" class="text-white bg-green-700 px-4 py-2 rounded-md text-sm hover:bg-gray-800">Check Other Blogs</a>
+                <a href="/blogs/blog1.html" class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm hover:bg-blue-700">Next</a>
+            </div>
+            <div id="header">We'd like to here your feedback:</div>
+
+            <!-- Comment Form -->
+
+            <form id="commentForm" class="flex flex-col">
+                <textarea id="commentInput" name="comment" rows="4" placeholder="Write your comment here..." class="p-4 border rounded-lg mb-4" required></textarea>
+                <div class="flex items-center mb-4">
+                    <input type="checkbox" id="anonymousCheckbox" class="mr-2">
+                    <label for="anonymousCheckbox" class="text-gray-700">Post anonymously</label>
+                </div>
+                    <div class="mt-6 flex justify-between">
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Post Comment</button>
+                </div>
+
+            </form>
+            <div id="commentError" class="text-red-500 mt-2"></div>
+
+        <!-- Comment Section -->
+        <div id="commentsContainer"></div>
                 <!-- Scroll To Top Button -->
                 <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
                     <span class="material-icons">arrow_upward</span>
