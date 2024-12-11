@@ -1,149 +1,118 @@
-// js/signup.js
-
 document.addEventListener('DOMContentLoaded', () => {
-    const signupForm = document.getElementById('signupForm');
-    const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('confirmPassword');
-    const errorMessage = document.getElementById('errorMessage');
-    console.log('Signup form:', signupForm);
+    const blogId = 'blog6'; // Identifier for the current blog post
+    const commentsContainer = document.getElementById('commentsContainer');
+    const commentForm = document.getElementById('commentForm');
+    const commentInput = document.getElementById('commentInput');
+    const anonymousCheckbox = document.getElementById('anonymousCheckbox');
+    const commentError = document.getElementById('commentError');
 
-        // Real-time password matching validation
-        confirmPasswordInput.addEventListener('input', () => {
-            if (passwordInput.value !== confirmPasswordInput.value) {
-                errorMessage.textContent = 'Passwords do not match!';
-                errorMessage.className = 'notification error';
-                errorMessage.style.display = 'block';
-            } else {
-                errorMessage.textContent = '';
-                errorMessage.style.display = 'none';
+    let isAuthenticated = false; // Flag to track authentication status
+
+
+    // Function to check if user is authenticated
+    const checkAuthentication = () => {
+        return fetch('/session-check', { credentials: 'include' })
+            .then(response => response.json())
+            .then(data => {
+                isAuthenticated = data.authenticated;
+            })
+            .catch(error => {
+                console.error('Error checking authentication:', error);
+            });
+    };
+
+    // Function to fetch and display comments
+    const loadComments = () => {
+        fetch(`/api/comments/${blogId}`, {
+            credentials: 'include' // Include cookies for session
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                commentsContainer.innerHTML = '';
+                data.comments.forEach(comment => {
+                    const commentDiv = document.createElement('div');
+                    commentDiv.classList.add('mb-4', 'p-4', 'border', 'rounded-lg');
+                    
+                    const userPara = document.createElement('p');
+                    userPara.classList.add('font-semibold');
+                    userPara.textContent = comment.username;
+
+                    const datePara = document.createElement('p');
+                    datePara.classList.add('text-sm', 'text-gray-500');
+                    const date = new Date(comment.createdAt);
+                    datePara.textContent = date.toLocaleString();
+
+                    const commentPara = document.createElement('p');
+                    commentPara.classList.add('mt-2', 'text-gray-700');
+                    commentPara.textContent = comment.comment;
+
+                    commentDiv.appendChild(userPara);
+                    commentDiv.appendChild(datePara);
+                    commentDiv.appendChild(commentPara);
+
+                    commentsContainer.appendChild(commentDiv);
+                });
+            } else {
+                commentsContainer.innerHTML = '<p class="text-gray-500">No comments yet. Be the first to comment!</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching comments:', error);
+            commentsContainer.innerHTML = '<p class="text-red-500">Failed to load comments.</p>';
         });
+    };
 
-    signupForm.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent the default form submission
+    // Initial load
+    checkAuthentication().then(() => {
+        loadComments();
+    });
 
-        if (passwordInput.value !== confirmPasswordInput.value) {
-            showNotification('error', 'Passwords do not match!');
+    // Handle comment form submission
+    commentForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const commentText = commentInput.value.trim();
+        const isAnonymous = anonymousCheckbox.checked; 
+
+        
+        if (commentText === '') {
+            commentError.textContent = 'Comment cannot be empty.';
             return;
         }
 
-        const formData = new FormData(signupForm);
-        const data = Object.fromEntries(formData.entries());
-
-        try {
-            const response = await fetch('/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                showNotification('success', result.message);
-                // Optionally redirect to login page after a delay
-                setTimeout(() => {
-                    window.location.href = '/login.html';
-                }, 2000);
+        fetch(`/api/comments/${blogId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+                comment: commentText,
+                isAnonymous
+            })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+        .then(data => {
+            if (data.success) {
+                commentInput.value = '';
+                anonymousCheckbox.checked = false;
+                commentError.textContent = '';
+                loadComments();
             } else {
-                showNotification('error', result.message);
+                commentError.textContent = data.message || 'Failed to post comment.';
             }
-        } catch (error) {
-            console.error('Error during signup:', error);
-            showNotification('error', 'An error occurred during signup.');
-        }
+        })
+        .catch(error => {
+            console.error('Error posting comment:', error);
+            commentError.textContent = 'An error occurred while posting your comment.';
+        });
     });
-});
-
-
-// Password visibility toggle
-document.querySelectorAll('.password-toggle-icon').forEach(icon => {
-    icon.addEventListener('click', function () {
-        const input = this.previousElementSibling;
-        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-        input.setAttribute('type', type);
-        this.textContent = type === 'password' ? '👁️' : '🙈';
-    });
-});
-
-// Theme toggle logic
-const themeToggle = document.getElementById("themeToggle");
-
-if (localStorage.getItem("theme") === "dark") {
-    document.documentElement.setAttribute("data-theme", "dark");
-    themeToggle.textContent = "☀︎";
-}
-
-themeToggle.addEventListener("click", () => {
-    if (document.documentElement.getAttribute("data-theme") === "dark") {
-        document.documentElement.setAttribute("data-theme", "light");
-        themeToggle.textContent = "☾";
-        localStorage.setItem("theme", "light");
-    } else {
-        document.documentElement.setAttribute("data-theme", "dark");
-        themeToggle.textContent = "☀︎";
-        localStorage.setItem("theme", "dark");
-    }
-});
-
-function updateCriteriaLabel(elementId, isValid) {
-    const element = document.getElementById(elementId);
-    if (isValid) {
-        element.classList.add('valid');
-    } else {
-        element.classList.remove('valid');
-    }
-}
-
-document.getElementById('signupForm').addEventListener('submit', function(event) {
-    console.log('Form submitted'); // Debugging statement
-    event.preventDefault(); // Prevent default form submission
-
-    // Check if terms are agreed
-    const termsCheckbox = document.getElementById('termsCheckbox');
-    if (!termsCheckbox.checked) {
-        alert(`${type.toUpperCase()}: ${message}`);
-        showNotification('error', 'You must agree to the Terms and Conditions.');
-        return;
-    }
-
-    // Collect form data
-    const formData = {
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
-        studentIDNumber: document.getElementById('studentIDNumber').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
-        termsCheckbox: termsCheckbox.checked
-    };
-
-    // Send data to the server
-    fetch('/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-    })
-    .then((response) => response.json().then((data) => ({ status: response.status, body: data })))
-    .then(({ status, body }) => {
-        if (status === 400) {
-            // Display the error message in the notification
-            alert(`${type.toUpperCase()}: ${message}`);
-            showNotification('error', body.message);
-        } else if (status === 200 && body.success) {
-            // Display success notification and redirect
-            alert(`${type.toUpperCase()}: ${message}`);
-            showNotification('success', 'Signup successful! Redirecting to login...');
-            setTimeout(() => {
-                window.location.href = '/login.html';
-            }, 3000);
-        }
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        alert(`${type.toUpperCase()}: ${message}`);
-        showNotification('error', 'An unexpected error occurred. Please try again.');
-    });
-    
 });
