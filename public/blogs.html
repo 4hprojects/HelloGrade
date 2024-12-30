@@ -3,18 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Henson M. Sagorsor">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore the latest articles, insights, and tips on education, technology, and student success with HelloGrade Blogs.">
-    <title>Blogs - HelloGrade</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <meta name="description" content="Explore the latest insights and inspiration on education, technology, and student success with HelloGrade Blogs.">
+    <meta name="keywords" content="HelloGrade Blogs, Educational insights, Technology in education, Student success tips, Practical advice for learning">
+    <title>HelloGrade Blogs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/css/ustyles.css">
+    <link rel="stylesheet" href="/css/blogs.css">
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/js/uscripts.js"></script>
     <link rel="stylesheet" href="/dist/output.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -22,101 +23,55 @@
     <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
             <a href="https://hellograde.online/">
-                <img src="/images/icon.webp" alt="HelloGrade Logo" class="h-12 mr-3">
+                <img src="/images/icon.png" alt="HelloGrade Logo" class="h-12 mr-3">
             </a>
             <h1 class="text-xl font-bold">HelloGrade</h1>
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">
                 <li><a href="/index.html" title="Home"><span class="material-icons">home</span></a></li>
-                <li><a href="/search.html" title="Search"><span class="material-icons">search</span></a></li>
                 <li><a href="/blogs.html" title="Blogs" class="text-yellow-400"><span class="material-icons">article</span></a></li>
+                <li><a href="/help.html" title="Help"><span class="material-icons">help_outline</span></a></li>
                 <li><a href="/login.html" title="Sign In"><span class="material-icons">login</span></a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero bg-gray-100 text-gray-800 py-20 px-4">
-        <div class="container mx-auto text-center">
-            <h1 class="text-5xl font-bold mb-4 text-gray-800">HelloGrade Blogs</h1>
-            <p class="text-lg text-gray-700 mb-6">
-                Your go-to resource for insights and inspiration in education, technology, and student success. 
-                Explore curated articles designed to empower educators, students, and tech enthusiasts with practical tips, 
-                in-depth explorations, and the latest trends shaping the educational landscape.
-            </p>
-            <p class="text-lg text-gray-700">
-                Discover thought-provoking content that bridges the gap between learning and innovation. 
-                Let's learn, grow, and innovate together!
-            </p>
-        </div>
-    </section>
+    <!-- Blog Content -->
+    <main class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">HelloGrade Blogs</h2>
+        <p class="text-gray-600 text-center text-sm mb-8">
+            Welcome to your ultimate hub for all things education, technology, and beyond! At HelloGrade Blogs, we’re all about inspiring educators, empowering students, and connecting tech enthusiasts with engaging, relatable content.
+        </p>
+        <article class="text-gray-800 leading-7" id="content">
+            <section data-scroll-reveal="enter from-left">
+                <h3 class="text-2xl font-semibold mb-4">Explore a World of Possibilities</h3>
+                <p>At HelloGrade Blogs, you’ll find articles featuring:</p>
+                <ul class="list-disc list-inside">
+                    <li><strong>Events:</strong> Stay updated on the latest educational and tech events that matter.</li>
+                    <li><strong>Success Tips:</strong> Unlock your potential with practical advice for excelling in academics, teaching, and personal growth.</li>
+                    <li><strong>Reviews:</strong> Discover honest reviews on tools, apps, and resources to enhance your learning or teaching journey.</li>
+                    <li><strong>Travel:</strong> Get inspired by stories of exploration, from educational tours to must-visit destinations that spark curiosity, broaden horizons, and offer enriching experiences for learners, educators, and adventurers alike.</li>
+                </ul>
+                <p class="mt-4">Whether you're here to learn, innovate, or dream big, we’ve got something for everyone. Let’s grow, discover, and make a difference together!</p>
+            </section>
+        </article>
 
-
-    <!-- Blog Posts Section -->
-    <section id="blogs" class="my-16 px-4">
-        <h2 class="text-3xl font-bold text-center text-blue-600 mb-8">Latest Blogs</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Blog 6 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="/images/blog6.webp" alt="Semestral Break Activities" class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">Baguio Smart City Challenge: Student Innovations for a Smarter Future</h3>
-                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 11, 2024</span> by <span class="font-medium">Henson M. Sagorsor</span></p>
-                <p class="text-gray-600 mt-2">Explore the projects, lessons, and insights from this transformative experience.</p>
-                <a href="/blogs/blog6.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
+        <section id="latestBlog" class="container mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Latest Blog</h2>
+            <div id="latestBlogContainer" class="bg-white p-6 rounded-lg shadow-md">
+                <!-- Latest blog will be inserted here dynamically -->
             </div>
-            <!-- Blog 5 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="/images/blog5.webp" alt="Semestral Break Activities" class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">What to Do During Semestral Breaks: Rest, Growth, and Fun</h3>
-                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 5, 2024</span></p>
-                <p class="text-gray-600 mt-2">Maximise your semestral break with tips for rest, skill development, and exciting activities to recharge and grow.</p>
-                <a href="/blogs/blog5.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
+        </section>
+        
+        <section id="randomBlogs" class="container mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Discover More Blogs</h2>
+            <div id="randomBlogsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Random blogs will be inserted here dynamically -->
             </div>
-
-            <!-- Blog 4 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="/images/blog4.webp" alt="Digital Literacy Skills" class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">Why Every Student Should Attend Seminars and Conferences</h3>
-                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 2, 2024</span></p>
-                <p class="text-gray-600 mt-2">Discover the benefits of seminars and conferences: networking, fresh perspectives, and staying updated on trends.</p>
-                <a href="/blogs/blog4.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
-            </div>            
-            <!-- Blog 1 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="/images/blog1.webp" alt="Technology in Education" class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">The Role of Technology in Education</h3>
-                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 1, 2024</span></p>
-                <p class="text-gray-600 mt-2">Learn how technology is shaping the way educators and students interact in today's classrooms.</p>
-                <a href="/blogs/blog1.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
-            </div>
-            <!-- Blog 2 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="/images/blog2.webp" alt="Effective Study Techniques" class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">Effective Study Techniques</h3>
-                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 1, 2024</span></p>
-                <p class="text-gray-600 mt-2">Discover effective methods for students to improve their learning and retention of concepts.</p>
-                <a href="/blogs/blog2.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
-            </div>
-            <!-- Blog 3 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="/images/blog3.webp" alt="Digital Literacy Skills" class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">Developing Digital Literacy Skills for the 21st Century</h3>
-                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 1, 2024</span></p>
-                <p class="text-gray-600 mt-2">Empower students with essential competencies to thrive in the digital age.</p>
-                <a href="/blogs/blog3.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Advertisement Section -->
-    <div class="text-center my-8">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
-        <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-4537208011192461" data-ad-slot="7121468855"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
+        </section>
+        
+    </main>
 
     <!-- Scroll To Top Button -->
     <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
@@ -125,6 +80,15 @@
 
     <!-- Footer -->
     <div id="footerContainer"></div>
+
+    <script>
+        ScrollReveal().reveal("[data-scroll-reveal]", {
+            duration: 1000,
+            delay: 300,
+            reset: true
+        });
+    </script>
+    <script src="js/blogs.js"></script>
 </body>
 
 </html>
