@@ -25,14 +25,14 @@
     <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
             <a href="https://hellograde.online/">
-                <img src="images/icon.png" alt="HelloGrade Icon" class="h-12 mr-3">
+                <img src="images/icon.webp" alt="HelloGrade Icon" class="h-12 mr-3">
             </a>
             <h1 class="text-xl font-bold">HelloGrade</h1>
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">
                 <li><a href="dashboard.html" title="Dashboard"><span class="material-icons">dashboard</span></a></li>
-                <li><a href="attendance.html" title="Attendance Summary"><span class="material-icons">assignment</span></a></li>
+                <li><a href="attendance.html" title="Attendance Summary" class="text-yellow-400"><span class="material-icons">assignment</span></a></li>
                 <li><a id="logoutLink" href="login.html" title="Sign Out"><span class="material-icons">logout</span></a></li>
             </ul>
         </nav>
@@ -128,39 +128,37 @@
     </section>
     <section class="text-center">
     <div>
-            <!-- Blog 5 -->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <img src="/images/blog5.png" alt="Semestral Break Activities" class="w-full h-40 object-cover rounded-md mb-4">
-            <h3 class="text-xl font-semibold text-gray-800">What to Do During Semestral Breaks: Rest, Growth, and Fun</h3>
-            <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 5, 2024</span></p>
-            <p class="text-gray-600 mt-2">Maximise your semestral break with tips for rest, skill development, and exciting activities to recharge and grow.</p>
-            <a href="/blogs/blog5.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
-        </div>
+        <section id="latestBlog" class="container mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Latest Blog</h2>
+            <div id="latestBlogContainer" class="bg-white p-6 rounded-lg shadow-md">
+                <!-- Latest blog will be inserted here dynamically -->
+            </div>
+        </section>
  <!-- Advertisement Section -->
-        <div class="text-center my-8">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-                crossorigin="anonymous"></script>
-            <!-- HelloGrade Responsive Ad -->
-            <ins class="adsbygoogle"
-                style="display:inline-block;width:728px;height:90px"
-                data-ad-client="ca-pub-4537208011192461"
-                data-ad-slot="7121468855"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-            crossorigin="anonymous"></script>
-           <!-- Horizontal4Index -->
-           <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-4537208011192461"
-                data-ad-slot="7025129889"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-           <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-           </script>
-        </div>
+ <div class="text-center my-8">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+        crossorigin="anonymous"></script>
+    <!-- HelloGrade Responsive Ad -->
+    <ins class="adsbygoogle"
+        style="display:inline-block;width:728px;height:90px"
+        data-ad-client="ca-pub-4537208011192461"
+        data-ad-slot="7121468855"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+    crossorigin="anonymous"></script>
+   <!-- Horizontal4Index -->
+   <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-4537208011192461"
+        data-ad-slot="7025129889"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+   <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+   </script>
+</div>
     <p>" "</p>
     <h1>&copy; 2024 HelloGrade. All Rights Reserved.</h1>
     </div>
@@ -562,5 +560,6 @@
 
 
     </script>
+    <script src="js/blogs.js"></script>
 </body>
 </html>
