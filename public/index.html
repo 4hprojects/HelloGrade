@@ -8,18 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Welcome to HelloGrade, your one-stop student grading portal. Simplify grade management, enhance transparency, and access grades efficiently on any device.">
     <title>Welcome to HelloGrade - Your Student Grading Portal</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/css/ustyles.css">
     <!-- Scroll Reveal and Smooth Scrolling -->
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="/js/uscripts.js"></script>
     <link rel="stylesheet" href="/dist/output.css">
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js" defer></script>
+    <script src="https://unpkg.com/scrollreveal" defer></script>
+    <script src="/js/uscripts.js" defer></script>
 
+    <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
@@ -30,25 +35,23 @@
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">             
-                <li><a href="https://hellograde.online/index.html" title="Home" class="text-yellow-400"><span class="material-icons" >home</span></a></li>
-                <li><a href="/search.html" title="Search"><span class="material-icons">search</span></a></li>
-                <li><a href="https://hellograde.online/blogs.html" title="Blogs"><span class="material-icons">article</span></a></li>
-                <li><a href="https://hellograde.online/login.html" title="Sign In"><span class="material-icons">login</span></a></li>
+                <li><a href="#" title="Search" onclick="toggleSearchOverlay()" class="cursor-pointer"><span class="material-icons">search</span></a></li>
+                <li><a href="/index.html" title="Home" class="text-yellow-400"><span class="material-icons" >home</span></a></li>
+                <li><a href="/blogs.html" title="Blogs"><span class="material-icons">article</span></a></li>
+                <li><a href="/login.html" title="Sign In"><span class="material-icons">login</span></a></li>
             </ul>
         </nav>
     </header>
-    
-<!-- Main Content with Smooth Scrolling and Reveal Animations -->
-<!-- Introduction Section -->
-<section class="hero bg-gray-100 text-gray-800 py-20 px-4">
-    <div class="container mx-auto text-center">
-        <h1 class="text-5xl font-bold mb-4 text-gray-800">Welcome to HelloGrade</h1>
-        <p class="text-xl mb-6 text-gray-700">Revolutionizing grade management for teachers and students.</p>
-        <a href="https://hellograde.online/login.html" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow-md">Get Started</a>
-    </div>
-</section>
 
-    
+    <!-- Main Content with Smooth Scrolling and Reveal Animations -->
+    <!-- Introduction Section -->
+    <section class="hero bg-gray-100 text-gray-800 py-20 px-4">
+        <div class="container mx-auto text-center">
+            <h1 class="text-5xl font-bold mb-4 text-gray-800">Welcome to HelloGrade</h1>
+            <p class="text-xl mb-6 text-gray-700">We offer seamless ways to manage grades, track progress, and enhance learning. Experience simplicity and efficiency at your fingertips.</p>
+            <a href="/login.html" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow-md">Get Started</a>
+        </div>
+    </section>
 
     <!-- Features Section with Grid Layout -->
     <section id="features" class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
@@ -61,40 +64,40 @@
             <p>Students can access their grades instantly, promoting responsibility and goal setting.</p>
         </div>
         <div class="scroll-reveal">
-            <h3 class="text-2xl font-bold text-blue-600">Customizable Grading Criteria</h3>
-            <p>Supports point-based, percentage, and custom grading scales to match academic standards.</p>
-        </div>
+            <h3 class="text-2xl font-bold text-blue-600">Effortless Academic Records Viewing</h3>
+            <p>Enable students and educators to access academic records seamlessly, offering a clear view of progress and achievements with just a few clicks.</p>
+        </div>        
         <div class="scroll-reveal">
             <h3 class="text-2xl font-bold text-blue-600">Data Security and Privacy</h3>
             <p>Ensures secure data handling with encryption and limited access to protect user information.</p>
         </div>
     </section>
     
- <!-- Advertisement Section -->
-        <div class="text-center my-8">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-                crossorigin="anonymous"></script>
-            <!-- HelloGrade Responsive Ad -->
-            <ins class="adsbygoogle"
-                style="display:inline-block;width:728px;height:90px"
-                data-ad-client="ca-pub-4537208011192461"
-                data-ad-slot="7121468855"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+    <!-- Advertisement Section -->
+    <div class="text-center my-8">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
             crossorigin="anonymous"></script>
-           <!-- Horizontal4Index -->
-           <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-4537208011192461"
-                data-ad-slot="7025129889"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-           <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-           </script>
-        </div>
+        <!-- HelloGrade Responsive Ad -->
+        <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-4537208011192461"
+            data-ad-slot="7121468855"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+        crossorigin="anonymous"></script>
+       <!-- Horizontal4Index -->
+       <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-4537208011192461"
+            data-ad-slot="7025129889"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+       <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+       </script>
+    </div>
 
     <!-- Why Choose Section -->
     <section id="why-choose" class="text-center mb-16 scroll-reveal">
@@ -107,216 +110,86 @@
         </p>
     </section>
 
-    <!-- Blogs Section -->
-    <section id="blogs" class="my-16 px-4">
-        <h2 class="text-3xl font-bold text-center text-blue-600 mb-8">Latest Blogs</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Blog 5 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="/images/blog5.webp" alt="Semestral Break Activities" class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">What to Do During Semestral Breaks: Rest, Growth, and Fun</h3>
-                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 5, 2024</span></p>
-                <p class="text-gray-600 mt-2">Maximise your semestral break with tips for rest, skill development, and exciting activities to recharge and grow.</p>
-                <a href="/blogs/blog5.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
-            </div>
+    <section id="latestBlog" class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Latest Blog</h2>
+        <div id="latestBlogContainer" class="bg-white p-6 rounded-lg shadow-md">
+            <!-- Latest blog will be inserted here dynamically -->
+        </div>
+    </section>
+    
 
-            <!-- Blog 4 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="/images/blog4.webp" alt="Digital Literacy Skills" class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">Why Every Student Should Attend Seminars and Conferences</h3>
-                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 2, 2024</span></p>
-                <p class="text-gray-600 mt-2">Discover the benefits of seminars and conferences: networking, fresh perspectives, and staying updated on trends.</p>
-                <a href="https://hellograde.online/blogs/blog4.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
-            </div>    
-            <!-- Blog 6 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <img src="images/blog6.webp" alt="Group of BSU students holding certificates in front of a stage backdrop that reads 'Baguio Smart City Challenge' with event logos." class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">Baguio Smart City Challenge: Student Innovations for a Smarter Future</h3>
-                <p class="text-gray-600 text-sm">Published on: <span class="font-medium">December 11, 2024</span></p>
-                <p class="text-gray-600 mt-2">Explore the projects, lessons, and insights from this transformative experience.</p>
-                <a href="https://hellograde.online/blogs/blog6.html" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
-            </div>
+    <section id="randomBlogs" class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Discover More Blogs</h2>
+        <div id="randomBlogsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Random blogs will be inserted here dynamically -->
         </div>
     </section>
 
-
-    <!-- Determine Proficiency Section -->
-    <section id="determine-proficiency" class="bg-white p-8 rounded-lg shadow-md my-16">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Determine Proficiency</h2>
-        <h3 class="text-2xl font-semibold text-gray-700 mb-6">Systematic Grading</h3>
-        <p class="text-lg text-gray-600 mb-8">
-            The 11-point grading system is a comprehensive method of evaluating academic performance using a range of predefined grade values.
-        </p>
     
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Left Section: Descriptions -->
-            <div class="space-y-8">
-                <div class="flex items-start">
-                    <span class="material-icons text-indigo-600 mr-2"></span>
-                    <div>
-                        <h4 class="font-semibold text-gray-700">Enhanced Precision</h4>
-                        <p class="text-gray-600">
-                            The expanded range of grade points allows educators to make finer distinctions in student performance, giving a more detailed assessment of students' knowledge and skill levels.
-                        </p>
-                    </div>
-                </div>
-                <div class="flex items-start">
-                    <span class="material-icons text-indigo-600 mr-2"></span>
-                    <div>
-                        <h4 class="font-semibold text-gray-700">Improved Differentiation</h4>
-                        <p class="text-gray-600">
-                            This grading system highlights and rewards incremental progress, offering a clearer reflection of each student’s unique strengths and areas for development.
-                        </p>
-                    </div>
-                </div>
-                <div class="flex items-start">
-                    <span class="material-icons text-indigo-600 mr-2"></span>
-                    <div>
-                        <h4 class="font-semibold text-gray-700">Clearer Communication</h4>
-                        <p class="text-gray-600">
-                            With additional grading points, this system provides a more comprehensive picture of student achievement, supporting in-depth discussions between educators, students, and parents about progress, focus areas, and strategies for growth.
-                        </p>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Right Section: Grading Table -->
-            <div class="relative overflow-x-auto mt-0 sm:mt-10 hidden sm:block">
-                <table class="w-full text-sm text-left text-gray-500 content3_4">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-100/20 text-center">
-                        <tr>
-                            <th scope="col" class="px-3 py-2 font-semibold text-gray-700">
-                               Grade
-                            </th>
-                            <th scope="col" class="px-3 py-2 font-semibold text-gray-700">
-                                Grade Percentage Equivalent
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                1.00
-                            </td>
-                            <td class="px-3 py-1">
-                                98-100
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                1.25
-                            </td>
-                            <td class="px-3 py-1">
-                                95-97
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                1.50
-                            </td>
-                            <td class="px-3 py-1">
-                               92-94
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                1.75
-                            </td>
-                            <td class="px-3 py-1">
-                               89-91
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                2.00
-                            </td>
-                            <td class="px-3 py-1">
-                               86-88
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                2.25
-                            </td>
-                            <td class="px-3 py-1">
-                               83-85
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                2.50
-                            </td>
-                            <td class="px-3 py-1">
-                               80-82
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                2.75
-                            </td>
-                            <td class="px-3 py-1">
-                                77-79
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                3.00
-                            </td>
-                            <td class="px-3 py-1">
-                               75-76
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                5.00
-                            </td>
-                            <td class="px-3 py-1">
-                               Below 75
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                INC
-                            </td>
-                            <td class="px-3 py-1">
-                               Incomplete
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                OD
-                            </td>
-                            <td class="px-3 py-1">
-                               Officially Dropped
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                UD
-                            </td>
-                            <td class="px-3 py-1">
-                               Unofficially Dropped
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300">
-                            <td class="px-3 py-1 font-medium text-gray-900 whitespace-nowrap">
-                                W
-                            </td>
-                            <td class="px-3 py-1">
-                               Withdrawn
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-    </section>
 
     <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
         <span class="material-icons">arrow_upward</span>
     </button>
-</main>
 
-<script>
+    <!-- Floating Search Button -->
+    <button 
+      class="fixed bottom-20 right-5 h-12 w-12 rounded-full bg-green-500 text-white 
+             hover:bg-green-600 flex items-center justify-center shadow-lg z-50"
+      onclick="toggleSearchOverlay()"
+      aria-label="Search"
+    >
+      <span class="material-icons">search</span>
+    </button>
+
+    <!-- Search Overlay (Hidden by Default) -->
+    <div 
+      id="searchOverlay" 
+      class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-[9999] hidden"
+    >
+      <div class="bg-white rounded-md p-4 w-11/12 sm:w-3/5 lg:w-2/5 relative">
+        <!-- Close Button -->
+        <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+                onclick="toggleSearchOverlay()"
+                aria-label="Close">
+          <span class="material-icons">close</span>
+        </button>
+
+        <h2 class="text-lg font-semibold mb-4 text-gray-800">Search HelloGrade</h2>
+        <!-- Search Form -->
+        <form onsubmit="return goToSearchPage()">
+          <input 
+            type="text" 
+            id="overlaySearchInput"
+            class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            placeholder="Type your search..."
+          />
+          <button 
+            type="submit"
+            class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- Contact Support -->
+<section class="text-center">
+<h3 class="text-2xl font-semibold mb-4 ">Say Hello to Efficient Academic Management</h3>
+<p class="mb-6">
+    Join the community of students and educators transforming how they track and manage academic progress!
+</p>
+<a href="/login.html" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow-md">Get Started</a>
+</section>
+
+<p class="mt-2 text-white">We appreciate your feedback.</p>
+<p class="mt-2 text-white">We appreciate your feedback.</p>
+<p class="mt-2 text-white">We appreciate your feedback.</p>
+
+<button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
+<span class="material-icons">arrow_upward</span>
+</button>
+
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
@@ -325,25 +198,28 @@
                 window.scrollTo({
                     top: 0,
                     behavior: "smooth"
-                });            });
+                });
+            });
         });
 
-    // ScrollReveal configuration
-    ScrollReveal().reveal('.scroll-reveal', { duration: 1200, origin: 'bottom', distance: '30px' });
+        // ScrollReveal configuration
+        ScrollReveal().reveal('.scroll-reveal', { duration: 1200, origin: 'bottom', distance: '30px' });
 
-    // Get the button
-    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+        // Show/hide the scroll-to-top button
+        window.onscroll = function() {
+            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollToTopBtn.style.display = "flex";
+            } else {
+                scrollToTopBtn.style.display = "none";
+            }
+        };
 
-    // Function to show the button when scrolling down
-    window.onscroll = function() {
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-            scrollToTopBtn.style.display = "flex";
-        } else {
-            scrollToTopBtn.style.display = "none";
-        }
-    };
-</script>
-<!-- Footer -->
-<div id="footerContainer"></div>
+
+    </script>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+    <script src="js/blogs.js"></script>
 </body>
 </html>
