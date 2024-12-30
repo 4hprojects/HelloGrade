@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search Results - HelloGrade</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="/css/ustyles.css">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js" defer></script>
+  <script src="/js/uscripts.js" defer></script>
+
+  <!-- Google AdSense -->
+  <script async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" 
+          crossorigin="anonymous">
+  </script>
+  
+  <!-- Google CSE script -->
+  <script async src="https://cse.google.com/cse.js?cx=92f202aaff90f46bb"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
+    <div class="flex items-center">
+      <a href="https://hellograde.online/">
+        <img src="images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3">
+      </a>
+      <h1 class="text-xl font-bold">HelloGrade</h1>
+    </div>
+    <nav>
+      <ul id="navMenu" class="flex flex-row gap-4">             
+        <!-- Link user here to load the inline search page -->
+        <li><a href="/search.html" title="Search" class="text-yellow-400"><span class="material-icons">search</span></a></li>
+        <li><a href="/index.html" title="Home" ><span class="material-icons">home</span></a></li>
+        <li><a href="/blogs.html" title="Blogs"><span class="material-icons">article</span></a></li>
+        <li><a href="/login.html" title="Sign In"><span class="material-icons">login</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto my-8 px-4">
+    <!-- 
+      This is your in-page Google Custom Search:
+      1) The search box (gcse-searchbox)
+      2) The search results (gcse-searchresults)
+      Google will automatically place the results beneath the box, no modal needed.
+    -->
+    <div class="gcse-searchbox"
+         data-as_sitesearch="hellograde.online"
+         data-auto-complete="true"
+         data-auto-complete-max-completions="5">
+    </div>
+
+    <div class="gcse-searchresults"
+         data-link-target="_self" 
+         data-as_sitesearch="hellograde.online">
+    </div>
+  </main>
+<!-- Contact Support -->
+ <div>
+<section class="text-center">
+    <h3 class="text-2xl font-semibold mb-4">Need Further Assistance or Want to provide feedback?</h3>
+    <p class="mb-6">
+        If you can't find the answer you're looking for, please contact our support team.
+    </p>
+    <a href="/contact.html" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors">
+        Contact Support
+    </a>
+</section>
+<p class="mt-2">.</p>
+<p class="mt-2">Need Further Assistance?</p>
+<button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-blue-500 text-white hover:bg-blue-600 flex items-center justify-center shadow-lg">
+    <span class="material-icons">arrow_upward</span>
+</button>
+<div>.</div>
+</div>
+  <!-- Footer -->
+  <div id="footerContainer"></div>
+
+  <script>
+    // On load, parse the 'q' parameter and inject it into the search box if present
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const query = urlParams.get('q');
+      if (query) {
+        // Delay to ensure the search box is initialized
+        setTimeout(() => {
+          const searchBox = document.querySelector('input.gsc-input');
+          if (searchBox) {
+            searchBox.value = query;
+            // Programmatically "click" the search button
+            const searchButton = document.querySelector('input.gsc-search-button');
+            if (searchButton) {
+              searchButton.click();
+            }
+          }
+        }, 500);
+      }
+    });
+  </script>
+</body>
+</html>
