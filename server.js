@@ -358,12 +358,14 @@ app.post('/signup', async (req, res) => {
         console.log('Logout route called');
         console.log('Session data before destroying:', req.session);
     
-        if (!req.session.userId) {
-            console.error('No userId in session during logout');
-            return res.status(400).json({ success: false, message: 'No user is logged in.' });
+        const userId = req.session?.userId;
+
+        if (!userId) {
+        console.error('No userId in session during logout');
+        return res.status(400).json({ success: false, message: 'No user is logged in.' });
         }
 
-       // console.log('Logging out user ID:', userId);
+        console.log('Logging out user ID:', userId);
         
         try {
             
