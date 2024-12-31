@@ -35,11 +35,13 @@
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">
-                <li><a href="/index" title="Home" class="text-yellow-400"><span class="material-icons" >home</span></a></li>             
-                <li><a href="#" title="Search" onclick="toggleSearchOverlay()" class="cursor-pointer"><span class="material-icons">search</span></a></li>
-                <li><a href="/blogs" title="Blogs"><span class="material-icons">article</span></a></li>
-                <li><a href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
+                <li><a href="/index" title="Home" class="text-yellow-400"><span class="material-icons" >home</span></a></li>
+                <li><a href="#" title="Search" onclick="toggleSearchOverlay()"><span class="material-icons">search</span></a></li>
+                <li><a href="/blog" title="Blogs"><span class="material-icons">article</span></a></li>
+                <!-- Give this link an ID to easily target in JS -->
+                <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
             </ul>
+            
         </nav>
     </header>
 
@@ -221,5 +223,6 @@
     <!-- Footer -->
     <div id="footerContainer"></div>
     <script src="js/blogs.js"></script>
+    <script src="/js/checkSession.js" defer></script>
 </body>
 </html>
