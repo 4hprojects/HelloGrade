@@ -21,10 +21,10 @@
     </div>
     <nav>
         <ul id="navMenu" class="flex flex-row gap-4">             
-                <li><a href="/index.html" title="Home"><span class="material-icons">home</span></a></li>
-            <li><a href="/search.html" title="Search"><span class="material-icons">search</span></a></li>
-                <li><a href="/blogs.html" title="Blogs"><span class="material-icons">article</span></a></li>
-                <li><a href="/login.html" title="Sign In"><span class="material-icons">login</span></a></li>
+                <li><a href="/index" title="Home"><span class="material-icons">home</span></a></li>
+                <li><a href="/search" title="Search"><span class="material-icons">search</span></a></li>
+                <li><a href="/blog" title="Blogs"><span class="material-icons">article</span></a></li>
+                <li><a href="/login" title="Sign In" class="text-yellow-400"><span class="material-icons">login</span></a></li>
         </ul>
     </nav>
 </header>
@@ -47,8 +47,8 @@
         <button type="submit">Log In</button>
         <div class="error-message" id="formError"></div>
         <div class="footer">
-            <p><a href="/reset-password.html">Forgot Password?</a></p>
-            <p>Don't have an account? <a href="/signup.html">Sign Up</a></p>
+            <p><a href="/reset-password">Forgot Password?</a></p>
+            <p>Don't have an account? <a href="/signup">Sign Up</a></p>
         </div>
     </form>
 </main>
@@ -113,7 +113,7 @@
         .then(data => {
             if (data.success) {
                 // Check user role and redirect accordingly
-                window.location.href = data.role === 'admin' ? '/admin_dashboard.html' : '/dashboard.html';
+                window.location.href = data.role === 'admin' ? '/admin_dashboard' : '/dashboard';
             } else {
                 alert(data.message || 'Login failed.');
                 document.getElementById('formError').textContent = data.message;
@@ -166,7 +166,7 @@
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
-                        window.location.href = data.role === 'admin' ? '/admin_dashboard.html' : '/dashboard.html';
+                        window.location.href = data.role === 'admin' ? '/admin_dashboard' : '/dashboard';
                     } else {
                         alert(data.message || 'Login failed.');
                     }
