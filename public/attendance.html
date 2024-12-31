@@ -31,9 +31,10 @@
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">
-                <li><a href="dashboard.html" title="Dashboard"><span class="material-icons">dashboard</span></a></li>
-                <li><a href="attendance.html" title="Attendance Summary" class="text-yellow-400"><span class="material-icons">assignment</span></a></li>
-                <li><a id="logoutLink" href="login.html" title="Sign Out"><span class="material-icons">logout</span></a></li>
+                <li><a href="#" title="Search" onclick="toggleSearchOverlay()" class="cursor-pointer"><span class="material-icons">search</span></a></li>    
+                <li><a href="/dashboard" title="Dashboard"><span class="material-icons">dashboard</span></a></li>
+                <li><a href="/attendance" title="Attendance Summary" class="text-yellow-400"><span class="material-icons">assignment</span></a></li>
+                <li><a id="logoutLink" href="/login" title="Sign Out"><span class="material-icons">logout</span></a></li>
             </ul>
         </nav>
     </header>
@@ -167,7 +168,37 @@
     <footer class="bg-green-600 text-white text-center py-3 mt-4">
         <p\h>&copy; 2024 HelloGrade. All Rights Reserved.</p>
     </footer>
+    <!-- Search Overlay (Hidden by Default) -->
+    <div 
+      id="searchOverlay" 
+      class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-[9999] hidden"
+    >
+      <div class="bg-white rounded-md p-4 w-11/12 sm:w-3/5 lg:w-2/5 relative">
+        <!-- Close Button -->
+        <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+                onclick="toggleSearchOverlay()"
+                aria-label="Close">
+          <span class="material-icons">close</span>
+        </button>
 
+        <h2 class="text-lg font-semibold mb-4 text-gray-800">Search HelloGrade</h2>
+        <!-- Search Form -->
+        <form onsubmit="return goToSearchPage()">
+          <input 
+            type="text" 
+            id="overlaySearchInput"
+            class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            placeholder="Type your search..."
+          />
+          <button 
+            type="submit"
+            class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+    </div>
     <!-- Scripts -->
     <script>
         // Session Validation and Fetch User Details
@@ -182,15 +213,15 @@
                 const sessionData = await sessionResponse.json();
 
                 if (!sessionResponse.ok || !sessionData.authenticated) {
-                    window.location.href = 'login.html';
+                    window.location.href = 'login';
                     return;
                 }
 
                 if (sessionData.role === 'admin') {
-                    window.location.href = 'admin_dashboard.html';
+                    window.location.href = 'admin_dashboard';
                     return;
                 } else if (sessionData.role !== 'student') {
-                    window.location.href = '403.html';
+                    window.location.href = '403';
                     return;
                 }
 
@@ -198,7 +229,7 @@
                 await fetchStudentDetails();
             } catch (error) {
                 console.error('Error during session validation:', error);
-                window.location.href = 'login.html';
+                window.location.href = 'login';
             }
         });
 
@@ -338,7 +369,7 @@
             })
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = 'index.html';
+                        window.location.href = 'index';
                     } else {
                         console.error('Logout failed');
                     }
