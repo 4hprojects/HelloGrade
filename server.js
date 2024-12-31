@@ -78,6 +78,9 @@ app.use((req, res, next) => {
 
 //routes
 app.get('/login', (req, res) => {
+    if (req.session && req.session.userId) {
+        return res.redirect('/dashboard'); // or wherever you want to send them
+    }
     res.sendFile(__dirname + '/public/login.html');
   });
 app.get('/blog', (req, res) => {
@@ -107,6 +110,10 @@ app.get('/privacy-policy', (req, res) => {
 app.get('/terms-and-conditions', (req, res) => {
     res.sendFile(__dirname + '/public/terms-and-conditions.html');
   });
+  app.get('/reset-password', (req, res) => {
+    res.sendFile(__dirname + '/public/reset-password.html');
+  });
+
 
 app.post('/api/contact', (req, res) => {
     const { name, email, message } = req.body;
