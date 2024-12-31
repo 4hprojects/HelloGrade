@@ -76,7 +76,21 @@ app.use((req, res, next) => {
     next();
 });
 
-
+app.get('/login', (req, res) => {
+    res.sendFile(__dirname + '/public/login.html');
+  });
+app.get('/blogs', (req, res) => {
+    res.sendFile(__dirname + '/public/blogs.html');
+  });
+app.get('/index', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+  });
+app.get('/search', (req, res) => {
+    res.sendFile(__dirname + '/public/search.html');
+  });
+app.get('/contact', (req, res) => {
+    res.sendFile(__dirname + '/public/contact.html');
+  });
 
 app.post('/api/contact', (req, res) => {
     const { name, email, message } = req.body;
@@ -158,9 +172,6 @@ async function connectToDatabase() {
 
 
 
-app.get('/login.html', (req, res) => {
-    res.sendFile(__dirname + '/public/login.html');
-});
 
 
 // Sign Up Route
