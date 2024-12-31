@@ -36,22 +36,21 @@
     <nav>
       <ul id="navMenu" class="flex flex-row gap-4">             
         <!-- Link user here to load the inline search page -->
-        <li><a href="/index.html" title="Home" ><span class="material-icons">home</span></a></li>
-        <li><a href="/search.html" title="Search" class="text-yellow-400"><span class="material-icons">search</span></a></li>
-        <li><a href="/blogs.html" title="Blogs"><span class="material-icons">article</span></a></li>
-        <li><a href="/login.html" title="Sign In"><span class="material-icons">login</span></a></li>
+        <li><a href="/index" title="Home" ><span class="material-icons">home</span></a></li>
+        <li><a href="/search" title="Search" class="text-yellow-400"><span class="material-icons">search</span></a></li>
+        <li><a href="/blog" title="Blogs"><span class="material-icons">article</span></a></li>
+        <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
       </ul>
     </nav>
   </header>
-
-  <!-- Main Content -->
-  <main class="container mx-auto my-8 px-4">
+ <!-- Main Content -->
+ <main class="container mx-auto my-8 px-4 ">
     <!-- 
       This is your in-page Google Custom Search:
       1) The search box (gcse-searchbox)
       2) The search results (gcse-searchresults)
       Google will automatically place the results beneath the box, no modal needed.
-    -->
+    -->        <h1 class="text-5xl font-bold mb-4 text-gray-800 text-center">Search in HelloGrade</h1>
     <div class="gcse-searchbox"
          data-as_sitesearch="hellograde.online"
          data-auto-complete="true"
@@ -63,6 +62,9 @@
          data-as_sitesearch="hellograde.online">
     </div>
   </main>
+
+
+ 
 <!-- Contact Support -->
  <div>
 <section class="text-center">
@@ -70,7 +72,7 @@
     <p class="mb-6">
         If you can't find the answer you're looking for, please contact our support team.
     </p>
-    <a href="/contact.html" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors">
+    <a href="/contact" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors">
         Contact Support
     </a>
 </section>
@@ -105,5 +107,6 @@
       }
     });
   </script>
+  <script src="/js/checkSession.js" defer></script>
 </body>
 </html>
