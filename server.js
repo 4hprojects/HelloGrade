@@ -76,10 +76,11 @@ app.use((req, res, next) => {
     next();
 });
 
+//routes
 app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/public/login.html');
   });
-app.get('/blogs', (req, res) => {
+app.get('/blog', (req, res) => {
     res.sendFile(__dirname + '/public/blogs.html');
   });
 app.get('/index', (req, res) => {
@@ -90,6 +91,21 @@ app.get('/search', (req, res) => {
   });
 app.get('/contact', (req, res) => {
     res.sendFile(__dirname + '/public/contact.html');
+  });
+app.get('/about', (req, res) => {
+    res.sendFile(__dirname + '/public/about.html');
+  });
+app.get('/help', (req, res) => {
+    res.sendFile(__dirname + '/public/help.html');
+  });
+app.get('/contact', (req, res) => {
+    res.sendFile(__dirname + '/public/contact.html');
+  });
+app.get('/privacy-policy', (req, res) => {
+    res.sendFile(__dirname + '/public/privacy-policy.html');
+  });
+app.get('/terms-and-conditions', (req, res) => {
+    res.sendFile(__dirname + '/public/terms-and-conditions.html');
   });
 
 app.post('/api/contact', (req, res) => {
@@ -812,6 +828,9 @@ function parseCSVFile(filePath) {
     // Protect the dashboard route
     app.get('/dashboard', isAuthenticated, (req, res) => {
         res.sendFile(__dirname + '/public/dashboard.html');
+    });
+    app.get('/attendance', isAuthenticated, (req, res) => {
+        res.sendFile(__dirname + '/public/attendance.html');
     });
 
     app.get('/get-grades/:studentIDNumber', isAuthenticated, async (req, res) => {
