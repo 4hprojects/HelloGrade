@@ -89,7 +89,7 @@
         <h1>Oops! Page Not Found</h1>
         <p>We couldn't find the page you were looking for.</p>
         <p>Redirecting to the homepage in <span id="countdown">5</span> seconds.</p>
-        <a href="/index.html" aria-label="Go back to homepage immediately">Go Back to Homepage</a>
+        <a href="/index" aria-label="Go back to homepage immediately">Go Back to Homepage</a>
     </div>
 
     <script>
@@ -106,11 +106,11 @@
 
                     if (countdown <= 0) {
                         clearInterval(interval);
-                        window.location.href = '/index.html'; // Absolute path for redirection
+                        window.location.href = '/index'; // Absolute path for redirection
                     }
                 }, 1000);
             } else {
-                console.error("Countdown element not found. Ensure there's an element with ID 'countdown' on the 404.html page.");
+                console.error("Countdown element not found. Ensure there's an element with ID 'countdown' on the 404 page.");
             }
         });
     </script>
