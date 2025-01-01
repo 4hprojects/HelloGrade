@@ -1207,6 +1207,58 @@ app.get('/api/comments/:blogId', async (req, res) => {
     }
 });
 
+app.get('/sitemap.xml', async (req, res) => {
+    const staticUrls = [
+        { loc: '/login', changefreq: 'daily', priority: 0.8 },
+        { loc: '/blog', changefreq: 'weekly', priority: 0.7 },
+        { loc: '/index', changefreq: 'daily', priority: 1.0 },
+        { loc: '/search', changefreq: 'weekly', priority: 0.6 },
+        { loc: '/contact', changefreq: 'monthly', priority: 0.5 },
+        { loc: '/about', changefreq: 'monthly', priority: 0.5 },
+        { loc: '/help', changefreq: 'monthly', priority: 0.5 },
+        { loc: '/privacy-policy', changefreq: 'yearly', priority: 0.3 },
+        { loc: '/terms-and-conditions', changefreq: 'yearly', priority: 0.3 },
+        { loc: '/reset-password', changefreq: 'weekly', priority: 0.6 }
+    ];
+
+    const baseUrl = 'https://hellograde.online';
+
+    let dynamicUrls = [];
+
+    try {
+        // Fetch dynamic URLs for blogs
+        const blogs = await blogCollection.find({}).toArray();
+        dynamicUrls = blogs.map(blog => ({
+            loc: `/blogs/${blog.slug}`,
+            changefreq: 'weekly',
+            priority: 0.7
+        }));
+    } catch (error) {
+        console.error('Error fetching dynamic URLs:', error);
+    }
+
+    const urls = [...staticUrls, ...dynamicUrls];
+
+    const sitemap = `
+        <?xml version="1.0" encoding="UTF-8"?>
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+            ${urls
+                .map(url => `
+                    <url>
+                        <loc>${baseUrl}${url.loc}</loc>
+                        <changefreq>${url.changefreq}</changefreq>
+                        <priority>${url.priority}</priority>
+                    </url>
+                `)
+                .join('')}
+        </urlset>
+    `;
+
+    res.header('Content-Type', 'application/xml');
+    res.send(sitemap.trim());
+});
+
+
 // Serve 404 page for non-existent routes
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
