@@ -48,6 +48,13 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/blog7.webp",
             link: "/blogs/blog7.html",
             description: "Discover the essential lessons to thrive in IT, from mastering problem-solving and debugging to embracing perseverance and practical skills. Avoid common regrets and excel in your IT career with these expert tips."
+        },
+        {
+            title: "Building Habits for Success: Your Journey to Personal Growth",
+            date: "January 2, 2025",
+            image: "/images/blog8.webp",
+            link: "/blogs/blog8.html",
+            description: "Discover how to build positive habits and unlock your potential for success. Learn practical strategies to overcome challenges, achieve goals, and foster personal growth on your journey to self-improvement."
         }
     ];
 
