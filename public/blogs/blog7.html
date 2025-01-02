@@ -9,6 +9,7 @@
     <meta name="keywords" content="IT career regrets, Things to know before entering IT, IT industry tips for beginners, Problem-solving in IT, IT career advice, IT debugging skills, Perseverance in IT field, IT practical skills over theory, IT career preparation, Real-world IT skills">
     <meta name="author" content="HelloGrade">
     <title>10 Things I Wish I Knew Before Entering IT – Tips for Success</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -17,9 +18,10 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/js/uscripts.js"></script>
     <link rel="stylesheet" href="/dist/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
-<body>
+<body data-blog-id="blog7">
     <!-- Header -->
     <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
@@ -30,10 +32,10 @@
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">
-                <li><a href="/index.html" title="Home"><span class="material-icons">home</span></a></li>
-                <li><a href="/search.html" title="Search"><span class="material-icons">search</span></a></li>
-                <li><a href="/blogs.html" title="Blogs" class="text-yellow-400"><span class="material-icons">article</span></a></li>
-                <li><a href="/login.html" title="Sign In"><span class="material-icons">login</span></a></li>
+                <li><a href="/index" title="Home"><span class="material-icons">home</span></a></li>
+                <li><a href="/search" title="Search"><span class="material-icons">search</span></a></li>
+                <li><a href="/blog" title="Blogs"  class="text-yellow-400"><span class="material-icons">article</span></a></li>
+                <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
             </ul>
         </nav>
     </header>
@@ -124,13 +126,10 @@
                     <p>Are you considering a career in IT or already on the path? Share your experiences and insights in the comments below. Let’s learn and grow together!</p>
                 </section>
             </article>
-            
 
-        <div class="mt-6 flex justify-between">
-            <a href="/blogs/blog6.html" class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm hover:bg-gray-800">Previous</a>
-            <a href="/blogs.html" class="text-white bg-green-700 px-4 py-2 rounded-md text-sm hover:bg-gray-800">Check Other Blogs</a>
-            <a href="/blogs/blog8.html" class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm hover:bg-blue-700">Next</a>
-        </div>
+            <div id="share-buttons" class="mt-6 flex justify-center space-x-4"></div>
+
+            <div id="blogNav"></div>
                     <!-- Comment Section -->
                     <h3 class="text-2xl font-semibold mt-8 mb-4">We'd Like to Hear Your Feedback</h3>
                     <form id="commentForm" class="flex flex-col mb-6">
@@ -168,7 +167,10 @@
                     reset: true
                 });
             </script>
-            <script src="/js/blog7.js"></script>
+            <script src="/js/blogs.js" defer></script>
+            <script src="/js/blogComments.js"></script>
+            <script src="/js/checkSession.js" defer></script>
+            <script src="/js/shareButtons.js"></script>
 </body>
 
 </html>
