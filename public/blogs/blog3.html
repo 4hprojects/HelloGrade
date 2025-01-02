@@ -14,22 +14,22 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/js/uscripts.js"></script>
     <link rel="stylesheet" href="/dist/output.css">
-<body>
+<body data-blog-id="blog3">
 
     <!-- Header -->
     <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
-            <a href="/index.html">
+            <a href="/index">
                 <img src="/images/icon.webp" alt="HelloGrade Logo" class="h-12 mr-3">
             </a>
             <h1 class="text-xl font-bold">HelloGrade</h1>
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">
-                <li><a href="/index.html" title="Home"><span class="material-icons">home</span></a></li>
-                <li><a href="/search.html" title="Search"><span class="material-icons">search</span></a></li>
-                <li><a href="/blogs.html" title="Blogs" class="text-yellow-400"><span class="material-icons">article</span></a></li>
-                <li><a href="/login.html" title="Sign In"><span class="material-icons">login</span></a></li>
+                <li><a href="/index" title="Home"><span class="material-icons">home</span></a></li>
+                <li><a href="/search" title="Search"><span class="material-icons">search</span></a></li>
+                <li><a href="/blog" title="Blogs"  class="text-yellow-400"><span class="material-icons">article</span></a></li>
+                <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
             </ul>
         </nav>
     </header>
@@ -78,18 +78,39 @@
             <p>In a world where technology is intertwined with every aspect of life, digital literacy has become a cornerstone of success. By equipping students with the skills they need to navigate and thrive in the digital age, educators are not just preparing them for the classroom but also for the future.</p>
             <p>The journey toward digital literacy is ongoing, but with intentional teaching strategies and supportive communities, we can empower the next generation to be responsible, skilled, and innovative digital citizens.</p>
         </article>
-        <div class="mt-6 flex justify-between">
-            <a href="/blogs/blog2.html" class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm hover:bg-gray-800">Previous</a>
-            <a href="/blogs.html" class="text-white bg-green-700 px-4 py-2 rounded-md text-sm hover:bg-gray-800">Check Other Blogs</a>
-            <a href="/blogs/blog4.html" class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm hover:bg-blue-700">Next</a>
-        </div>
+        <div id="blogNav"></div>
+                            <!-- Comment Section -->
+                            <h3 class="text-2xl font-semibold mt-8 mb-4">We'd Like to Hear Your Feedback</h3>
+                            <form id="commentForm" class="flex flex-col mb-6">
+                                <textarea id="commentInput" name="comment" rows="4" placeholder="Write your comment here..." class="p-4 border rounded-lg mb-4" required></textarea>
+                                <div class="flex items-center mb-4">
+                                    <input type="checkbox" id="anonymousCheckbox" class="mr-2">
+                                    <label for="anonymousCheckbox" class="text-gray-700">Post anonymously</label>
+                                </div>
+                                <div class="mt-6 flex justify-between">
+                                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Post Comment</button>
+                            </div>
+                            </form>
+                            <div id="commentError" class="text-red-500 mt-2"></div>
+                    
+                            <h4 class="text-xl font-semibold mb-4">Comments</h4>
+                            <div id="commentsContainer" class="space-y-4">
+                                <!-- Placeholder for comments -->
+                                <p class="text-gray-600">No comments yet. Be the first to share your thoughts!</p>
+                            </div>
+                    
+                            <!-- Scroll To Top Button -->
+                            <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
+                                <span class="material-icons">arrow_upward</span>
+                            </button>
     </main>
-    <!-- Scroll To Top Button -->
-    <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
-        <span class="material-icons">arrow_upward</span>
-    </button>
+
     
     <!-- Footer -->
     <div id="footerContainer"></div>
+    <script src="/js/blogs.js" defer></script>
+    <script src="/js/blogComments.js"></script>
+    <script src="/js/checkSession.js" defer></script>
+    <script src="/js/shareButtons.js"></script>
 </body>
 </html>
