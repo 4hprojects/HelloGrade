@@ -63,6 +63,14 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/blog8.webp",
             link: "/blogs/blog8.html",
             description: "Discover how to build positive habits and unlock your potential for success. Learn practical strategies to overcome challenges, achieve goals, and foster personal growth on your journey to self-improvement."
+        },
+        {
+            id: "blog9",
+            title: "A Beginner's Guide to USB-A, USB-B, and USB-C",
+            date: "January 3, 2025", 
+            image: "/images/blog9.webp",
+            link: "/blogs/blog9.html",
+            description: "Learn the differences between USB-A, USB-B, and USB-C, their history, uses, and why USB-C is the future. A comprehensive guide for tech enthusiasts and beginners alike."
         }
     ];
 
