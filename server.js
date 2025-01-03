@@ -48,6 +48,8 @@ let usersCollection;
 let gradesCollection;
 let logsCollection;
 let commentsCollection; // Add this line
+let blogCollection; // add this line at the top where you define your collections
+
 
 // Call the database connection function
 connectToDatabase();
@@ -64,7 +66,7 @@ app.use(session({
         secure: false, // Set to true only if using HTTPS
         httpOnly: true,
         sameSite: 'lax', // Adjust sameSite setting for better compatibility
-        maxAge: 2 * 60 * 60 * 1000 // 2 hours
+        maxAge: 1 * 60 * 60 * 1000 // 2 hours
     }
 }));
 
@@ -183,6 +185,7 @@ async function connectToDatabase() {
         gradesCollection = database.collection('tblGrades');
         logsCollection = database.collection('tblLogs');
         commentsCollection = database.collection('tblComments'); 
+        blogCollection = database.collection('tblBlogs');
 
         // Initialize SendGrid with API key
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -1207,7 +1210,165 @@ app.get('/api/comments/:blogId', async (req, res) => {
     }
 });
 
-app.get('/sitemap.xml', async (req, res) => {
+// POST /api/blogs - Create a new blog post
+app.post('/api/blogs', async (req, res) => {
+    try {
+      const { title, slug, content, author } = req.body;
+  
+      // Basic validation
+      if (!title || !slug || !content) {
+        return res.status(400).json({
+          success: false,
+          message: 'title, slug, and content are required.'
+        });
+      }
+  
+      // Check if slug already exists
+      const existing = await blogCollection.findOne({ slug });
+      if (existing) {
+        return res.status(400).json({
+          success: false,
+          message: 'A blog with this slug already exists.'
+        });
+      }
+  
+      const newPost = {
+        title,
+        slug,
+        content,
+        author: author || 'Anonymous',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+  
+      const result = await blogCollection.insertOne(newPost);
+      if (result.acknowledged) {
+        return res.status(201).json({ success: true, blogPost: newPost });
+      } else {
+        return res.status(500).json({ success: false, message: 'Failed to create blog post.' });
+      }
+    } catch (error) {
+      console.error('Error creating blog post:', error);
+      res.status(500).json({ success: false, message: 'Internal server error.' });
+    }
+  });
+
+  const path = require('path');
+
+  app.get('/blogs/:blogId', (req, res) => {
+    const { blogId } = req.params;     // e.g. 'blog6'
+    // If you keep the file as blog6.html in /public/blogs:
+    res.sendFile(path.join(__dirname, 'public', 'blogs', blogId + '.html'));
+  });
+  
+  // GET /blogs/:slug - Fetch a blog post by slug
+app.get('/blogs/:slug', async (req, res) => {
+    try {
+      const { slug } = req.params;
+  
+      const blogPost = await blogCollection.findOne({ slug });
+      if (!blogPost) {
+        return res.status(404).send('Blog not found');
+      }
+  
+      // Option 1: Send JSON (for a front-end to render)
+      // res.json({ success: true, blogPost });
+  
+      // Option 2: Send minimal HTML from the server
+      // This returns an HTML page with the title and content
+      const html = `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>${blogPost.title}</title>
+          </head>
+          <body>
+            <h1>${blogPost.title}</h1>
+            <p><em>By ${blogPost.author} on ${blogPost.createdAt}</em></p>
+            <div>${blogPost.content}</div>
+          </body>
+        </html>
+      `;
+      res.send(html);
+  
+    } catch (error) {
+      console.error('Error fetching blog post:', error);
+      res.status(500).send('An error occurred while fetching the blog post.');
+    }
+  });
+  
+  // GET /blogs - Fetch all blog posts
+app.get('/blogs', async (req, res) => {
+    try {
+      // You could add pagination or sorting. For now, let's just get them all:
+      const allPosts = await blogCollection
+        .find({})
+        .sort({ createdAt: -1 })  // newest first
+        .toArray();
+  
+      // Option 1: Return JSON array
+      // res.json({ success: true, blogs: allPosts });
+  
+      // Option 2: Render a basic HTML list
+      let html = `<h1>All Blog Posts</h1>`;
+      allPosts.forEach(post => {
+        html += `<h2><a href="/blogs/${post.slug}">${post.title}</a></h2>`;
+      });
+      res.send(html);
+  
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+      res.status(500).send('An error occurred while fetching the blog posts.');
+    }
+  });
+
+  // PUT /api/blogs/:slug - Update a blog post
+app.put('/api/blogs/:slug', async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const { title, content, author } = req.body;
+  
+      const result = await blogCollection.findOneAndUpdate(
+        { slug },
+        {
+          $set: {
+            title,
+            content,
+            author,
+            updatedAt: new Date()
+          }
+        },
+        { returnDocument: 'after' } // so we get the updated doc in result.value
+      );
+  
+      if (!result.value) {
+        return res.status(404).json({ success: false, message: 'Blog not found' });
+      }
+  
+      res.json({ success: true, blogPost: result.value });
+    } catch (error) {
+      console.error('Error updating blog post:', error);
+      res.status(500).json({ success: false, message: 'Internal server error.' });
+    }
+  });
+  
+  // DELETE /api/blogs/:slug - Delete a blog post
+app.delete('/api/blogs/:slug', async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const result = await blogCollection.findOneAndDelete({ slug });
+      if (!result.value) {
+        return res.status(404).json({ success: false, message: 'Blog not found' });
+      }
+  
+      res.json({ success: true, message: 'Blog deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting blog post:', error);
+      res.status(500).json({ success: false, message: 'Internal server error.' });
+    }
+  });
+  
+  app.get('/sitemap.xml', async (req, res) => {
     const staticUrls = [
         { loc: '/login', changefreq: 'daily', priority: 0.8 },
         { loc: '/blog', changefreq: 'weekly', priority: 0.7 },
