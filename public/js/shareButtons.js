@@ -12,11 +12,19 @@ function createShareButtons(containerId) {
             title: "Share on Facebook",
         },
         {
-            name: "X",
-            url: `https://x.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
-            class: "text-black hover:text-gray-700",
-            icon: '<i class="fab fa-x-twitter"></i>',
-            title: "Share on X",
+            name: "Copy Link",
+            url: "#", // No URL for copy link, we handle it via JavaScript
+            class: "text-gray-600 hover:text-gray-800",
+            icon: '<i class="fas fa-link"></i>',
+            title: "Copy Link",
+            action: function() {
+                // Copy the current page URL to clipboard
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert("Link copied to clipboard!"); // Optional alert for user confirmation
+                }).catch((err) => {
+                    console.error("Failed to copy the link: ", err);
+                });
+            }
         },
         {
             name: "LinkedIn",
@@ -47,7 +55,19 @@ function createShareButtons(containerId) {
         link.className = `${platform.class} text-2xl mx-2`; // Styling for icons
         link.title = platform.title;
         link.innerHTML = platform.icon;
+        
         container.appendChild(link);
+                // If it's the "Copy Link" button, attach a click event to call `action`
+                if (platform.action) {
+                    link.addEventListener("click", (event) => {
+                        event.preventDefault(); // Prevent the default link action
+                        platform.action();
+                    });
+                } else {
+                    link.innerHTML = platform.icon;
+                }
+        
+                container.appendChild(link);
     });
 }
 
