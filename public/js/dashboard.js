@@ -1,135 +1,209 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        // Session validation
-        const sessionResponse = await fetch('/session-check', {
-            method: 'GET',
-            credentials: 'include',
-        });
+//<!-- Scripts -->
 
-        const sessionData = await sessionResponse.json();
+   document.getElementById('classesSelect').addEventListener('change', function () {
+       const selectedCourseID = this.value;
+       fetchGradesForCourse(selectedCourseID);
+   });
 
-        if (!sessionResponse.ok || !sessionData.authenticated) {
-            window.location.href = '/login';
-            return;
-        }
+   // Fetch Courses and Populate Dropdown
+   async function fetchCourses(studentIDNumber) {
+       try {
+           const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
+           const data = await response.json();
 
-        if (sessionData.role === 'admin') {
-            window.location.href = '/admin_dashboard';
-            return;
-        } else if (sessionData.role !== 'student') {
-            window.location.href = '/403';
-            return;
-        }
+           if (data.success) {
+               populateCourses(data.gradeDataArray);
+           } else {
+               console.error('Failed to fetch courses:', data.message);
+           }
+       } catch (error) {
+           console.error('Error fetching courses:', error);
+       }
+   }
 
-        // Fetch user details after session validation
-        await fetchStudentDetails();
-    } catch (error) {
-        console.error('Error during session validation:', error);
-        window.location.href = '/login';
-    }
-});
+   // Session Validation and Fetch User Details
+   document.addEventListener('DOMContentLoaded', async () => {
+       try {
+           // Session validation
+           const sessionResponse = await fetch('/session-check', {
+               method: 'GET',
+               credentials: 'include',
+           });
 
-async function fetchStudentDetails() {
-    try {
-        const response = await fetch('/user-details', {
-            method: 'GET',
-            credentials: 'include',
-        });
+           const sessionData = await sessionResponse.json();
 
-        if (!response.ok) {
-            throw new Error(`Failed to fetch user details. Status: ${response.status}`);
-        }
+           if (!sessionResponse.ok || !sessionData.authenticated) {
+               window.location.href = '/login';
+               return;
+           }
 
-        const data = await response.json();
+           if (sessionData.role === 'admin') {
+               window.location.href = '/admin_dashboard';
+               return;
+           } else if (sessionData.role !== 'student') {
+               window.location.href = '/403';
+               return;
+           }
 
-        if (data.success) {
-            document.getElementById('studentName').textContent = `${data.user.firstName} ${data.user.lastName}`;
-            document.getElementById('studentID').textContent = data.user.studentIDNumber;
+           // Fetch user details after session validation
+           await fetchStudentDetails();
+       } catch (error) {
+           console.error('Error during session validation:', error);
+           window.location.href = '/login';
+       }
+   });
 
-            // Fetch and display courses
-            await fetchCourses(data.user.studentIDNumber);
-        } else {
-            console.error('Failed to fetch user details:', data.message);
-        }
-    } catch (error) {
-        console.error('Error fetching user details:', error);
-    }
-}
+   async function fetchStudentDetails() {
+       try {
+           const response = await fetch('/user-details', {
+               method: 'GET',
+               credentials: 'include',
+           });
 
-async function fetchCourses(studentIDNumber) {
-    try {
-        const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
-        const data = await response.json();
+           if (!response.ok) {
+               throw new Error(`Failed to fetch user details. Status: ${response.status}`);
+           }
 
-        if (data.success) {
-            populateCourses(data.gradeDataArray);
-        } else {
-            console.error('Failed to fetch courses:', data.message);
-        }
-    } catch (error) {
-        console.error('Error fetching courses:', error);
-    }
-}
+           const data = await response.json();
 
-function populateCourses(courseArray) {
-    const classesSelect = document.getElementById('classesSelect');
-    classesSelect.innerHTML = ''; // Clear options
+           if (data.success) {
+               document.getElementById('studentName').textContent = `${data.user.firstName} ${data.user.lastName}`;
+               document.getElementById('studentID').textContent = data.user.studentIDNumber;
 
-    courseArray.forEach(course => {
-        const option = document.createElement('option');
-        option.value = course.courseID;
-        option.textContent = `${course.courseID} - ${course.courseDescription}`;
-        classesSelect.appendChild(option);
-    });
+               // Fetch and display courses
+               await fetchCourses(data.user.studentIDNumber);
+           } else {
+               console.error('Failed to fetch user details:', data.message);
+           }
+       } catch (error) {
+           console.error('Error fetching user details:', error);
+       }
+   }
 
-    // Display grades for the first course by default
-    if (courseArray.length > 0) {
-        fetchGradesForCourse(courseArray[0].courseID);
-    }
-}
+   // Fetch Courses and Populate Dropdown
+   async function fetchCourses(studentIDNumber) {
+       try {
+           const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
+           const data = await response.json();
 
-async function fetchGradesForCourse(courseID) {
-    const studentIDNumber = document.getElementById('studentID').textContent;
+           if (data.success) {
+               populateCourses(data.gradeDataArray);
+           } else {
+               console.error('Failed to fetch courses:', data.message);
+           }
+       } catch (error) {
+           console.error('Error fetching courses:', error);
+       }
+   }
 
-    try {
-        const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
-        const data = await response.json();
+   function populateCourses(courseArray) {
+       const classesSelect = document.getElementById('classesSelect');
+       classesSelect.innerHTML = ''; // Clear options
 
-        if (data.success) {
-            const courseData = data.gradeDataArray.find(course => course.courseID === courseID);
-            if (courseData) displayGrades(courseData);
-        } else {
-            console.error('Failed to fetch grades:', data.message);
-        }
-    } catch (error) {
-        console.error('Error fetching grades:', error);
-    }
-}
+       courseArray.forEach(course => {
+           const option = document.createElement('option');
+           option.value = course.courseID;
+           option.textContent = `${course.courseID} - ${course.courseDescription}`;
+           classesSelect.appendChild(option);
+       });
 
-function displayGrades(courseData) {
-    const gradeTableContainer = document.getElementById('gradeTableContainer');
-    const accordionContainer = document.getElementById('accordionContainer');
+       // Display grades for the first course by default
+       if (courseArray.length > 0) {
+           fetchGradesForCourse(courseArray[0].courseID);
+       }
+   }
 
-    gradeTableContainer.innerHTML = `
-        <div class="content-inner mb-6">
-            <h3 class="text-lg font-semibold text-green-600 mb-4">${courseData.courseID} - ${courseData.courseDescription}</h3>
-            <table class="w-full bg-white border border-gray-200 text-center">
-                <thead class="bg-green-600 text-white font-semibold">
-                    <tr>
-                        <th class="py-2">Category</th>
-                        <th class="py-2">Midterm</th>
-                        <th class="py-2">Finals</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Attendance</td><td>${courseData.midtermAttendance || 'No entry'}</td><td>${courseData.finalsAttendance || 'No entry'}</td></tr>
-                    <tr><td>Class Standing</td><td>${courseData.midtermClassStanding || 'No entry'}</td><td>${courseData.finalsClassStanding || 'No entry'}</td></tr>
-                    <tr><td>Exams</td><td>${courseData.midtermExam || 'No entry'}</td><td>${courseData.finalExam || 'No entry'}</td></tr>
-                    <tr class="bg-gray-100 font-semibold"><td>Computed Grade</td><td>${courseData.midtermGrade || 'No entry'}</td><td>${courseData.finalGrade || 'No entry'}</td></tr>
-                    <tr class="bg-gray-200 font-bold"><td>Transmuted Grade</td><td>${courseData.transmutedMidtermGrade || 'No entry'}</td><td>${courseData.transmutedFinalGrade || 'No entry'}</td></tr>
-                    <tr class="bg-green-100 font-bold"><td colspan="3">Final Grade: ${courseData.totalFinalGrade || 'No entry'}</td></tr>
-                </tbody>
-            </table>
-        </div>
-    `;
-}
+   // Fetch Grades for Selected Course
+   async function fetchGradesForCourse(courseID) {
+       const studentIDNumber = document.getElementById('studentID').textContent;
+
+       try {
+           const response = await fetch(`/get-grades/${studentIDNumber}`, { credentials: 'include' });
+           const data = await response.json();
+
+           if (data.success) {
+               const courseData = data.gradeDataArray.find(course => course.courseID === courseID);
+               if (courseData) displayGrades(courseData);
+           } else {
+               console.error('Failed to fetch grades:', data.message);
+           }
+       } catch (error) {
+           console.error('Error fetching grades:', error);
+       }
+   }
+
+   // Display Grades in Table and Accordion
+   function displayGrades(courseData) {
+       const gradeTableContainer = document.getElementById('gradeTableContainer');
+       const accordionContainer = document.getElementById('accordionContainer');
+
+       // Display Grades in Table View
+       gradeTableContainer.innerHTML = `
+       <div class="content-inner mb-6">
+           <h3 class="text-lg font-semibold text-green-600 mb-4">${courseData.courseID} - ${courseData.courseDescription}</h3>
+           <table class="w-full bg-white border border-gray-200 text-center">
+               <thead class="bg-green-600 text-white font-semibold">
+                   <tr>
+                       <th class="py-2">Category</th>
+                       <th class="py-2">Midterm</th>
+                       <th class="py-2">Finals</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   <tr><td>Attendance</td><td>${courseData.midtermAttendance || 'No entry'}</td><td>${courseData.finalsAttendance || 'No entry'}</td></tr>
+                   <tr><td>Class Standing</td><td>${courseData.midtermClassStanding || 'No entry'}</td><td>${courseData.finalsClassStanding || 'No entry'}</td></tr>
+                   <tr><td>Exams</td><td>${courseData.midtermExam || 'No entry'}</td><td>${courseData.finalExam || 'No entry'}</td></tr>
+                   <tr class="bg-gray-100 font-semibold"><td>Computed Grade</td><td>${courseData.midtermGrade || 'No entry'}</td><td>${courseData.finalGrade || 'No entry'}</td></tr>
+                   <tr class="bg-gray-200 font-bold"><td>Transmuted Grade</td><td>${courseData.transmutedMidtermGrade || 'No entry'}</td><td>${courseData.transmutedFinalGrade || 'No entry'}</td></tr>
+                   <tr class="bg-green-100 font-bold"><td colspan="3">Final Grade: ${courseData.totalFinalGrade || 'No entry'}</td></tr>
+               </tbody>
+           </table>
+       </div>
+       `;
+
+       // Populate Accordion View for Mobile
+       accordionContainer.innerHTML = `
+           ${['Attendance', 'Class Standing', 'Exams', 'Grades'].map(category => `
+               <div class="accordion">
+                   <div class="accordion-header">${category}</div>
+                   <div class="accordion-body">
+                       <p>Details for ${category}</p>
+                   </div>
+               </div>
+           `).join('')}
+       `;
+
+       // Accordion Toggle
+       document.querySelectorAll('.accordion-header').forEach(header => {
+           header.addEventListener('click', () => {
+               const body = header.nextElementSibling;
+               body.classList.toggle('visible');
+           });
+       });
+   }
+
+   // Event Listener for Dropdown Change
+   document.getElementById('classesSelect').addEventListener('change', function () {
+       fetchGradesForCourse(this.value);
+   });
+
+
+   // Logout Functionality
+   document.getElementById('logoutLink').addEventListener('click', function (event) {
+       event.preventDefault();
+
+       fetch('/logout', {
+           method: 'POST',
+           credentials: 'include'
+       })
+       .then(response => {
+           if (response.ok) {
+               window.location.href = '/index';
+           } else {
+               console.error('Logout failed');
+           }
+       })
+       .catch(error => {
+           console.error('Error during logout:', error);
+       });
+   });
