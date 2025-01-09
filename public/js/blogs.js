@@ -71,6 +71,14 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/blog9.webp",
             link: "/blogs/blog9.html",
             description: "Learn the differences between USB-A, USB-B, and USB-C, their history, uses, and why USB-C is the future. A comprehensive guide for tech enthusiasts and beginners alike."
+        },
+        {
+            id: "blog10",
+            title: "A Professional’s Guide to Personal and Leadership Growth",
+            date: "January 9, 2025", 
+            image: "/images/blog10.webp",
+            link: "/blogs/blog10.html",
+            description: "Unlock the secrets to personal effectiveness and leadership with our professional guide to The 7 Habits of Highly Effective People. Explore actionable self-improvement tips, productivity habits, and strategies for habit formation in this 8-part series based on Stephen R. Covey’s timeless principles."
         }
     ];
 
@@ -119,6 +127,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2. Blog Navigation (Previous / Next)
     const currentBlogId = document.body.getAttribute("data-blog-id"); // e.g., "blog7"
+    if (!currentBlogId) {
+        console.error("No valid blog ID provided in data-blog-id.");
+        return;
+    }
     const currentIndex = sortedBlogs.findIndex(blog => blog.id === currentBlogId);
 
     // If the blog ID is recognized (currentIndex >= 0), build nav
