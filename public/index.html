@@ -9,12 +9,12 @@
     <meta name="description" content="Welcome to HelloGrade, your one-stop student grading portal. Simplify grade management, enhance transparency, and access grades efficiently on any device.">
     <title>Welcome to HelloGrade - Your Student Grading Portal</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/css/ustyles.css">
     <!-- Scroll Reveal and Smooth Scrolling -->
     <link rel="stylesheet" href="/dist/output.css">
-    
+    <link rel="preload" href="images/icon.webp" as="image">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js" defer></script>
@@ -23,15 +23,16 @@
 
     <!-- Google Ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
+    
 </head>
 
 <body>
     <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
             <a href="https://hellograde.online/">
-                <img src="images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3">
+                <img src="images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3" loading="lazy">
             </a>
-            <p class="text-xl font-bold">HelloGrade</p>
+            <h1 class="text-xl font-bold">HelloGrade</h1>
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">
@@ -53,7 +54,9 @@
             <p class="text-xl mb-6 text-gray-700">We offer seamless ways to manage grades, track progress, and enhance learning. Experience simplicity and efficiency at your fingertips.</p>
             <a href="/login" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow-md">Get Started</a>
         </div>
+        <img src="images/hero-image.webp" alt="Hero Image" loading="lazy" class="hidden">
     </section>
+    
 
     <!-- Features Section with Grid Layout -->
     <section id="features" class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
@@ -183,9 +186,32 @@
 <a href="/login" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow-md">Get Started</a>
 </section>
 
-<p class="mt-2 text-white">We appreciate your feedback.</p>
-<p class="mt-2 text-white">We appreciate your feedback.</p>
-<p class="mt-2 text-white">We appreciate your feedback.</p>
+    <!-- Advertisement Section -->
+    <div class="text-center my-8">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+            crossorigin="anonymous"></script>
+        <!-- HelloGrade Responsive Ad -->
+        <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-4537208011192461"
+            data-ad-slot="7121468855"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+        crossorigin="anonymous"></script>
+       <!-- Horizontal4Index -->
+       <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-4537208011192461"
+            data-ad-slot="7025129889"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+       <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+       </script>
+    </div>
+
 
 <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
 <span class="material-icons">arrow_upward</span>
