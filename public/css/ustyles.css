@@ -10,6 +10,14 @@ body {
     min-height: 100vh;
 }
 
+.spinner {
+    text-align: center;
+    font-size: 1.2em;
+    color: #4CAF50;
+    padding: 20px;
+}
+
+
 /* Header Styles */
 header {
     background-color: #28a745;
@@ -742,10 +750,20 @@ footer ul {
 }
 
 
-#features div:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease-in-out;
+.card-effect {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
+
+.card-effect:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
 
 #features div {
     background: #ffffff;
