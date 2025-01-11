@@ -9,12 +9,12 @@
     <meta name="description" content="Welcome to HelloGrade, your one-stop student grading portal. Simplify grade management, enhance transparency, and access grades efficiently on any device.">
     <title>Welcome to HelloGrade - Your Student Grading Portal</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/css/ustyles.css">
     <!-- Scroll Reveal and Smooth Scrolling -->
     <link rel="stylesheet" href="/dist/output.css">
-    <link rel="preload" href="images/icon.webp" as="image">
-
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js" defer></script>
@@ -23,14 +23,13 @@
 
     <!-- Google Ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
-    
 </head>
 
 <body>
     <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
             <a href="https://hellograde.online/">
-                <img src="images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3" loading="lazy">
+                <img src="images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3">
             </a>
             <h1 class="text-xl font-bold">HelloGrade</h1>
         </div>
@@ -49,88 +48,74 @@
     <!-- Main Content with Smooth Scrolling and Reveal Animations -->
     <!-- Introduction Section -->
     <section class="hero bg-gray-100 text-gray-800 py-20 px-4">
-        <div class="container mx-auto text-center">
+        <div class="container mx-auto text-center card-effect">
             <h1 class="text-5xl font-bold mb-4 text-gray-800">Welcome to HelloGrade</h1>
-            <p class="text-xl mb-6 text-gray-700">We offer seamless ways to manage grades, track progress, and enhance learning. Experience simplicity and efficiency at your fingertips.</p>
-            <a href="/login" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow-md">Get Started</a>
-        </div>
-        <img src="images/hero-image.webp" alt="Hero Image" loading="lazy" class="hidden">
-    </section>
-    
-
-    <!-- Features Section with Grid Layout -->
-    <section id="features" class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-        <div class="scroll-reveal">
-            <h3 class="text-2xl font-bold text-blue-600">Effortless Grade and Record Management</h3>
-            <p>Simplify the process for educators by offering tools to input grades, track student performance, and access academic records in one unified platform. Students can view and download their grades and progress with ease, fostering accountability and clarity.</p>
-        </div>
-        <div class="scroll-reveal">
-            <h3 class="text-2xl font-bold text-blue-600">Personalized Academic Insights and Notifications</h3>
-            <p>Stay informed with smart notifications about grades, deadlines, and academic milestones. Generate tailored reports and actionable insights for educators and students, promoting data-driven decisions and goal-oriented behavior.</p>
-        </div>
-        <div class="scroll-reveal">
-            <h3 class="text-2xl font-bold text-blue-600">Secure and Private Data Handling</h3>
-            <p>Ensure peace of mind with robust encryption and strict access controls. Protect user data and uphold privacy standards, making HelloGrade a trusted choice for academic record management.</p>
-        </div>        
-        <div class="scroll-reveal">
-            <h3 class="text-2xl font-bold text-blue-600">Integrated Learning and Knowledge Hub</h3>
-            <p>Enhance the academic experience with seamless integration to educational blogs, resources, and tools. Access articles, guides, and tips directly within the platform to support learning and personal development.</p>
+            <p class="text-xl mb-6 text-gray-700">
+                At HelloGrade, we understand that success isn’t just about grades—it’s about growth. Our platform is designed to empower students and educators with tools to streamline academic processes while nurturing personal development. Whether you’re managing grades or seeking inspiration to reach your full potential, HelloGrade is here to support your journey.
+            </p>
+            <br>
+            <a href="/login" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow-md">
+                Get Started
+            </a>
         </div>
     </section>
     
-    <!-- Advertisement Section -->
-    <div class="text-center my-8">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-            crossorigin="anonymous"></script>
-        <!-- HelloGrade Responsive Ad -->
-        <ins class="adsbygoogle"
-            style="display:inline-block;width:728px;height:90px"
-            data-ad-client="ca-pub-4537208011192461"
-            data-ad-slot="7121468855"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-        crossorigin="anonymous"></script>
-       <!-- Horizontal4Index -->
-       <ins class="adsbygoogle"
-            style="display:block"
-            data-ad-client="ca-pub-4537208011192461"
-            data-ad-slot="7025129889"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
-       <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-       </script>
-    </div>
+    <!-- Ad Section Placeholder -->
+    <div id="ad1"></div>
 
     <!-- Why Choose Section -->
-    <section id="why-choose" class="text-center mb-16 scroll-reveal">
-        <h2 class="text-3xl font-bold text-blue-600">Why Choose HelloGrade?</h2>
-        <p class="text-lg mt-4 max-w-2xl mx-auto">
-            HelloGrade is more than just a grading tool—it’s a comprehensive solution designed to support educators and empower students. With HelloGrade, institutions can simplify grade management, enhance transparency, and foster a proactive learning environment.
-        </p>
-        <p class="text-lg mt-4 max-w-2xl mx-auto">
-            Developed with attention to detail and an understanding of educational needs, HelloGrade is here to support teachers, inspire students, and transform how grades are managed in today’s schools.
-        </p>
+   
+    <section id="why-choose" class="py-16 px-4 bg-gray-50">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Why Choose HelloGrade?</h2>
+            <p class="text-lg text-gray-700 max-w-2xl mx-auto">
+                HelloGrade isn’t just a tool for managing grades—it’s a transformative platform designed to support educators, empower students, and redefine how academic progress is tracked and celebrated. Here are three key reasons why HelloGrade is the right choice for you:
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div class="card-effect">
+                <h3 class="text-2xl font-bold text-blue-600">Simplify Grade Management</h3>
+                <p>
+                    Managing academic records can be overwhelming for both educators and students. HelloGrade makes the process effortless with tools to input, organize, and update grades seamlessly, track performance, and ensure transparency and accessibility anytime, anywhere.
+                </p>
+            </div>
+            <div class="card-effect">
+                <h3 class="text-2xl font-bold text-blue-600">Foster Personal Growth</h3>
+                <p>
+                    At HelloGrade, we believe that education goes beyond the classroom. That’s why we offer blogs and resources focused on self-improvement, study habits, and time management. Motivational stories and personalized insights help students set and achieve meaningful goals.
+                </p>
+            </div>
+            <div class="card-effect">
+                <h3 class="text-2xl font-bold text-blue-600">Prioritize Security and Reliability</h3>
+                <p>
+                    We understand the importance of safeguarding academic data. HelloGrade protects all data with robust encryption and secure access protocols. The platform is reliable, accessible, and complies with strict data protection standards to give users peace of mind.
+                </p>
+            </div>
+        </div>
     </section>
+    
+    
 
     <section id="latestBlog" class="container mx-auto px-4 py-8">
         <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Latest Blog</h2>
-        <div id="latestBlogContainer" class="bg-white p-6 rounded-lg shadow-md">
+        <div id="latestBlogContainer" class="bg-white p-6 rounded-lg shadow-md  card-effect">
             <!-- Latest blog will be inserted here dynamically -->
         </div>
     </section>
     
 
     <section id="randomBlogs" class="container mx-auto px-4 py-8">
-        <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Discover More Blogs</h2>
-        <div id="randomBlogsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-blue-600 mb-4">Explore Our Blogs</h2>
+            <p class="text-lg text-gray-700">Our blogs are updated regularly, so you’ll always find fresh ideas to motivate and guide you. Discover articles that inform, inspire, and ignite your potential:</class=>
+
+                <div id="randomBlogsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Random blogs will be inserted here dynamically -->
+                </div>
+
+        <p class="text-lg text-gray-700"></class=>
         </div>
     </section>
-
-    
 
     <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
         <span class="material-icons">arrow_upward</span>
@@ -158,7 +143,7 @@
                 aria-label="Close">
           <span class="material-icons">close</span>
         </button>
-
+        
         <h2 class="text-lg font-semibold mb-4 text-gray-800">Search HelloGrade</h2>
         <!-- Search Form -->
         <form onsubmit="return goToSearchPage()">
@@ -177,40 +162,26 @@
         </form>
       </div>
     </div>
+    
     <!-- Contact Support -->
-<section class="text-center">
-<h3 class="text-2xl font-semibold mb-4 ">Say Hello to Efficient Academic Management</h3>
-<p class="mb-6">
-    Join the community of students and educators transforming how they track and manage academic progress!
-</p>
-<a href="/login" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow-md">Get Started</a>
-</section>
-
-    <!-- Advertisement Section -->
-    <div class="text-center my-8">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-            crossorigin="anonymous"></script>
-        <!-- HelloGrade Responsive Ad -->
-        <ins class="adsbygoogle"
-            style="display:inline-block;width:728px;height:90px"
-            data-ad-client="ca-pub-4537208011192461"
-            data-ad-slot="7121468855"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-        crossorigin="anonymous"></script>
-       <!-- Horizontal4Index -->
-       <ins class="adsbygoogle"
-            style="display:block"
-            data-ad-client="ca-pub-4537208011192461"
-            data-ad-slot="7025129889"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
-       <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-       </script>
+    <div class=" card-effect">
+        <section class="text-center bg-gray-100 p-8 rounded-lg shadow-lg">
+            <h3 class="text-3xl font-bold mb-4 text-blue-800">
+                Ready to Take the Next Step?
+            </h3>
+            <p class="mb-6 text-gray-700 text-lg">
+                Join a thriving community of university students and educators revolutionizing academic management. Enhance your educational experience and pave the way for your future career growth.
+            </p>
+            <a href="/login" 
+            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg transition-transform transform hover:scale-105">
+                Start Your Path to Success
+            </a>
+        </section>
     </div>
+
+<!-- Advertisement Section -->
+<div id="ad2"></div>
+<br>
 
 
 <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
@@ -248,7 +219,8 @@
 
     <!-- Footer -->
     <div id="footerContainer"></div>
-    <script src="js/blogs.js"></script>
+    <script src="/js/ads.js"></script>
+    <script src="/js/blogs.js"></script>
     <script src="/js/checkSession.js" defer></script>
 </body>
 </html>
