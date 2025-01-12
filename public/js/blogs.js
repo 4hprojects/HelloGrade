@@ -79,6 +79,14 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/blog10.webp",
             link: "/blogs/blog10.html",
             description: "Unlock the secrets to personal effectiveness and leadership with our professional guide to The 7 Habits of Highly Effective People. Explore actionable self-improvement tips, productivity habits, and strategies for habit formation in this 8-part series based on Stephen R. Covey’s timeless principles."
+        },
+        {
+            id: "blog11",
+            title: "Why Writing Down Your Goals Is Crucial",
+            date: "January 12, 2025", 
+            image: "/images/blog11-gabrielle-henderson-5HqtJT2l9Gw-unsplash.webp",
+            link: "/blogs/why-writing-down-your-goals-is-important.html",
+            description: "Learn why writing down goals boosts success. Discover insights from Covey's The 7 Habits and neuroscience to achieve clarity, accountability, and progress."
         }
     ];
 
