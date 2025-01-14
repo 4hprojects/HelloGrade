@@ -87,6 +87,14 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/blog11-gabrielle-henderson-5HqtJT2l9Gw-unsplash.webp",
             link: "/blogs/why-writing-down-your-goals-is-important.html",
             description: "Learn why writing down goals boosts success. Discover insights from Covey's The 7 Habits and neuroscience to achieve clarity, accountability, and progress."
+        },
+        {
+            id: "blog12",
+            title: "Master Time Management: Proven Methods for Productivity",
+            date: "January 15, 2025", 
+            image: "/images/blog12-djim-loic-ft0-Xu4nTvA-unsplash.webp",
+            link: "/blogs/master-time-management.html",
+            description: "Discover practical time management methods, including the Eisenhower Matrix, time-blocking, and the Pomodoro technique. Transform your productivity with actionable strategies inspired by The 7 Habits of Highly Effective People."
         }
     ];
 
