@@ -798,3 +798,17 @@ footer ul {
     object-position: center; /* Centers the cropped area of the image */
     display: block; /* Removes any inline spacing issues */
 }
+
+/* Adjust the height of the image to match the text */
+.flex.items-center img {
+    height: 2em; /* Match to the text size (1.5em = 24px if the text size is 16px) */
+    vertical-align: middle; /* Align with text vertically */
+}
+
+/* Optionally, adjust text alignment for perfect vertical alignment */
+.flex.items-center p {
+    display: inline-block;
+    line-height: 2em; /* Ensures text aligns with the image */
+    margin: 0; /* Remove extra margin to align perfectly */
+}
+
