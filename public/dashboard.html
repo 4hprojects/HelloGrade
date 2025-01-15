@@ -34,31 +34,30 @@
         </nav>
     </header>
 
+<section class="dashboard-section bg-white shadow-md p-4 rounded-lg mx-auto my-4 max-w-md">
     <!-- Welcome Section -->
-    <section class="welcome-section bg-white shadow-md p-4 rounded-lg mx-auto my-4 max-w-md">
-        <!-- Combined Welcome and Dropdown -->
-        <div class="welcome-dropdown">
-            <p class="text-xl sm:text-2xl font-semibold text-green-white text-center">
-                Hello, <span id="studentName">[User's Name]</span>!
-            </p>
-            <p class="text-gray-600 text-center mb-4">
-                Student ID: <span id="studentID">[Student ID]</span>
-            </p>
+    <div class="welcome-dropdown mb-4">
+        <p class="text-lg font-medium text-gray-800 text-center">
+            Hello, <span id="studentName" class="text-green-500">[User's Name]</span>!
+        </p>
+        <p class="text-sm text-gray-600 text-center mb-2">
+            Student ID: <span id="studentID" class="font-semibold">[Student ID]</span>
+        </p>
+    
+        <select id="classesSelect" class="w-full p-2 border border-gray-300 rounded">
+            <!-- Options will be dynamically populated -->
+        </select>
+    </div>
+    
 
-            <select id="classesSelect" class="w-full mt-2 mb-4 p-2 border border-gray-300 rounded">
-                <!-- Options will be dynamically populated -->
-            </select>
+    <!-- Grades Section -->
+    <div id="gradeTableContainer" class="content overflow-x-auto">
+        <div id="accordionContainer" class="accordion-container">
+            <!-- Dynamically populated accordion -->
         </div>
-    </section>
-    <section class="grades-section">
-        <!-- Grade Table Container -->
-        <div id="gradeTableContainer" class="content overflow-x-auto">
-            <!-- Content will be dynamically inserted here -->
-            <div id="accordionContainer" class="accordion-container">
-                <!-- Dynamically populated accordion -->
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
+
 
     <section id="latestBlog" class="container mx-auto px-4 py-8">
         <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Latest Blog</h2>
