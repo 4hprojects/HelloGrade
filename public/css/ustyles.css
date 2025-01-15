@@ -872,3 +872,38 @@ footer p {
     margin: 5px 0 0; /* Reduce spacing */
     color: #d1d5db; /* Dimmed text for less prominence */
 }
+
+.welcome-section {
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px auto;
+    max-width: 400px;
+}
+
+.welcome-dropdown p {
+    margin: 10px 0;
+    font-size: 1.25em;
+    color: #4a4a4a;
+}
+
+#classesSelect {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 1em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+#classesSelect:hover {
+    border-color: #4caf50;
+}
+
+#classesSelect:focus {
+    border-color: #4caf50;
+    outline: none;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
