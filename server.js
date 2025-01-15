@@ -574,12 +574,17 @@ app.get('/api/classes', isAuthenticated, async (req, res) => {
 
 
   app.get('/api/quizzes', isAuthenticated, async (req, res) => {
-    console.log("Test1")
+    console.log("/api/quizzes route hit"); // Debug log
     try {
         console.log("Test2")
         const { role, userId, studentIDNumber } = req.session;
-        const filter = {};
+        let filter = {};
 
+        // If teacher => only show quizzes the teacher created
+        if (role === 'teacher') {
+            filter = { createdBy: new ObjectId(userId) };
+        }
+    /*
         if (role === 'student') {
             console.log("Test3")
             // Fetch active quizzes assigned to the student
@@ -594,7 +599,7 @@ app.get('/api/classes', isAuthenticated, async (req, res) => {
         } else if (role === 'teacher') {
             // Fetch quizzes created by the teacher
             filter.createdBy = new ObjectId(userId);
-        }
+        }*/
         // For admin, no additional filter (returns all quizzes)
 
         // Fetch quizzes based on the filter
@@ -841,7 +846,7 @@ app.post('/api/quizzes', isAuthenticated, isAdmin, async (req, res) => {
 
         const result = await quizzesCollection.insertOne(newQuiz);
         if (result.acknowledged) {
-            return res.status(201).json({ success: true,attemptId: result.insertedId, attemptNumber: newAttempt.attemptNumber, });
+            return res.status(201).json({ success: true, quizId: result.insertedId, message: 'Quiz created successfully.' });
         } else {
             return res.status(500).json({ success: false, message: 'Failed to create quiz.' });
         }
