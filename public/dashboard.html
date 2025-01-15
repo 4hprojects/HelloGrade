@@ -34,12 +34,11 @@
         </nav>
     </header>
 
-<section class="dashboard-section bg-white shadow-md p-4 rounded-lg mx-auto my-4 max-w-md">
+<section class="dashboard-section bg-white shadow-md p-4 rounded-lg mx-auto my-4 w-full">
     <!-- Welcome Section -->
     <div class="welcome-dropdown mb-6">
         <p class="text-xl sm:text-2xl font-semibold text-gray-800 text-center">
             Hello, <span id="studentName" class="text-green-500">[User's Name]</span>!
-        </p>
         <p class="text-gray-600 text-center mb-4">
             Student ID: <span id="studentID">[Student ID]</span>
         </p>
@@ -49,12 +48,13 @@
         </select>
     </div>
 
-    <!-- Grades Section -->
-    <div id="gradeTableContainer" class="content overflow-x-auto">
-        <div id="accordionContainer" class="accordion-container">
-            <!-- Dynamically populated accordion -->
-        </div>
+<!-- Grades Section -->
+<div id="gradeTableContainer" class="w-full mt-4 p-4 border border-gray-300 rounded-lg">
+    <div id="accordionContainer" class="w-full mt-2 p-2 border border-gray-300 rounded-lg">
+        <!-- Dynamically populated accordion -->
     </div>
+</div>
+
 </section>
 
 
