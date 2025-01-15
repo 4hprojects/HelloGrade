@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Scroll to Top Button functionality
     const scrollToTopBtn = document.getElementById("scrollToTopBtn");
     if (scrollToTopBtn) {
         // Show the button when scrolling down
@@ -18,7 +19,19 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
+
+    // Load footer HTML content
+    const footerContainer = document.getElementById("footerContainer");
+    if (footerContainer) {
+        fetch("/footer.html")
+            .then(response => response.text())
+            .then(data => {
+                footerContainer.innerHTML = data;
+            })
+            .catch(error => console.error("Error loading footer:", error));
+    }
 });
+
 
 document.addEventListener("DOMContentLoaded", function () {
     fetch("/footer.html")
@@ -51,4 +64,20 @@ function goToSearchPage() {
         window.location.href = '/search.html';
     }
     return false; // Prevent normal form submission
+}
+
+// search functions
+function toggleSearchOverlay() {
+    const searchOverlay = document.getElementById('searchOverlay');
+    if (searchOverlay) {
+        searchOverlay.classList.toggle('hidden');
+    }
+}
+
+function goToSearchPage() {
+    const query = document.getElementById('overlaySearchInput').value.trim();
+    if (query) {
+        window.location.href = `/search?q=${encodeURIComponent(query)}`;
+    }
+    return false; // Prevent default form submission
 }
