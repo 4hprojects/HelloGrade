@@ -907,3 +907,22 @@ footer p {
     outline: none;
     box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
 }
+
+/* Grades Section */
+#gradeTableContainer {
+    width: 100%; /* Ensure the container spans the full width */
+    max-width: 100%; /* Prevent shrinking on smaller screens */
+    padding: 1px; /* Add spacing inside the container */
+    margin: 0 auto; /* Center the container within its parent */
+    border-radius: 8px; /* Softer rounded corners */
+    box-sizing: border-box; /* Include padding and border in width */
+    overflow-x: auto; /* Enable horizontal scrolling if the table content overflows */
+}
+
+#accordionContainer {
+    width: 100%; /* Full width of its parent */
+    padding: 1px; /* Add inner spacing */
+    border-radius: 6px; /* Match container style */
+    box-sizing: border-box; /* Consistent sizing with parent */
+    overflow-x: auto; /* Handle any content overflow */
+}
