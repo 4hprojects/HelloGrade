@@ -36,19 +36,18 @@
 
 <section class="dashboard-section bg-white shadow-md p-4 rounded-lg mx-auto my-4 max-w-md">
     <!-- Welcome Section -->
-    <div class="welcome-dropdown mb-4">
-        <p class="text-lg font-medium text-gray-800 text-center">
+    <div class="welcome-dropdown mb-6">
+        <p class="text-xl sm:text-2xl font-semibold text-gray-800 text-center">
             Hello, <span id="studentName" class="text-green-500">[User's Name]</span>!
         </p>
-        <p class="text-sm text-gray-600 text-center mb-2">
-            Student ID: <span id="studentID" class="font-semibold">[Student ID]</span>
+        <p class="text-gray-600 text-center mb-4">
+            Student ID: <span id="studentID">[Student ID]</span>
         </p>
-    
-        <select id="classesSelect" class="w-full p-2 border border-gray-300 rounded">
+
+        <select id="classesSelect" class="w-full mt-2 mb-4 p-2 border border-gray-300 rounded-lg">
             <!-- Options will be dynamically populated -->
         </select>
     </div>
-    
 
     <!-- Grades Section -->
     <div id="gradeTableContainer" class="content overflow-x-auto">
