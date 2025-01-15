@@ -28,12 +28,30 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    height: 60px;
-    padding: 15px 20px;
+    height: 1%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 999;
+}
+
+header .flex.items-center img {
+    height: 32px; /* Reduce logo height */
+    margin-right: 8px; /* Adjust spacing from the text */
+}
+
+header .flex.items-center p {
+    font-size: 1rem; /* Reduce text size */
+    font-weight: 600; /* Maintain bold appearance for visibility */
+}
+
+#navMenu {
+    gap: 8px; /* Decrease spacing between navigation items */
+}
+
+
+#navMenu li a:hover {
+    color: #ffd700; /* Gold hover effect for emphasis */
 }
 
 main {
