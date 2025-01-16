@@ -95,6 +95,14 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/blog12-djim-loic-ft0-Xu4nTvA-unsplash.webp",
             link: "/blogs/master-time-management.html",
             description: "Discover practical time management methods, including the Eisenhower Matrix, time-blocking, and the Pomodoro technique. Transform your productivity with actionable strategies inspired by The 7 Habits of Highly Effective People."
+        },
+        {
+            id: "blog13",
+            title: "Crafting Your Legacy: The Power of Beginning With the End in Mind",
+            date: "January 16, 2025", 
+            image: "/images/blog13joshua-hoehne-Nsaqv7v2V7Q-unsplash.webp",
+            link: "/blogs/scp2-beginning-with-the-end-in-mind.html",
+            description: "Discover practical time management methods, including the Eisenhower Matrix, time-blocking, and the Pomodoro technique. Transform your productivity with actionable strategies inspired by The 7 Habits of Highly Effective People."
         }
     ];
 
@@ -144,9 +152,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Blog Navigation (Previous / Next)
     const currentBlogId = document.body.getAttribute("data-blog-id"); // e.g., "blog7"
     if (!currentBlogId) {
-        console.error("No valid blog ID provided in data-blog-id.");
-        return;
-    }
+    console.error("No valid blog ID provided in data-blog-id.");
+    return;
+}
     const currentIndex = sortedBlogs.findIndex(blog => blog.id === currentBlogId);
 
     // If the blog ID is recognized (currentIndex >= 0), build nav
