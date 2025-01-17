@@ -1,5 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
+        {
+            id: "blog14",
+            title: "The Cost of Standing Still: Brands That Failed to Innovate and Disappeared",
+            date: "January 17, 2025", 
+            image: "/images/blog14chris-lawton-5IHz5WhosQE-unsplash.webp",
+            link: "/blogs/brands-that-failed-to-innovate-and-disappeared.html",
+            description: "Discover the cautionary tales of once-dominant brands like Blockbuster, Kodak, and Nokia that failed to innovate and lost their edge. Learn why they failed, the lessons they teach, and how businesses can avoid the same fate."
+        },
         {   
             id: "blog1",
             title: "The Role of Technology in Education",
