@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             id: "blog15",
             title: "5G vs 6G: The Future of Connectivity and What It Means for You",
-            date: "January 17, 2025",
+            date: "January 18, 2025",
             image: "/images/blog15-5g-vs-6g.webp",
             link: "/blogs/blog15-5g-vs-6g.html",
             description: "Discover the key differences between 5G and 6G, their transformative applications, and how businesses can prepare for the next wave of wireless connectivity."
