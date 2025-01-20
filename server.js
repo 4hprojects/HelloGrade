@@ -96,6 +96,44 @@ app.use((req, res, next) => {
     next();
 });
 
+const { fetchClassSectionFromMasterList, fetchClassRecordFromSheet } = require('./utils/googleSheetsUtils.js');
+
+
+
+// Route to fetch ClassRecord from a specific sheet
+app.get('/api/getClassRecordFromSheet', async (req, res) => {
+  const { studentID, sheetName } = req.query;
+  if (!studentID || !sheetName) {
+    return res.status(400).json({ success: false, message: 'Student ID and sheet name are required.' });
+  }
+
+  try {
+    const classRecord = await fetchClassRecordFromSheet(studentID, sheetName);
+    res.json({ success: true, data: classRecord });
+  } catch (error) {
+    console.error('Error fetching class record:', error.message);
+    res.status(500).json({ success: false, message: 'Internal server error. Please try again later.' });
+  }
+});
+
+
+
+// Route to fetch ClassSection from MasterList
+app.get('/api/getClassRecordFromMasterList', async (req, res) => {
+    const { studentID } = req.query;
+    if (!studentID) {
+      return res.status(400).json({ success: false, message: 'Student ID is required.' });
+    }
+  
+    try {
+      const classSection = await fetchClassSectionFromMasterList(studentID);
+      res.json({ success: true, data: { ClassSection: classSection } });
+    } catch (error) {
+      console.error('Error fetching ClassSection:', error.message);
+      res.status(500).json({ success: false, message: 'Internal server error. Please try again later.' });
+    }
+  });
+
 //routes
 app.get('/login', (req, res) => {
     if (req.session && req.session.userId) {
@@ -136,8 +174,8 @@ app.get('/terms-and-conditions', (req, res) => {
   app.get('/reset-password', (req, res) => {
     res.sendFile(__dirname + '/public/reset-password.html');
   });
-  app.get('/quiz', (req, res) => {
-    res.sendFile(__dirname + '/public/quiz.html');
+  app.get('/classrecords', (req, res) => {
+    res.sendFile(__dirname + '/public/classrecords.html');
   });
   
 
