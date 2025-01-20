@@ -79,6 +79,14 @@ app.use(session({
     }
 }));
 
+app.get('/api/config', (req, res) => {
+    res.json({
+        apiKey: process.env.GOOGLE_API_KEY,
+        spreadsheetId: process.env.GOOGLE_SPREADSHEET_ID,
+    });
+});
+
+
 app.use((req, res, next) => {
     if (req.session && req.session.role) {
         console.log('Session role:', req.session.role); // Debugging
