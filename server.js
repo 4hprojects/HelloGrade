@@ -82,7 +82,8 @@ app.use(session({
 app.get('/api/config', (req, res) => {
     res.json({
         apiKey: process.env.GOOGLE_API_KEY,
-        spreadsheetId: process.env.GOOGLE_SPREADSHEET_ID,
+        spreadsheetIdAtt: process.env.GOOGLE_SPREADSHEET_ID_ATTENDANCE,
+        spreadsheetIdCSMST2025: process.env.GOOGLE_SPREADSHEET_ID_CSMST2025,
     });
 });
 
