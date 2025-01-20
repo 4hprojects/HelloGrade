@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Track your class attendance effortlessly with HelloGrade. Access detailed records, including dates, times, status, and remarks. Stay informed and ensure your academic progress with ease." />
     <meta name="description" content="View your attendance summary on HelloGrade. Stay updated with your class attendance records, including dates, times, status, and remarks. Ensure you're on track with your academic commitments." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HelloGrade Attendance Summary</title>
@@ -49,49 +48,23 @@
             <p class="text-gray-600 text-center mb-4">
                 Student ID: <span id="studentID">[Student ID]</span>
             </p>
-            <select id="classesSelect" class="w-full mt-2 mb-4 p-2 border border-gray-300 rounded">
-                <!-- Options will be dynamically populated -->
-            </select>
         </div>
         <div class="attendance-summary">
-
-        
-            <!-- Summary Container -->
-            <div class="summary-container">
-                <section class="summary-item">
-                    <h3>Midterms Attendance Summary</h3>
-                    <div class="summary-grid">
-                        <div class="summary-row">
-                            <p>Total Classes:</p>
-                            <p id="totalClassesMidterms" class="summary-value">0</p>
-                        </div>
-                        <div class="summary-row">
-                            <p>Classes Attended:</p>
-                            <p id="classesAttendedMidterms" class="summary-value">0</p>
-                        </div>
-                        <div class="summary-row">
-                            <p>Attendance Percentage:</p>
-                            <p id="attendancePercentageMidterms" class="summary-value">0%</p>
-                        </div>
-                    </div>
-                </section>
-                <section class="summary-item">
-                    <h3>Finals Attendance Summary</h3>
-                    <div class="summary-grid">
-                        <div class="summary-row">
-                            <p>Total Classes:</p>
-                            <p id="totalClassesFinals" class="summary-value">0</p>
-                        </div>
-                        <div class="summary-row">
-                            <p>Classes Attended:</p>
-                            <p id="classesAttendedFinals" class="summary-value">0</p>
-                        </div>
-                        <div class="summary-row">
-                            <p>Attendance Percentage:</p>
-                            <p id="attendancePercentageFinals" class="summary-value">0%</p>
-                        </div>
-                    </div>
-                </section>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Term</th>
+                            <th>Remarks</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>                    
+                    <tbody id="data-table-body">
+                        <!-- Attendance data will be dynamically added here -->
+                    </tbody>
+                </table>
+                <div class="error-message" id="attendanceError"></div>
             </div>
         </div>
         <div class="export-options flex justify-center gap-4 mt-4">
@@ -100,28 +73,7 @@
         </div>
     </section>
     <!-- Attendance Table -->
-    <section class="attendance-section">
-                        <!-- Center-aligned Course Title -->
-                        <h3 class="course-title text-lg font-semibold text-green-600 mb-4" id="courseTitle">Attendance Summary</h3>
-        <div class="content overflow-x-auto mx-4">
-            <h3 class="text-lg font-semibold text-green-600 mb-4" id="courseTitle"></h3>
-            <table class="w-full bg-white border border-gray-200 text-center">
-                <thead class="bg-green-600 text-white font-semibold">
-                    <tr>
-                        <th class="py-2">Date</th>
-                        <th class="py-2">Time</th>
-                        <th class="py-2">Status</th>
-                        <th class="py-2">Remarks</th>
-                        <th class="py-2">Term</th> <!-- New Term Column -->
-                    </tr>
-                </thead>
-                
-                <tbody id="attendanceTableBody">
-                    <!-- Rows will be dynamically added here -->
-                </tbody>
-            </table>
-        </div>
-    </section>
+
     <section class="text-center">
     <div>
         <section id="latestBlog" class="container mx-auto px-4 py-8">
@@ -130,35 +82,11 @@
                 <!-- Latest blog will be inserted here dynamically -->
             </div>
         </section>
- <!-- Advertisement Section -->
- <div class="text-center my-8">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-        crossorigin="anonymous"></script>
-    <!-- HelloGrade Responsive Ad -->
-    <ins class="adsbygoogle"
-        style="display:inline-block;width:728px;height:90px"
-        data-ad-client="ca-pub-4537208011192461"
-        data-ad-slot="7121468855"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-    crossorigin="anonymous"></script>
-   <!-- Horizontal4Index -->
-   <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-4537208011192461"
-        data-ad-slot="7025129889"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-   <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-   </script>
 </div>
     </section>
     <!-- Footer -->
     <footer class="bg-green-600 text-white text-center py-3">
-        <p>&copy; 2024 HelloGrade. All Rights Reserved.</p>
+        <p>&copy; 2025 HelloGrade. All Rights Reserved.</p>
     </footer>
     <!-- Scripts -->
     <script src="js/attendance.js"></script>
