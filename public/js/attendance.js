@@ -36,7 +36,7 @@ async function fetchStudentDetails() {
             document.getElementById("studentName").textContent = studentName;
             document.getElementById("studentID").textContent = studentID;
 
-            await fetchAttendanceForCourse("default-course-id"); // Replace with default course logic
+            await fetchAttendanceForCourse("FullAttendance", studentID); // Replace with default course logic
         } else {
             console.error("Failed to fetch user details:", data.message);
         }
@@ -45,12 +45,16 @@ async function fetchStudentDetails() {
     }
 }
 
-async function fetchAttendanceForCourse(courseID) {
-    const studentID = document.getElementById("studentID").textContent;
+async function fetchAttendanceForCourse(courseID, studentID) {
+    // Fetch API config
+    const response = await fetch('/api/config');
+    const config = await response.json();
 
-    const apiKey = 'AIzaSyBSZED5vFQinb2Y4GRPkNAIgwa6NY7eOhE';
-    const spreadsheetId = '1K9F2W7dmscWCs6jB_FvLJQaArV_DCgChgYtvjAGUKy4';
-    const range = 'FullAttendance!A1:F'; // Match your spreadsheet range
+    // Use fetched keys
+    const apiKey = config.apiKey;
+    const spreadsheetId = config.spreadsheetIdAtt;
+
+    const range = `${courseID}!A:Z`; // Adjust range if needed
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
 
     try {
