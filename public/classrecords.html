@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="View your Class Records in HelloGrade. Track scores, activities, bonus points, and exam performance.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Records - HelloGrade</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <!-- Tailwind and Flowbite -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- Your custom CSS (optional) -->
+  <link rel="stylesheet" href="/css/ustyles.css">
+</head>
+<header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
+  <div class="flex items-center">
+    <a href="https://hellograde.online/">
+      <img src="images/icon.webp" alt="HelloGrade Icon" class="h-12 mr-3">
+    </a>
+    <h1 class="text-xl font-bold">HelloGrade</h1>
+  </div>
+  <nav>
+    <ul id="navMenu" class="flex flex-row gap-4">
+        <li><a href="#" title="Search" onclick="toggleSearchOverlay()" class="cursor-pointer"><span class="material-icons">search</span></a></li>          
+        <li><a href="/dashboard" title="Dashboard"><span class="material-icons">dashboard</span></a></li>
+        <li><a href="/classrecords" title="Records" class="text-yellow-400"><span class="material-icons">class</span></a></li>
+        <li><a href="/attendance" title="Attendance Summary" ><span class="material-icons">assignment</span></a></li>
+        <li><a id="logoutLink" href="/login" title="Sign Out"><span class="material-icons">logout</span></a></li>
+    </ul>
+</nav>
+</header>
+<body class="font-[Poppins]">
+<main class="max-w-4xl mx-auto p-4">
+  <div id="notification" class="hidden p-4 mb-4 rounded bg-red-100 text-red-700"></div>
+  <h2 class="text-2xl font-bold mb-4 text-center">Class Records</h2>
+  <section class="welcome-section bg-white shadow-md p-4 rounded-lg mx-auto my-4 max-w-md">
+    <div class="welcome-dropdown">
+          <p class="text-xl sm:text-2xl font-semibold text-green-white text-center">
+              Hello, <span id="studentFullName">[User's Name]</span>!
+          </p>
+          <p class="text-gray-600 text-center mb-4">
+              Student ID: <span id="studentIDNumber">[Student ID]</span>
+          </p>
+      </div>
+  </section>
+  
+  <!-- Score Summary Section -->
+  <section id="scoreInfo" class="bg-gray-100 p-4 rounded-lg mb-6">
+    <h3 class="text-lg font-semibold mb-2">Overall Scores</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <p class="font-medium">Total Score:</p>
+        <p id="totalScore" class="text-xl font-bold">--</p>
+      </div>
+      <div>
+        <p class="font-medium">Total Score with +pts:</p>
+        <p id="totalScoreWithBonus" class="text-xl font-bold">--</p>
+      </div>
+      <div>
+        <p class="font-medium">Percentage:</p>
+        <p id="percentage" class="text-xl font-bold">--</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Activities Table (Lessons 1 to 12) -->
+  <section class="mb-6">
+    <h3 class="text-lg font-semibold mb-2">Activities</h3>
+    <div class="overflow-x-auto">
+      <table class="table-auto w-full border border-gray-300">
+        <thead class="bg-green-50 border-b border-gray-300">
+          <tr>
+            <th class="px-4 py-2 text-left">Lesson</th>
+            <th class="px-4 py-2 text-left">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Lesson 1 to 12 -->
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Lesson 1</td>
+            <td class="px-4 py-2" id="lesson1Score">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Lesson 2</td>
+            <td class="px-4 py-2" id="lesson2Score">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Lesson 3</td>
+            <td class="px-4 py-2" id="lesson3Score">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Lesson 4</td>
+            <td class="px-4 py-2" id="lesson4Score">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Lesson 5</td>
+            <td class="px-4 py-2" id="lesson5Score">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Lesson 6</td>
+            <td class="px-4 py-2" id="lesson6Score">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Lesson 7</td>
+            <td class="px-4 py-2" id="lesson7Score">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Lesson 8</td>
+            <td class="px-4 py-2" id="lesson8Score">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Lesson 9</td>
+            <td class="px-4 py-2" id="lesson9Score">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Lesson 10</td>
+            <td class="px-4 py-2" id="lesson10Score">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Lesson 11</td>
+            <td class="px-4 py-2" id="lesson11Score">--</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-2">Lesson 12</td>
+            <td class="px-4 py-2" id="lesson12Score">--</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Bonus Points Table (Preclass Survey, Activity 1, Activity 2) -->
+  <section class="mb-6">
+    <h3 class="text-lg font-semibold mb-2">Bonus Points</h3>
+    <div class="overflow-x-auto">
+      <table class="table-auto w-full border border-gray-300">
+        <thead class="bg-green-50 border-b border-gray-300">
+          <tr>
+            <th class="px-4 py-2 text-left">Item</th>
+            <th class="px-4 py-2 text-left">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Preclass Survey</td>
+            <td class="px-4 py-2" id="preclassSurvey">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Activity 1</td>
+            <td class="px-4 py-2" id="activity1Bonus">--</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-2">Activity 2</td>
+            <td class="px-4 py-2" id="activity2Bonus">--</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Midterm Exam Table (Z, AA, AB) -->
+  <section class="mb-6">
+    <h3 class="text-lg font-semibold mb-2">Midterm Exam</h3>
+    <div class="overflow-x-auto">
+      <table class="table-auto w-full border border-gray-300">
+        <thead class="bg-green-50 border-b border-gray-300">
+          <tr>
+            <th class="px-4 py-2 text-left">Exam Component</th>
+            <th class="px-4 py-2 text-left">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Midterm Exam</td>
+            <td class="px-4 py-2" id="midtermExam">--</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-2">Midterm w/ +pts</td>
+            <td class="px-4 py-2" id="midtermWithBonus">--</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-2">Total</td>
+            <td class="px-4 py-2" id="midtermTotal">--</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+<section id="latestBlog" class="container mx-auto px-4 py-8">
+  <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Latest Blog</h2>
+  <div id="latestBlogContainer" class="bg-white p-6 rounded-lg shadow-md">
+      <!-- Latest blog will be inserted here dynamically -->
+  </div>
+</section>
+<br>
+<br>
+<br>
+
+<!-- Placeholder script; actual logic to be added in separate JS file -->
+<script src="/js/classrecords.js"></script>
+<script src="/js/logout.js"></script>
+<script src="js/blogs.js"></script>
+</body>
+</html>
