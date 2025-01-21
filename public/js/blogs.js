@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "blog17",
+            title: "Mastering the Basics: While Looping Statement",
+            date: "January 22, 2025",
+            image: "/images/blog17lucas-hein-3tgwzKpxHa4-unsplash.webp",
+            link: "/blogs/while-looping-statement",
+            description: "Learn Python while looping statements with clear examples, practical tips, and expert insights to improve your coding skills."
+        },  
+        {
             id: "blog16",
             title: "The Invisible Force Behind Every Click",
             date: "January 21, 2025",
