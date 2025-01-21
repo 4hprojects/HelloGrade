@@ -1,27 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "blog16",
+            title: "The Invisible Force Behind Every Click",
+            date: "January 21, 2025",
+            image: "/images/blog16software-behind-every-click.webp",
+            link: "/blogs/software-behind-every-click",
+            description: "Discover software's role, types, and functions shaping our world. Explore operating systems, applications, and tools driving innovation."
+        },  
+        {
             id: "blog15",
             title: "5G vs 6G: The Future of Connectivity and What It Means for You",
             date: "January 18, 2025",
             image: "/images/blog15-5g-vs-6g.webp",
-            link: "/blogs/5G-vs-6G.html",
+            link: "/blogs/5G-vs-6G",
             description: "Discover the key differences between 5G and 6G, their transformative applications, and how businesses can prepare for the next wave of wireless connectivity."
-        },     
-        {
-            id: "blog14",
-            title: "The Cost of Standing Still: Brands That Failed to Innovate and Disappeared",
-            date: "January 17, 2025", 
-            image: "/images/blog14chris-lawton-5IHz5WhosQE-unsplash.webp",
-            link: "/blogs/brands-that-failed-to-innovate-and-disappeared.html",
-            description: "Discover the cautionary tales of once-dominant brands like Blockbuster, Kodak, and Nokia that failed to innovate and lost their edge. Learn why they failed, the lessons they teach, and how businesses can avoid the same fate."
-        },
+        },        
         {   
             id: "blog1",
             title: "The Role of Technology in Education",
             date: "December 1, 2024",
             image: "/images/blog1.webp",
-            link: "/blogs/blog1.html",
+            link: "/blogs/blog1",
             description: "Learn how technology is shaping the way educators and students interact in today's classrooms."
         },
         {
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Effective Study Techniques",
             date: "December 1, 2024",
             image: "/images/blog2.webp",
-            link: "/blogs/blog2.html",
+            link: "/blogs/blog2",
             description: "Discover effective methods for students to improve their learning and retention of concepts."
         },
         {
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Developing Digital Literacy Skills",
             date: "December 1, 2024",
             image: "/images/blog3.webp",
-            link: "/blogs/blog3.html",
+            link: "/blogs/blog3",
             description: "Empower students with essential competencies to thrive in the digital age."
         },
         {
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Why Every Student Should Attend Seminars and Conferences",
             date: "December 2, 2024",
             image: "/images/blog4.webp",
-            link: "/blogs/blog4.html",
+            link: "/blogs/blog4",
             description: "Discover the benefits of seminars and conferences: networking, fresh perspectives, and staying updated on trends."
         },
         {
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "What to Do During Semestral Breaks: Rest, Growth, and Fun",
             date: "December 5, 2024",
             image: "/images/blog5.webp",
-            link: "/blogs/blog5.html",
+            link: "/blogs/blog5",
             description: "Maximise your semestral break with tips for rest, skill development, and exciting activities."
         },
         {
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Baguio Smart City Challenge: Student Innovations for a Smarter Future",
             date: "December 11, 2024",
             image: "/images/blog6.webp",
-            link: "/blogs/blog6.html",
+            link: "/blogs/blog6",
             description: "Explore the projects, lessons, and insights from this transformative experience."
         },
         {
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "10 Things I Wish I Knew Before Entering IT – Tips for Success",
             date: "December 30, 2024",
             image: "/images/blog7.webp",
-            link: "/blogs/blog7.html",
+            link: "/blogs/blog7",
             description: "Discover the essential lessons to thrive in IT, from mastering problem-solving and debugging to embracing perseverance and practical skills. Avoid common regrets and excel in your IT career with these expert tips."
         },
         {
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Building Habits for Success: Your Journey to Personal Growth",
             date: "January 2, 2025", 
             image: "/images/blog8.webp",
-            link: "/blogs/blog8.html",
+            link: "/blogs/blog8",
             description: "Discover how to build positive habits and unlock your potential for success. Learn practical strategies to overcome challenges, achieve goals, and foster personal growth on your journey to self-improvement."
         },
         {
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "A Beginner's Guide to USB-A, USB-B, and USB-C",
             date: "January 3, 2025", 
             image: "/images/blog9.webp",
-            link: "/blogs/blog9.html",
+            link: "/blogs/blog9",
             description: "Learn the differences between USB-A, USB-B, and USB-C, their history, uses, and why USB-C is the future. A comprehensive guide for tech enthusiasts and beginners alike."
         },
         {
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "A Professional’s Guide to Personal and Leadership Growth",
             date: "January 9, 2025", 
             image: "/images/blog10.webp",
-            link: "/blogs/blog10.html",
+            link: "/blogs/blog10",
             description: "Unlock the secrets to personal effectiveness and leadership with our professional guide to The 7 Habits of Highly Effective People. Explore actionable self-improvement tips, productivity habits, and strategies for habit formation in this 8-part series based on Stephen R. Covey’s timeless principles."
         },
         {
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Why Writing Down Your Goals Is Crucial",
             date: "January 12, 2025", 
             image: "/images/blog11-gabrielle-henderson-5HqtJT2l9Gw-unsplash.webp",
-            link: "/blogs/why-writing-down-your-goals-is-important.html",
+            link: "/blogs/why-writing-down-your-goals-is-important",
             description: "Learn why writing down goals boosts success. Discover insights from Covey's The 7 Habits and neuroscience to achieve clarity, accountability, and progress."
         },
         {
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Master Time Management: Proven Methods for Productivity",
             date: "January 15, 2025", 
             image: "/images/blog12-djim-loic-ft0-Xu4nTvA-unsplash.webp",
-            link: "/blogs/master-time-management.html",
+            link: "/blogs/master-time-management",
             description: "Discover practical time management methods, including the Eisenhower Matrix, time-blocking, and the Pomodoro technique. Transform your productivity with actionable strategies inspired by The 7 Habits of Highly Effective People."
         },
         {
@@ -117,8 +117,16 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Crafting Your Legacy: The Power of Beginning With the End in Mind",
             date: "January 16, 2025", 
             image: "/images/blog13joshua-hoehne-Nsaqv7v2V7Q-unsplash.webp",
-            link: "/blogs/scp2-beginning-with-the-end-in-mind.html",
+            link: "/blogs/scp2-beginning-with-the-end-in-mind",
             description: "Discover practical time management methods, including the Eisenhower Matrix, time-blocking, and the Pomodoro technique. Transform your productivity with actionable strategies inspired by The 7 Habits of Highly Effective People."
+        },
+        {
+            id: "blog14",
+            title: "The Cost of Standing Still: Brands That Failed to Innovate and Disappeared",
+            date: "January 17, 2025", 
+            image: "/images/blog14chris-lawton-5IHz5WhosQE-unsplash.webp",
+            link: "/blogs/brands-that-failed-to-innovate-and-disappeared",
+            description: "Discover the cautionary tales of once-dominant brands like Blockbuster, Kodak, and Nokia that failed to innovate and lost their edge. Learn why they failed, the lessons they teach, and how businesses can avoid the same fate."
         }
     ];
 
