@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "The Role of Technology in Education",
             date: "December 1, 2024",
             image: "/images/blog1.webp",
-            link: "/blogs/blog1",
+            link: "/blogs/role-of-technology-in-education",
             description: "Learn how technology is shaping the way educators and students interact in today's classrooms."
         },
         {
