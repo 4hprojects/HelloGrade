@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "blog18",
+            title: "Essential Guide to Computer Hardware: Basics, Components, and Troubleshooting Tips",
+            date: "January 22, 2025",
+            image: "/images/blog17nathan-anderson-xV3CHzfhkjE-unsplash.webp",
+            link: "/blogs/mst24lesson3-hardwarecomponents",
+            description: "Discover the basics of computer hardware, including CPUs, motherboards, storage devices, and expert troubleshooting tips."
+        },    
+        {
             id: "blog17",
             title: "Mastering the Basics: While Looping Statement",
             date: "January 22, 2025",
