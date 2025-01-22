@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "blog19",
+            title: "Put First Things First: Master Time Management with Habit 3",
+            date: "January 23, 2025",
+            image: "/images/blog19ch_pski-bylXfUFJylU-unsplash.webp",
+            link: "/blogs/scp3-put-first-things-first",
+            description: "Learn actionable strategies from Stephen R. Covey’s Habit 3 to prioritise your Big Rocks, manage your time effectively, and align daily actions with your personal mission."
+        },
+        {
             id: "blog18",
             title: "Essential Guide to Computer Hardware: Basics, Components, and Troubleshooting Tips",
             date: "January 22, 2025",
