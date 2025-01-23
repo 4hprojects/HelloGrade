@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Mastering the Basics: While Looping Statement",
             date: "January 22, 2025",
             image: "/images/blog17lucas-hein-3tgwzKpxHa4-unsplash.webp",
-            link: "/blogs/it113-lesson5-while-looping-statement",
+            link: "/blogs/it114-lesson5-while-looping-statement",
             description: "Learn Python while looping statements with clear examples, practical tips, and expert insights to improve your coding skills."
         },  
         {
