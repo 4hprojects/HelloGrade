@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "mst24lesson5",
             title: "The Internet and the World Wide Web: A Gateway to Modern Connectivity",
             date: "January 23, 2025",
-            image: "/images/blog01.webp",
+            image: "/images/mst24-lesson5-leon-seibert-2m71l9fA6mg-unsplash.webp",
             link: "/blogs/mst24lesson5-internet-twww",
             description: "Explore the Internet and the World Wide Web: their history, infrastructure, and tools like web browsers and search engines. Learn how these technologies shape modern life and discover actionable insights to improve your online interactions."
         },  
