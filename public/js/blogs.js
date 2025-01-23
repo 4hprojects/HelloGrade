@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Master Python Conditional Statements: If, Elif, Else Guide",
             date: "January 23, 2025",
             image: "/images/it114-lesson4-conditional-statements.webp",
-            link: "/blogs/it114lesson4-conditional-statements",
+            link: "/blogs/it114-lesson4-conditional-statements",
             description: "Learn Python conditional statements with if, elif, else, and nested logic. Write smarter, dynamic code with practical examples and actionable tips for better decision-making in your programs."
         },
         {
