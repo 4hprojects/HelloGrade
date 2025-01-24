@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/mst24-lesson5-leon-seibert-2m71l9fA6mg-unsplash.webp",
             link: "/blogs/mst24lesson5-internet-twww",
             description: "Explore the Internet and the World Wide Web: their history, infrastructure, and tools like web browsers and search engines. Learn how these technologies shape modern life and discover actionable insights to improve your online interactions."
-        },  
+        },        
         {
             id: "blog19",
             title: "Put First Things First: Master Time Management with Habit 3",
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/blog17nathan-anderson-xV3CHzfhkjE-unsplash.webp",
             link: "/blogs/mst24lesson3-hardwarecomponents",
             description: "Discover the basics of computer hardware, including CPUs, motherboards, storage devices, and expert troubleshooting tips."
-        },    
+        },         
         {
             id: "blog17",
             title: "Mastering the Basics: While Looping Statement",
@@ -65,12 +65,12 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Learn how technology is shaping the way educators and students interact in today's classrooms."
         },
         {
-            id: "blog2",
-            title: "Effective Study Techniques",
+            id: "effective-study-techniques",
+            title: "Effective Study Techniques: Boost Learning and Retention",
             date: "December 1, 2024",
-            image: "/images/blog2.webp",
-            link: "/blogs/blog2",
-            description: "Discover effective methods for students to improve their learning and retention of concepts."
+            image: "/images/effective-study-techniques.webp",
+            link: "/blogs/effective-study-techniques",
+            description: "Master proven study techniques like active recall, spaced repetition, and the Pomodoro Technique. Transform your study habits, improve retention, and reduce stress with actionable methods to enhance your learning journey."
         },
         {
             id: "blog3",
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "A Professional’s Guide to Personal and Leadership Growth",
             date: "January 9, 2025", 
             image: "/images/blog10.webp",
-            link: "/blogs/blog10",
+            link: "/blogs/scp1-be-proactive",
             description: "Unlock the secrets to personal effectiveness and leadership with our professional guide to The 7 Habits of Highly Effective People. Explore actionable self-improvement tips, productivity habits, and strategies for habit formation in this 8-part series based on Stephen R. Covey’s timeless principles."
         },
         {
