@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "The Invisible Force Behind Every Click",
             date: "January 21, 2025",
             image: "/images/blog16software-behind-every-click.webp",
-            link: "/blogs/software-behind-every-click",
+            link: "/blogs/mst24lesson4-software-behind-every-click",
             description: "Discover software's role, types, and functions shaping our world. Explore operating systems, applications, and tools driving innovation."
         },  
         {
