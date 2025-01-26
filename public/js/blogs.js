@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "mst24lesson6",
+            title: "Cybersecurity: Guarding the Digital Frontier",
+            date: "January 26, 2025",
+            image: "/images/mst24lesson6-cybersecurity.webp",
+            link: "/blogs/mst24lesson6-cybersecurity",
+            description: "Learn key cybersecurity practices, understand common threats, and discover actionable strategies to protect your digital footprint. This article explores the evolution of cybersecurity, its critical importance, and how to stay safe in an ever-connected world."
+        },
+        {
             id: "it114lesson4",
             title: "Master Python Conditional Statements: If, Elif, Else Guide",
             date: "January 23, 2025",
