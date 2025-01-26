@@ -31,6 +31,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 const { ObjectId } = require('mongodb');
 
+const { google } = require('googleapis');
+
 //const dateFnsTz = require('date-fns-tz');
 //const { format, utcToZonedTime } = dateFnsTz;
 
@@ -86,6 +88,106 @@ app.get('/api/config', (req, res) => {
         spreadsheetIdCSMST2025: process.env.GOOGLE_SPREADSHEET_ID_CSMST2025,
     });
 });
+
+//-----------------------------------------------------------------
+// BYTe Fun Run 2025: Sign-Up POST Route
+//-----------------------------------------------------------------
+app.post('/api/bytefunrun2025', async (req, res) => {
+    try {
+        // 1) Collect the fields from request body:
+        const {
+            distance,                  // "3k" or "5k"
+            email,                     // email
+            firstName,
+            lastName,
+            age,
+            gender,
+            emergencyContactName,
+            emergencyContactNumber,
+            organization,             // "BYTe", "Guest", or "others"
+            otherOrganization,        // if org === "others"
+            signature                 // digital signature
+        } = req.body;
+
+        // 2) Handle "others"
+        let finalOrganization = organization;
+        if (organization === 'others' && otherOrganization) {
+            finalOrganization = otherOrganization;
+        }
+
+        // 3) Append to Google Sheets
+        //    You need a valid auth client with write permission:
+        const path = require('path');
+        // ...
+        const auth = new google.auth.GoogleAuth({
+          keyFile: path.join(__dirname, 'credentials', 'service-account.json'),
+          scopes: ['https://www.googleapis.com/auth/spreadsheets']
+        });
+        
+        const authClient = await auth.getClient();
+        const sheets = google.sheets({ version: 'v4', auth: authClient });
+
+        // The tab name is "MasterList" in your .env details.
+        // The Sheet ID is "1OKY2K73Ya73o9NWe_Rtr36jO267CWLMhxeuLrde0b80".
+        const SPREADSHEET_ID = '1OKY2K73Ya73o9NWe_Rtr36jO267CWLMhxeuLrde0b80';
+        const SHEET_NAME      = 'MasterList';
+
+        // Prepare row data
+        const now = new Date().toLocaleString(); // or store as ISO
+        const row = [
+            distance,
+            email,
+            firstName,
+            lastName,
+            age,
+            gender,
+            emergencyContactName,
+            emergencyContactNumber,
+            finalOrganization,
+            signature,      // digital signature
+            now             // submission time
+        ];
+
+        // Append data
+        await sheets.spreadsheets.values.append({
+            spreadsheetId: SPREADSHEET_ID,
+            range: 'MasterList',            // e.g. "MasterList"
+            valueInputOption: 'USER_ENTERED',
+            resource: { values: [ row ] },
+        });
+
+        // 4) (Optional) Send a SendGrid Confirmation Email
+        if (email && process.env.SENDER_EMAIL) {
+            const msg = {
+                to: email,
+                from: process.env.SENDER_EMAIL,
+                subject: 'BYTe Fun Run 2025 Sign-Up Confirmation',
+                html: `
+                    <p>Hi ${firstName},</p>
+                    <p>Thank you for signing up for the <strong>BYTe Fun Run 2025</strong>. 
+                       We have received your registration!</p>
+                    <p>Event details will be sent closer to the date.
+                       We look forward to seeing you at the event!</p>
+                    <p>Best Regards,<br>BYTe Team</p>
+                `,
+            };
+            await sgMail.send(msg);
+        }
+
+        // 5) Respond back to the frontend
+        return res.status(200).json({
+            success: true,
+            message: 'Fun Run sign-up submitted successfully!',
+        });
+    } catch (err) {
+        console.error('Error in /api/bytefunrun2025 sign-up:', err);
+        return res.status(500).json({
+            success: false,
+            message: 'An error occurred while submitting your sign-up.',
+        });
+    }
+});
+
 
 
 app.use((req, res, next) => {
@@ -177,6 +279,12 @@ app.get('/terms-and-conditions', (req, res) => {
   app.get('/classrecords', (req, res) => {
     res.sendFile(__dirname + '/public/classrecords.html');
   });
+  app.get('/events/2025bytefunrun', (req, res) => {
+    res.sendFile(__dirname + '/public/events/2025bytefunrun.html');
+});
+app.get('/events/2025bytefunruninfo', (req, res) => {
+    res.sendFile(__dirname + '/public/events/2025bytefunruninfo.html');
+});
   
 
 app.post('/api/contact', (req, res) => {
