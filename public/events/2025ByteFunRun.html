@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-X5E3N182NE');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="author" content="BYTe Team">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign up for the BYTe Fun Run 2025. Choose between 3K or 5K, and enjoy a day of fun and fitness with BYTe.">
+  <meta name="keywords" content="BYTe Fun Run, 2025 Fun Run, 3K run, 5K run, running event">
+  <meta name="robots" content="index, follow">
+
+  <title>BYTe Fun Run 2025 - Sign-Up</title>
+
+  <!-- Tailwind / Styles -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+  
+  <!-- Font Awesome for icons (Social Media) -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <!-- Icons (Material Icons) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- ScrollReveal -->
+  <script src="https://unpkg.com/scrollreveal"></script>
+</head>
+
+<body style="background-color: #f3f4f6; font-family: 'Poppins', sans-serif;">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white shadow">
+    <div class="flex items-center">
+      <a href="https://hellograde.online/">
+        <img src="/images/icon.webp" alt="HelloGrade Logo" class="h-12 mr-3">
+      </a>
+      <h1 class="text-xl font-bold">HelloGrade</h1>
+    </div>
+    <nav>
+      <ul id="navMenu" class="flex flex-row gap-4">
+        <li>
+          <a href="/index" title="Home">
+            <span class="material-icons">home</span>
+          </a>
+        </li>
+        <li>
+          <a href="/search" title="Search">
+            <span class="material-icons">search</span>
+          </a>
+        </li>
+        <li>
+          <a href="/blog" title="Blogs">
+            <span class="material-icons">article</span>
+          </a>
+        </li>
+        <li>
+          <a id="signinLink" href="/login" title="Sign In">
+            <span class="material-icons">login</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content (Fun Run Form) -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- Card Container -->
+    <div class="bg-white border border-gray-300 rounded-lg p-6 shadow-sm">
+      <h2 class="text-3xl font-bold text-center text-green-700 mb-6">
+        BYTe Fun Run 2025 Registration
+      </h2>
+      <p class="text-gray-600 text-sm text-center mb-8">
+        Join us for a day of fun and fitness! 
+        Please fill out the form below to register for the BYTe Fun Run 2025.
+      </p>
+
+      <!-- Share Buttons (if needed) -->
+      <div id="share-buttons-main" class="mt-6 flex justify-center space-x-4"></div>
+
+      <!-- Fun Run Form -->
+      <form id="funRunForm" class="max-w-2xl mx-auto space-y-5">
+
+        <!-- Row: Distance & Age -->
+        <div class="flex flex-wrap gap-4">
+          <!-- Distance -->
+          <div class="w-full sm:w-1/2 flex items-center">
+            <label
+              for="distance"
+              class="w-40 text-right mr-2 font-semibold"
+            >
+              Distance:
+            </label>
+            <select
+              name="distance"
+              id="distance"
+              required
+              class="border border-gray-300 rounded px-3 py-2 w-64
+                     focus:outline-none focus:ring-2 focus:ring-green-300"
+            >
+              <option value="3k">3K</option>
+              <option value="5k">5K</option>
+            </select>
+          </div>
+
+          <!-- Age -->
+          <div class="w-full sm:w-1/2 flex items-center">
+            <label
+              for="age"
+              class="w-40 text-right mr-2 font-semibold"
+            >
+              Age:
+            </label>
+            <input
+              type="number"
+              name="age"
+              id="age"
+              required
+              class="border border-gray-300 rounded px-3 py-2 w-64
+                     focus:outline-none focus:ring-2 focus:ring-green-300"
+            />
+          </div>
+        </div>
+
+        <!-- Row: First Name & Last Name -->
+        <div class="flex flex-wrap gap-4">
+          <!-- First Name -->
+          <div class="w-full sm:w-1/2 flex items-center">
+            <label
+              for="firstName"
+              class="w-40 text-right mr-2 font-semibold"
+            >
+              First Name:
+            </label>
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              required
+              class="border border-gray-300 rounded px-3 py-2 w-64
+                     focus:outline-none focus:ring-2 focus:ring-green-300"
+            />
+          </div>
+
+          <!-- Last Name -->
+          <div class="w-full sm:w-1/2 flex items-center">
+            <label
+              for="lastName"
+              class="w-40 text-right mr-2 font-semibold"
+            >
+              Last Name:
+            </label>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              required
+              class="border border-gray-300 rounded px-3 py-2 w-64
+                     focus:outline-none focus:ring-2 focus:ring-green-300"
+            />
+          </div>
+        </div>
+
+        <!-- Row: Email & Gender -->
+        <div class="flex flex-wrap gap-4">
+          <!-- Email -->
+          <div class="w-full sm:w-1/2 flex items-center">
+            <label
+              for="email"
+              class="w-40 text-right mr-2 font-semibold"
+            >
+              Email Address:
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              required
+              class="border border-gray-300 rounded px-3 py-2 w-64
+                     focus:outline-none focus:ring-2 focus:ring-green-300"
+            />
+          </div>
+
+          <!-- Gender -->
+          <div class="w-full sm:w-1/2 flex items-center">
+            <label
+              for="gender"
+              class="w-40 text-right mr-2 font-semibold"
+            >
+              Gender:
+            </label>
+            <select
+              name="gender"
+              id="gender"
+              required
+              class="border border-gray-300 rounded px-3 py-2 w-64
+                     focus:outline-none focus:ring-2 focus:ring-green-300"
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Row: Emergency Contact Name & Number -->
+        <div class="flex flex-wrap gap-4">
+          <!-- Emergency Contact Name -->
+          <div class="w-full sm:w-1/2 flex items-center">
+            <label
+              for="emergencyContactName"
+              class="w-40 text-right mr-2 font-semibold"
+            >
+              Emergency Contact:
+            </label>
+            <input
+              type="text"
+              name="emergencyContactName"
+              id="emergencyContactName"
+              required
+              class="border border-gray-300 rounded px-3 py-2 w-64
+                     focus:outline-none focus:ring-2 focus:ring-green-300"
+            />
+          </div>
+
+          <!-- Contact Number -->
+          <div class="w-full sm:w-1/2 flex items-center">
+            <label
+              for="emergencyContactNumber"
+              class="w-40 text-right mr-2 font-semibold"
+            >
+              Contact #:
+            </label>
+            <input
+              type="text"
+              name="emergencyContactNumber"
+              id="emergencyContactNumber"
+              required
+              class="border border-gray-300 rounded px-3 py-2 w-64
+                     focus:outline-none focus:ring-2 focus:ring-green-300"
+            />
+          </div>
+        </div>
+
+        <!-- Row: Organization + Other Organization -->
+        <div class="flex flex-wrap gap-4">
+          <!-- Organization -->
+          <div class="w-full sm:w-1/2 flex items-center">
+            <label
+              for="organization"
+              class="w-40 text-right mr-2 font-semibold"
+            >
+              Organization:
+            </label>
+            <select
+              name="organization"
+              id="organization"
+              required
+              class="border border-gray-300 rounded px-3 py-2 w-64
+                     focus:outline-none focus:ring-2 focus:ring-green-300"
+            >
+              <option value="BYTe">BYTe</option>
+              <option value="Guest">Guest</option>
+              <option value="others">Others</option>
+            </select>
+          </div>
+
+          <!-- Other Organization (hidden by default) -->
+          <div class="w-full sm:w-1/2 flex items-center">
+            <label
+              for="otherOrganization"
+              class="w-40 text-right mr-2 font-semibold"
+            >
+              If "Others":
+            </label>
+            <input
+              type="text"
+              name="otherOrganization"
+              id="otherOrganization"
+              placeholder="Type your org..."
+              class="border border-gray-300 rounded px-3 py-2 w-64 hidden
+                     focus:outline-none focus:ring-2 focus:ring-green-300"
+            />
+          </div>
+        </div>
+
+        <!-- Waiver Acknowledgment Section -->
+        <div id="waiverSection"></div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="bg-green-600 text-white px-6 py-2 mt-4 rounded
+                 hover:bg-green-700 w-full sm:w-auto"
+        >
+          Submit
+        </button>
+      </form>
+    </div> <!-- End Card -->
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-8 py-4 text-center text-gray-600">
+    <p>&copy; 2025 HelloGrade Events.</p>
+  </footer>
+
+  <!-- "Thank You" Modal (Hidden by Default) -->
+  <div
+    id="thankYouMessage"
+    class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden"
+  >
+    <div class="bg-white p-6 rounded shadow max-w-md w-full mx-4">
+      <h2 class="text-2xl font-bold mb-4">Thank you for signing up!</h2>
+      <p class="mb-4">
+        Your registration for the BYTe Fun Run 2025 has been received.
+        We’ll send further details to your email shortly.
+      </p>
+      <p class="mb-4">
+        Meanwhile, you can:
+      </p>
+      <ul class="list-disc list-inside mb-4 text-sm">
+        <li>Check your email for a confirmation message.</li>
+        <li>
+          Visit our
+          <a href="/blog" class="text-blue-600 underline" target="_blank">Blog</a>
+          for more updates.
+        </li>
+        <li>Share this event with friends and family!</li>
+      </ul>
+
+      <!-- Social Share Buttons (unique ID) -->
+      <div id="share-buttons-overlay" class="mt-6 flex justify-center space-x-4"></div>
+
+      <!-- Action Buttons Row -->
+      <div class="mt-6 flex flex-col sm:flex-row sm:justify-end sm:items-center gap-3">
+        <!-- Register Another Person -->
+        <button
+          id="registerAnother"
+          class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+        >
+          Register Another Person
+        </button>
+        <!-- Back to Race Info -->
+        <button
+          id="backToInfo"
+          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Back to Race Info
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/events/js/2025ByteFunRun.js"></script>
+  <script src="/js/shareButtons.js" defer></script>
+  <script>
+    // Show/hide "Other Organization" field
+    const orgSelect = document.getElementById('organization');
+    const otherOrgInput = document.getElementById('otherOrganization');
+    orgSelect.addEventListener('change', () => {
+      if (orgSelect.value === 'others') {
+        otherOrgInput.classList.remove('hidden');
+      } else {
+        otherOrgInput.value = '';
+        otherOrgInput.classList.add('hidden');
+      }
+    });
+
+    // Optional: ScrollReveal effect for the form
+    ScrollReveal().reveal('#funRunForm', {
+      origin: 'bottom',
+      distance: '20px',
+      duration: 800,
+      delay: 200
+    });
+  </script>
+</body>
+</html>
