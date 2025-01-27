@@ -82,3 +82,14 @@ header h1 {
   color: #fff;
   font-size: 1.5rem;
 }
+
+.custom-link {
+  color: #FF4500; /* Bright orange for better visibility */
+  font-weight: bold; /* Bold for emphasis */
+  text-decoration: none; /* Remove underline */
+}
+
+.custom-link:hover {
+  color: #E03E00; /* Darker shade for hover effect */
+  text-decoration: underline; /* Add underline on hover */
+}
