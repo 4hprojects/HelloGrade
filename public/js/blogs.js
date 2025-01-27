@@ -5,9 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Data Structures in Python: Building Blocks for Efficient Programming",
             date: "January 27, 2025",
             image: "/images/it114-lesson6-python-data-structures.webp",
-            link: "/blogs/it114-lesson6-python-datastructures",
+            link: "/blogs/it114-lesson6-datastructures.html",
             description: "Dive into Python data structures like lists, tuples, sets, and dictionaries. Learn their characteristics, practical use cases, and actionable tips to write efficient, scalable, and maintainable code. Master the foundations for smarter programming."
-        },  
+        },    
         {
             id: "mst24lesson6",
             title: "Cybersecurity: Guarding the Digital Frontier",
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/mst24lesson6-cybersecurity.webp",
             link: "/blogs/mst24lesson6-cybersecurity",
             description: "Learn key cybersecurity practices, understand common threats, and discover actionable strategies to protect your digital footprint. This article explores the evolution of cybersecurity, its critical importance, and how to stay safe in an ever-connected world."
-        },
+        },        
         {
             id: "it114lesson4",
             title: "Master Python Conditional Statements: If, Elif, Else Guide",
