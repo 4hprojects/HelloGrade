@@ -1,4 +1,5 @@
-    // 1) After DOM loads, fetch the snippet
+//2025bytefunrun
+// 1) After DOM loads, fetch the snippet
     document.addEventListener('DOMContentLoaded', async () => {
         try {
           const response = await fetch('/events/waiverSnippet.html');
