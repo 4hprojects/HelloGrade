@@ -365,26 +365,5 @@
   <!-- Scripts -->
   <script src="/events/js/2025ByteFunRun.js"></script>
   <script src="/js/shareButtons.js" defer></script>
-  <script>
-    // Show/hide "Other Organization" field
-    const orgSelect = document.getElementById('organization');
-    const otherOrgInput = document.getElementById('otherOrganization');
-    orgSelect.addEventListener('change', () => {
-      if (orgSelect.value === 'others') {
-        otherOrgInput.classList.remove('hidden');
-      } else {
-        otherOrgInput.value = '';
-        otherOrgInput.classList.add('hidden');
-      }
-    });
-
-    // Optional: ScrollReveal effect for the form
-    ScrollReveal().reveal('#funRunForm', {
-      origin: 'bottom',
-      distance: '20px',
-      duration: 800,
-      delay: 200
-    });
-  </script>
 </body>
 </html>
