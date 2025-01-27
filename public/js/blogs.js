@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Data Structures in Python: Building Blocks for Efficient Programming",
             date: "January 27, 2025",
             image: "/images/it114-lesson6-python-data-structures.webp",
-            link: "/blogs/it114lesson6-python-datastructures",
+            link: "/blogs/it114-lesson6-python-datastructures",
             description: "Dive into Python data structures like lists, tuples, sets, and dictionaries. Learn their characteristics, practical use cases, and actionable tips to write efficient, scalable, and maintainable code. Master the foundations for smarter programming."
         },  
         {
