@@ -414,7 +414,112 @@
                     Use this table as a quick reference when selecting the right data structure for your project. Each structure offers unique strengths tailored to specific tasks.
                 </p>
             </section>
+
+            <section data-scroll-reveal="enter from-bottom">
+                <h3 class="text-2xl font-semibold text-blue-600 mb-4">What is a Method?</h3>
+                <p class="mb-6">
+                    A <strong>method</strong> is a function that is associated with an object and performs a specific operation on that object. Methods are essentially functions defined within the scope of a class and are called on the objects (or instances) of that class.
+                </p>
+                <h3 class="text-xl font-semibold text-blue-600 mb-4">In Simpler Terms:</h3>
+                <ul>
+                    <li>A <strong>method</strong> is like a built-in "action" or "behavior" that objects (like lists, strings, or other data types in Python) can perform.</li>
+                    <li>Methods are invoked using the <code>dot notation</code>, e.g., <code>object.method()</code>.</li>
+                </ul>
+                <h3 class="text-xl font-semibold text-blue-600 mb-4">Example</h3>
+                <p class="mb-6">
+                    For a Python list, methods like <code>append</code>, <code>pop</code>, or <code>sort</code> define actions you can take with that list:
+                </p>
+                <pre><code>
+        my_list = [1, 2, 3]
+        my_list.append(4)  # Method 'append' adds 4 to the list
+        print(my_list)  # Output: [1, 2, 3, 4]
+                </code></pre>
+                <p class="mb-6">
+                    Here, <code>append</code> is a <strong>method</strong> that modifies the <code>my_list</code> object.
+                </p>
+                <h3 class="text-xl font-semibold text-blue-600 mb-4">Key Points:</h3>
+                <ul>
+                    <li>Methods often operate on the data contained in the object.</li>
+                    <li>Some methods modify the object directly (e.g., <code>append</code>), while others return a new value or object (e.g., <code>count</code> or <code>copy</code>).</li>
+                    <li>In Python, all data types (like lists, strings, dictionaries, etc.) have their own set of methods.</li>
+                </ul>
+            </section>
             
+            <section data-scroll-reveal="enter from-bottom">
+                <h3 class="text-2xl font-semibold text-blue-600 mb-4">Code Example: List Methods Only</h3>
+                <p class="mb-6">
+                    Below is an example showcasing various <strong>Python list methods</strong> and how they work. These methods allow you to manipulate lists in Python effectively.
+                </p>
+                <h3 class="text-xl font-semibold text-blue-600 mb-4">Code Example</h3>
+                <pre><code>
+            my_list = [10, 20, 30, 40]
+            
+            # append(x): Adds an item to the end of the list
+            my_list.append(50)
+            print("After append:", my_list)  # Output: [10, 20, 30, 40, 50]
+            
+            # extend(iterable): Appends items from another iterable (e.g., list)
+            my_list.extend([60, 70])
+            print("After extend:", my_list)  # Output: [10, 20, 30, 40, 50, 60, 70]
+            
+            # insert(i, x): Inserts an item at a given index
+            my_list.insert(2, 25)
+            print("After insert:", my_list)  # Output: [10, 20, 25, 30, 40, 50, 60, 70]
+            
+            # remove(x): Removes the first occurrence of x
+            my_list.remove(30)
+            print("After remove:", my_list)  # Output: [10, 20, 25, 40, 50, 60, 70]
+            
+            # pop([i]): Removes and returns an item at the given index (or the last item if no index is specified)
+            last_item = my_list.pop()
+            print("Popped item:", last_item)  # Output: 70
+            print("After pop:", my_list)  # Output: [10, 20, 25, 40, 50, 60]
+            
+            # clear(): Removes all items from the list
+            my_list.clear()
+            print("After clear:", my_list)  # Output: []
+            
+            # Reset the list for further examples
+            my_list = [10, 20, 30, 20, 40, 50]
+            
+            # index(x): Finds the first index of the item x
+            index_of_20 = my_list.index(20)
+            print("Index of 20:", index_of_20)  # Output: 1
+            
+            # count(x): Counts occurrences of x in the list
+            count_of_20 = my_list.count(20)
+            print("Count of 20:", count_of_20)  # Output: 2
+            
+            # sort(key=None, reverse=False): Sorts the list in ascending order
+            my_list.sort(reverse=True)
+            print("After sort (descending):", my_list)  # Output: [50, 40, 30, 20, 20, 10]
+            
+            # reverse(): Reverses the elements of the list
+            my_list.reverse()
+            print("After reverse:", my_list)  # Output: [10, 20, 20, 30, 40, 50]
+            
+            # copy(): Returns a shallow copy of the list
+            copied_list = my_list.copy()
+            print("Copied list:", copied_list)  # Output: [10, 20, 20, 30, 40, 50]
+                </code></pre>
+                <h3 class="text-xl font-semibold text-blue-600 mb-4">Output</h3>
+                <pre><code>
+            After append: [10, 20, 30, 40, 50]
+            After extend: [10, 20, 30, 40, 50, 60, 70]
+            After insert: [10, 20, 25, 30, 40, 50, 60, 70]
+            After remove: [10, 20, 25, 40, 50, 60, 70]
+            Popped item: 70
+            After pop: [10, 20, 25, 40, 50, 60]
+            After clear: []
+            Index of 20: 1
+            Count of 20: 2
+            After sort (descending): [50, 40, 30, 20, 20, 10]
+            After reverse: [10, 20, 20, 30, 40, 50]
+            Copied list: [10, 20, 20, 30, 40, 50]
+                </code></pre>
+            </section>
+            
+
             <section data-scroll-reveal="enter from-left">
                 <h3 class="text-2xl font-semibold text-blue-600 mb-4">Mastering Python Data Structures</h3>
                 <p>
