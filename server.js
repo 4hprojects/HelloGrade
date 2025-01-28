@@ -1789,7 +1789,7 @@ app.post('/signup', async (req, res) => {
                     // Send account lock email
                     const emailContent = `
                         <p>Dear ${user.firstName},</p>
-                        <p>Your account has been locked due to multiple unsuccessful login attempts. Please wait 30 minutes before trying again or reset your password if you've forgotten it.</p>
+                        <p>You are locked out from logging in for 30 minutes, but you can reset your password immediately if you need.</p>
                         <p>Best regards,<br/>HelloGrade Student Portal Team</p>
                     `;
                     await sendEmail(user.emaildb, 'Account Locked', emailContent);
@@ -1880,47 +1880,67 @@ app.post('/signup', async (req, res) => {
     // Send Password Reset Email with Lockout Check
     app.post('/send-password-reset', async (req, res) => {
         const { email } = req.body;
-
+      
         try {
-            const user = await usersCollection.findOne({ emaildb: email });
-            if (!user) {
-                // Different response to indicate the email doesn't exist (for testing purposes only)
-                return res.status(404).json({ 
-                    success: false, 
-                    message: 'If that email address is in our database, we will send you an email to reset your password.' 
-                });
+          const user = await usersCollection.findOne({ emaildb: email });
+          if (!user) {
+            return res.status(404).json({
+              success: false,
+              message: 'If that email address is in our database, we will send you an email to reset your password.'
+            });
+          }
+      
+          // Generate OTP, set expires, etc.
+          const resetCode = generateOTP();
+          const resetExpires = new Date(Date.now() + 3600000);
+          await usersCollection.updateOne(
+            { emaildb: email },
+            { 
+              $set: {
+                resetCode,
+                resetExpires,
+                invalidResetAttempts: 0,
+                resetCodeLockUntil: null
+              }
             }
-
-            // Proceed with sending reset code if email exists
-            const resetCode = generateOTP();
-            const resetExpires = new Date(Date.now() + 3600000); // Expires in 1 hour
-
-            await usersCollection.updateOne(
-                { emaildb: email },
-                {
-                    $set: {
-                        resetCode,
-                        resetExpires,
-                        invalidResetAttempts: 0,
-                        resetCodeLockUntil: null
-                    }
-                }
-            );
-
-            // Send reset code email
-            const emailContent = `
-            <p>Dear ${user.firstName},</p>
-            <p>Your account has been locked due to multiple unsuccessful login attempts. Please wait 30 minutes before trying again or reset your password if you've forgotten it.</p>
-            <p>Best regards,<br/>HelloGrade Student Portal Team</p>
-        `;
-            await sendEmail(email, 'Your Password Reset Code', emailContent);
-
-            res.json({ success: true, message: 'If that email address is in our database, we will send you an email to reset your password.' });
+          );
+      
+          // Decide which email text to use
+          const isLocked = (user.accountLockedUntil && user.accountLockedUntil > new Date());
+          let emailContent = ''; // Declare once here, outside the if/else
+      
+          if (isLocked) {
+            emailContent = `
+              <p>Dear ${user.firstName},</p>
+              <p>We see you’re locked out for multiple login attempts.
+                 You may still reset your password right now, or wait 
+                 ${/* time left calculation if you want */''} 
+                 to try logging in again.</p>
+              <p>Reset code: ${resetCode}</p>
+              <p>Best regards,<br/>HelloGrade Student Portal Team</p>
+            `;
+          } else {
+            emailContent = `
+              <p>Dear ${user.firstName},</p>
+              <p>You requested a password reset. Here is your reset code:</p>
+              <p><b>${resetCode}</b></p>
+              <p>Best regards,<br/>HelloGrade Student Portal Team</p>
+            `;
+          }
+      
+          // Now we can call sendEmail, referencing the same `emailContent` variable
+          await sendEmail(email, 'Your Password Reset Code', emailContent);
+      
+          return res.json({
+            success: true, 
+            message: 'If that email address is in our database, we will send you an email to reset your password.'
+          });
         } catch (error) {
-            console.error('Error processing your request:', error);
-            res.status(500).json({ success: false, message: 'Error processing your request' });
+          console.error('Error processing your request:', error);
+          return res.status(500).json({ success: false, message: 'Error processing your request' });
         }
-    });
+      });
+      
 
 
     app.post('/verify-reset-code', async (req, res) => {
@@ -2008,6 +2028,8 @@ app.post('/reset-password', async (req, res) => {
                     resetCode: null,           // Clear the reset code
                     resetExpires: null,        // Clear the expiration
                     resetCodeVerified: false,  // Reset verification status
+                    accountLockedUntil: null,
+                    invalidLoginAttempts: 0
                 },
             }
         );
