@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "scp4-think-win-win",
+            title: "Think Win-Win: The Leadership Mindset That Changes Everything",
+            date: "January 29, 2025",
+            image: "/images/scp4-krakenimages-Y5bvRlcCx8k-unsplash.webp",
+            link: "/blogs/scp4-think-win-win",
+            description: "Discover how Think Win-Win, the 4th habit from The 7 Habits of Highly Effective People, fosters collaboration, leadership, and long-term success through mutual benefit."
+        },
+        {
             id: "it114lesson3",
             title: "Python Strings: Mastering Manipulation, Formatting, and Slicing",
             date: "January 15, 2025",
