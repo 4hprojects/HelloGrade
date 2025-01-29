@@ -1,11 +1,51 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "it114lesson3",
+            title: "Python Strings: Mastering Manipulation, Formatting, and Slicing",
+            date: "January 15, 2025",
+            image: "/images/it114lesson3-hellograde-blog-python-strings.jpg",
+            link: "/blogs/it114-lesson3-python-strings",
+            description: "Discover the power of Python strings. Learn string manipulation, slicing, formatting, and essential string methods with real-world examples to enhance your coding skills."
+        },
+        {
+            id: "it114lesson2",
+            title: "Python Programming Basics: Mastering Syntax, Variables, and Operators",
+            date: "January 13, 2025",
+            image: "/images/it114lesson2-hellograde-blog-python-basics.jpg",
+            link: "/blogs/it114-lesson2-python-programming-basics",
+            description: "Learn Python programming from scratch. Explore Python syntax, variables, data types, and operators with hands-on examples. Build a strong foundation for coding and software development."
+        },
+        {
+            id: "it114lesson1",
+            title: "IT 114 - Lesson 1: Introduction to Python Programming",
+            date: "January 9, 2025",
+            image: "/images/it114lesson1-python-intro.webp",
+            link: "/blogs/it114-lesson1-introduction-to-python",
+            description: "Start your Python journey with this beginner-friendly lesson. Learn about Python’s history, why it became the world’s most popular programming language, and how to set up your development environment. Get ready to write your first Python script and take the first step into coding."
+        },
+        {
+            id: "mst24lesson1",
+            title: "Understanding Information Technology",
+            date: "January 10, 2025",
+            image: "/images/mst24lesson1-towfiqu-barbhuiya-oZuBNC-6E2s-unsplash.webp",
+            link: "/blogs/mst24lesson1-understandingIT",
+            description: "Gain a solid foundation in Information Technology (IT). Explore core concepts, IT infrastructure, networking, cybersecurity, and the impact of IT in business, education, and society. Learn how IT drives innovation and digital transformation."
+        },        
+        {
+            id: "mst24lesson2",
+            title: "History of Computers: From Abacus to AI",
+            date: "January 8, 2025",
+            image: "/images/mst24-lesson2/intro.png",
+            link: "/blogs/mst24lesson2-historyofcomputers",
+            description: "Explore the evolution of computing, from ancient counting tools like the abacus to modern artificial intelligence. Discover key milestones, visionary pioneers like Charles Babbage and Alan Turing, and the impact of computing on today's digital world."
+        },
+        {
             id: "it114lesson6",
             title: "Data Structures in Python: Building Blocks for Efficient Programming",
             date: "January 27, 2025",
             image: "/images/it114-lesson6-python-data-structures.webp",
-            link: "/blogs/it114-lesson6-datastructures.html",
+            link: "/blogs/it114-lesson6-datastructures",
             description: "Dive into Python data structures like lists, tuples, sets, and dictionaries. Learn their characteristics, practical use cases, and actionable tips to write efficient, scalable, and maintainable code. Master the foundations for smarter programming."
         },    
         {
