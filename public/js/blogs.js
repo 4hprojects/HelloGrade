@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            "id": "mst24lesson7",
+            "title": "Social Media in the Modern World",
+            "date": "January 31, 2025",
+            "image": "/images/mst24lesson7-socialmedia.webp",
+            "link": "/blogs/mst24lesson7-socialmedia",
+            "description": "Discover the evolution of social media, its impact on society, privacy concerns, and ethical considerations. Learn how online communities, user-generated content, and digital technology shape communication, business, and global interactions."
+        },
+        {
             id: "scp4-think-win-win",
             title: "Think Win-Win: The Leadership Mindset That Changes Everything",
             date: "January 29, 2025",
