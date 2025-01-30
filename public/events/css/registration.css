@@ -142,3 +142,10 @@ header h1 {
   border: 1px solid #ddd;
   border-radius: 8px;
 }
+
+.qr-wrapper img {
+  width: 60%; /* Image takes full width of its container */
+  max-width: 500px; /* Prevents it from being too large */
+  height: auto;
+}
+
