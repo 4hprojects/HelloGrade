@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "programmingMindset",
+            title: "The Programming Mindset: Think Like a Developer",
+            date: "January 31, 2025",
+            image: "/images/pdev/pmt-katrina-wright-yMg_SMqfoRU-unsplash.webp",
+            link: "/blogs/programmingmindset",
+            description: "Develop a strong programming mindset with key problem-solving strategies. Learn debugging techniques, optimization principles, and practical approaches that help you write better code and become a more efficient developer."
+        },
+        {
             "id": "mst24lesson7",
             "title": "Social Media in the Modern World",
             "date": "January 31, 2025",
