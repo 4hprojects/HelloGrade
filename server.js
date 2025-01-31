@@ -63,7 +63,25 @@ let classesCollection;
 let countersCollection;
 
 // Call the database connection function
-connectToDatabase();
+connectToDatabase()
+  .then(() => {
+    console.log("DB connected, now attach routes.");
+
+    // Attach admin routes
+    const adminUsersRoutes = require('./routes/adminUsersRoutes');
+    app.use('/api/admin/users', adminUsersRoutes(usersCollection, isAuthenticated, isAdmin));
+
+    // Start the server
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Server is listening on port ${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error("Failed to connect to DB:", err);
+    process.exit(1);
+  });
+
 
 // Place all route definitions here
 
@@ -102,6 +120,8 @@ const serviceAccount = {
     client_x509_cert_url: process.env.GOOGLE_CLIENT_X509_CERT_URL,
     universe_domain: process.env.GOOGLE_UNIVERSE_DOMAIN
 };
+
+
 
 
 //-----------------------------------------------------------------
@@ -397,6 +417,8 @@ async function connectToDatabase() {
  *   "dueDate": "2025-02-05T23:59:59Z"           // optional
  * }
  */
+
+
 app.post('/api/quizzes/assign', isAuthenticated, isTeacherOrAdmin, async (req, res) => {
     try {
       const {
@@ -2732,7 +2754,14 @@ app.post('/api/blogs', async (req, res) => {
   });
   
 
-  
+  // Serve ads.txt file dynamically
+app.get("/ads.txt", (req, res) => {
+    res.type("text/plain");
+    res.send("google.com, pub-4537208011192461, DIRECT, f08c47fec0942fa0");
+});
+
+//user_reset route
+ 
   app.get('/sitemap.xml', async (req, res) => {
     const staticUrls = [
         { loc: '/login', changefreq: 'daily', priority: 0.8 },
@@ -2790,10 +2819,3 @@ app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
 });
 
-
-
-// Start the server after defining routes and middleware
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
