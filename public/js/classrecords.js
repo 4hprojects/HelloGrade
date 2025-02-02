@@ -53,8 +53,8 @@ async function fetchClassRecords(studentID) {
     const { ClassSection } = masterListData.data;
 
     // Determine sheet name based on ClassSection
-    let sheetName;
-    switch (ClassSection) {
+    let sheetName = 'MidCS';
+    /*switch (ClassSection) {
       case 'BSND3A':
         sheetName = 'MidCS-ND3A';
         break;
@@ -69,7 +69,7 @@ async function fetchClassRecords(studentID) {
         break;
       default:
         throw new Error(`ClassSection ${ClassSection} is not supported.`);
-    }
+    }*/
 
     console.log('Fetching class record from sheet:', sheetName);
 
