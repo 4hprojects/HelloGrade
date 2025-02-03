@@ -278,6 +278,7 @@ app.get('/login', (req, res) => {
     }
     res.sendFile(__dirname + '/public/login.html');
   });
+
 app.get('/blog', (req, res) => {
     res.sendFile(__dirname + '/public/blogs.html');
   });
@@ -320,6 +321,26 @@ app.get('/terms-and-conditions', (req, res) => {
 app.get('/events/2025bytefunruninfo', (req, res) => {
     res.sendFile(__dirname + '/public/events/2025bytefunruninfo.html');
 });
+
+// 1) Redirect "/classrecords.html" => "/classrecords"
+app.get('/classrecords.html', (req, res) => {
+    if (!req.session || !req.session.userId) {
+      // Not logged in, go to login
+      return res.redirect('/login');
+    }
+    // Otherwise, redirect to /classrecords
+    return res.redirect('/classrecords');
+  });
+  
+  // 2) Serve "/classrecords" only if logged in
+  app.get('/classrecords', (req, res) => {
+    // Check if user is logged in
+    if (!req.session || !req.session.userId) {
+      return res.redirect('/login');
+    }
+    // If logged in, send the classrecords HTML
+    res.sendFile(__dirname + '/public/classrecords.html');
+  });
   
 
 app.post('/api/contact', (req, res) => {
