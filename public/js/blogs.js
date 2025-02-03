@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "it114-lesson7",
+            title: "Mastering Python For Loops: A Comprehensive Guide",
+            date: "February 4, 2025",
+            image: "/images/it114-lesson7-blog-python-for-loops.webp",
+            link: "/blogs/it114-lesson7-forloop",
+            description: "Learn how to use Python for loops effectively with this step-by-step guide. Explore the syntax, iterate over sequences, work with nested loops, and apply advanced techniques like enumerate(), zip(), and range(). Unlock the full potential of iteration in Python with real-world examples and exercises."
+        },
+        {
             id: "programmingMindset",
             title: "The Programming Mindset: Think Like a Developer",
             date: "January 31, 2025",
