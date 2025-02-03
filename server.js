@@ -312,9 +312,7 @@ app.get('/terms-and-conditions', (req, res) => {
   app.get('/reset-password', (req, res) => {
     res.sendFile(__dirname + '/public/reset-password.html');
   });
-  app.get('/classrecords', (req, res) => {
-    res.sendFile(__dirname + '/public/classrecords.html');
-  });
+
   app.get('/events/2025bytefunrun', (req, res) => {
     res.sendFile(__dirname + '/public/events/2025bytefunrun.html');
 });
@@ -2354,7 +2352,8 @@ function parseCSVFile(filePath) {
     });
     app.get('/activities', isAuthenticated, (req, res) => {
         res.sendFile(__dirname + '/public/activities.html');
-    });
+    }); 
+
 
     app.get('/get-grades/:studentIDNumber', isAuthenticated, async (req, res) => {
         const studentIDNumber = req.params.studentIDNumber;
