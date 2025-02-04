@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "mst24-lesson8",
+            title: "Artificial Intelligence: Transforming the Digital Age",
+            date: "February 4, 2025",
+            image: "/images/mst24-lesson8-ai-concept.webp",
+            link: "/blogs/mst24lesson8-artificialintelligence",
+            description: "Discover the fundamentals of Artificial Intelligence, including Machine Learning, Deep Learning, and AI applications in daily life. Learn about AI ethics, automation, and the future of AI in business, healthcare, and technology."
+        },
+        {
             id: "it114-lesson7",
             title: "Mastering Python For Loops: A Comprehensive Guide",
             date: "February 4, 2025",
