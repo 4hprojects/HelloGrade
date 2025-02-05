@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "scp5-seek-first-to-understand",
+            title: "Habit 5: Seek First to Understand, Then to Be Understood",
+            date: "February 6, 2025",
+            image: "/images/sc/scp5-seek-first-to-understand.webp",
+            link: "/blogs/scp5-seek-first-to-understand",
+            description: "Discover how Habit 5 from Stephen Covey’s 7 Habits of Highly Effective People can transform communication, leadership, and problem-solving. Learn practical strategies for empathic listening and how to apply them in IT, business, and personal relationships."
+        },        
+        {
             id: "mst24-lesson8",
             title: "Artificial Intelligence: Transforming the Digital Age",
             date: "February 4, 2025",
