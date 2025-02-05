@@ -121,7 +121,11 @@ const serviceAccount = {
     universe_domain: process.env.GOOGLE_UNIVERSE_DOMAIN
 };
 
+// Import the new route file
+const studentEthnicityRoutes = require('./routes/studentEthnicityRoutes');
 
+// Mount it
+app.use('/api/student-ethnicity', studentEthnicityRoutes);
 
 
 //-----------------------------------------------------------------
