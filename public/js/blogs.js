@@ -1,6 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "it114-lesson8-randommodule",
+            title: "Python Random Module: Master Random Number Generation in Python",
+            date: "February 7, 2025",
+            image: "/images/it114-lesson8-randommodule.webp",
+            link: "/blogs/it114-lesson8-randommodule",
+            description: "Learn how to use the Python random module for generating random numbers, shuffling lists, selecting random elements, and more. Explore key functions like random(), randint(), shuffle(), choice(), and uniform(), and see how randomness is used in AI, game development, cryptography, and simulations."
+        },        
+        {
+            id: "year2038-problem",
+            title: "The Year 2038 Problem: How a Hidden Time Bomb in Computers Could Break the World",
+            date: "February 7, 2025",
+            image: "/images/year2038.webp",
+            link: "/blogs/year2038",
+            description: "Explore the risks of the Y2K38 bug and how the Unix time overflow could disrupt banking, aviation, infrastructure, and IoT. Learn about 64-bit migration, patching legacy systems, and industry-wide solutions to prevent a global digital meltdown before 2038."
+        },  
+        {
             id: "scp5-seek-first-to-understand",
             title: "Habit 5: Seek First to Understand, Then to Be Understood",
             date: "February 6, 2025",
