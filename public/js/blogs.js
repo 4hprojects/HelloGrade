@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
             id: "it114-lesson8-randommodule",
-            title: "Python Random Module: Master Random Number Generation in Python",
+            title: "Python Random Module",
             date: "February 7, 2025",
             image: "/images/it114-lesson8-randommodule.webp",
             link: "/blogs/it114-lesson8-randommodule",
@@ -10,15 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
         },        
         {
             id: "year2038-problem",
-            title: "The Year 2038 Problem: How a Hidden Time Bomb in Computers Could Break the World",
+            title: "The Year 2038 Problem",
             date: "February 7, 2025",
             image: "/images/year2038.webp",
             link: "/blogs/year2038",
             description: "Explore the risks of the Y2K38 bug and how the Unix time overflow could disrupt banking, aviation, infrastructure, and IoT. Learn about 64-bit migration, patching legacy systems, and industry-wide solutions to prevent a global digital meltdown before 2038."
-        },  
+        },        
         {
             id: "scp5-seek-first-to-understand",
-            title: "Habit 5: Seek First to Understand, Then to Be Understood",
+            title: "Seek First to Understand, Then to Be Understood",
             date: "February 6, 2025",
             image: "/images/sc/scp5-seek-first-to-understand.webp",
             link: "/blogs/scp5-seek-first-to-understand",
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },        
         {
             id: "mst24-lesson8",
-            title: "Artificial Intelligence: Transforming the Digital Age",
+            title: "Artificial Intelligence",
             date: "February 4, 2025",
             image: "/images/mst24-lesson8-ai-concept.webp",
             link: "/blogs/mst24lesson8-artificialintelligence",
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "it114-lesson7",
-            title: "Mastering Python For Loops: A Comprehensive Guide",
+            title: "Mastering Python For Loops",
             date: "February 4, 2025",
             image: "/images/it114-lesson7-blog-python-for-loops.webp",
             link: "/blogs/it114-lesson7-forloop",
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "scp4-think-win-win",
-            title: "Think Win-Win: The Leadership Mindset That Changes Everything",
+            title: "Think Win-Win",
             date: "January 29, 2025",
             image: "/images/scp4-krakenimages-Y5bvRlcCx8k-unsplash.webp",
             link: "/blogs/scp4-think-win-win",
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "it114lesson3",
-            title: "Python Strings: Mastering Manipulation, Formatting, and Slicing",
+            title: "Python Strings",
             date: "January 15, 2025",
             image: "/images/it114lesson3-hellograde-blog-python-strings.jpg",
             link: "/blogs/it114-lesson3-python-strings",
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "it114lesson2",
-            title: "Python Programming Basics: Mastering Syntax, Variables, and Operators",
+            title: "Python Programming Basics",
             date: "January 13, 2025",
             image: "/images/it114lesson2-hellograde-blog-python-basics.jpg",
             link: "/blogs/it114-lesson2-python-programming-basics",
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "it114lesson1",
-            title: "IT 114 - Lesson 1: Introduction to Python Programming",
+            title: "Introduction to Python Programming",
             date: "January 9, 2025",
             image: "/images/it114lesson1-python-intro.webp",
             link: "/blogs/it114-lesson1-introduction-to-python",
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "it114lesson6",
-            title: "Data Structures in Python: Building Blocks for Efficient Programming",
+            title: "Data Structures in Python",
             date: "January 27, 2025",
             image: "/images/it114-lesson6-python-data-structures.webp",
             link: "/blogs/it114-lesson6-datastructures",
@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },    
         {
             id: "mst24lesson6",
-            title: "Cybersecurity: Guarding the Digital Frontier",
+            title: "Cybersecurity",
             date: "January 26, 2025",
             image: "/images/mst24lesson6-cybersecurity.webp",
             link: "/blogs/mst24lesson6-cybersecurity",
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },        
         {
             id: "it114lesson4",
-            title: "Master Python Conditional Statements: If, Elif, Else Guide",
+            title: "Python Conditional Statements",
             date: "January 23, 2025",
             image: "/images/it114-lesson4-conditional-statements.webp",
             link: "/blogs/it114-lesson4-conditional-statements",
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "mst24lesson5",
-            title: "The Internet and the World Wide Web: A Gateway to Modern Connectivity",
+            title: "The Internet and the World Wide Web",
             date: "January 23, 2025",
             image: "/images/mst24-lesson5-leon-seibert-2m71l9fA6mg-unsplash.webp",
             link: "/blogs/mst24lesson5-internet-twww",
@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },        
         {
             id: "blog19",
-            title: "Put First Things First: Master Time Management with Habit 3",
+            title: "Put First Things First",
             date: "January 23, 2025",
             image: "/images/blog19ch_pski-bylXfUFJylU-unsplash.webp",
             link: "/blogs/scp3-put-first-things-first",
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "blog18",
-            title: "Essential Guide to Computer Hardware: Basics, Components, and Troubleshooting Tips",
+            title: "Essential Guide to Computer Hardware",
             date: "January 22, 2025",
             image: "/images/blog17nathan-anderson-xV3CHzfhkjE-unsplash.webp",
             link: "/blogs/mst24lesson3-hardwarecomponents",
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },         
         {
             id: "blog17",
-            title: "Mastering the Basics: While Looping Statement",
+            title: "While Looping Statement",
             date: "January 22, 2025",
             image: "/images/blog17lucas-hein-3tgwzKpxHa4-unsplash.webp",
             link: "/blogs/it114-lesson5-while-looping-statement",
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },  
         {
             id: "blog16",
-            title: "The Invisible Force Behind Every Click",
+            title: "Computer Software",
             date: "January 21, 2025",
             image: "/images/blog16software-behind-every-click.webp",
             link: "/blogs/mst24lesson4-software-behind-every-click",
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },  
         {
             id: "blog15",
-            title: "5G vs 6G: The Future of Connectivity and What It Means for You",
+            title: "5G vs 6G",
             date: "January 18, 2025",
             image: "/images/blog15-5g-vs-6g.webp",
             link: "/blogs/5G-vs-6G",
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },        
         {   
             id: "blog1",
-            title: "The Role of Technology in Education",
+            title: "Technology in Education",
             date: "December 1, 2024",
             image: "/images/blog1.webp",
             link: "/blogs/role-of-technology-in-education",
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "effective-study-techniques",
-            title: "Effective Study Techniques: Boost Learning and Retention",
+            title: "Effective Study Techniques",
             date: "December 1, 2024",
             image: "/images/effective-study-techniques.webp",
             link: "/blogs/effective-study-techniques",
@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "blog4",
-            title: "Why Every Student Should Attend Seminars and Conferences",
+            title: "Why Should We Attend Seminars and Conferences",
             date: "December 2, 2024",
             image: "/images/blog4.webp",
             link: "/blogs/blog4",
@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "blog5",
-            title: "What to Do During Semestral Breaks: Rest, Growth, and Fun",
+            title: "What to Do During Semestral Breaks",
             date: "December 5, 2024",
             image: "/images/blog5.webp",
             link: "/blogs/blog5",
@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "blog6",
-            title: "Baguio Smart City Challenge: Student Innovations for a Smarter Future",
+            title: "Baguio Smart City Challenge",
             date: "December 11, 2024",
             image: "/images/blog6.webp",
             link: "/blogs/blog6",
@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "blog7",
-            title: "10 Things I Wish I Knew Before Entering IT – Tips for Success",
+            title: "10 Things I Wish I Knew Before Entering IT",
             date: "December 30, 2024",
             image: "/images/blog7.webp",
             link: "/blogs/blog7",
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "blog8",
-            title: "Building Habits for Success: Your Journey to Personal Growth",
+            title: "Be Proactive",
             date: "January 2, 2025", 
             image: "/images/blog8.webp",
             link: "/blogs/blog8",
@@ -242,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "blog9",
-            title: "A Beginner's Guide to USB-A, USB-B, and USB-C",
+            title: "Beginner's Guide to USB-A, USB-B, and USB-C",
             date: "January 3, 2025", 
             image: "/images/blog9.webp",
             link: "/blogs/blog9",
@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "blog12",
-            title: "Master Time Management: Proven Methods for Productivity",
+            title: "Master Time Management",
             date: "January 15, 2025", 
             image: "/images/blog12-djim-loic-ft0-Xu4nTvA-unsplash.webp",
             link: "/blogs/master-time-management",
@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "blog13",
-            title: "Crafting Your Legacy: The Power of Beginning With the End in Mind",
+            title: "Beginning With the End in Mind",
             date: "January 16, 2025", 
             image: "/images/blog13joshua-hoehne-Nsaqv7v2V7Q-unsplash.webp",
             link: "/blogs/scp2-beginning-with-the-end-in-mind",
@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "blog14",
-            title: "The Cost of Standing Still: Brands That Failed to Innovate and Disappeared",
+            title: "Brands That Failed to Innovate and Disappeared",
             date: "January 17, 2025", 
             image: "/images/blog14chris-lawton-5IHz5WhosQE-unsplash.webp",
             link: "/blogs/brands-that-failed-to-innovate-and-disappeared",
