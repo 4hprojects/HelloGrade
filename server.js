@@ -123,9 +123,9 @@ const serviceAccount = {
 
 // Import the new route file
 const studentEthnicityRoutes = require('./routes/studentEthnicityRoutes');
-
 // Mount it
 app.use('/api/student-ethnicity', studentEthnicityRoutes);
+
 
 
 //-----------------------------------------------------------------
@@ -204,10 +204,29 @@ app.post('/api/bytefunrun2025', async (req, res) => {
                 html: `
                     <p>Hi ${firstName},</p>
                     <p>Thank you for signing up for the <strong>BYTe Fun Run 2025</strong>. 
-                       We have received your registration!</p>
-                    <p>Event details will be sent closer to the date.
-                       We look forward to seeing you at the event!</p>
+                    We have received your registration!</p>
+
+                    <p>We look forward to seeing you at the event!</p>
+
+                    <h2>2025 BYTe Fun Run Race Details</h2>
+                    <ul>
+                        <li><strong>Event Time:</strong> 28th February 2025 (Friday) - 5:00 pm to 7:00 pm</li>
+                        <li><strong>Event Address:</strong> CIS Building - Benguet State University</li>
+                        <li><strong>Gun Start:</strong> 5:20 pm (5k) and 5:30 pm (3k)</li>
+                    </ul>
+
+                    <h3>Claiming of Race Bib:</h3>
+                    <ul>
+                        <li><strong>Location:</strong> CIS Building - BYTE Office (First Floor)</li>
+                        <li><strong>(Thu) 27th February:</strong> 3:00 pm to 5:00 pm</li>
+                        <li><strong>(Fri) 28th February:</strong> 4:00 pm to 5:00 pm</li>
+                    </ul>
+
+                    <p>Check <a href="https://www.hellograde.online/events/2025bytefunruninfo" target="_blank">this page</a> for additional details.</p>
+
                     <p>Best Regards,<br>BYTe Team</p>
+
+
                 `,
             };
             await sgMail.send(msg);
