@@ -25,6 +25,8 @@ const csv = require('csv-parser'); // Ensure csv-parser is installed
 const path = require('path');
 const ExcelJS = require('exceljs');
 
+
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -125,6 +127,7 @@ const serviceAccount = {
 const studentEthnicityRoutes = require('./routes/studentEthnicityRoutes');
 // Mount it
 app.use('/api/student-ethnicity', studentEthnicityRoutes);
+
 
 
 
@@ -246,7 +249,25 @@ app.post('/api/bytefunrun2025', async (req, res) => {
     }
 });
 
+// Middleware for parsing JSON
+app.use(express.json());
 
+//-----register IT Quiz----
+        const { addEntryToSheet } = require("./routes/sheetsService");
+        // Serve static files from public directory
+        app.use(express.static(path.join(__dirname, "public")));
+
+        // Route for handling registration
+        app.post("/submit", async (req, res) => {
+            try {
+                const response = await addEntryToSheet(req.body);
+                res.json({ message: response });
+            } catch (error) {
+                console.error("Error:", error);
+                res.status(500).json({ message: "❌ Registration failed. Please try again." });
+            }
+        });
+///---until here--
 
 app.use((req, res, next) => {
     if (req.session && req.session.role) {
