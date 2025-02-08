@@ -363,6 +363,12 @@ app.get('/terms-and-conditions', (req, res) => {
 app.get('/events/2025bytefunruninfo', (req, res) => {
     res.sendFile(__dirname + '/public/events/2025bytefunruninfo.html');
 });
+app.get('/events/itquizbee2025', (req, res) => {
+    res.sendFile(__dirname + '/public/events/itquizbee2025.html');
+});
+app.get('/events', (req, res) => {
+    res.sendFile(__dirname + '/public/events.html');
+});
 
 // 1) Redirect "/classrecords.html" => "/classrecords"
 app.get('/classrecords.html', (req, res) => {
