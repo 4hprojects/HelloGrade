@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "mst24-lesson9",
+            title: "Cloud Computing",
+            date: "February 12, 2025",
+            image: "/images/mst24lesson9-cloudcomputing.webp",
+            link: "/blogs/mst24lesson9-cloudcomputing",
+            description: "Discover the fundamentals of cloud computing, including its benefits, service models (IaaS, PaaS, SaaS, FaaS), and real-world applications. Learn how cloud services power modern businesses and enhance technology efficiency."
+        },
+        {
             id: "handwriting-code-guide",
             title: "Improving Coding Skills Through Handwriting",
             date: "February 11, 2025",
