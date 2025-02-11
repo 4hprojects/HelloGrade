@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Improving Coding Skills Through Handwriting",
             date: "February 11, 2025",
             image: "/images/handwriting-code.webp",
-            link: "/blogs/handwriting.html",
+            link: "/blogs/handwritingcode.html",
             description: "Discover how writing code with pen and paper can improve your problem-solving, debugging, and coding skills. Learn actionable steps to practice pen and paper coding techniques and improve your coding fluency by applying traditional coding methods."
         },     
         {
