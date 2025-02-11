@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "handwriting-code-guide",
+            title: "Improving Coding Skills Through Handwriting",
+            date: "February 11, 2025",
+            image: "/images/handwriting-code.webp",
+            link: "/blogs/handwriting.html",
+            description: "Discover how writing code with pen and paper can improve your problem-solving, debugging, and coding skills. Learn actionable steps to practice pen and paper coding techniques and improve your coding fluency by applying traditional coding methods."
+        },     
+        {
             id: "it114-lesson8-randommodule",
             title: "Python Random Module",
             date: "February 7, 2025",
