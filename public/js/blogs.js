@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "it114-lesson9",
+            title: "Python Functions and Modules",
+            date: "February 12, 2025",
+            image: "/images/it114-lesson9-functions.webp",
+            link: "/blogs/it114-lesson9-functionmodules",
+            description: "Master Python functions and modules with this complete guide. Learn how to create efficient, reusable functions, import Python modules, and build custom modules to organize your code effectively."
+        },  
+        {
             id: "scp6-synergize",
             title: "Habit 6: Synergize®",
             date: "February 13, 2025",
