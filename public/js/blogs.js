@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "scp6-synergize",
+            title: "Habit 6: Synergize®",
+            date: "February 13, 2025",
+            image: "/images/habit6-synergize.jpg",
+            link: "/blogs/scp6-habit6-synergize.webp",
+            description: "Discover how Habit 6: Synergize® from 'The 7 Habits of Highly Effective People' can transform teamwork and problem-solving. Learn how creative collaboration, valuing differences, and the third alternative mindset lead to better solutions and stronger relationships."
+        },
+        {
             id: "mst24-lesson9",
             title: "Cloud Computing",
             date: "February 12, 2025",
