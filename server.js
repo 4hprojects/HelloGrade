@@ -2831,7 +2831,7 @@ app.get("/ads.txt", (req, res) => {
 });
 
 //user_reset route
- 
+ /*
   app.get('/sitemap.xml', async (req, res) => {
     const staticUrls = [
         { loc: '/login', changefreq: 'daily', priority: 0.8 },
@@ -2883,7 +2883,7 @@ app.get("/ads.txt", (req, res) => {
     res.send(sitemap.trim());
 });
 
-
+*/
 // Serve 404 page for non-existent routes
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
