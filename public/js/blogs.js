@@ -1,6 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "promptengineering",
+            title: "Google’s Prompt Engineering Essentials",
+            date: "February 13, 2025",
+            image: "/images/prompt-engineering.webp",
+            link: "/blogs/promptengineering",
+            description: "Learn Google's Prompt Engineering Essentials and become an expert in AI prompt engineering. Discover AI automation, workflow optimization, and advanced AI prompting techniques."
+        },  
+        {
+            id: "mst24-lesson10",
+            title: "E-commerce Fundamentals",
+            date: "February 13, 2025",
+            image: "/images/mst24lesson10-ecommerce.webp",
+            link: "/blogs/mst24lesson10-ecommerce",
+            description: "Dive into the world of e-commerce, exploring various business models, the integration of AI and automation, and emerging trends shaping the future of online retail. Learn how businesses can adapt to the evolving digital marketplace."
+        },   
+        {
             id: "it114-lesson9",
             title: "Python Functions and Modules",
             date: "February 13, 2025",
