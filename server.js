@@ -43,8 +43,8 @@ const { google } = require('googleapis');
 app.use(helmet({ contentSecurityPolicy: false }));
 app.disable('x-powered-by');
 
-const sitemapRoutes = require('./routes/sitemapRoutes');
-app.use('/', sitemapRoutes);
+//const sitemapRoutes = require('./routes/sitemapRoutes');
+//app.use('/', sitemapRoutes);
 // Configure CORS appropriately
 //app.use(cors({
 //    origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:3000/', 'https://4hprojects.github.io'],
