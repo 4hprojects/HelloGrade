@@ -214,16 +214,16 @@ app.post('/api/bytefunrun2025', async (req, res) => {
 
                     <h2>2025 BYTe Fun Run Race Details</h2>
                     <ul>
-                        <li><strong>Event Time:</strong> 28th February 2025 (Friday) - 5:00 pm to 7:00 pm</li>
+                        <li><strong>Event Time:</strong> 28th February 2025 (Friday) - 5:00 am to 7:00 am</li>
                         <li><strong>Event Address:</strong> CIS Building - Benguet State University</li>
-                        <li><strong>Gun Start:</strong> 5:20 pm (5k) and 5:30 pm (3k)</li>
+                        <li><strong>Gun Start:</strong> 5:50 am (5k) and 6:00 am (3k)</li>
                     </ul>
 
                     <h3>Claiming of Race Bib:</h3>
                     <ul>
                         <li><strong>Location:</strong> CIS Building - BYTE Office (First Floor)</li>
                         <li><strong>(Thu) 27th February:</strong> 3:00 pm to 5:00 pm</li>
-                        <li><strong>(Fri) 28th February:</strong> 4:00 pm to 5:00 pm</li>
+                        <li><strong>(Fri) 28th February:</strong> 5:00 am to 5:30 am</li>
                     </ul>
 
                     <p>Check <a href="https://www.hellograde.online/events/2025bytefunruninfo" target="_blank">this page</a> for additional details.</p>
