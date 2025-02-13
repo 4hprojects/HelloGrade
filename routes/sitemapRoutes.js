@@ -5,103 +5,111 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * Reads 'public/js/blogs.js', extracts the array assigned to `blogPool`, 
- * and returns it as a proper JavaScript array.
- * 
- * WARNING: This is a naive parsing approach. For complex or changing code 
- * in `blogs.js`, a more robust solution (or separate JSON) is recommended.
+ * Reads the file `public/js/blogs.js`, extracts the array assigned
+ * to `const blogPool = [ ... ];`, converts it to a usable array,
+ * and returns it as a JavaScript array of objects.
+ *
+ * WARNING: This approach is naive. If `blogs.js` changes format
+ * (e.g., multiline comments inside the array, advanced code),
+ * you may need a more robust parser or store your data in JSON instead.
  */
 function getBlogsFromBlogsJS() {
-  // 1) Read the file
+  // 1. Read the file content
   const filePath = path.join(__dirname, '..', 'public', 'js', 'blogs.js');
   const fileContent = fs.readFileSync(filePath, 'utf8');
 
-  // 2) Use a RegExp to find:  `const blogPool = [ ... ];`
+  // 2. Find the snippet that looks like: `const blogPool = [...];`
   const regex = /const\s+blogPool\s*=\s*(\[[\s\S]*?\]);/;
   const match = fileContent.match(regex);
   if (!match) {
-    // If we can't find the array, return empty
+    // If not found, return empty array
     return [];
   }
 
-  // `match[1]` should be the string version of the array, e.g. "[ { id: ..., }, ... ]"
-  let arrayString = match[1].trim(); // remove trailing semicolon, etc.
+  // match[1] is the "[ ... ]" part
+  let arrayString = match[1].trim();
 
-  // 3) Convert that arrayString into valid JSON so we can JSON.parse it.
-  //    - Wrap unquoted object keys in double quotes
-  //    - Change any single quotes '...' to "..."
-  //    - This might fail if your blog data has funky formatting or quotes inside strings.
-  //      Adjust as necessary for your actual data.
-
-  // Wrap unquoted keys: (e.g. id: => "id":
-  arrayString = arrayString.replace(/(\w+)\s*:/g, '"$1":');
-  // Convert single quotes to double quotes
+  // 3. Convert that array substring into valid JSON so we can parse it:
+  //    a) Wrap unquoted keys in double quotes
+  //    b) Convert single quotes to double quotes
+  //    (Naive approach—if your data has tricky quotes, you’ll need more robust logic)
+  arrayString = arrayString.replace(/(\w+)\s*:/g, '"$1":'); // e.g. id: -> "id":
   arrayString = arrayString.replace(/'/g, '"');
 
-  // 4) Parse as JSON
-  const blogData = JSON.parse(arrayString);
-  return blogData;
+  // 4. Parse the resulting string as JSON
+  return JSON.parse(arrayString);
 }
 
-/**
- * Route for generating sitemap.xml with both:
- *  - Some "static" routes
- *  - The dynamic blog routes from `blogs.js`
- */
+// GET /sitemap.xml
 router.get('/sitemap.xml', (req, res) => {
-  // 1) Base domain for generating full URLs
-  const baseUrl = 'https://hellograde.online';
+  // 1. Base URL for building full links
+  const baseUrl = 'https://www.hellograde.online';
 
-  // 2) Static URLs you want in your sitemap
+  // 2. Optional static URLs you want in the sitemap
   const staticUrls = [
-    { loc: '/',                   changefreq: 'daily',   priority: 1.0  },
-    { loc: '/index',              changefreq: 'daily',   priority: 1.0  },
-    { loc: '/blogs',              changefreq: 'daily',   priority: 1.0  },
-    { loc: '/login',              changefreq: 'daily',   priority: 0.8  },
-    { loc: '/search',             changefreq: 'weekly',  priority: 0.6  },
-    { loc: '/contact',            changefreq: 'monthly', priority: 0.5  },
-    { loc: '/about',              changefreq: 'monthly', priority: 0.5  },
-    { loc: '/help',               changefreq: 'monthly', priority: 0.5  },
-    { loc: '/privacy-policy',     changefreq: 'yearly',  priority: 0.3  },
-    { loc: '/terms-and-conditions', changefreq: 'yearly', priority: 0.3 }
-    // Add others as you like
+    // Add any non-blog pages you want to appear
+    { loc: '/',               priority: 1.0 },
+    { loc: '/index',          priority: 0.8 },
+    { loc: '/login',          priority: 0.8 },
+    { loc: '/search',         priority: 0.6 },
+    { loc: '/contact',        priority: 0.5 },
+    { loc: '/about',          priority: 0.5 },
+    { loc: '/help',           priority: 0.5 },
+    { loc: '/privacy-policy', priority: 0.3 },
+    { loc: '/terms-and-conditions', priority: 0.3 },
+    // etc.
   ];
 
-  // 3) Get the blog array from blogs.js
+  // 3. Parse the blogs array from `blogs.js`
   let blogList = [];
   try {
     blogList = getBlogsFromBlogsJS();
   } catch (err) {
-    console.error('Failed to parse blogs.js:', err);
-    // fallback to empty
+    console.error('Error parsing blogs.js:', err);
     blogList = [];
   }
 
-  // 4) Generate blog entries for the sitemap
-  const dynamicUrls = blogList.map(blog => ({
-    loc: blog.link,         // e.g. "/blogs/promptengineering"
-    changefreq: 'weekly',   // or "daily", up to you
-    priority: 0.8           // up to you
+  // 4. Build dynamic URLs for each blog entry
+  //    If you have a date in the blog for <lastmod>, parse that as well (optional).
+  const blogUrls = blogList.map((blog) => ({
+    loc: blog.link,       // e.g. "/blogs/promptengineering"
+    priority: 0.64,       // up to you
+    // Could parse blog.date to generate a <lastmod> if you want
   }));
 
-  // 5) Combine both sets
-  const allUrls = [...staticUrls, ...dynamicUrls];
+  // 5. Combine static + dynamic
+  const allUrls = [
+    ...staticUrls,
+    ...blogUrls
+  ];
 
-  // 6) Build the XML
-  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+  // 6. Generate XML
+  //    Example: create a typical sitemap header with schemas, then loop
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+  xml += `<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>\n`;
+  xml += `<!-- Generated from blogs.js + static urls -->\n\n`;
 
-  for (const urlObj of allUrls) {
-    xml += '  <url>\n';
-    xml += `    <loc>${baseUrl}${urlObj.loc}</loc>\n`;
-    xml += `    <changefreq>${urlObj.changefreq}</changefreq>\n`;
-    xml += `    <priority>${urlObj.priority}</priority>\n`;
-    xml += '  </url>\n';
-  }
+  // For <lastmod>, you can set it to current date or parse the blog date
+  const now = new Date();
+  allUrls.forEach((urlObj) => {
+    const loc = urlObj.loc || '/';
+    const priority = urlObj.priority || 0.5;
+    // optional date format
+    const iso = now.toISOString().replace('Z', '+00:00');
 
-  xml += '</urlset>';
+    xml += `  <url>\n`;
+    xml += `    <loc>${baseUrl}${loc}</loc>\n`;
+    xml += `    <lastmod>${iso}</lastmod>\n`;
+    xml += `    <priority>${priority.toFixed(2)}</priority>\n`;
+    xml += `  </url>\n`;
+  });
 
-  // 7) Return as XML
+  xml += `</urlset>`;
   res.header('Content-Type', 'application/xml');
   res.send(xml);
 });
