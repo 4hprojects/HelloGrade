@@ -44,8 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "scp6-synergize",
             title: "Habit 6: Synergize®",
             date: "February 13, 2025",
-            image: "/images/habit6-synergize.jpg",
-            link: "/blogs/scp6-habit6-synergize.webp",
+            image: "/images/habit6-synergize.webp",
+            link: "/blogs/scp6-synergize",
             description: "Discover how Habit 6: Synergize® from 'The 7 Habits of Highly Effective People' can transform teamwork and problem-solving. Learn how creative collaboration, valuing differences, and the third alternative mindset lead to better solutions and stronger relationships."
         },
         {
