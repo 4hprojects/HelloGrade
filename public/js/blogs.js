@@ -1,6 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "mst24-lesson12",
+            title: "The Gig Economy",
+            date: "February 14, 2025",
+            image: "/images/mst24lesson12-thegigeconomy.webp",
+            link: "/blogs/mst24lesson12-thegigeconomy",
+            description: "Discover how the gig economy is transforming work. Learn about freelancing, gig platforms, financial planning, skill development, and the key strategies to thrive as an independent contractor or remote worker."
+        },        
+        {
+            id: "mst24-lesson11",
+            title: "Telecommunications",
+            date: "February 14, 2025",
+            image: "/images/mst24-lesson11-telecommunication.webp",
+            link: "/blogs/mst24lesson11-telecommunication",
+            description: "Discover how telecommunications networks, mobile networks, VOIP, and 5G technology are transforming global communication. Explore the evolution, impact, and future of the telecommunications industry, including the latest innovations and challenges."
+        },
+        {
             id: "promptengineering",
             title: "Google’s Prompt Engineering Essentials",
             date: "February 13, 2025",
