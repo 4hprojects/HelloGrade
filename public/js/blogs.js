@@ -1,6 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "it114-lesson9_1-returnstatement",
+            title: "Python Return Statement",
+            date: "February 16, 2025",
+            image: "/images/it114-lesson9_1-return.webp",
+            link: "/blogs/it114-lesson9_1-returnstatement",
+            description: "Master the Python return statement and learn how to send data back from functions efficiently. Explore real-world examples of returning values, handling multiple returns, early exits, and recursion to enhance your Python programming skills."
+        },
+        {
+            id: "it114-lesson10-errorhandling",
+            title: "Python Error Handling",
+            date: "February 16, 2025",
+            image: "/images/it114-lesson10-error-handling.webp",
+            link: "/blogs/it114-lesson10-errorhandling",
+            description: "Learn how to handle errors in Python using try-except blocks, prevent crashes, and write more resilient applications. This in-depth guide covers syntax errors, runtime exceptions, debugging techniques, and best practices for structured error handling."
+        },        
+        {
             id: "mst24-lesson12",
             title: "The Gig Economy",
             date: "February 14, 2025",
@@ -31,15 +47,15 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/mst24lesson10-ecommerce.webp",
             link: "/blogs/mst24lesson10-ecommerce",
             description: "Dive into the world of e-commerce, exploring various business models, the integration of AI and automation, and emerging trends shaping the future of online retail. Learn how businesses can adapt to the evolving digital marketplace."
-        },   
+        },        
         {
             id: "it114-lesson9",
             title: "Python Functions and Modules",
-            date: "February 13, 2025",
+            date: "February 12, 2025",
             image: "/images/it114-lesson9-functions.webp",
             link: "/blogs/it114-lesson9-functionmodules",
             description: "Master Python functions and modules with this complete guide. Learn how to create efficient, reusable functions, import Python modules, and build custom modules to organize your code effectively."
-        },  
+        },        
         {
             id: "scp6-synergize",
             title: "Habit 6: Synergize®",
@@ -63,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/handwriting-code.webp",
             link: "/blogs/handwritingcode.html",
             description: "Discover how writing code with pen and paper can improve your problem-solving, debugging, and coding skills. Learn actionable steps to practice pen and paper coding techniques and improve your coding fluency by applying traditional coding methods."
-        },     
+        },        
         {
             id: "it114-lesson8-randommodule",
             title: "Python Random Module",
@@ -113,12 +129,12 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Develop a strong programming mindset with key problem-solving strategies. Learn debugging techniques, optimization principles, and practical approaches that help you write better code and become a more efficient developer."
         },
         {
-            "id": "mst24lesson7",
-            "title": "Social Media in the Modern World",
-            "date": "January 31, 2025",
-            "image": "/images/mst24lesson7-socialmedia.webp",
-            "link": "/blogs/mst24lesson7-socialmedia",
-            "description": "Discover the evolution of social media, its impact on society, privacy concerns, and ethical considerations. Learn how online communities, user-generated content, and digital technology shape communication, business, and global interactions."
+            id: "mst24lesson7",
+            title: "Social Media in the Modern World",
+            date: "January 31, 2025",
+            image: "/images/mst24lesson7-socialmedia.webp",
+            link: "/blogs/mst24lesson7-socialmedia",
+            description: "Discover the evolution of social media, its impact on society, privacy concerns, and ethical considerations. Learn how online communities, user-generated content, and digital technology shape communication, business, and global interactions."
         },
         {
             id: "scp4-think-win-win",
@@ -305,11 +321,11 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Discover how to build positive habits and unlock your potential for success. Learn practical strategies to overcome challenges, achieve goals, and foster personal growth on your journey to self-improvement."
         },
         {
-            id: "blog9",
+            id: "beginnersguide-usb-abc",
             title: "Beginner's Guide to USB-A, USB-B, and USB-C",
             date: "January 3, 2025", 
             image: "/images/blog9.webp",
-            link: "/blogs/blog9",
+            link: "/blogs/beginnersguide-usb-abc",
             description: "Learn the differences between USB-A, USB-B, and USB-C, their history, uses, and why USB-C is the future. A comprehensive guide for tech enthusiasts and beginners alike."
         },
         {
