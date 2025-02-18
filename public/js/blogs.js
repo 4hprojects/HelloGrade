@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "it114-lesson11",
+            title: "Python Scope and the LEGB Rule",
+            date: "February 18, 2025",
+            image: "/images/it114-lesson11-pythonscope.webp",
+            link: "/blogs/it114-lesson11-pythonscope",
+            description: "Master Python Scope and the LEGB Rule: Learn how Local, Enclosing, Global, and Built-in scopes work in Python, avoid common mistakes, and follow best practices to write efficient and error-free code."
+        },
+        {
             id: "it114-lesson9_1-returnstatement",
             title: "Python Return Statement",
             date: "February 16, 2025",
