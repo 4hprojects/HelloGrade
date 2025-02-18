@@ -99,8 +99,8 @@
                     <section data-scroll-reveal="enter from-left">
                         <h2 class="text-2xl font-semibold text-blue-600 mb-4">Understanding the Python Return Statement</h2>
                         <p>
-                            Functions are the **building blocks of Python programming**, allowing code to be **reusable, efficient, and modular**. But what makes a function truly powerful? 
-                            The ability to **return values**. Without the <code>return</code> statement, functions would only perform actions but never send results back to the caller.
+                            Functions are the <strong>building blocks of Python programming</strong>, allowing code to be <strong>reusable, efficient, and modular</strong>. But what makes a function truly powerful? 
+                            The ability to <strong>return values</strong>. Without the <code>return</code> statement, functions would only perform actions but never send results back to the caller.
                         </p>
         
                         <p>
@@ -114,7 +114,7 @@
         
                         <p>
                             If a function does not include a <code>return</code> statement, or if <code>return</code> is used without a value, Python automatically returns <code>None</code>. 
-                            This is useful for **functions that perform actions rather than computations**, such as logging messages or modifying data.
+                            This is useful for <strong>functions that perform actions rather than computations</strong>, such as logging messages or modifying data.
                         </p>
         
                         <!-- ✅ Ad Inside Content -->
@@ -129,16 +129,16 @@
                         </script>
         
                         <p class="mt-4">
-                            Let’s explore how the <code>return</code> statement works in practice, from **basic usage to returning multiple values** in Python functions.
+                            Let’s explore how the <code>return</code> statement works in practice, from <strong>basic usage to returning multiple values</strong> in Python functions.
                         </p>
                     </section>
             <!-- Section 2 -->
-            <section data-scroll-reveal="enter from-left">
+            <section data-scroll-reveal="enter from-left" class="mt-8 bg-green-50 p-6 rounded-lg">
                 <h2 class="text-2xl font-semibold text-blue-600 mb-4">Basic Usage of the Return Statement in Python</h2>
                 
                 <p>
-                    The <code>return</code> statement is a fundamental part of Python functions. It ensures that a function **returns a computed result** instead of just executing commands. 
-                    This makes functions more versatile, allowing them to **process data and send results** back to the caller.
+                    The <code>return</code> statement is a fundamental part of Python functions. It ensures that a function <strong>calculates the sum</strong> result instead of just executing commands. 
+                    This makes functions more versatile, allowing them to process data and send results back to the caller.
                 </p>
 
                 <p>
@@ -163,13 +163,13 @@ print(result)  # Output: 12
 
                 <ul class="list-disc list-inside ml-6 mb-4">
                     <li>The function <code>compute_sum</code> takes two parameters: <code>a</code> and <code>b</code>.</li>
-                    <li>It **calculates the sum** of the two numbers and returns the result using <code>return a + b</code>.</li>
+                    <li>It calculates the sum of the two numbers and returns the result using <code>return a + b</code>.</li>
                     <li>When the function is called with <code>compute_sum(5, 7)</code>, it returns <code>12</code>, which is then printed.</li>
                 </ul>
 
                 <p>
                     Without the <code>return</code> statement, the function would execute but wouldn’t provide a result for further use. 
-                    This is why **returning values is essential** in Python programming.
+                    This is why <strong>returning values is essential</strong> in Python programming.
                 </p>
                 </section>
             <!-- Section 3 -->
@@ -177,7 +177,7 @@ print(result)  # Output: 12
                 <h2 class="text-2xl font-semibold text-blue-600 mb-4">Returning None in Python Functions</h2>
                 
                 <p>
-                    In Python, if a function **does not include a return statement** or uses <code>return</code> without a value, 
+                    In Python, if a function does not include a return statement or uses <code>return</code> without a value, 
                     it automatically returns <code>None</code>. This is useful for functions that perform an action, such as printing output, 
                     updating a database, or modifying an object, without returning a result.
                 </p>
@@ -209,7 +209,7 @@ print(result)  # Output: Hello, world! \n None
                 </ul>
 
                 <p>
-                    This behavior is useful when a function is meant to **execute an action** rather than return data. 
+                    This behavior is useful when a function is meant to <strong>execute an action</strong> rather than return data. 
                     However, if a return value is needed, we must explicitly use the <code>return</code> statement.
                 </p>
 
@@ -225,16 +225,16 @@ print(result)  # Output: Hello, world! \n None
                 </script>
 
                 <p class="mt-4">
-                    Now, let’s explore how Python allows **returning multiple values** in a single function call.
+                    Now, let’s explore how Python allows returning multiple values in a single function call.
                 </p>
             </section>
             <!-- Section 4 -->
-            <section data-scroll-reveal="enter from-left">
+            <section data-scroll-reveal="enter from-left" class="mt-8 bg-green-50 p-6 rounded-lg">
                 <h2 class="text-2xl font-semibold text-blue-600 mb-4">Returning Multiple Values in Python Functions</h2>
                 
                 <p>
-                    Unlike some programming languages that restrict functions to returning a **single value**, Python allows returning multiple values effortlessly.
-                    This is particularly useful for functions that need to send back **different pieces of related data** in a single call.
+                    Unlike some programming languages that restrict functions to returning a single value, Python allows returning multiple values effortlessly.
+                    This is particularly useful for functions that need to send back <strong>different pieces of related data</strong> in a single call.
                 </p>
 
                 <p>
@@ -274,14 +274,14 @@ print(person_name, person_age, person_country)
                 </p>
 
                 <ul class="list-disc list-inside ml-6 mb-4">
-                    <li>The function <code>get_person_info()</code> returns three values inside a **tuple**.</li>
-                    <li>We use **tuple unpacking** to assign each value to a separate variable.</li>
+                    <li>The function <code>get_person_info()</code> returns three values inside a tuple.</li>
+                    <li>We use tuple unpacking to assign each value to a separate variable.</li>
                 </ul>
 
                 <h3 class="text-xl font-semibold text-green-600 mt-6">Using Dictionaries for Labeled Data</h3>
 
                 <p>
-                    While tuples are great, they rely on positional access. If we want **more readable and flexible output**, using a dictionary is a better choice:
+                    While tuples are great, they rely on positional access. If we want more readable and flexible output, using a dictionary is a better choice:
                 </p>
 
                 <div class="bg-gray-100 p-4 rounded-lg overflow-x-auto">
@@ -298,12 +298,12 @@ print(person["name"], person["age"], person["country"])
                 </div>
 
                 <p class="mt-4">
-                    Using a dictionary allows us to access values **by key instead of position**, improving code readability.
+                    Using a dictionary allows us to access values by key instead of position, improving code readability.
                 </p>
 
 
                 <p class="mt-4">
-                    Now that we’ve seen how to return multiple values, let's explore **early exits in functions** using the <code>return</code> statement.
+                    Now that we’ve seen how to return multiple values, let's explore <strong>returning early can be a powerful way to improve efficiency</strong> in functions using the <code>return</code> statement.
                 </p>
             </section>
             <!-- Section 5 -->
@@ -312,8 +312,8 @@ print(person["name"], person["age"], person["country"])
                 
                 <p>
                     The <code>return</code> statement doesn’t have to be at the end of a function. 
-                    In fact, **returning early can be a powerful way to improve efficiency**. 
-                    When a <code>return</code> is encountered, the function stops execution immediately, allowing for **quicker exits** 
+                    In fact, <strong>returning early can be a powerful way to improve efficiency</strong>. 
+                    When a <code>return</code> is encountered, the function stops execution immediately, allowing for <strong>quicker exits</strong> 
                     in cases where further processing isn’t necessary.
                 </p>
 
@@ -355,36 +355,36 @@ print(validate_username("JohnDoe")) # Output: Username is valid.
                 </p>
 
                 <ul class="list-disc list-inside ml-6 mb-4">
-                    <li>The function **immediately exits** if the username is empty, returning an error message.</li>
+                    <li>The function <strong>immediately exits</strong> if the username is empty, returning an error message.</li>
                     <li>If the username is too short, another early return happens.</li>
-                    <li>Only when both checks pass does the function return a **valid** message.</li>
+                    <li>Only when both checks pass does the function return a valid message.</li>
                 </ul>
 
                 <h3 class="text-xl font-semibold text-green-600 mt-6">Why Use Early Returns?</h3>
 
                 <p>
-                    Using early returns **eliminates unnecessary nested conditions**, making the code **cleaner and easier to read**. 
+                    Using early returns eliminates unnecessary nested conditions, making the code cleaner and easier to read. 
                     Without early exits, we would need additional <code>else</code> statements, adding complexity.
                 </p>
 
                 <p class="mt-4">
-                    Now that we’ve covered early exits, let’s look at **how return is used in recursive functions**.
+                    Now that we’ve covered early exits, let’s look at how return is used in recursive functions.
                 </p>
             </section>
             <!-- Section 6 -->
-            <section data-scroll-reveal="enter from-left">
+            <section data-scroll-reveal="enter from-left" class="mt-8 bg-green-50 p-6 rounded-lg">
                 <h2 class="text-2xl font-semibold text-blue-600 mb-4">Recursive Functions and Return Statements</h2>
                 
                 <p>
-                    Recursion is a technique where a function **calls itself** to solve smaller instances of a problem. 
-                    The <code>return</code> statement is essential in recursive functions because it **ensures that results are passed back** 
+                    Recursion is a technique where a function calls itself to solve smaller instances of a problem. 
+                    The <code>return</code> statement is essential in recursive functions because it ensures that results are passed back 
                     through each recursive call until the final answer is computed.
                 </p>
 
                 <h3 class="text-xl font-semibold text-green-600 mt-6">Example: Factorial Using Recursion</h3>
                 
                 <p>
-                    Let’s look at a recursive function that calculates the **factorial of a number**:
+                    Let’s look at a recursive function that calculates the factorial of a number:
                 </p>
 
                 <div class="bg-gray-100 p-4 rounded-lg overflow-x-auto">
@@ -406,24 +406,23 @@ print(factorial(5))  # Output: 120
 
                 <ul class="list-disc list-inside ml-6 mb-4">
                     <li>The function keeps calling itself with a smaller value of <code>n</code>.</li>
-                    <li>When <code>n</code> reaches <code>1</code>, the function **stops calling itself** and returns <code>1</code> (base case).</li>
-                    <li>Each previous function call **receives the returned value** and completes the multiplication.</li>
+                    <li>When <code>n</code> reaches <code>1</code>, the function stops calling itself and returns <code>1</code> (base case).</li>
+                    <li>Each previous function call relies on the return value of the next recursive call to complete the multiplication.</li>
                 </ul>
 
                 <h3 class="text-xl font-semibold text-green-600 mt-6">Why Is Return Important in Recursion?</h3>
 
                 <p>
-                    Without the <code>return</code> statement in recursion, the function **would not pass values back**, 
-                    and the final result would be lost. Each function call **relies on the return value of the next recursive call** 
-                    to complete the calculation.
+                    Without the <code>return</code> statement in recursion, the function would not pass values back, 
+                    and the final result would be lost. Each function call passes the returned value upward until the final calculation is done.
                 </p>
 
                 <p>
-                    Recursive functions **must always have a base case** to prevent infinite recursion, which can **cause a stack overflow**.
+                    Recursive functions must always have a base case to prevent infinite recursion, which can cause a stack overflow.
                 </p>
 
                 <p class="mt-4">
-                    Now that we’ve covered recursion, let’s summarize everything we’ve learned about the **return statement in Python**.
+                    Now that we’ve covered recursion, let’s summarize everything we’ve learned about the return statement in Python.
                 </p>
             </section>
             <!-- Section 7 -->
@@ -432,7 +431,7 @@ print(factorial(5))  # Output: 120
                 
                 <p>
                     The <code>return</code> statement is one of the most powerful tools in Python functions. 
-                    It allows us to **send data back to the caller, control program flow, and improve function efficiency**.
+                    It allows us to send data back to the caller, control program flow, and improve function efficiency.
                 </p>
 
                 <h3 class="text-xl font-semibold text-green-600 mt-6">Key Takeaways</h3>
@@ -456,7 +455,7 @@ print(factorial(5))  # Output: 120
                 </ul>
 
                 <p class="mt-4">
-                    By mastering the <code>return</code> statement, you can write more **efficient, readable, and maintainable Python code**.
+                    By mastering the <code>return</code> statement, you can write more efficient, readable, and maintainable Python code.
                 </p>
 
                 <!-- ✅ Ad Inside Content -->
@@ -469,14 +468,14 @@ print(factorial(5))  # Output: 120
                 <script>
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
-
+                <div class="mt-8 bg-green-50 p-6 rounded-lg">
                 <p class="mt-4">
                     Ready to take your Python skills to the next level? Explore our next lesson: 
                     <a href="http://hellograde.online/blogs/it114-lesson10-errorhandling  " class="text-green-600 hover:underline" target="_blank">
                         Lesson 10: Error Handling
                     </a>.
                 </p>
-
+                </div>
                 <p class="mt-4">
                     You may also want to check out our related topic: 
                     <a href="https://www.hellograde.online/blogs/it114-lesson9-functionmodules" class="text-blue-600 hover:underline" target="_blank">
@@ -490,7 +489,7 @@ print(factorial(5))  # Output: 120
 
                 <ul class="list-disc list-inside ml-6 mb-4">
                     <li>
-                        Learn about the growing **gig economy** and how digital platforms are changing the future of work: 
+                        Learn about the growing <strong>gig economy</strong> and how digital platforms are changing the future of work: 
                         <a href="https://www.hellograde.online/blogs/mst24lesson12-thegigeconomy" 
                             class="text-blue-600 hover:underline" target="_blank">
                             The Gig Economy
