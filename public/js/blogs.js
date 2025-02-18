@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "scp7-sharpen-the-saw",
+            title: "Sharpen the Saw®: The Key to Sustainable Success",
+            date: "February 18, 2025",
+            image: "/images/scp7-sharpen.webp",
+            link: "/blogs/scp7-sharpen-the-saw",
+            description: "Sharpen the Saw®—Habit 7 of The 7 Habits of Highly Effective People—focuses on continuous self-renewal. Learn how strengthening your physical, mental, emotional, and spiritual well-being leads to lasting productivity and success."
+        },      
+        {
             id: "it114-lesson11",
             title: "Python Scope and the LEGB Rule",
             date: "February 18, 2025",
