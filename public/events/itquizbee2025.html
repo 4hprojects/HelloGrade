@@ -48,28 +48,26 @@
 </head>
 
 <body data-blog-id="ITQuizBee2025">
-        <!-- Header -->
-        <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
-            <div class="flex items-center">
-                <a href="https://hellograde.online/">
-                    <img src="/images/icon.webp" alt="HelloGrade Logo" class="h-12 mr-3">
-                </a>
-                <p class="text-xl font-bold">HelloGrade</p>
-            </div>
-            <nav>
-                <ul id="navMenu" class="flex flex-row gap-4">
-                    <li><a href="/index" title="Home"><span class="material-icons">home</span></a></li>
-                    <li><a href="/search" title="Search"><span class="material-icons">search</span></a></li>
-                    <li><a href="/blog" title="Blogs" class="text-yellow-400"><span class="material-icons">article</span></a></li>
-                    <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
-                </ul>
-            </nav>
-        </header>
+    <!-- Header -->
+    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
+        <div class="flex items-center">
+            <a href="https://hellograde.online/">
+                <img src="/images/icon.webp" alt="HelloGrade Logo" class="h-12 mr-3">
+            </a>
+            <p class="text-xl font-bold">HelloGrade</p>
+        </div>
+        <nav>
+            <ul id="navMenu" class="flex flex-row gap-4">
+                <li><a href="/index" title="Home"><span class="material-icons">home</span></a></li>
+                <li><a href="/search" title="Search"><span class="material-icons">search</span></a></li>
+                <li><a href="/blog" title="Blogs" class="text-yellow-400"><span class="material-icons">article</span></a></li>
+                <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
+            </ul>
+        </nav>
+    </header>
 
     <div class="container">
         <h1>🎓 IT Quiz Bee 2025 Registration</h1>
-
-
 
         <section class="event-details">
             <h2>Event Details</h2>
@@ -82,10 +80,6 @@
                 <li><strong>Registration:</strong> Online pre-registration is required. Walk-ins will be accommodated only if slots are available.</li>
                 <li><strong>Prizes & Certificates:</strong> All participants will receive a Certificate of Participation. Top scorers will receive certificates and/or awards (prizes subject to availability).</li>
             </ul>
-                <!-- Centered Scroll Button -->
-    <div class="scroll-to-privacy">
-        <button id="scrollToPrivacyBtn" class="btn btn-primary">I want to Register</button>
-    </div>
         </section>
 
         <section class="event-rules">
@@ -144,7 +138,7 @@
                     </tr>
                 </tbody>
             </table>
-<br>
+            <br>
             <h3>Code of Conduct</h3>
             <ul class="list-disc ml-5">
                 <li>Participants must maintain professionalism and sportsmanship throughout the event.</li>
@@ -155,22 +149,33 @@
             <p class="final-note"><strong>Note:</strong> The event organizers reserve the right to make adjustments to the rules as necessary. Any changes will be communicated before the quiz starts.</p>
         </section>
 
-       <!-- Call-to-Action Section -->
-        <section class="cta-section">
-            <h2>Ready to Showcase Your IT Knowledge? 🚀</h2>
-            <p>
-                Now that you understand the rules and privacy terms, it's time to take the next step!
-                Register now and be part of the <strong>IT Quiz Bee 2025</strong>—where knowledge meets excitement! 🏆
+        <!-- Registration Closed Notice -->
+        <section class="cta-section text-center my-8 p-4 border border-gray-300 bg-gray-50">
+            <h2 class="text-2xl font-semibold mb-4">Online Registration is Now Closed</h2>
+            <p class="mb-4">
+                Thank you for your interest in the <strong>IT Quiz Bee 2025</strong>. 
+                Online registration is no longer available.
             </p>
-            <p><strong>Spots are limited—secure yours today! ⏳</strong></p>
+            <p class="mb-4">
+                However, if you are still interested in joining, <strong>walk-ins will be accommodated</strong> on the event day 
+                <strong>depending on the availability of slots</strong>. Please arrive early to check for open slots.
+            </p>
+            <p>
+                We look forward to seeing all registered participants. If you have any questions, 
+                please contact the <strong>College of Information Sciences - Department of Information Technology</strong>.
+            </p>
+            <p class="mt-4">
+                <strong>Contact Person:</strong> Henson Sagorsor - Event Facilitator <br>
+                <strong>Email:</strong> <a href="mailto:h.sagorsor@bsu.edu.ph" class="text-blue-600 hover:underline">h.sagorsor@bsu.edu.ph</a>
+            </p>
         </section>
-        <br><br>        <br><br>
-        <!-- Centered Label to Encourage Reading the Privacy Agreement -->
-        <section class="privacy-section">
-        <div id="privacy-section" class="read-agreement-label">
-            <p><strong>📜 Before you register, please read and agree to the Data Privacy Agreement below. ✅</strong></p>
-        </div>
-        </section>
+        
+        
+
+
+        <!-- You can retain the Privacy section or remove it entirely. 
+             For clarity, we've left it commented out below.
+
         <section class="privacy-section">
             <h2>Data Privacy Agreement</h2>
             <p>
@@ -187,104 +192,40 @@
                 the event organizers. However, withdrawal of consent may affect my eligibility to participate in the quiz.
             </p>
             <p class="agreement-notice">Accept these terms to proceed with registration.</p>
-            <!-- Improved Checkbox Label -->
-            <label class="checkbox-container">
-                <input type="checkbox" id="privacyAgreement">
-                I have read and agree to the <strong>Data Privacy Agreement.</strong>
-            </label>
-
         </section>
+        -->
 
-        
-
-        <!-- Registration Form -->
-        <form id="registrationForm" class="form-hidden">
-            <h2>Register for IT Quiz Bee 2025</h2>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" class="form-input" placeholder="Enter your first name" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" class="form-input" placeholder="Enter your last name" required>
-                </div>
-            </div>
-
-
-
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
-            <br><br>
-            <h2>Academic Information</h2>
-            <label for="yearLevel">Year Level:</label>
-            <select id="yearLevel" class="form-select" required>
-                <option value="" disabled selected>Select Year Level</option>
-                <option value="1">1st Year</option>
-                <option value="2">2nd Year</option>
-                <option value="3">3rd Year</option>
-                <option value="4">4th Year</option>
-                <option value="5">5th Year</option>
-                <option value="6">6th Year</option>
-            </select>
-
-            <label for="college">College:</label>
-            <select id="college" class="form-select" required>
-                <option value="" disabled selected>Select College</option>
-            </select>
-
-            <label for="degree">Degree Program:</label>
-            <select id="degree" class="form-select" required>
-                <option value="" disabled selected>Select Degree</option>
-            </select>
-<br><br>
-            <h2>Digital Signature</h2>
-            <label for="signature">Type Your Full Name:</label>
-            <input type="text" id="signature" class="form-input" placeholder="Your Full Name" required>
-
-            <label class="checkbox-container">
-                <input type="checkbox" id="registrationConfirmation" required>
-                I confirm that the information provided is accurate.<br>
-                I understand that any false or misleading information may result in disqualification from the event.
-
-            </label>
-
-            <div class="register-btn-container">
-                <button type="submit" class="btn btn-primary">Register</button>
-            </div>
-
-            <p id="formStatus" class="form-status"></p>
+        <!-- Hide/Remove the Registration Form -->
+        <!--
+        <form id="registrationForm">
+            ... all form fields ...
         </form>
-
-
+        -->
 
     </div>
 
-    <!-- Success Modal (hidden by default) -->
-    <div id="successModal" class="modal">
+    <!-- Success Modal (if you no longer need it, you can remove it) -->
+    <div id="successModal" class="modal" style="display:none;">
         <div id="modalContent" class="modal-content">
-        <button id="closeModal" class="modal-close">X</button>
-        <!-- You can insert dynamic success text here or in script.js -->
+            <button id="closeModal" class="modal-close">X</button>
         </div>
     </div>
     
     <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
         <span class="material-icons">arrow_upward</span>
     </button>
-    <script src="js/byteITquizbee2025.js"></script>
-          <!-- ads footer -->
-          <ins class="adsbygoogle"
-          style="display:block"
-          data-ad-client="ca-pub-4537208011192461"
-          data-ad-slot="1190959056"
-          data-ad-format="auto"
-          data-full-width-responsive="true"></ins>
-      <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
 
+    <!-- Script references -->
+    <script src="js/byteITquizbee2025.js"></script>
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-4537208011192461"
+        data-ad-slot="1190959056"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 
     <!-- Footer -->
     <div id="footerContainer"></div>
