@@ -45,6 +45,8 @@ app.disable('x-powered-by');
 
 //const sitemapRoutes = require('./routes/sitemapRoutes');
 //app.use('/', sitemapRoutes);
+//const data = fs.readFileSync(path.join(__dirname, 'public', 'blogPool.json'), 'utf8');
+//const blogList = JSON.parse(data);
 // Configure CORS appropriately
 //app.use(cors({
 //    origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:3000/', 'https://4hprojects.github.io'],
@@ -106,7 +108,7 @@ app.get('/api/config', (req, res) => {
     res.json({
         apiKey: process.env.GOOGLE_API_KEY,
         spreadsheetIdAtt: process.env.GOOGLE_SPREADSHEET_ID_ATTENDANCE,
-        spreadsheetIdCSMST2025: process.env.GOOGLE_SPREADSHEET_ID_CSMST2025,
+        spreadsheetIdCSMST2025: process.env.GOOGLE_SPREADSHEET_ID_ATTENDANCE,
     });
 });
 
@@ -282,21 +284,27 @@ const { fetchClassSectionFromMasterList, fetchClassRecordFromSheet } = require('
 
 
 
-// Route to fetch ClassRecord from a specific sheet
+// Route to fetch class records (for both Midterm & Final)
 app.get('/api/getClassRecordFromSheet', async (req, res) => {
-  const { studentID, sheetName } = req.query;
-  if (!studentID || !sheetName) {
-    return res.status(400).json({ success: false, message: 'Student ID and sheet name are required.' });
-  }
-
-  try {
-    const classRecord = await fetchClassRecordFromSheet(studentID, sheetName);
-    res.json({ success: true, data: classRecord });
-  } catch (error) {
-    console.error('Error fetching class record:', error.message);
-    res.status(500).json({ success: false, message: 'Internal server error. Please try again later.' });
-  }
-});
+    try {
+      const { studentID, sheetName } = req.query;
+  
+      // Validate required parameters
+      if (!studentID || !sheetName) {
+        return res.status(400).json({ success: false, message: "Missing studentID or sheetName parameter." });
+      }
+  
+      // Fetch data from Google Sheets
+      const record = await fetchClassRecordFromSheet(studentID, sheetName);
+  
+      // Respond with the fetched data
+      return res.json({ success: true, data: record });
+  
+    } catch (err) {
+      console.error(`Error in /api/getClassRecordFromSheet: ${err.message}`);
+      return res.status(500).json({ success: false, message: err.message });
+    }
+  });
 
 
 
@@ -2192,94 +2200,6 @@ app.post('/upload-grades', isAuthenticated, isAdmin, upload.single('gradesFile')
     }
 });
 
-app.post('/upload-attendance', isAuthenticated, isAdmin, upload.single('attendanceFile'), async (req, res) => {
-    try {
-        const attendanceFile = req.file;
-        if (!attendanceFile) {
-            console.error("File upload error: No file was uploaded.");
-            return res.status(400).json({ success: false, message: 'No file uploaded' });
-        }
-
-        const attendanceData = await parseCSVFile(attendanceFile.path);
-
-        if (!Array.isArray(attendanceData)) {
-            console.error("Parsing error: attendanceData is not an array.");
-            fs.unlink(attendanceFile.path, err => {
-                if (err) console.error('Error deleting uploaded file:', err);
-            });
-            return res.status(500).json({ success: false, message: 'Parsing error: attendanceData is not an array' });
-        }
-
-        const attendanceCollection = client.db('myDatabase').collection('tblAttendance');
-
-        // Prepare bulk operations
-        const bulkOps = attendanceData.map(record => {
-            const {
-                studentIDNumber,
-                courseID,
-                courseDescription,
-                attDate,
-                attTime,
-                attStatus,
-                attRemarks,
-                term
-            } = record;
-
-            if (!studentIDNumber || !courseID || !attDate || !attTime || !term) {
-                console.error('Invalid record:', record);
-                return null; // Skip invalid records
-            }
-
-            return {
-                updateOne: {
-                    filter: {
-                        studentIDNumber: studentIDNumber,
-                        courseID: courseID,
-                        attDate: attDate,
-                        attTime: attTime
-                    },
-                    update: {
-                        $set: {
-                            courseDescription,
-                            attStatus,
-                            attRemarks,
-                            term
-                        }
-                    },
-                    upsert: true
-                }
-            };
-        }).filter(op => op !== null); // Remove null values
-
-        if (bulkOps.length > 0) {
-            await attendanceCollection.bulkWrite(bulkOps);
-        } else {
-            console.warn('No valid records to process.');
-        }
-
-        // Delete the uploaded file
-        fs.unlink(attendanceFile.path, err => {
-            if (err) console.error('Error deleting uploaded file:', err);
-        });
-
-        res.json({ success: true, message: 'Attendance uploaded and stored successfully.' });
-    } catch (error) {
-        console.error('Error uploading attendance:', error);
-
-        if (req.file) {
-            fs.unlink(req.file.path, err => {
-                if (err) console.error('Error deleting uploaded file:', err);
-            });
-        }
-
-        res.status(500).json({ success: false, message: 'An internal server error occurred while uploading attendance.' });
-    }
-});
-
-
-
-
-
 
 // Fetch user details route
 app.get('/user-details', isAuthenticated, async (req, res) => {
@@ -2600,40 +2520,6 @@ app.get('/get-courses/:studentIDNumber', isAuthenticated, async (req, res) => {
     } catch (error) {
         console.error('Error fetching courses:', error);
         res.status(500).json({ success: false, message: 'An error occurred while fetching courses.' });
-    }
-});
-
-// Fetch Attendance Data for a Student and Course
-app.get('/get-attendance/:studentIDNumber/:courseID', isAuthenticated, async (req, res) => {
-    const studentIDNumber = req.params.studentIDNumber;
-    const courseID = req.params.courseID;
-    console.log('/get-attendance/ API called with studentIDNumber:', studentIDNumber, 'courseID:', courseID); // Debug log
-
-    try {
-        const attendanceRecords = await client.db('myDatabase').collection('tblAttendance')
-            .find({ studentIDNumber: studentIDNumber, courseID: courseID })
-            .project({ _id: 0, attDate: 1, attTime: 1, attStatus: 1, attRemarks: 1, term: 1 })
-            .sort({ attDate: 1, attTime: 1 })
-            .toArray();
-
-        if (attendanceRecords.length === 0) {
-            return res.json({ success: true, attendanceDataArray: [] });
-        }
-
-        res.json({ 
-            success: true, 
-            attendanceDataArray: attendanceRecords.map(record => ({
-                attDate: record.attDate || "", // Default to empty string
-                attTime: record.attTime || "", // Default to empty string
-                attStatus: record.attStatus || "", // Default to empty string
-                attRemarks: record.attRemarks || "", // Default to empty string
-                term: record.term || "" // Default to empty string
-            }))
-        });
-        
-    } catch (error) {
-        console.error('Error fetching attendance:', error);
-        res.status(500).json({ success: false, message: 'An error occurred while fetching attendance.' });
     }
 });
 
