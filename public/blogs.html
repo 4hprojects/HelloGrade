@@ -77,27 +77,150 @@
 
     <!-- Blog Content -->
     <main class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">HelloGrade Blogs</h1>
-        <div id="share-buttons" class="mt-6 flex justify-center space-x-4"></div>
-        <p class="text-gray-600 text-center text-sm mb-8">
-            "Technology will never replace great teachers, but in the hands of great teachers, it’s transformational." These words by George Couros perfectly describe the changing face of education. With EdTech investments reaching $20 billion in 2023, the shift toward technology-driven learning is undeniable.
-        </p>
-        <p class="text-gray-800 leading-7">
-            At HelloGrade, we’re focused on tools and strategies that truly make a difference—AI that personalises feedback, platforms that streamline grading, and solutions that deepen student engagement. Our blog cuts through the clutter to bring you practical insights, actionable tips, and inspiring success stories.
-        </p>
-        
-        <article class="text-gray-800 leading-7" id="content">
-            <section data-scroll-reveal="enter from-left">
-                <h3 class="text-2xl font-semibold mb-4">Educational Excellence with a Tech-Driven Focus</h3>
-                <p>
-                    At HelloGrade, we specialise in delivering content that empowers our readers through three interconnected pillars:
-                </p>
-                <ul class="list-disc list-inside mt-4">
-                    <li><strong>Educational Technology Trends:</strong> Stay ahead with insights into the latest tools, platforms, and innovations reshaping education. From AI in classrooms to data-driven teaching, we delve into the trends that are redefining learning and teaching experiences.</li>
-                    <li><strong>Personal & Professional Growth:</strong> We believe learning doesn’t stop at the classroom. Our content supports educators, students, and professionals with strategies to develop skills, improve productivity, and create meaningful, balanced lives.</li>
-                    <li><strong>Practical Education Solutions:</strong> Explore actionable ideas and tools that can be implemented immediately. From streamlining grading systems to engaging students in creative ways, we provide hands-on strategies to make education more effective and efficient.</li>
+        <!-- Blog Introduction -->
+        <section class="px-4 py-6 max-w-3xl mx-auto text-gray-800">
+            <p class="text-gray-600 text-center text-sm mb-4 leading-6">
+                "Technology will never replace great teachers, but in the hands of great teachers, it’s transformational."
+                – George Couros
+            </p>
+
+            <p class="text-gray-600 text-center text-sm mb-6 leading-6">
+                With EdTech investments surpassing $20 billion in 2023, technology-driven learning isn't just a trend—it’s a shift in how education works. 
+                At HelloGrade, we focus on practical solutions that simplify grading, enhance engagement, and support learners where it matters most.
+            </p>
+
+            <p class="text-gray-800 leading-7 mb-6">
+                Our blog delivers <strong>real insights</strong>, <strong>actionable tips</strong>, and <strong>inspiring stories</strong>—without the fluff.
+            </p>
+
+            <div class="bg-gray-100 p-4 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2 text-gray-900">What You’ll Find Here:</h3>
+                <ul class="text-gray-700 text-sm space-y-2">
+                    <li>📌 <strong>EdTech Tools</strong> – Apps and platforms that make studying easier.</li>
+                    <li>📌 <strong>Learning Strategies</strong> – Practical tips to retain information and ace your exams.</li>
+                    <li>📌 <strong>Productivity & Growth</strong> – Ways to stay motivated, focused, and ahead in school.</li>
                 </ul>
+            </div>
+
+            <p class="text-gray-700 text-sm mt-4 text-center">
+                Explore, learn, and be part of the conversation. Welcome to the HelloGrade blog!
+            </p>
+        </section>
+
+                
+
+
+        <section id="latestBlog" class="container mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Latest Blog</h2>
+            <div id="latestBlogContainer" class="bg-white p-6 rounded-lg shadow-md">
+                <!-- Latest blog will be inserted here dynamically -->
+            </div>
+        </section>
+
+        <!-- Categories and Series Section -->
+        <section id="categoriesAndSeries" class="mt-8">
+            <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Categories and Series</h2>
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              
+              <!-- Living in the IT Era Series -->
+              <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-2xl font-semibold mb-4">Living in the IT Era</h3>
+                <ul class="list-disc list-inside">
+                  <li><a href="/blogs/mst24lesson1-understandingIT" class="text-blue-600 hover:underline" target="_blank">Lesson 1: Understanding IT</a></li>
+                  <li><a href="/blogs/mst24lesson2-historyofcomputers" class="text-blue-600 hover:underline" target="_blank">Lesson 2: History of Computers</a></li>
+                  <li><a href="/blogs/mst24lesson3-hardwarecomponents" class="text-blue-600 hover:underline" target="_blank">Lesson 3: Hardware Components</a></li>
+                  <li><a href="/blogs/mst24lesson4-software-behind-every-click" class="text-blue-600 hover:underline" target="_blank">Lesson 4: Computer Software</a></li>
+                  <li><a href="/blogs/mst24lesson5-internet-twww" class="text-blue-600 hover:underline" target="_blank">Lesson 5: Internet and WWW</a></li>
+                  <li><a href="/blogs/mst24lesson6-cybersecurity" class="text-blue-600 hover:underline" target="_blank">Lesson 6: Cybersecurity</a></li>
+                  <li><a href="/blogs/mst24lesson7-socialmedia" class="text-blue-600 hover:underline" target="_blank">Lesson 7: Social Media</a></li>
+                  <li><a href="/blogs/mst24lesson8-artificialintelligence" class="text-blue-600 hover:underline" target="_blank">Lesson 8: Artificial Intelligence</a></li>
+                  <li><a href="/blogs/mst24lesson9-cloudcomputing" class="text-blue-600 hover:underline" target="_blank">Lesson 9: Cloud Computing</a></li>
+                  <li><a href="/blogs/mst24lesson10-ecommerce" class="text-blue-600 hover:underline" target="_blank">Lesson 10: E-Commerce</a></li>
+                  <li><a href="/blogs/mst24lesson11-telecommunication" class="text-blue-600 hover:underline" target="_blank">Lesson 11: Telecommunications</a></li>
+                  <li><a href="/blogs/mst24lesson12-thegigeconomy" class="text-blue-600 hover:underline" target="_blank">Lesson 12: The Gig Economy</a></li>
+                  <li class="text-gray-500">More lessons coming soon...</li>
+                </ul>
+              </div>
+          
+              <!-- Python Programming Basics Series -->
+              <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-2xl font-semibold mb-4">Python Programming Basics</h3>
+                <ul class="list-disc list-inside">
+                  <li><a href="/blogs/it114-lesson1-introduction-to-python" class="text-blue-600 hover:underline" target="_blank">Lesson 1: Introduction to Python</a></li>
+                  <li><a href="/blogs/it114-lesson2-python-programming-basics" class="text-blue-600 hover:underline" target="_blank">Lesson 2: Python Syntax</a></li>
+                  <li><a href="/blogs/it114-lesson3-python-strings" class="text-blue-600 hover:underline" target="_blank">Lesson 3: Python Strings</a></li>
+                  <li><a href="/blogs/it114-lesson4-conditional-statements" class="text-blue-600 hover:underline" target="_blank">Lesson 4: Conditional Statements</a></li>
+                  <li><a href="/blogs/it114-lesson5-while-looping-statement" class="text-blue-600 hover:underline" target="_blank">Lesson 5: While Loops</a></li>
+                  <li><a href="/blogs/it114-lesson6-datastructures" class="text-blue-600 hover:underline" target="_blank">Lesson 6: Data Structures</a></li>
+                  <li><a href="/blogs/it114-lesson7-forloop" class="text-blue-600 hover:underline" target="_blank">Lesson 7: For Loops</a></li>
+                  <li><a href="/blogs/it114-lesson8-randommodule" class="text-blue-600 hover:underline" target="_blank">Lesson 8: Random Module</a></li>
+                  <li><a href="/blogs/it114-lesson9-functionmodules" class="text-blue-600 hover:underline" target="_blank">Lesson 9: Functions and Modules</a></li>
+                  <li><a href="/blogs/it114-lesson9_1-returnstatement" class="text-blue-600 hover:underline" target="_blank">Lesson 9.1: Return Statement</a></li>
+                  <li><a href="/blogs/it114-lesson10-errorhandling" class="text-blue-600 hover:underline" target="_blank">Lesson 10: Error Handling</a></li>
+                  <li><a href="/blogs/it114-lesson11-pythonscope" class="text-blue-600 hover:underline" target="_blank">Lesson 11: Python Scope</a></li>
+                  <li class="text-gray-500">More lessons coming soon...</li>
+                </ul>
+              </div>
+          
+              <!-- 7 Habits of Highly Effective People Series -->
+              <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-2xl font-semibold mb-4">7 Habits of Highly Effective People</h3>
+                <ul class="list-disc list-inside">
+                  <li><a href="/blogs/scp1-be-proactive" class="text-blue-600 hover:underline" target="_blank">Habit 1: Be Proactive</a></li>
+                  <li><a href="/blogs/scp2-beginning-with-the-end-in-mind" class="text-blue-600 hover:underline" target="_blank">Habit 2: Begin with the End in Mind</a></li>
+                  <li><a href="/blogs/scp3-put-first-things-first" class="text-blue-600 hover:underline" target="_blank">Habit 3: Put First Things First</a></li>
+                  <li><a href="/blogs/scp4-think-win-win" class="text-blue-600 hover:underline" target="_blank">Habit 4: Think Win-Win</a></li>
+                  <li><a href="/blogs/scp5-seek-first-to-understand" class="text-blue-600 hover:underline" target="_blank">Habit 5: Seek First to Understand</a></li>
+                  <li><a href="/blogs/scp6-synergize" class="text-blue-600 hover:underline" target="_blank">Habit 6: Synergize®</a></li>
+                  <li><a href="/blogs/scp7-sharpen-the-saw" class="text-blue-600 hover:underline" target="_blank">Habit 7: Sharpen the Saw</a></li>
+                </ul>
+              </div>
+          
+              <!-- Tech Related -->
+              <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-2xl font-semibold mb-4">Tech Related</h3>
+                <ul class="list-disc list-inside">
+                  <li><a href="/blogs/year2038" class="text-blue-600 hover:underline" target="_blank">The Year 2038 Problem</a></li>
+                  <li><a href="/blogs/5G-vs-6G" class="text-blue-600 hover:underline" target="_blank">5G vs 6G</a></li>
+                  <li><a href="/blogs/beginnersguide-usb-abc" class="text-blue-600 hover:underline" target="_blank">Beginner's Guide to USB-A, USB-B, and USB-C</a></li>
+                  <li><a href="/blogs/promptengineering" class="text-blue-600 hover:underline" target="_blank">Google’s Prompt Engineering Essentials</a></li>
+                  <li><a href="/blogs/handwritingcode.html" class="text-blue-600 hover:underline" target="_blank">Improving Coding Skills Through Handwriting</a></li>
+                  <li><a href="/blogs/brands-that-failed-to-innovate-and-disappeared" class="text-blue-600 hover:underline" target="_blank">Brands That Failed to Innovate and Disappeared</a></li>
+                  <li class="text-gray-500">More blogs coming soon...</li>
+                </ul>
+              </div>
+          
+              <!-- Self Help Articles -->
+              <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-2xl font-semibold mb-4">Self Help Articles</h3>
+                <ul class="list-disc list-inside">
+                  <li><a href="/blogs/brainrot" class="text-blue-600 hover:underline" target="_blank">How to Overcome Brain Rot and Rebuild Your Attention Span</a></li>
+                  <li><a href="/blogs/master-time-management" class="text-blue-600 hover:underline" target="_blank">Master Time Management</a></li>
+                  <li><a href="/blogs/why-writing-down-your-goals-is-important" class="text-blue-600 hover:underline" target="_blank">Why Writing Down Your Goals Is Crucial</a></li>
+                  <li><a href="/blogs/blog7" class="text-blue-600 hover:underline" target="_blank">10 Things I Wish I Knew Before Entering IT</a></li>
+                  <li><a href="/blogs/blog5" class="text-blue-600 hover:underline" target="_blank">What to Do During Semestral Breaks</a></li>
+                  <li><a href="/blogs/blog4" class="text-blue-600 hover:underline" target="_blank">Why Should We Attend Seminars and Conferences</a></li>
+                  <li><a href="/blogs/blog3" class="text-blue-600 hover:underline" target="_blank">Developing Digital Literacy Skills</a></li>
+                  <li><a href="/blogs/effective-study-techniques" class="text-blue-600 hover:underline" target="_blank">Effective Study Techniques</a></li>
+                  <li><a href="/blogs/role-of-technology-in-education" class="text-blue-600 hover:underline" target="_blank">Technology in Education</a></li>
+                  <li><a href="/blogs/programmingmindset" class="text-blue-600 hover:underline" target="_blank">The Programming Mindset: Think Like a Developer</a></li>
+                  <li class="text-gray-500">More blogs coming soon...</li>
+                </ul>
+              </div>
+          
             </section>
+          </section>
+          
+
+        
+        <section id="randomBlogs" class="container mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Discover More Blogs</h2>
+            <div id="randomBlogsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Random blogs will be inserted here dynamically -->
+            </div>
+        </section>
+
+        <article class="text-gray-800 leading-7" id="content">
             <section class="mt-6 text-center">
                 <p class="text-lg text-blue-600 font-semibold">
                     Join the Conversation, Shape the Future
@@ -111,112 +234,6 @@
             </section>
                         
         </article>
-
-        <section id="latestBlog" class="container mx-auto px-4 py-8">
-            <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Latest Blog</h2>
-            <div id="latestBlogContainer" class="bg-white p-6 rounded-lg shadow-md">
-                <!-- Latest blog will be inserted here dynamically -->
-            </div>
-        </section>
-
-        <!-- Categories and Series Section -->
-        <section id="categoriesAndSeries" class="mt-8">
-            <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Categories and Series</h2>
-            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Living in the IT Era Series -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold mb-4">Living in the IT Era</h3>
-                    <ul class="list-disc list-inside">
-                        <li><a href="/blogs/mst24lesson1-understandingIT" class="text-blue-600 hover:underline" target="_blank">Lesson 1: Understanding IT</a></li>
-                        <li><a href="/blogs/mst24lesson2-historyofcomputers" class="text-blue-600 hover:underline" target="_blank">Lesson 2: History of Computers</a></li>
-                        <li><a href="/blogs/mst24lesson3-hardwarecomponents" class="text-blue-600 hover:underline" target="_blank">Lesson 3: Hardware Components</a></li>
-                        <li><a href="/blogs/mst24lesson4-software-behind-every-click" class="text-blue-600 hover:underline" target="_blank">Lesson 4: Computer Software</a></li>
-                        <li><a href="/blogs/mst24lesson5-internet-twww" class="text-blue-600 hover:underline" target="_blank">Lesson 5: Internet and WWW</a></li>
-                        <li><a href="/blogs/mst24lesson6-cybersecurity" class="text-blue-600 hover:underline" target="_blank">Lesson 6: Cybersecurity</a></li>
-                        <li><a href="/blogs/mst24lesson7-socialmedia" class="text-blue-600 hover:underline" target="_blank">Lesson 7: Social Media</a></li>
-                        <li><a href="/blogs/mst24lesson8-artificialintelligence" class="text-blue-600 hover:underline" target="_blank">Lesson 8: Artificial Intelligence</a></li>
-                        <li><a href="/blogs/mst24lesson9-cloudcomputing" class="text-blue-600 hover:underline" target="_blank">Lesson 9: Cloud Computing</a></li>
-                        <li><a href="/blogs/mst24lesson10-ecommerce" class="text-blue-600 hover:underline" target="_blank">Lesson 10: E-Commerce</a></li>
-                        <li><a href="/blogs/mst24lesson11-telecommunication" class="text-blue-600 hover:underline" target="_blank">Lesson 11: Telecommunication</a></li>
-                        <li><a href="/blogs/mst24lesson12-thegigeconomy" class="text-blue-600 hover:underline" target="_blank">Lesson 12: The Gig Economy</a></li>
-                        <li class="text-gray-500">More lessons coming soon...</li>
-                    </ul>
-                </div>
-
-                <!-- Python Programming Basics Series -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold mb-4">Python Programming Basics</h3>
-                    <ul class="list-disc list-inside">
-                        <li><a href="/blogs/it114-lesson1-introduction-to-python" class="text-blue-600 hover:underline" target="_blank">Lesson 1: Introduction to Python</a></li>
-                        <li><a href="/blogs/it114-lesson2-python-programming-basics" class="text-blue-600 hover:underline" target="_blank">Lesson 2: Python Syntax</a></li>
-                        <li><a href="/blogs/it114-lesson3-python-strings" class="text-blue-600 hover:underline" target="_blank">Lesson 3: Python Strings</a></li>
-                        <li><a href="/blogs/it114-lesson4-conditional-statements" class="text-blue-600 hover:underline" target="_blank">Lesson 4: Conditional Statements</a></li>
-                        <li><a href="/blogs/it114-lesson5-while-looping-statement" class="text-blue-600 hover:underline" target="_blank">Lesson 5: While Loops</a></li>
-                        <li><a href="/blogs/it114-lesson6-datastructures" class="text-blue-600 hover:underline" target="_blank">Lesson 6: Data Structures</a></li>
-                        <li><a href="/blogs/it114-lesson7-forloop" class="text-blue-600 hover:underline" target="_blank">Lesson 7: For Loops</a></li>
-                        <li><a href="/blogs/it114-lesson8-randommodule" class="text-blue-600 hover:underline" target="_blank">Lesson 8: Random Module</a></li>
-                        <li><a href="/blogs/it114-lesson9-functionmodules" class="text-blue-600 hover:underline" target="_blank">Lesson 9: Function and Modules</a></li>
-                        <li><a href="/blogs/it114-lesson9_1-returnstatement" class="text-blue-600 hover:underline" target="_blank">Lesson 9.1: Return Statement</a></li>
-                        <li><a href="/blogs/it114-lesson10-errorhandling" class="text-blue-600 hover:underline" target="_blank">Lesson 10: Error Handling</a></li>
-                        <li class="text-gray-500">More lessons coming soon...</li>
-                    </ul>
-                </div>
-
-                <!-- 7 Habits of Highly Effective People Series -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold mb-4">7 Habits of Highly Effective People</h3>
-                    <ul class="list-disc list-inside">
-                        <li><a href="/blogs/scp1-be-proactive" class="text-blue-600 hover:underline" target="_blank">Habit 1: Be Proactive</a></li>
-                        <li><a href="/blogs/scp2-beginning-with-the-end-in-mind" class="text-blue-600 hover:underline" target="_blank">Habit 2: Begin with the End in Mind</a></li>
-                        <li><a href="/blogs/scp3-put-first-things-first" class="text-blue-600 hover:underline" target="_blank">Habit 3: Put First Things First</a></li>
-                        <li><a href="/blogs/scp4-think-win-win" class="text-blue-600 hover:underline" target="_blank">Habit 4: Think Win-win</a></li>
-                        <li><a href="/blogs/scp5-seek-first-to-understand" class="text-blue-600 hover:underline" target="_blank">Habit 5: Seek First to Understand then to be Understood</a></li>
-                        <li><a href="/blogs/scp6-synergize" class="text-blue-600 hover:underline" target="_blank">Habit 6: Synergize®</a></li>
-                        <li><a href="/blogs/scp7-sharpen-the-saw" class="text-blue-600 hover:underline" target="_blank">Habit 7: Sharpen the Saw</a></li>
-                        <!--li class="text-gray-500">More habits coming soon...</li-->
-                    </ul>
-                </div>
-
-                <!-- Tech Related -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold mb-4">Tech Related</h3>
-                    <ul class="list-disc list-inside">
-                        <li><a href="/blogs/year2038" class="text-blue-600 hover:underline" target="_blank">The Year 2038 Problem</a></li>
-                        <li><a href="/blogs/5G-vs-6G" class="text-blue-600 hover:underline" target="_blank">5G vs 6G</a></li>
-                        <li><a href="/blogs/blog9" class="text-blue-600 hover:underline" target="_blank">Beginner's Guide to USB-A, USB-B, and USB-C</a></li>
-                        <!--li><a href="/blogs/scp4-think-win-win" class="text-blue-600 hover:underline" target="_blank">Habit 4: Think Win-win</a></!--li>
-                        <li><a href="/blogs/scp5-seek-first-to-understand" class="text-blue-600 hover:underline" target="_blank">Habit 5: Seek First to Understand then to be Understood</a></li>
-                        <li><a href="/blogs/scp6-synergize" class="text-blue-600 hover:underline" target="_blank">Habit 6: Synergize®</a></li>
-                        <li><a href="/blogs/scp7-sharpen-the-saw" class="text-blue-600 hover:underline" target="_blank">Habit 7: Sharpen the Saw</a></li-->
-                        <li class="text-gray-500">More habits coming soon...</li>
-                    </ul>
-                </div>
-                                <!-- Tech Related -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold mb-4">Self Help Articles</h3>
-                    <ul class="list-disc list-inside">
-                        <li><a href="/blogs/brands-that-failed-to-innovate-and-disappeared" class="text-blue-600 hover:underline" target="_blank">The Year 2038 Problem</a></li>
-                        <li><a href="/blogs/master-time-management" class="text-blue-600 hover:underline" target="_blank">5G vs 6G</a></li>
-                        <li><a href="/blogs//why-writing-down-your-goals-is-important" class="text-blue-600 hover:underline" target="_blank">Beginner's Guide to USB-A, USB-B, and USB-C</a></li>
-                        <li><a href="/blogs/blog7" class="text-blue-600 hover:underline" target="_blank">10 Things I Wish I Knew Before Entering IT</a></li>
-                        <li><a href="/blogs/blog5" class="text-blue-600 hover:underline" target="_blank">What to Do During Semestral Breaks</a></li>
-                        <li><a href="/blogs/blog4" class="text-blue-600 hover:underline" target="_blank">Why Should We Attend Seminars and Conferences</a></li>
-                        <li><a href="/blogs/blog3" class="text-blue-600 hover:underline" target="_blank">Developing Digital Literacy Skills</a></li>
-                        <li><a href="/blogs/effective-study-techniques" class="text-blue-600 hover:underline" target="_blank">Effective Study Techniques</a></li>
-                        <li><a href="/blogs/role-of-technology-in-education" class="text-blue-600 hover:underline" target="_blank">Technology in Education</a></li>
-                        <li><a href="/blogs/programmingmindset" class="text-blue-600 hover:underline" target="_blank">Think Like a Developer</a></li>
-                        <li class="text-gray-500">More habits coming soon...</li>
-                    </ul>
-                </div>
-            </section>
-
-        
-        <section id="randomBlogs" class="container mx-auto px-4 py-8">
-            <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Discover More Blogs</h2>
-            <div id="randomBlogsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Random blogs will be inserted here dynamically -->
-            </div>
-        </section>
         
     </main>
 
