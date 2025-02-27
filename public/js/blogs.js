@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
             id: "principle1",
-            title: "Best Programming Practices for Beginners in Python",
+            title: "Know the Condition of Your Flock - The Way of the Shepherd",
             date: "February 27, 2025",
             image: "/images/twots/principle1.webp",
             link: "/books/the-way-of-the-sheperhed/principle1.html",
