@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "best-programming-practices",
+            title: "Best Programming Practices for Beginners in Python",
+            date: "February 27, 2025",
+            image: "/images/blog-best-programming-practices.webp",
+            link: "/blogs/best-programming-practices.html",
+            description: "Master Python programming with essential best practices for beginners. Learn how to plan before coding, create task lists, organize functions, and use keyboard shortcuts to write clean, efficient code."
+        }, 
+        {
             id: "brainrot",
             title: "How to Overcome Brain Rot and Rebuild Your Attention Span",
             date: "February 24, 2025",
