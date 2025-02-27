@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Know the Condition of Your Flock - The Way of the Shepherd",
             date: "February 27, 2025",
             image: "/images/twots/principle1.webp",
-            link: "/books/the-way-of-the-sheperhed/principle1.html",
+            link: "/books/the-way-of-the-shepherd/principle1.html",
             description: "Understand the first principle of The Way of the Shepherd: Know the Condition of Your Flock. Strengthen leadership skills with trust and engagement."
         }, 
         
