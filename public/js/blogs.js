@@ -1,6 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "principle1",
+            title: "Best Programming Practices for Beginners in Python",
+            date: "February 27, 2025",
+            image: "/images/twots/principle1.webp",
+            link: "/books/the-way-of-the-sheperhed/principle1.html",
+            description: "Understand the first principle of The Way of the Shepherd: Know the Condition of Your Flock. Strengthen leadership skills with trust and engagement."
+        }, 
+        
+        {
             id: "best-programming-practices",
             title: "Best Programming Practices for Beginners in Python",
             date: "February 27, 2025",
