@@ -5,16 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Know the Condition of Your Flock - The Way of the Shepherd",
             date: "February 27, 2025",
             image: "/images/twots/principle1.webp",
-            link: "/books/the-way-of-the-shepherd/principle1.html",
+            link: "/books/the-way-of-the-shepherd/principle1",
             description: "Understand the first principle of The Way of the Shepherd: Know the Condition of Your Flock. Strengthen leadership skills with trust and engagement."
-        }, 
-        
+        },      
         {
             id: "best-programming-practices",
             title: "Best Programming Practices for Beginners in Python",
             date: "February 27, 2025",
             image: "/images/blog-best-programming-practices.webp",
-            link: "/blogs/best-programming-practices.html",
+            link: "/blogs/best-programming-practices",
             description: "Master Python programming with essential best practices for beginners. Learn how to plan before coding, create task lists, organize functions, and use keyboard shortcuts to write clean, efficient code."
         }, 
         {
