@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "weekend-recovery",
+            title: "How to Recover Your Energy on Weekends: Science-Backed Strategies",
+            date: "February 28, 2025",
+            image: "/images/blog-weekend-recovery.webp",
+            link: "https://hellograde.online/blogs/how-to-recover-your-energy-on-weekends",
+            description: "Maximize your weekend recovery with science-backed strategies. Learn how to balance active and passive relaxation, set boundaries between work and personal life, and recharge effectively for better productivity and well-being."
+        },
+        {
             id: "principle1",
             title: "Know the Condition of Your Flock - The Way of the Shepherd",
             date: "February 27, 2025",
