@@ -378,6 +378,9 @@ app.get('/events/itquizbee2025', (req, res) => {
 app.get('/events', (req, res) => {
     res.sendFile(__dirname + '/public/events.html');
 });
+app.get('/books/the-way-of-the-shepherd/principle1', (req, res) => {
+    res.sendFile(__dirname + '/public/books/the-way-of-the-shepherd/principle1.html');
+});
 
 // 1) Redirect "/classrecords.html" => "/classrecords"
 app.get('/classrecords.html', (req, res) => {
