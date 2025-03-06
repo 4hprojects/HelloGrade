@@ -374,7 +374,7 @@ app.get('/events/2025bytefunruninfo', (req, res) => {
 });
 app.get('/events/bytefunrun2025results', (req, res) => {
     res.sendFile(__dirname + '/public/events/bytefunrun2025results.html');
-  
+});
 app.get('/events/itquizbee2025', (req, res) => {
     res.sendFile(__dirname + '/public/events/itquizbee2025.html');
 });
