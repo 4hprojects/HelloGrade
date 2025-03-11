@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "it114-lesson12",
+            title: "IT 114 - Lesson 12: Time Module and Datetime Module",
+            date: "March 11, 2025",
+            image: "/images/hellograde-blog-python-time.webp",
+            link: "https://www.hellograde.online/blogs/it114-lesson12-pythontimedate.html",
+            description: "Master Python’s time and datetime modules! Learn how to handle timestamps, format time, use delays, and perform date arithmetic with real-world applications."
+        },
+        {
             id: "weekend-recovery",
             title: "How to Recover Your Energy on Weekends: Science-Backed Strategies",
             date: "February 28, 2025",
