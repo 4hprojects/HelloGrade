@@ -365,7 +365,7 @@ app.get('/terms-and-conditions', (req, res) => {
   app.get('/reset-password', (req, res) => {
     res.sendFile(__dirname + '/public/reset-password.html');
   });
-
+/*
   app.get('/events/2025bytefunrun', (req, res) => {
     res.sendFile(__dirname + '/public/events/2025bytefunrun.html');
 });
@@ -384,7 +384,10 @@ app.get('/events', (req, res) => {
 app.get('/books/the-way-of-the-shepherd/principle1', (req, res) => {
     res.sendFile(__dirname + '/public/books/the-way-of-the-shepherd/principle1.html');
 });
-
+app.get('/books/the-way-of-the-shepherd/principle2', (req, res) => {
+    res.sendFile(__dirname + '/public/books/the-way-of-the-shepherd/principle2.html');
+});
+*/
 // 1) Redirect "/classrecords.html" => "/classrecords"
 app.get('/classrecords.html', (req, res) => {
     if (!req.session || !req.session.userId) {
@@ -1070,26 +1073,6 @@ app.post('/api/classes/upload-temp-students', isAuthenticated, isTeacherOrAdmin,
     }
 });
 
-
-/**
- * Create a new quiz
- * Example of request body:
- * {
- *   "quizTitle": "Sample Quiz",
- *   "description": "This is a sample quiz.",
- *   "questions": [
- *     {
- *       "questionText": "What is 2 + 2?",
- *       "options": ["1", "2", "3", "4"],
- *       "correctAnswer": 3
- *     }
- *   ],
- *   "dueDate": "2025-01-20T23:59:59",  // in ISO (UTC) or your chosen format
- *   "latePenaltyPercent": 40,         // default if not provided
- *   "maxAttempts": 1,                 // default is 1
- *   "duration": 10                    // e.g. 10 minutes (0 if not timed)
- * }
- */
 app.post('/api/quizzes', isAuthenticated, isAdmin, async (req, res) => {
     try {
         const {
@@ -1260,22 +1243,6 @@ function convertToTimezone(date, timeZone) {
     );
 }
 
-//const currentTime = new Date();
-//const timeZone = 'Asia/Manila';
-//const manilaTime = utcToZonedTime(currentTime, timeZone);
-//console.log('Manila Time:', manilaTime);
-
-/**
- * Submit final quiz attempt
- *  We:
- *    1. Confirm ownership
- *    2. Calculate raw score
- *    3. Check if late (submittedAt > dueDate)
- *    4. Apply late penalty
- *    5. Mark isCompleted = true, store finalScore
- *    6. If multiple attempts, compute average - (attempts - 1)
- */
-
 function isValidObjectId(id) {
     return ObjectId.isValid(id) && new ObjectId(id).toString() === id;
 }
@@ -1335,17 +1302,6 @@ app.post('/api/quizzes/:quizId/attempts/:attemptId/submit', isAuthenticated, asy
         const totalQuizPoints = quiz.questions.length;
         
 
-        // 3. Check late submission
-        // convert both times to Asia/Manila before comparing
-        // Convert something to Manila time
-        //const manilaDateNow = utcToZonedTime(new Date(), 'Asia/Manila');
-        //console.log('Manila Date:', manilaDateNow);
-
-        // Use format if needed
-        //console.log('Formatted Manila Time:', format(manilaDateNow, 'yyyy-MM-dd HH:mm:ssXXX', {
-        //timeZone: 'Asia/Manila',
-        //}));
-
         let finalScore = rawScore;
         
         // Remove timezone conversion logic: we simply use the current server time for submission
@@ -1359,30 +1315,7 @@ app.post('/api/quizzes/:quizId/attempts/:attemptId/submit', isAuthenticated, asy
             finalScore = rawScore - penalty;
         }
         }
-/*
-        try {
-            manilaDateNow = utcToZonedTime(new Date(), 'Asia/Manila');
-        } catch (error) {
-            console.warn('Timezone conversion failed, using server time as fallback.');
-            manilaDateNow = new Date();
-        }
-        
-        
-        if (quiz.dueDate) {
-            const manilaDueDate = utcToZonedTime(quiz.dueDate, 'Asia/Manila');
-            // compare times in ms
-            console.log('Due Date:', manilaDueDate);
-            if (submittedAt.getTime() > manilaDueDate.getTime()) {
-                const penaltyPercent = quiz.latePenaltyPercent || 40;
-                const penalty = (penaltyPercent / 100) * totalQuizPoints;
-                finalScore = rawScore - penalty;
-            }
-        }
-        console.log('Current time:', new Date());
-        console.log('Timezone:', timeZone);
-        console.log('Zoned time:', utcToZonedTime(new Date(), timeZone));
 
-*/
         // clamp finalScore to a minimum of 0
         finalScore = Math.max(0, finalScore);
 
@@ -2715,7 +2648,21 @@ app.post('/api/blogs', async (req, res) => {
     // If you keep the file as blog6.html in /public/blogs:
     res.sendFile(path.join(__dirname, 'public', 'blogs', blogId + '.html'));
   });
-  
+  app.get('/lessons/mst24/:blogId', (req, res) => {
+    const { blogId } = req.params;     // e.g. 'blog6'
+    // If you keep the file as blog6.html in /public/blogs:
+    res.sendFile(path.join(__dirname, 'public', 'lessons','mst24', blogId + '.html'));
+  });
+  app.get('/events/:blogId', (req, res) => {
+    const { blogId } = req.params;     // e.g. 'blog6'
+    // If you keep the file as blog6.html in /public/blogs:
+    res.sendFile(path.join(__dirname, 'public', 'events', blogId + '.html'));
+  });
+  app.get('/books/the-way-of-the-shepherd/:blogId', (req, res) => {
+    const { blogId } = req.params;     // e.g. 'blog6'
+    // If you keep the file as blog6.html in /public/blogs:
+    res.sendFile(path.join(__dirname, 'public', 'books','the-way-of-the-shepherd', blogId + '.html'));
+  });
 
   // Serve ads.txt file dynamically
 app.get("/ads.txt", (req, res) => {
@@ -2723,60 +2670,6 @@ app.get("/ads.txt", (req, res) => {
     res.send("google.com, pub-4537208011192461, DIRECT, f08c47fec0942fa0");
 });
 
-//user_reset route
- /*
-  app.get('/sitemap.xml', async (req, res) => {
-    const staticUrls = [
-        { loc: '/login', changefreq: 'daily', priority: 0.8 },
-        { loc: '/blog', changefreq: 'weekly', priority: 0.9 },
-        { loc: '/index', changefreq: 'daily', priority: 1.0 },
-        { loc: '/search', changefreq: 'weekly', priority: 0.6 },
-        { loc: '/contact', changefreq: 'monthly', priority: 0.5 },
-        { loc: '/about', changefreq: 'monthly', priority: 0.5 },
-        { loc: '/help', changefreq: 'monthly', priority: 0.5 },
-        { loc: '/privacy-policy', changefreq: 'yearly', priority: 0.3 },
-        { loc: '/terms-and-conditions', changefreq: 'yearly', priority: 0.3 },
-        { loc: '/reset-password', changefreq: 'weekly', priority: 0.6 }
-    ];
-
-    const baseUrl = 'https://hellograde.online';
-
-    let dynamicUrls = [];
-
-    try {
-        // Fetch dynamic URLs for blogs
-        const blogs = await blogCollection.find({}).toArray();
-        dynamicUrls = blogs.map(blog => ({
-            loc: `/blogs/${blog.slug}`,
-            changefreq: 'weekly',
-            priority: 0.8
-        }));
-    } catch (error) {
-        console.error('Error fetching dynamic URLs:', error);
-    }
-
-    const urls = [...staticUrls, ...dynamicUrls];
-
-    const sitemap = `
-        <?xml version="1.0" encoding="UTF-8"?>
-        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            ${urls
-                .map(url => `
-                    <url>
-                        <loc>${baseUrl}${url.loc}</loc>
-                        <changefreq>${url.changefreq}</changefreq>
-                        <priority>${url.priority}</priority>
-                    </url>
-                `)
-                .join('')}
-        </urlset>
-    `;
-
-    res.header('Content-Type', 'application/xml');
-    res.send(sitemap.trim());
-});
-
-*/
 // Serve 404 page for non-existent routes
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
