@@ -1,8 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "principle3",
+            title: "Help Your Sheep Identify with You",
+            date: "March 13, 2025",
+            image: "/images/twots/principle3.webp",
+            link: "/books/the-way-of-the-shepherd/principle3",
+            description: "Learn how to build trust and connection with your team by helping them identify with you. Explore actionable strategies from The Way of the Shepherd to inspire loyalty, foster open communication, and lead with authenticity."
+        },
+        {
+            id: "lesson13-2",
+            title: "Google Workspace",
+            date: "March 14, 2025",
+            image: "/images/mst24/lesson13/google-workspace-overview.webp",
+            link: "https://hellograde.online/lessons/mst24/lesson13-2",
+            description: "Explore how Google Workspace enhances productivity through cloud-based collaboration, AI-powered tools, and seamless integrations. Compare it with Microsoft 365 and discover its business benefits."
+        },
+        {
+            id: "lesson13-1",
+            title: "Introduction to Office Suites",
+            date: "March 13, 2025",
+            image: "/images/mst24/lesson13/google-workspace-overview.webp",
+            link: "https://hellograde.online/lessons/mst24/lesson13-2",
+            description: "Explore the fundamentals of office suites, their evolution, and how they enhance productivity. Learn about Microsoft Office, Google Workspace, LibreOffice, and more."
+        },
+        {
             id: "it114-lesson12",
-            title: "IT 114 - Lesson 12: Time Module and Datetime Module",
+            title: "Time Module and Datetime Module",
             date: "March 11, 2025",
             image: "/images/hellograde-blog-python-time.webp",
             link: "https://www.hellograde.online/blogs/it114-lesson12-pythontimedate.html",
@@ -17,13 +41,21 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Maximize your weekend recovery with science-backed strategies. Learn how to balance active and passive relaxation, set boundaries between work and personal life, and recharge effectively for better productivity and well-being."
         },
         {
+            id: "principle2",
+            title: "Discover the Shape of Your Sheep",
+            date: "March 6, 2025",
+            image: "/images/twots/principle2.webp",
+            link: "/books/the-way-of-the-sheprhed/principle1",
+            description: "Know the Condition of Your Flock. Learn actionable leadership strategies to build trust, improve communication, and inspire your team to thrive."
+        },  
+        {
             id: "principle1",
-            title: "Know the Condition of Your Flock - The Way of the Shepherd",
+            title: "Know the Condition of Your Flock",
             date: "February 27, 2025",
             image: "/images/twots/principle1.webp",
-            link: "/books/the-way-of-the-shepherd/principle1",
+            link: "/books/the-way-of-the-sheprhed/principle1",
             description: "Understand the first principle of The Way of the Shepherd: Know the Condition of Your Flock. Strengthen leadership skills with trust and engagement."
-        },      
+        },  
         {
             id: "best-programming-practices",
             title: "Best Programming Practices for Beginners in Python",
@@ -31,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/blog-best-programming-practices.webp",
             link: "/blogs/best-programming-practices",
             description: "Master Python programming with essential best practices for beginners. Learn how to plan before coding, create task lists, organize functions, and use keyboard shortcuts to write clean, efficient code."
-        }, 
+        },        
         {
             id: "brainrot",
             title: "How to Overcome Brain Rot and Rebuild Your Attention Span",
