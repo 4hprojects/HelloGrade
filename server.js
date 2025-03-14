@@ -365,6 +365,18 @@ app.get('/terms-and-conditions', (req, res) => {
   app.get('/reset-password', (req, res) => {
     res.sendFile(__dirname + '/public/reset-password.html');
   });
+  app.get('/lessons', (req, res) => {
+    res.sendFile(__dirname + '/public/lessons.html');
+  });
+  app.get('/lesson', (req, res) => {
+    res.sendFile(__dirname + '/public/lessons.html');
+  });
+  app.get('/event', (req, res) => {
+    res.sendFile(__dirname + '/public/events.html');
+  });
+  app.get('/events', (req, res) => {
+    res.sendFile(__dirname + '/public/events.html');
+  });
 /*
   app.get('/events/2025bytefunrun', (req, res) => {
     res.sendFile(__dirname + '/public/events/2025bytefunrun.html');
