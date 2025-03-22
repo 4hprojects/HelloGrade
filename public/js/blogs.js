@@ -1,6 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "byteFunRun2025Results",
+            title: "BYTe Fun Run 2025 Results",
+            date: "March 23, 2025",
+            image: "/images/events/2025byterun/bytefunrun2025-banner.jpg",
+            link: "/events/bytfunrun2025results",
+            description: "See the official results of the BYTe Fun Run 2025! Discover the top finishers, event highlights, and the sponsors who made it possible."
+        },
+        {
+            id: "principle4",
+            title: "Help Your Sheep Identify with You",
+            date: "March 22, 2025",
+            image: "/images/twots/principle4.webp",
+            link: "/books/the-way-of-the-shepherd/principle4",
+            description: "Discover how to create a safe workplace environment with Principle #4 from 'The Way of the Shepherd.' Learn actionable strategies to foster trust, boost productivity, and ensure employee well-being."
+        },
+        {
+            id: "mst24-lesson13-3",
+            title: "Mastering Gmail: Boost Productivity with Email Excellence",
+            date: "March 22, 2025",
+            image: "/images/mst24/lesson13/lesson13-3.webp",
+            link: "/lessons/mst24/lesson13-3",
+            description: "Learn how to master Gmail with this comprehensive guide. Explore Gmail's user interface, email etiquette, and productivity tips to streamline your communication and boost efficiency."
+        },
+        {
             id: "principle3",
             title: "Help Your Sheep Identify with You",
             date: "March 13, 2025",
@@ -12,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "lesson13-2",
             title: "Google Workspace",
             date: "March 14, 2025",
-            image: "/images/mst24/lesson13/google-workspace-overview.webp",
+            image: "/images/mst24/lesson13/lesson13-2.webp",
             link: "https://hellograde.online/lessons/mst24/lesson13-2",
             description: "Explore how Google Workspace enhances productivity through cloud-based collaboration, AI-powered tools, and seamless integrations. Compare it with Microsoft 365 and discover its business benefits."
         },
