@@ -1,5 +1,38 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
+                {
+            id: "it114-lesson15-textcolor",
+            title: "Python Text Colors: Mastering Colorama and ANSI Escape Sequences",
+            date: "March 26, 2025",
+            image: "/images/it114/python-text-colors.webp",
+            link: "/lessons/blogs/it114-lesson15-textcolor",
+            description: "Learn to enhance Python console applications with Colorama and ANSI escape sequences. This guide covers cross-platform text coloring, styling techniques, and practical examples for better debugging and user experience."
+        },
+        {
+            id: "it114-lesson14-install-python-library",
+            title: "IT114 Lesson 14: Installing New Libraries in Python",
+            date: "March 26, 2025",
+            image: "/images/it114/python-library-installation.webp",
+            link: "/lessons/blogs/it114-lesson14-install-python-library",
+            description: "Learn how to install and manage Python libraries using pip, explore virtual environments, and discover alternative installation methods. Boost your programming skills with practical tips and hands-on examples."
+        },
+        
+        {
+            id: "mst24-lesson13-4",
+            title: "Google Drive Essentials: Master Cloud Storage & Collaboration",
+            date: "2025-03-25",
+            image: "/images/mst24/lesson13/google-drive-hero.webp",
+            link: "/lessons/mst24/lesson13-4",
+            description: "Learn to leverage Google Drive's full potential - from file sharing to real-time collaboration. Discover interface tips, advanced sharing controls, and productivity hacks for professionals."
+        },
+        {
+            id: "it114-lesson13-2dnestedloop",
+            title: "IT 114 - Lesson 13: 2D Lists and Nested Loops",
+            date: "March 24, 2025",
+            image: "/images/it114/lesson13-2d-lists-nested-loops.webp",
+            link: "/lessons/blogs/it114-lesson13-2dnestedloop",
+            description: "Master 2D lists and nested loops in Python with practical examples, operations, and methods. Learn how to create, modify, and iterate through 2D lists effectively."
+        },
         {
             id: "byteFunRun2025Results",
             title: "BYTe Fun Run 2025 Results",
