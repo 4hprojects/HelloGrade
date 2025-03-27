@@ -1,11 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
-                {
+        {
+            id: "principle5",
+            title: "The Staff of Direction: How Great Leaders Guide Their Teams (Principle 5 of The Way of the Shepherd)",
+            date: "March 27, 2025",
+            image: "/images/twots/principle5.webp",
+            link: "/books/the-way-of-the-shepherd/principle5",
+            description: "Master the biblical art of leadership direction with the Staff of Direction. Learn how to guide teams like a shepherd—setting clear paths, gentle correction, and protection—just as taught in The Way of the Shepherd. Includes actionable strategies and modern parallels."
+        },
+        {
+            id: "mst24-lesson13-5",
+            title: "Mastering Google Docs Collaboration: Real-Time Editing & Team Productivity",
+            date: "2025-03-26",
+            image: "/images/mst24/lesson13/google-docs-collaboration.webp",
+            link: "/lessons/mst24/lesson13-5",
+            description: "Learn professional Google Docs workflows including version control, security settings, and collaboration best practices for teams. Discover hidden features that save 5+ hours weekly."
+        },
+        {
             id: "it114-lesson15-textcolor",
             title: "Python Text Colors: Mastering Colorama and ANSI Escape Sequences",
             date: "March 26, 2025",
             image: "/images/it114/python-text-colors.webp",
-            link: "/lessons/blogs/it114-lesson15-textcolor",
+            link: "/blogs/it114-lesson15-textcolor",
             description: "Learn to enhance Python console applications with Colorama and ANSI escape sequences. This guide covers cross-platform text coloring, styling techniques, and practical examples for better debugging and user experience."
         },
         {
@@ -13,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "IT114 Lesson 14: Installing New Libraries in Python",
             date: "March 26, 2025",
             image: "/images/it114/python-library-installation.webp",
-            link: "/lessons/blogs/it114-lesson14-install-python-library",
+            link: "/blogs/it114-lesson14-install-python-library",
             description: "Learn how to install and manage Python libraries using pip, explore virtual environments, and discover alternative installation methods. Boost your programming skills with practical tips and hands-on examples."
         },
         
@@ -30,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "IT 114 - Lesson 13: 2D Lists and Nested Loops",
             date: "March 24, 2025",
             image: "/images/it114/lesson13-2d-lists-nested-loops.webp",
-            link: "/lessons/blogs/it114-lesson13-2dnestedloop",
+            link: "/blogs/it114-lesson13-2dnestedloop",
             description: "Master 2D lists and nested loops in Python with practical examples, operations, and methods. Learn how to create, modify, and iterate through 2D lists effectively."
         },
         {
@@ -70,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Google Workspace",
             date: "March 14, 2025",
             image: "/images/mst24/lesson13/lesson13-2.webp",
-            link: "https://hellograde.online/lessons/mst24/lesson13-2",
+            link: "/lessons/mst24/lesson13-2",
             description: "Explore how Google Workspace enhances productivity through cloud-based collaboration, AI-powered tools, and seamless integrations. Compare it with Microsoft 365 and discover its business benefits."
         },
         {
@@ -78,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Introduction to Office Suites",
             date: "March 13, 2025",
             image: "/images/mst24/lesson13/google-workspace-overview.webp",
-            link: "https://hellograde.online/lessons/mst24/lesson13-2",
+            link: "/lessons/mst24/lesson13-1",
             description: "Explore the fundamentals of office suites, their evolution, and how they enhance productivity. Learn about Microsoft Office, Google Workspace, LibreOffice, and more."
         },
         {
@@ -86,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Time Module and Datetime Module",
             date: "March 11, 2025",
             image: "/images/hellograde-blog-python-time.webp",
-            link: "https://www.hellograde.online/blogs/it114-lesson12-pythontimedate.html",
+            link: "/blogs/it114-lesson12-pythontimedate.html",
             description: "Master Python’s time and datetime modules! Learn how to handle timestamps, format time, use delays, and perform date arithmetic with real-world applications."
         },
         {
@@ -94,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "How to Recover Your Energy on Weekends: Science-Backed Strategies",
             date: "February 28, 2025",
             image: "/images/blog-weekend-recovery.webp",
-            link: "https://hellograde.online/blogs/how-to-recover-your-energy-on-weekends",
+            link: "/blogs/how-to-recover-your-energy-on-weekends",
             description: "Maximize your weekend recovery with science-backed strategies. Learn how to balance active and passive relaxation, set boundaries between work and personal life, and recharge effectively for better productivity and well-being."
         },
         {
