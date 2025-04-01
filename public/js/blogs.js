@@ -1,6 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "byteQuizBee2025",
+            title: "BYTe Quiz Bee 2025 Results: Winners & Highlights",
+            date: "March 22, 2025",
+            image: "/images/events/byte-quiz-bee-2025.jpg",
+            link: "/events/itquizbee2025results",
+            description: "Discover the top performers of the BYTe Quiz Bee 2025. View the complete results, winners, and highlights of this year's IT quiz bee event for non-IT students at Benguet State University."
+        },
+        {
+            id: "byteFunRun2025Results",
+            title: "BYTe Fun Run 2025 Results: Race Highlights & Winners",
+            date: "March 4, 2025",
+            image: "/images/events/2025byterun/bytefunrun2025-banner.jpg",
+            link: "/events/bytefunrun2025results",
+            description: "The official results of the BYTe Fun Run 2025! Discover the top finishers in 3K and 5K categories, event highlights, and the sponsors who made it possible. Relive the race day excitement through our photo gallery."
+        },
+        {
             id: "mst24-lesson13-8",
             title: "Google Forms",
             date: "April 1, 2025",
