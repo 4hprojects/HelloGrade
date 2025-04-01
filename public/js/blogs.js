@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "mst24-lesson13-6",
             title: "Google Sheets",
             date: "March 31, 2025",
-            image: "/images/mst24/lesson13/google-sheets-tips.webp",
+            image: "/images/mst24/lesson13/google-sheets-dashboard.webp",
             link: "https://www.hellograde.online/lessons/mst24/lesson13-6",
             description: "Boost your Google Sheets skills with essential formulas, formatting tips, and productivity hacks. Learn how to analyze and visualize data like a pro."
         },       
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "it114-lesson16-lambda",
             title: "Python Lambda Functions: Write Cleaner, Faster Code",
             date: "March 28, 2025",
-            image: "/images/python-lambda-functions.webp",
+            image: "/images/it114/lambda.png",
             link: "/blogs/it114-lesson16-lambda",
             description: "Master Python lambda functions with this comprehensive guide. Learn syntax, practical use cases with map()/filter()/sorted(), and when to use them versus regular functions for cleaner code. Includes exercises and assessment."
         },
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "lesson13-1",
             title: "Introduction to Office Suites",
             date: "March 13, 2025",
-            image: "/images/mst24/lesson13/google-workspace-overview.webp",
+            image: "/images/mst24/lesson13/office-suites-intro.webp",
             link: "/lessons/mst24/lesson13-1",
             description: "Explore the fundamentals of office suites, their evolution, and how they enhance productivity. Learn about Microsoft Office, Google Workspace, LibreOffice, and more."
         },
@@ -221,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "mst24-lesson11",
             title: "Telecommunications",
             date: "February 14, 2025",
-            image: "/images/mst24-lesson11-telecommunication.webp",
+            image: "/images/mst24lesson11-telecommunication.webp",
             link: "/blogs/mst24lesson11-telecommunication",
             description: "Discover how telecommunications networks, mobile networks, VOIP, and 5G technology are transforming global communication. Explore the evolution, impact, and future of the telecommunications industry, including the latest innovations and challenges."
         },
@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "scp6-synergize",
             title: "Habit 6: Synergize®",
             date: "February 13, 2025",
-            image: "/images/habit6-synergize.webp",
+            image: "/images/scp6-habit6-synergize.webp",
             link: "/blogs/scp6-synergize",
             description: "Discover how Habit 6: Synergize® from 'The 7 Habits of Highly Effective People' can transform teamwork and problem-solving. Learn how creative collaboration, valuing differences, and the third alternative mindset lead to better solutions and stronger relationships."
         },
@@ -509,7 +509,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "blog8",
             title: "Be Proactive",
             date: "January 2, 2025", 
-            image: "/images/blog8.webp",
+            image: "/images/beproactive.webp",
             link: "/blogs/blog8",
             description: "Discover how to build positive habits and unlock your potential for success. Learn practical strategies to overcome challenges, achieve goals, and foster personal growth on your journey to self-improvement."
         },
@@ -566,7 +566,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. Latest / Random Blog Sections
     const latestBlogContainer = document.getElementById("latestBlogContainer");
     const randomBlogsContainer = document.getElementById("randomBlogsContainer");
-    const numberOfBlogsToShow = 3;
+    const numberOfBlogsToShow = 60;
 
     // Sort blogs by date (largest/newest date first)
     const sortedBlogs = blogPool.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -578,11 +578,11 @@ document.addEventListener("DOMContentLoaded", () => {
         latestBlogContainer.innerHTML = `
             <img src="${latestBlog.image}" alt="${latestBlog.title}" class="w-full h-64 object-cover rounded-md mb-4">
             <h3 class="text-2xl font-semibold text-gray-800">
-                <a href="${latestBlog.link}" class="text-blue-600 hover:underline">${latestBlog.title}</a>
+                <a href="${latestBlog.link}" target="_blank" class="text-blue-600 hover:underline">${latestBlog.title}</a>
             </h3>
             <p class="text-gray-600 text-sm">Published on: <span class="font-medium">${latestBlog.date}</span></p>
             <p class="text-gray-600 mt-2">${latestBlog.description}</p>
-            <a href="${latestBlog.link}" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
+            <a href="${latestBlog.link}" target="_blank" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
         `;
     }
 
@@ -595,11 +595,11 @@ document.addEventListener("DOMContentLoaded", () => {
             blogCard.innerHTML = `
                 <img src="${blog.image}" alt="${blog.title}" class="w-full h-40 object-cover rounded-md mb-4">
                 <h3 class="text-xl font-semibold text-gray-800">
-                    <a href="${blog.link}" class="text-blue-600 hover:underline">${blog.title}</a>
+                    <a href="${blog.link}" target="_blank" class="text-blue-600 hover:underline">${blog.title}</a>
                 </h3>
                 <p class="text-gray-600 text-sm">Published on: <span class="font-medium">${blog.date}</span></p>
                 <p class="text-gray-600 mt-2">${blog.description}</p>
-                <a href="${blog.link}" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
+                <a href="${blog.link}" target="_blank" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
             `;
 
             randomBlogsContainer.appendChild(blogCard);
@@ -628,19 +628,19 @@ document.addEventListener("DOMContentLoaded", () => {
             navContainer.innerHTML = `
             <div class="mt-6 flex justify-center space-x-4">
                 <a
-                    href="${prevBlog.link}"
+                    href="${prevBlog.link}" target="_blank"
                     class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm text-center hover:bg-blue-700"
                 >
                     Previous: ${prevBlog.title}
                 </a>
                 <a
-                    href="/blog"
+                    href="/blog" target="_blank"
                     class="text-white bg-green-700 px-4 py-2 rounded-md text-sm text-center hover:bg-green-800"
                 >
                     Check Other Blogs
                 </a>
                 <a
-                    href="${nextBlog.link}"
+                    href="${nextBlog.link}" target="_blank"
                     class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm text-center hover:bg-blue-700"
                 >
                     Next: ${nextBlog.title}
