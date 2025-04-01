@@ -1,6 +1,38 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "mst24-lesson13-8",
+            title: "Google Forms",
+            date: "April 1, 2025",
+            image: "/images/mst24/lesson13/google-forms-dashboard.webp",
+            link: "/lessons/mst24/lesson13-8",
+            description: "Learn professional Google Forms techniques - from basic surveys to advanced features like conditional logic and GDPR compliance. Includes templates, question type guides, and data analysis tips."
+        },
+        {
+            id: "mst24-lesson13-7",
+            title: "Google Slides",
+            date: "March 31, 2025",
+            image: "/images/mst24/lesson13/google-slides-dashboard.webp",
+            link: "/lessons/mst24/lesson13-7",
+            description: "Transform your presentations with professional Google Slides techniques - learn visual hierarchy, real-time collaboration, and advanced design features to create impactful slides."
+        },
+        {
+            id: "mst24-lesson13-6",
+            title: "Google Sheets",
+            date: "March 31, 2025",
+            image: "/images/mst24/lesson13/google-sheets-tips.webp",
+            link: "https://www.hellograde.online/lessons/mst24/lesson13-6",
+            description: "Boost your Google Sheets skills with essential formulas, formatting tips, and productivity hacks. Learn how to analyze and visualize data like a pro."
+        },       
+        {
+            id: "it114-lesson16-lambda",
+            title: "Python Lambda Functions: Write Cleaner, Faster Code",
+            date: "March 28, 2025",
+            image: "/images/python-lambda-functions.webp",
+            link: "/blogs/it114-lesson16-lambda",
+            description: "Master Python lambda functions with this comprehensive guide. Learn syntax, practical use cases with map()/filter()/sorted(), and when to use them versus regular functions for cleaner code. Includes exercises and assessment."
+        },
+        {
             id: "principle5",
             title: "The Staff of Direction: How Great Leaders Guide Their Teams (Principle 5 of The Way of the Shepherd)",
             date: "March 27, 2025",
@@ -10,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "mst24-lesson13-5",
-            title: "Mastering Google Docs Collaboration: Real-Time Editing & Team Productivity",
+            title: "Google Docs",
             date: "2025-03-26",
             image: "/images/mst24/lesson13/google-docs-collaboration.webp",
             link: "/lessons/mst24/lesson13-5",
@@ -35,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         {
             id: "mst24-lesson13-4",
-            title: "Google Drive Essentials: Master Cloud Storage & Collaboration",
+            title: "Google Drive",
             date: "2025-03-25",
             image: "/images/mst24/lesson13/google-drive-hero.webp",
             link: "/lessons/mst24/lesson13-4",
@@ -67,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: "mst24-lesson13-3",
-            title: "Mastering Gmail: Boost Productivity with Email Excellence",
+            title: "Gmail",
             date: "March 22, 2025",
             image: "/images/mst24/lesson13/lesson13-3.webp",
             link: "/lessons/mst24/lesson13-3",
