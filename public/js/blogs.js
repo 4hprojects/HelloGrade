@@ -566,7 +566,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. Latest / Random Blog Sections
     const latestBlogContainer = document.getElementById("latestBlogContainer");
     const randomBlogsContainer = document.getElementById("randomBlogsContainer");
-    const numberOfBlogsToShow = 60;
+    const numberOfBlogsToShow = 6;
 
     // Sort blogs by date (largest/newest date first)
     const sortedBlogs = blogPool.sort((a, b) => new Date(b.date) - new Date(a.date));
