@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "it114-lesson17-threading",
+            title: "Python Threading",
+            date: "April 2, 2025",
+            image: "/images/it114/python-threading.webp",
+            link: "/blogs/lesson17-threading",
+            description: "Master Python threading to speed up I/O-bound tasks while avoiding race conditions, deadlocks, and GIL limitations. Includes practical examples and synchronization techniques."
+        },
+        {
             id: "byteQuizBee2025",
             title: "BYTe Quiz Bee 2025 Results: Winners & Highlights",
             date: "March 22, 2025",
