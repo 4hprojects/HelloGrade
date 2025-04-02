@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Python Threading",
             date: "April 2, 2025",
             image: "/images/it114/python-threading.webp",
-            link: "/blogs/lesson17-threading",
+            link: "/blogs/it114-lesson17-threading",
             description: "Master Python threading to speed up I/O-bound tasks while avoiding race conditions, deadlocks, and GIL limitations. Includes practical examples and synchronization techniques."
         },
         {
