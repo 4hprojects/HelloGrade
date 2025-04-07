@@ -1,5 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
+                {
+            id: "generalist-vs-specialist",
+            title: "Specialist vs Generalist",
+            date: "2025-04-15",
+            image: "/images/blogs/specialist-vs-generalist-career.webp",
+            link: "/blogs/generalist-vs-specialist",
+            description: "85% of companies now seek hybrid talent. Discover whether to specialize or generalize in your career, with actionable strategies to become a T-shaped professional and future-proof your skills."
+        },
+        {
+            id: "it114-lesson19-exefile",
+            title: "Python to EXE: Create Standalone Apps with PyInstaller",
+            date: "April 3, 2025",
+            image: "/images/it114/python-to-exe-guide.webp",
+            link: "/blogs/lesson19-exefile",
+            description: "Step-by-step guide to convert Python scripts to executable (.exe) files using PyInstaller. Learn to create standalone apps for Windows, macOS, and Linux with flags like --onefile and --windowed. Includes troubleshooting tips for common issues."
+        },
+        {
+            id: "it114-lesson18-classes",
+            title: "Python OOP: Mastering Classes and Objects",
+            date: "April 3, 2025",
+            image: "/images/it114/python-classes.webp",
+            link: "/blogs/it114-lesson18-classes",
+            description: "Comprehensive guide to Python classes and object-oriented programming. Learn class syntax, inheritance, methods, and practical OOP applications with clear examples."
+        },
         {
             id: "it114-lesson17-threading",
             title: "Python Threading",
