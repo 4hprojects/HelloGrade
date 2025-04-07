@@ -1,12 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
-                {
-            id: "generalist-vs-specialist",
+        {
+            id: "specialist-vs-generalist",
             title: "Specialist vs Generalist",
-            date: "2025-04-15",
+            date: "April 7, 2025",
             image: "/images/blogs/specialist-vs-generalist-career.webp",
-            link: "/blogs/generalist-vs-specialist",
+            link: "/blogs/specialist-vs-generalist",
             description: "85% of companies now seek hybrid talent. Discover whether to specialize or generalize in your career, with actionable strategies to become a T-shaped professional and future-proof your skills."
+        },
+        {
+            id:"it114-lesson20-programdocumentation",
+            title: "Software Documentation Guide",
+            date: "April 4, 2025",
+            image: "/images/it114/software-documentation.webp",
+            link: "/blogs/it114-lesson20-programdocumentation",
+            description: "Comprehensive guide to software documentation covering its importance, essential components, best practices, and real-world examples. Learn how to create documentation that boosts productivity and maintains code quality."
         },
         {
             id: "it114-lesson19-exefile",
