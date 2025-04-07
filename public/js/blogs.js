@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Python to EXE: Create Standalone Apps with PyInstaller",
             date: "April 3, 2025",
             image: "/images/it114/python-to-exe-guide.webp",
-            link: "/blogs/lesson19-exefile",
+            link: "/blogs/it114-lesson19-exefile",
             description: "Step-by-step guide to convert Python scripts to executable (.exe) files using PyInstaller. Learn to create standalone apps for Windows, macOS, and Linux with flags like --onefile and --windowed. Includes troubleshooting tips for common issues."
         },
         {
