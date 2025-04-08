@@ -6,322 +6,432 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
-
 <url>
   <loc>https://www.hellograde.online/</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
+  <lastmod>2025-04-08T00:00:00+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://www.hellograde.online/index</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
+  <lastmod>2025-04-08T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.hellograde.online/blog</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
+  <lastmod>2025-04-08T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.hellograde.online/login</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
+  <lastmod>2025-04-08T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.hellograde.online/search</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson1-understandingIT</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson2-historyofcomputers</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson3-hardwarecomponents</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson4-software-behind-every-click</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson5-internet-twww</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson6-cybersecurity</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson7-socialmedia</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson8-artificialintelligence</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson9-cloudcomputing</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson10-ecommerce</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson12-thegigeconomy</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson1-introduction-to-python</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson2-python-programming-basics</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson3-python-strings</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson4-conditional-statements</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson5-while-looping-statement</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson6-datastructures</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson7-forloop</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson8-randommodule</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson9-functionmodules</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson9_1-returnstatement</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson10-errorhandling</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson11-pythonscope</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/scp1-be-proactive</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/scp2-beginning-with-the-end-in-mind</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/scp3-put-first-things-first</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/scp4-think-win-win</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/scp5-seek-first-to-understand</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/scp6-synergize</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/scp7-sharpen-the-saw</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/year2038</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/5G-vs-6G</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/beginnersguide-usb-abc</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/promptengineering</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/handwritingcode.html</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/brands-that-failed-to-innovate-and-disappeared</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/brainrot</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/master-time-management</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/why-writing-down-your-goals-is-important</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/blog7</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/blog5</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/blog4</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/blog3</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/effective-study-techniques</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/role-of-technology-in-education</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/programmingmindset</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
+  <lastmod>2025-04-08T00:00:00+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.hellograde.online/reset-password</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
+  <lastmod>2025-04-08T00:00:00+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.hellograde.online/signup.html</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
+  <lastmod>2025-04-08T00:00:00+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.hellograde.online/contact</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/scp1-be-proactive.html</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson3-hardwarecomponents.html</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/mst24lesson1-understandingIT.html</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson1-introduction-to-python.html</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/why-writing-down-your-goals-is-important.html</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/it114-lesson5-while-looping-statement.html</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/master-time-management.html</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://www.hellograde.online/blogs/scp2-beginning-with-the-end-in-mind.html</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
+  <lastmod>2025-04-08T00:00:00+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://www.hellograde.online/terms-and-conditions</loc>
-  <lastmod>2025-02-28T13:22:58+00:00</lastmod>
+  <lastmod>2025-04-08T00:00:00+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 
+<!-- Blog Posts -->
+<url>
+  <loc>https://www.hellograde.online/blogs/specialist-vs-generalist</loc>
+  <lastmod>2025-04-07T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson20-programdocumentation</loc>
+  <lastmod>2025-04-04T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson19-exefile</loc>
+  <lastmod>2025-04-03T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson18-classes</loc>
+  <lastmod>2025-04-03T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson17-threading</loc>
+  <lastmod>2025-04-02T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/events/itquizbee2025results</loc>
+  <lastmod>2025-03-22T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/events/bytefunrun2025results</loc>
+  <lastmod>2025-03-04T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/lessons/mst24/lesson13-8</loc>
+  <lastmod>2025-04-01T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/lessons/mst24/lesson13-7</loc>
+  <lastmod>2025-03-31T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/lessons/mst24/lesson13-6</loc>
+  <lastmod>2025-03-31T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson16-lambda</loc>
+  <lastmod>2025-03-28T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/books/the-way-of-the-shepherd/principle5</loc>
+  <lastmod>2025-03-27T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/lessons/mst24/lesson13-5</loc>
+  <lastmod>2025-03-26T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson15-textcolor</loc>
+  <lastmod>2025-03-26T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson14-install-python-library</loc>
+  <lastmod>2025-03-26T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/lessons/mst24/lesson13-4</loc>
+  <lastmod>2025-03-25T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson13-2dnestedloop</loc>
+  <lastmod>2025-03-24T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/books/the-way-of-the-shepherd/principle4</loc>
+  <lastmod>2025-03-22T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/lessons/mst24/lesson13-3</loc>
+  <lastmod>2025-03-22T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/books/the-way-of-the-shepherd/principle3</loc>
+  <lastmod>2025-03-13T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/lessons/mst24/lesson13-2</loc>
+  <lastmod>2025-03-14T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/lessons/mst24/lesson13-1</loc>
+  <lastmod>2025-03-13T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson12-pythontimedate</loc>
+  <lastmod>2025-03-11T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/how-to-recover-your-energy-on-weekends</loc>
+  <lastmod>2025-02-28T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/books/the-way-of-the-sheprhed/principle1</loc>
+  <lastmod>2025-03-06T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/books/the-way-of-the-sheprhed/principle1</loc>
+  <lastmod>2025-02-27T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/best-programming-practices</loc>
+  <lastmod>2025-02-27T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/brainrot</loc>
+  <lastmod>2025-02-24T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/scp7-sharpen-the-saw</loc>
+  <lastmod>2025-02-18T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson11-pythonscope</loc>
+  <lastmod>2025-02-18T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson9_1-returnstatement</loc>
+  <lastmod>2025-02-16T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson10-errorhandling</loc>
+  <lastmod>2025-02-16T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson12-thegigeconomy</loc>
+  <lastmod>2025-02-14T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson11-telecommunication</loc>
+  <lastmod>2025-02-14T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/promptengineering</loc>
+  <lastmod>2025-02-13T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson10-ecommerce</loc>
+  <lastmod>2025-02-13T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson9-functionmodules</loc>
+  <lastmod>2025-02-12T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/scp6-synergize</loc>
+  <lastmod>2025-02-13T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson9-cloudcomputing</loc>
+  <lastmod>2025-02-12T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/handwritingcode</loc>
+  <lastmod>2025-02-11T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson8-randommodule</loc>
+  <lastmod>2025-02-07T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/year2038</loc>
+  <lastmod>2025-02-07T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/scp5-seek-first-to-understand</loc>
+  <lastmod>2025-02-06T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson8-artificialintelligence</loc>
+  <lastmod>2025-02-04T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson7-forloop</loc>
+  <lastmod>2025-02-04T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/programmingmindset</loc>
+  <lastmod>2025-01-31T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson7-socialmedia</loc>
+  <lastmod>2025-01-31T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/scp4-think-win-win</loc>
+  <lastmod>2025-01-29T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson3-python-strings</loc>
+  <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson2-python-programming-basics</loc>
+  <lastmod>2025-01-13T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson1-introduction-to-python</loc>
+  <lastmod>2025-01-09T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson1-understandingIT</loc>
+  <lastmod>2025-01-10T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson2-historyofcomputers</loc>
+  <lastmod>2025-01-08T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson6-datastructures</loc>
+  <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson6-cybersecurity</loc>
+  <lastmod>2025-01-26T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson4-conditional-statements</loc>
+  <lastmod>2025-01-23T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson5-internet-twww</loc>
+  <lastmod>2025-01-23T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/scp3-put-first-things-first</loc>
+  <lastmod>2025-01-23T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson3-hardwarecomponents</loc>
+  <lastmod>2025-01-22T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/it114-lesson5-while-looping-statement</loc>
+  <lastmod>2025-01-22T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/mst24lesson4-software-behind-every-click</loc>
+  <lastmod>2025-01-21T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/5G-vs-6G</loc>
+  <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/role-of-technology-in-education</loc>
+  <lastmod>2024-12-01T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/effective-study-techniques</loc>
+  <lastmod>2024-12-01T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/blog3</loc>
+  <lastmod>2024-12-01T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/blog4</loc>
+  <lastmod>2024-12-02T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/blog5</loc>
+  <lastmod>2024-12-05T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/blog6</loc>
+  <lastmod>2024-12-11T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/blog7</loc>
+  <lastmod>2024-12-30T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/blog8</loc>
+  <lastmod>2025-01-02T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/beginnersguide-usb-abc</loc>
+  <lastmod>2025-01-03T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/scp1-be-proactive</loc>
+  <lastmod>2025-01-09T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/why-writing-down-your-goals-is-important</loc>
+  <lastmod>2025-01-12T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/master-time-management</loc>
+  <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/scp2-beginning-with-the-end-in-mind</loc>
+  <lastmod>2025-01-16T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.hellograde.online/blogs/brands-that-failed-to-innovate-and-disappeared</loc>
+  <lastmod>2025-01-17T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
 
 </urlset>
