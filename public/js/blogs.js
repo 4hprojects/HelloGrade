@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "emotional-resilience",
             title: "Build Emotional Resilience",
             date: "April 29, 2025",
-            image: "/images/emotional-resilience-guide.webp",
+            image: "/images/blogs/emotional-resilience-guide.webp",
             link: "/blogs/emotional-resilience",
             description: "75% of professionals experience burnout. Master science-backed techniques to bounce back from setbacks, manage stress, and build unshakable mental toughness in high-pressure environments."
         },
