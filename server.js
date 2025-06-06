@@ -2675,7 +2675,14 @@ app.post('/api/blogs', async (req, res) => {
     // If you keep the file as blog6.html in /public/blogs:
     res.sendFile(path.join(__dirname, 'public', 'books','the-way-of-the-shepherd', blogId + '.html'));
   });
-
+app.get('/blogs/tech-comparison/:slug', (req, res, next) => {
+    const slug = req.params.slug;
+    const filePath = path.join(__dirname, 'public', 'blogs', 'tech-comparison', `${slug}.html`);
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) return next(); // File doesn't exist, continue to 404
+        res.sendFile(filePath);
+    });
+});
   // Serve ads.txt file dynamically
 app.get("/ads.txt", (req, res) => {
     res.type("text/plain");
