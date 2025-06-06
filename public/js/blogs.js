@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "navigation-apps",
+            title: "Waze vs Google Maps vs Apple Maps : Choosing Your Perfect GPS Companion",
+            date: "June 6, 2025",
+            image: "/images/tech-comparison/navigation-apps-comparison.jpg",
+            link: "/blogs/tech-comparison/navigation-apps",
+            description: "Professional comparison of Waze, Google Maps, and Apple Maps. Discover which navigation app wins for real-time traffic, privacy, business listings, and route optimization with up-to-date data and expert insights."
+        },
+        {
             id: "emotional-resilience",
             title: "Build Emotional Resilience",
             date: "April 29, 2025",
