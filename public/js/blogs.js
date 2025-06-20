@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Mastering Tailwind CSS: A Beginner-Friendly Introduction",
             date: "June 20, 2025",
             image: "/images/images/tailwind-css-guide.png",
-            link: "/blogs/it114-tailwindcss-intro",
+            link: "/lessons/tailwind/tailwind-lesson1",
             description: "Learn how Tailwind CSS helps you style websites faster using utility classes. This guide is perfect for beginners who want a flexible, efficient way to write modern CSS without the hassle."
         },
         {
