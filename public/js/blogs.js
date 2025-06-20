@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "tailwind-intro",
+            title: "Mastering Tailwind CSS: A Beginner-Friendly Introduction",
+            date: "June 20, 2025",
+            image: "/images/images/tailwind-css-guide.png",
+            link: "/blogs/it114-tailwindcss-intro",
+            description: "Learn how Tailwind CSS helps you style websites faster using utility classes. This guide is perfect for beginners who want a flexible, efficient way to write modern CSS without the hassle."
+        },
+        {
             id: "navigation-apps",
             title: "Waze vs Google Maps vs Apple Maps : Choosing Your Perfect GPS Companion",
             date: "June 6, 2025",
