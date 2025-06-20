@@ -2665,6 +2665,11 @@ app.post('/api/blogs', async (req, res) => {
     // If you keep the file as blog6.html in /public/blogs:
     res.sendFile(path.join(__dirname, 'public', 'lessons','mst24', blogId + '.html'));
   });
+    app.get('/lessons/tailwind/:blogId', (req, res) => {
+    const { blogId } = req.params;     // e.g. 'blog6'
+    // If you keep the file as blog6.html in /public/blogs:
+    res.sendFile(path.join(__dirname, 'public', 'lessons','tailwind', blogId + '.html'));
+  });
   app.get('/events/:blogId', (req, res) => {
     const { blogId } = req.params;     // e.g. 'blog6'
     // If you keep the file as blog6.html in /public/blogs:
