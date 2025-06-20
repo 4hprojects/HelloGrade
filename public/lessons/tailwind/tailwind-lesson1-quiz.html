@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind CSS Proficiency Quiz | HelloGrade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+    <div class="max-w-4xl mx-auto px-4">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-blue-700 mb-2">Tailwind CSS Proficiency Quiz</h1>
+            <p class="text-gray-600">Test your knowledge of Tailwind CSS with these 30 questions (20 MCQs and 10 True/False)</p>
+            <div class="mt-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4">
+                <p><strong>Note:</strong> Answers are revealed immediately after each question. Try to answer before checking!</p>
+            </div>
+        </header>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-green-700 mb-6 border-b pb-2">Multiple Choice Questions (20 items)</h2>
+            
+            <!-- Question 1 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">1</div>
+                    <p class="font-medium text-gray-800">What is the primary philosophy behind Tailwind CSS?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q1" id="q1a" class="mr-2">
+                        <label for="q1a">Component-first approach</label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q1" id="q1b" class="mr-2">
+                        <label for="q1b">Utility-first approach</label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q1" id="q1c" class="mr-2">
+                        <label for="q1c">Inline styles approach</label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q1" id="q1d" class="mr-2">
+                        <label for="q1d">Semantic CSS approach</label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">B. Utility-first approach</span></p>
+                        <p class="mt-1 text-gray-700">Tailwind is a utility-first CSS framework, meaning it provides low-level utility classes to build designs directly in your markup.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">2</div>
+                    <p class="font-medium text-gray-800">Which of these classes would add 1rem (16px) of padding to all sides of an element?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q2" id="q2a" class="mr-2">
+                        <label for="q2a"><code>p-1</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q2" id="q2b" class="mr-2">
+                        <label for="q2b"><code>p-4</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q2" id="q2c" class="mr-2">
+                        <label for="q2c"><code>px-4</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q2" id="q2d" class="mr-2">
+                        <label for="q2d"><code>pt-4</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">B. <code>p-4</code></span></p>
+                        <p class="mt-1 text-gray-700">In Tailwind, <code>p-4</code> adds 1rem (16px) padding to all sides. The number represents multiples of 0.25rem (4 = 1rem).</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">3</div>
+                    <p class="font-medium text-gray-800">How would you make a flex container that aligns items vertically in the center?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q3" id="q3a" class="mr-2">
+                        <label for="q3a"><code>flex items-center</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q3" id="q3b" class="mr-2">
+                        <label for="q3b"><code>flex justify-center</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q3" id="q3c" class="mr-2">
+                        <label for="q3c"><code>flex content-center</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q3" id="q3d" class="mr-2">
+                        <label for="q3d"><code>flex align-center</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">A. <code>flex items-center</code></span></p>
+                        <p class="mt-1 text-gray-700"><code>items-center</code> aligns flex items along the cross axis (vertically for row direction). <code>justify-center</code> would align along the main axis (horizontally for row direction).</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">4</div>
+                    <p class="font-medium text-gray-800">Which Tailwind class would you use to make text bold?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q4" id="q4a" class="mr-2">
+                        <label for="q4a"><code>font-heavy</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q4" id="q4b" class="mr-2">
+                        <label for="q4b"><code>text-bold</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q4" id="q4c" class="mr-2">
+                        <label for="q4c"><code>font-bold</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q4" id="q4d" class="mr-2">
+                        <label for="q4d"><code>weight-bold</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">C. <code>font-bold</code></span></p>
+                        <p class="mt-1 text-gray-700">Tailwind uses <code>font-bold</code> for bold text (font-weight: 700). Other options include <code>font-normal</code>, <code>font-semibold</code>, and <code>font-extrabold</code>.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">5</div>
+                    <p class="font-medium text-gray-800">What does the "md:" prefix indicate in Tailwind classes?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q5" id="q5a" class="mr-2">
+                        <label for="q5a">Mobile-first design</label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q5" id="q5b" class="mr-2">
+                        <label for="q5b">Medium screen size breakpoint</label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q5" id="q5c" class="mr-2">
+                        <label for="q5c">Dark mode variant</label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q5" id="q5d" class="mr-2">
+                        <label for="q5d">Modern design specification</label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">B. Medium screen size breakpoint</span></p>
+                        <p class="mt-1 text-gray-700">The <code>md:</code> prefix applies styles at the medium breakpoint (768px by default). Tailwind uses mobile-first breakpoints: <code>sm:</code>, <code>md:</code>, <code>lg:</code>, <code>xl:</code>, <code>2xl:</code>.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Questions 6-20 would follow the same pattern -->
+            <!-- For brevity, I'll show the structure for one more MCQ -->
+
+            <!-- Question 6 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">6</div>
+                    <p class="font-medium text-gray-800">Which Tailwind class would you use to create a subtle shadow effect?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q6" id="q6a" class="mr-2">
+                        <label for="q6a"><code>shadow-sm</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q6" id="q6b" class="mr-2">
+                        <label for="q6b"><code>shadow</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q6" id="q6c" class="mr-2">
+                        <label for="q6c"><code>shadow-md</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q6" id="q6d" class="mr-2">
+                        <label for="q6d"><code>shadow-lg</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">B. <code>shadow</code></span></p>
+                        <p class="mt-1 text-gray-700">Tailwind provides multiple shadow sizes: <code>shadow-sm</code> (smallest), <code>shadow</code> (default), <code>shadow-md</code>, <code>shadow-lg</code>, <code>shadow-xl</code>, and <code>shadow-2xl</code> (largest).</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">7</div>
+                    <p class="font-medium text-gray-800">How would you set a dark blue background color using Tailwind's default palette?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q7" id="q7a" class="mr-2">
+                        <label for="q7a"><code>bg-blue-800</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q7" id="q7b" class="mr-2">
+                        <label for="q7b"><code>bg-dark-blue</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q7" id="q7c" class="mr-2">
+                        <label for="q7c"><code>bg-blue-dark</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q7" id="q7d" class="mr-2">
+                        <label for="q7d"><code>bg-blue-900</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">A. <code>bg-blue-800</code></span></p>
+                        <p class="mt-1 text-gray-700">Tailwind's color system uses numerical suffixes from 50-900, where higher numbers are darker. <code>bg-blue-800</code> is a dark blue in the default palette.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">8</div>
+                    <p class="font-medium text-gray-800">Which class would add 2rem (32px) of margin to the top of an element?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q8" id="q8a" class="mr-2">
+                        <label for="q8a"><code>mt-8</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q8" id="q8b" class="mr-2">
+                        <label for="q8b"><code>m-8</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q8" id="q8c" class="mr-2">
+                        <label for="q8c"><code>mx-8</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q8" id="q8d" class="mr-2">
+                        <label for="q8d"><code>pt-8</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">A. <code>mt-8</code></span></p>
+                        <p class="mt-1 text-gray-700">Tailwind's spacing scale uses multiples of 0.25rem (4px by default). <code>mt-8</code> adds margin-top of 2rem (8 × 0.25rem). <code>m-8</code> would add margin to all sides.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">9</div>
+                    <p class="font-medium text-gray-800">What does the "dark:" prefix do in Tailwind?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q9" id="q9a" class="mr-2">
+                        <label for="q9a">Makes text harder to read</label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q9" id="q9b" class="mr-2">
+                        <label for="q9b">Applies styles when dark mode is active</label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q9" id="q9c" class="mr-2">
+                        <label for="q9c">Reduces opacity of elements</label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q9" id="q9d" class="mr-2">
+                        <label for="q9d">Makes elements appear behind others</label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">B. Applies styles when dark mode is active</span></p>
+                        <p class="mt-1 text-gray-700">The <code>dark:</code> variant applies styles when dark mode is enabled in the operating system or when manually toggled. Example: <code>dark:bg-gray-800</code>.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">10</div>
+                    <p class="font-medium text-gray-800">Which utility would you use to make an element take up the full width of its container?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q10" id="q10a" class="mr-2">
+                        <label for="q10a"><code>w-screen</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q10" id="q10b" class="mr-2">
+                        <label for="q10b"><code>w-auto</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q10" id="q10c" class="mr-2">
+                        <label for="q10c"><code>w-full</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q10" id="q10d" class="mr-2">
+                        <label for="q10d"><code>w-container</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">C. <code>w-full</code></span></p>
+                        <p class="mt-1 text-gray-700"><code>w-full</code> sets width to 100% of the parent container. <code>w-screen</code> would make it 100vw (viewport width), which might cause horizontal scrolling.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">11</div>
+                    <p class="font-medium text-gray-800">How would you create a grid with three equal-width columns?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q11" id="q11a" class="mr-2">
+                        <label for="q11a"><code>grid grid-cols-3</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q11" id="q11b" class="mr-2">
+                        <label for="q11b"><code>grid cols-3</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q11" id="q11c" class="mr-2">
+                        <label for="q11c"><code>flex grid-3</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q11" id="q11d" class="mr-2">
+                        <label for="q11d"><code>grid-3-columns</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">A. <code>grid grid-cols-3</code></span></p>
+                        <p class="mt-1 text-gray-700">The <code>grid</code> class establishes a grid container, and <code>grid-cols-3</code> creates three equal-width columns. Tailwind supports up to 12 columns by default.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">12</div>
+                    <p class="font-medium text-gray-800">Which class would center text horizontally?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q12" id="q12a" class="mr-2">
+                        <label for="q12a"><code>text-center</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q12" id="q12b" class="mr-2">
+                        <label for="q12b"><code>align-center</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q12" id="q12c" class="mr-2">
+                        <label for="q12c"><code>justify-center</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q12" id="q12d" class="mr-2">
+                        <label for="q12d"><code>content-center</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">A. <code>text-center</code></span></p>
+                        <p class="mt-1 text-gray-700"><code>text-center</code> centers text horizontally. <code>justify-center</code> is for flex/grid alignment, and <code>content-center</code> aligns grid content.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">13</div>
+                    <p class="font-medium text-gray-800">What does the "lg:" breakpoint represent by default?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q13" id="q13a" class="mr-2">
+                        <label for="q13a">640px</label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q13" id="q13b" class="mr-2">
+                        <label for="q13b">768px</label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q13" id="q13c" class="mr-2">
+                        <label for="q13c">1024px</label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q13" id="q13d" class="mr-2">
+                        <label for="q13d">1280px</label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">C. 1024px</span></p>
+                        <p class="mt-1 text-gray-700">Tailwind's default breakpoints are: <code>sm:</code> 640px, <code>md:</code> 768px, <code>lg:</code> 1024px, <code>xl:</code> 1280px, <code>2xl:</code> 1536px.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">14</div>
+                    <p class="font-medium text-gray-800">How would you add rounded corners to an element?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q14" id="q14a" class="mr-2">
+                        <label for="q14a"><code>rounded</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q14" id="q14b" class="mr-2">
+                        <label for="q14b"><code>corner-round</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q14" id="q14c" class="mr-2">
+                        <label for="q14c"><code>border-radius</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q14" id="q14d" class="mr-2">
+                        <label for="q14d"><code>curve</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">A. <code>rounded</code></span></p>
+                        <p class="mt-1 text-gray-700"><code>rounded</code> gives a border-radius of 0.25rem (4px). You can use sizes like <code>rounded-md</code> (0.375rem), <code>rounded-lg</code> (0.5rem), or specific corners like <code>rounded-t-lg</code>.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">15</div>
+                    <p class="font-medium text-gray-800">Which class would make an element have absolute positioning?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q15" id="q15a" class="mr-2">
+                        <label for="q15a"><code>position-absolute</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q15" id="q15b" class="mr-2">
+                        <label for="q15b"><code>absolute</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q15" id="q15c" class="mr-2">
+                        <label for="q15c"><code>pos-abs</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q15" id="q15d" class="mr-2">
+                        <label for="q15d"><code>fixed</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">B. <code>absolute</code></span></p>
+                        <p class="mt-1 text-gray-700">Tailwind uses direct CSS property names for positioning: <code>absolute</code>, <code>relative</code>, <code>fixed</code>, <code>sticky</code>. You'll typically combine with <code>top-0</code>, <code>right-0</code>, etc.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">16</div>
+                    <p class="font-medium text-gray-800">How would you create a hover effect that changes text color to red?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q16" id="q16a" class="mr-2">
+                        <label for="q16a"><code>hover:text-red-500</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q16" id="q16b" class="mr-2">
+                        <label for="q16b"><code>hover:color-red</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q16" id="q16c" class="mr-2">
+                        <label for="q16c"><code>text-hover-red</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q16" id="q16d" class="mr-2">
+                        <label for="q16d"><code>hover-red-text</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">A. <code>hover:text-red-500</code></span></p>
+                        <p class="mt-1 text-gray-700">State variants like <code>hover:</code>, <code>focus:</code>, and <code>active:</code> can be prefixed to many utility classes. The syntax is always <code>variant:utility-value</code>.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">17</div>
+                    <p class="font-medium text-gray-800">Which class would set the font size to 1.25rem (20px)?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q17" id="q17a" class="mr-2">
+                        <label for="q17a"><code>text-sm</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q17" id="q17b" class="mr-2">
+                        <label for="q17b"><code>text-base</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q17" id="q17c" class="mr-2">
+                        <label for="q17c"><code>text-lg</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q17" id="q17d" class="mr-2">
+                        <label for="q17d"><code>text-xl</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">C. <code>text-lg</code></span></p>
+                        <p class="mt-1 text-gray-700">Tailwind's default font sizes: <code>text-sm</code> (0.875rem), <code>text-base</code> (1rem), <code>text-lg</code> (1.25rem), <code>text-xl</code> (1.5rem), up to <code>text-9xl</code>.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 18 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">18</div>
+                    <p class="font-medium text-gray-800">How would you create a container with a max-width of 1280px?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q18" id="q18a" class="mr-2">
+                        <label for="q18a"><code>container</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q18" id="q18b" class="mr-2">
+                        <label for="q18b"><code>max-w-screen</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q18" id="q18c" class="mr-2">
+                        <label for="q18c"><code>w-1280</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q18" id="q18d" class="mr-2">
+                        <label for="q18d"><code>max-w-full</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">A. <code>container</code></span></p>
+                        <p class="mt-1 text-gray-700">The <code>container</code> class centers your content with max-width at each breakpoint (1280px at xl). For fixed widths, use <code>max-w-7xl</code> (80rem) or similar.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 19 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">19</div>
+                    <p class="font-medium text-gray-800">Which class would add a 1px solid gray border?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q19" id="q19a" class="mr-2">
+                        <label for="q19a"><code>border border-gray-300</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q19" id="q19b" class="mr-2">
+                        <label for="q19b"><code>border-1 gray</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q19" id="q19c" class="mr-2">
+                        <label for="q19c"><code>solid-border gray</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q19" id="q19d" class="mr-2">
+                        <label for="q19d"><code>border-gray</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">A. <code>border border-gray-300</code></span></p>
+                        <p class="mt-1 text-gray-700">Border styling requires two classes: <code>border</code> for width/style and <code>border-{color}</code> for color. You can adjust width with <code>border-2</code>, <code>border-4</code>, etc.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 20 -->
+            <div class="mb-8 pb-6">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">20</div>
+                    <p class="font-medium text-gray-800">How would you make an element invisible but still take up space?</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q20" id="q20a" class="mr-2">
+                        <label for="q20a"><code>hidden</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q20" id="q20b" class="mr-2">
+                        <label for="q20b"><code>invisible</code></label>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <input type="radio" name="q20" id="q20c" class="mr-2">
+                        <label for="q20c"><code>opacity-0</code></label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="radio" name="q20" id="q20d" class="mr-2">
+                        <label for="q20d"><code>display-none</code></label>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">B. <code>invisible</code></span></p>
+                        <p class="mt-1 text-gray-700"><code>invisible</code> sets visibility: hidden (takes space), while <code>hidden</code> sets display: none (removes from flow). <code>opacity-0</code> makes transparent but remains interactive.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold text-green-700 mb-6 border-b pb-2">True or False Questions (10 items)</h2>
+            
+            <!-- Question 21 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">21</div>
+                    <p class="font-medium text-gray-800">Tailwind CSS uses a mobile-first approach for responsive design.</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center">
+                            <input type="radio" name="q21" id="q21true" class="mr-2">
+                            <label for="q21true">True</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" name="q21" id="q21false" class="mr-2">
+                            <label for="q21false">False</label>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">True</span></p>
+                        <p class="mt-1 text-gray-700">Tailwind follows a mobile-first breakpoint system where unprefixed utilities take effect on all screen sizes, while prefixed utilities (like <code>md:</code>) only take effect at that breakpoint and above.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">22</div>
+                    <p class="font-medium text-gray-800">The <code>hover:</code> variant can only be used with color-related classes.</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center">
+                            <input type="radio" name="q22" id="q22true" class="mr-2">
+                            <label for="q22true">True</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" name="q22" id="q22false" class="mr-2">
+                            <label for="q22false">False</label>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">False</span></p>
+                        <p class="mt-1 text-gray-700">The <code>hover:</code> variant can be used with many utility classes, not just colors. For example: <code>hover:bg-blue-500</code>, <code>hover:shadow-lg</code>, <code>hover:scale-110</code>, etc.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">23</div>
+                    <p class="font-medium text-gray-800">Tailwind automatically removes all unused CSS in production builds.</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center">
+                            <input type="radio" name="q23" id="q23true" class="mr-2">
+                            <label for="q23true">True</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" name="q23" id="q23false" class="mr-2">
+                            <label for="q23false">False</label>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">True</span></p>
+                        <p class="mt-1 text-gray-700">Tailwind uses PurgeCSS (now part of PostCSS) to analyze your HTML/JS and remove any unused utility classes in production, resulting in very small CSS files.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">24</div>
+                    <p class="font-medium text-gray-800">You can customize Tailwind's default configuration by editing the tailwind.config.js file.</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center">
+                            <input type="radio" name="q24" id="q24true" class="mr-2">
+                            <label for="q24true">True</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" name="q24" id="q24false" class="mr-2">
+                            <label for="q24false">False</label>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">True</span></p>
+                        <p class="mt-1 text-gray-700">The tailwind.config.js file allows extensive customization of colors, spacing, fonts, breakpoints, and more. You can extend or override the default theme.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">25</div>
+                    <p class="font-medium text-gray-800">Tailwind includes pre-built components like navbars and cards out of the box.</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center">
+                            <input type="radio" name="q25" id="q25true" class="mr-2">
+                            <label for="q25true">True</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" name="q25" id="q25false" class="mr-2">
+                            <label for="q25false">False</label>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">False</span></p>
+                        <p class="mt-1 text-gray-700">Tailwind provides utility classes to build components, not pre-made components. However, official UI libraries like Tailwind UI offer pre-built components.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 26 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">26</div>
+                    <p class="font-medium text-gray-800">The `focus:` variant is used for styling elements when they have keyboard focus.</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center">
+                            <input type="radio" name="q26" id="q26true" class="mr-2">
+                            <label for="q26true">True</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" name="q26" id="q26false" class="mr-2">
+                            <label for="q26false">False</label>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">True</span></p>
+                        <p class="mt-1 text-gray-700">The `focus:` variant applies styles when an element receives focus, crucial for accessibility. Example: `focus:ring-2 focus:ring-blue-500`.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 27 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">27</div>
+                    <p class="font-medium text-gray-800">Tailwind's spacing scale is based on multiples of 0.25rem (4px by default).</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center">
+                            <input type="radio" name="q27" id="q27true" class="mr-2">
+                            <label for="q27true">True</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" name="q27" id="q27false" class="mr-2">
+                            <label for="q27false">False</label>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">True</span></p>
+                        <p class="mt-1 text-gray-700">Tailwind uses a spacing scale where 1 unit = 0.25rem (4px with default settings). So `p-4` = 1rem (16px), `m-2` = 0.5rem (8px), etc.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 28 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">28</div>
+                    <p class="font-medium text-gray-800">You need to use a build tool like webpack to use Tailwind CSS.</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center">
+                            <input type="radio" name="q28" id="q28true" class="mr-2">
+                            <label for="q28true">True</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" name="q28" id="q28false" class="mr-2">
+                            <label for="q28false">False</label>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">False</span></p>
+                        <p class="mt-1 text-gray-700">While build tools are recommended for production, you can use Tailwind via CDN for basic projects. However, you lose customization and purge capabilities.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 29 -->
+            <div class="mb-8 pb-6 border-b border-gray-200">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">29</div>
+                    <p class="font-medium text-gray-800">The `active:` variant styles elements when they are being clicked.</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center">
+                            <input type="radio" name="q29" id="q29true" class="mr-2">
+                            <label for="q29true">True</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" name="q29" id="q29false" class="mr-2">
+                            <label for="q29false">False</label>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">True</span></p>
+                        <p class="mt-1 text-gray-700">The `active:` variant applies styles while an element is being activated (mouse down). Useful for button press effects. Example: `active:scale-95`.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+            <!-- Question 30 -->
+            <div class="mb-8">
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center justify-center bg-blue-100 text-blue-800 font-bold rounded-full h-8 w-8 mr-3 flex-shrink-0">30</div>
+                    <p class="font-medium text-gray-800">Tailwind was created by the same team that created Bootstrap.</p>
+                </div>
+                <div class="ml-11">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center">
+                            <input type="radio" name="q30" id="q30true" class="mr-2">
+                            <label for="q30true">True</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" name="q30" id="q30false" class="mr-2">
+                            <label for="q30false">False</label>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded hidden answer">
+                        <p class="font-semibold text-green-700">Correct Answer: <span class="font-normal">False</span></p>
+                        <p class="mt-1 text-gray-700">Tailwind was created by Adam Wathan, Jonathan Reinink, David Hemphill, and Steve Schoger. Bootstrap was created by Twitter developers Mark Otto and Jacob Thornton.</p>
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium toggle-answer">Show Answer</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-8 text-center">
+            <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-200">
+                Submit Quiz
+            </button>
+            <p class="mt-4 text-gray-600">You've completed 0 of 30 questions</p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle answer visibility
+        document.querySelectorAll('.toggle-answer').forEach(button => {
+            button.addEventListener('click', function() {
+                const answer = this.previousElementSibling;
+                answer.classList.toggle('hidden');
+                this.textContent = answer.classList.contains('hidden') ? 'Show Answer' : 'Hide Answer';
+            });
+        });
+
+        // In a real implementation, you would add:
+        // - Form submission handling
+        // - Score calculation
+        // - Progress tracking
+        // - User authentication
+    </script>
+</body>
+</html>
