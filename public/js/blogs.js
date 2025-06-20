@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "BYTe Fun Run 2025 Results",
             date: "March 23, 2025",
             image: "/images/events/2025byterun/bytefunrun2025-banner.jpg",
-            link: "/events/bytfunrun2025results",
+            link: "/events/bytefunrun2025results",
             description: "See the official results of the BYTe Fun Run 2025! Discover the top finishers, event highlights, and the sponsors who made it possible."
         },
         {
