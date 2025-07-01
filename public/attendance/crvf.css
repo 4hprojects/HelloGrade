@@ -1,27 +1,113 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Segoe UI', Arial, sans-serif;
   padding: 20px;
   background: #f2f2f2;
+  margin: 0;
 }
-h2 {
-  margin-bottom: 10px;
+.main-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+.left-panel {
+  flex: 2 1 0%;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.right-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+  margin-top: 10px;
+}
+
+#logs {
+  margin-top: 18px;
+  max-height: 40vh;
+  overflow-y: auto;
   font-size: 1.3em;
+  width: 100%;
+}
+.log-entry {
+  margin: 10px 0;
+  padding: 18px;
+  background: #fff;
+  border-left: 8px solid green;
+  border-radius: 8px;
+  font-size: 1.2em;
+  word-break: break-all;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+h2 {
+  margin-bottom: 18px;
+  font-size: 2.2em;
   text-align: center;
+  letter-spacing: 1px;
+}
+#status {
+  margin: 18px 0 10px 0;
+  font-size: 1.5em;
+  text-align: center;
+  color: #333;
+  font-weight: bold;
+}
+#helloLabel {
+  font-size: 1.4em;
+  color: #2196f3;
+  text-align: center;
+  margin-bottom: 18px;
+  min-height: 1.6em;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 #rfidInput {
   width: 100%;
-  padding: 10px;
-  font-size: 1.2em;
+  padding: 18px;
+  font-size: 2em;
   box-sizing: border-box;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  border: 2px solid #2196f3;
+  text-align: center;
+  background: #fff;
+}
+#logs {
+  margin-top: 18px;
+  max-height: 40vh;
+  overflow-y: auto;
+  font-size: 1.3em;
+}
+.log-entry {
+  margin: 10px 0;
+  padding: 18px;
+  background: #fff;
+  border-left: 8px solid green;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  font-size: 1.2em;
+  word-break: break-all;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+.unsynced {
+  border-color: red;
 }
 button {
-  width: 48%;
-  padding: 12px;
-  font-size: 1em;
-  margin: 1%;
+  width: 100%;
+  padding: 18px;
+  font-size: 1.3em;
   border-radius: 8px;
   border: none;
   background: #4caf50;
@@ -29,50 +115,32 @@ button {
   font-weight: bold;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   transition: background 0.2s;
+  margin-bottom: 10px;
 }
 button:hover, button:focus {
   background: #388e3c;
 }
-#status {
-  margin: 10px 0;
-  font-size: 1em;
-  text-align: center;
-  color: #333;
-}
-#helloLabel {
-  font-size: 1.1em;
-  color: #2196f3;
-  text-align: center;
-  margin-bottom: 8px;
-  min-height: 1.2em;
-}
-#logs {
-  margin-top: 16px;
-  max-height: 40vh;
-  overflow-y: auto;
-}
-.log-entry {
-  margin: 5px 0;
-  padding: 10px;
-  background: #fff;
-  border-left: 5px solid green;
-  border-radius: 6px;
-  font-size: 1em;
-  word-break: break-all;
-}
-.unsynced {
-  border-color: red;
+@media (max-width: 900px) {
+  .main-container {
+    flex-direction: column;
+    gap: 0;
+  }
+  .right-panel {
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 0;
+  }
+  button {
+    font-size: 1.1em;
+    padding: 12px;
+    margin-bottom: 0;
+  }
 }
 @media (max-width: 600px) {
-  h2 { font-size: 1.1em; }
-  #rfidInput { font-size: 1em; padding: 10px; }
-  button { font-size: 0.95em; padding: 10px; }
-  .log-entry { font-size: 0.95em; padding: 8px; }
+  h2 { font-size: 1.3em; }
+  #status, #helloLabel { font-size: 1.1em; }
+  #rfidInput { font-size: 1.1em; padding: 10px; }
+  .log-entry { font-size: 1em; padding: 8px; }
   #logs { max-height: 30vh; }
-}
-@media (max-width: 400px) {
-  button {
-    width: 100%;
-    margin-bottom: 8px;
-  }
+  .main-container { padding: 0 4px; }
 }
