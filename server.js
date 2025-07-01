@@ -377,6 +377,9 @@ app.get('/terms-and-conditions', (req, res) => {
   app.get('/events', (req, res) => {
     res.sendFile(__dirname + '/public/events.html');
   });
+    app.get('/attendance/crvf', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'attendance', 'crvf.html'));
+    });
 /*
   app.get('/events/2025bytefunrun', (req, res) => {
     res.sendFile(__dirname + '/public/events/2025bytefunrun.html');
