@@ -23,237 +23,34 @@
   <link rel="stylesheet" href="crvf.css">
 
 </head>
+
+
 <body>
-
-<h2>RFID Attendance Scanner</h2>
-<p id="status">Waiting for scan...</p>
-
-<button id="reloadBtn">Reload Registered List</button>
-<button id="syncBtn">Sync Offline Data</button>
-<p id="helloLabel"></p>
-<input type="text" id="rfidInput" placeholder="Scan or type RFID..." autofocus />
-
-<div id="logs"></div>
-
-<script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbyRXVvf9XDXGsIZyDIZoA4DbhNLcS3rL4GDnby_BQoemU2gSKmuFaH-ga9uvm2FTkEcLg/exec';
-
-const input = document.getElementById('rfidInput');
-const status = document.getElementById('status');
-const logsDiv = document.getElementById('logs');
-const reloadBtn = document.getElementById('reloadBtn');
-const syncBtn = document.getElementById('syncBtn');
-let registeredList = [];  // 💡 store attendees here
-let offlineLogs = JSON.parse(localStorage.getItem("offlineLogs") || "[]");
-
-// Manual sync button handler
-syncBtn.addEventListener("click", () => {
-  status.textContent = "Manual sync started...";
-  syncStoredLogs();
-  focusInput();
-});
-
-async function loadRegisteredList() {
-  status.textContent = "Loading registered data...";
-  try {
-    const res = await fetch(API_URL);
-    registeredList = await res.json();
-    status.textContent = "Ready to scan.";
-  } catch (e) {
-    status.textContent = "Failed to load registered data.";
-  }
-}
-
-// Fetch registered list on load
-window.addEventListener("load", async () => {
-  try {
-    const res = await fetch(API_URL);
-    registeredList = await res.json();
-    status.textContent = "Ready to scan.";
-  } catch (e) {
-    status.textContent = "Failed to load registered data.";
-  }
-});
-
-// Reload button handler
-reloadBtn.addEventListener("click", () => {
-  loadRegisteredList();
-  focusInput();
-  console.log("Registered List:", registeredList);
-});
-
-function focusInput() {
-  input.focus();
-  input.select();
-}
-
-function getSlot() {
-  const h = new Date().getHours();
-  if (h < 12) return "AM IN";
-  if (h >= 12 && h < 13) return "AM OUT";
-  if (h >= 13 && h < 17) return "PM IN";
-  return "PM OUT";
-}
-
-function logEntry(entry) {
-  const div = document.createElement('div');
-  div.className = 'log-entry' + (entry.synced ? '' : ' unsynced');
-  // Only show name if available
-  let name = (entry.last_name || entry.first_name)
-    ? ` - ${entry.last_name}, ${entry.first_name}`.replace(/, $/, '') // Remove trailing comma if no first name
-    : '';
-  div.textContent = `${entry.time} - ${entry.rfid} (${entry.slot})${name}`;
-  logsDiv.prepend(div);
-}
-
-function saveOffline(entry) {
-  const logs = JSON.parse(localStorage.getItem("logs") || "[]");
-  logs.push(entry);
-  localStorage.setItem("logs", JSON.stringify(logs));
-}
-
-function syncStoredLogs() {
-  if (!navigator.onLine) return;
-  if (!offlineLogs.length) {
-    status.textContent = "No offline logs to sync.";
-    return;
-  }
-
-  let logsToSync = [...offlineLogs];
-  let syncedCount = 0;
-
-  offlineLogs.forEach(async (log, idx) => {
-    try {
-      await fetch(API_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(log)
-      });
-      syncedCount++;
-      // Remove from offlineLogs after successful sync
-      offlineLogs = offlineLogs.filter(l => l !== log);
-      localStorage.setItem("offlineLogs", JSON.stringify(offlineLogs));
-      logEntry({ ...log, synced: true });
-      if (syncedCount === logsToSync.length) {
-        status.textContent = "All offline logs synced!";
-      }
-    } catch (e) {
-      console.error("Sync failed", e);
-      status.textContent = "Some logs failed to sync.";
-    }
-  });
-}
-
-
-
-input.addEventListener("keydown", function (e) {
-  if (e.key === "Enter") {
-    let rfid = input.value.trim();
-    input.value = "";
-    focusInput();
-
-    if (!rfid) return;
-
-    rfid = stripLeadingZeros(rfid);
-
-    const match = registeredList.find(entry => String(entry.rfid) === String(rfid));
-    const now = new Date();
-    const entry = {
-      rfid: rfid,
-      id_number: match ? (match.id_number || "") : "",
-      last_name: match ? (match.last_name || "") : "",
-      first_name: match ? (match.first_name || "") : "",
-      middle_name: match ? (match.middle_name || "") : "",
-      organization: match ? (match.organization || "") : "",
-      contact_no: match ? String(match.contact_no || "") : "",
-      date: now.toISOString().split("T")[0],
-      time: now.toLocaleTimeString(),
-      slot: getSlot(),
-      synced: false
-      
-    };
-        console.log("Match:", match);
-        // Print name and contact number after scanning
-    if (match) {
-      status.textContent = `Registered: ${rfid} | Name: ${entry.last_name}, ${entry.first_name} | Contact: ${entry.contact_no}`;
-    } else {
-      status.textContent = `Unregistered RFID: ${rfid}`;
-    }
-
-      const helloLabel = document.getElementById('helloLabel');
-// ...inside your input keydown handler, after creating entry...
-if (match) {
-  helloLabel.textContent = `Hello, ${entry.first_name} ${entry.last_name}`;
-} else {
-  helloLabel.textContent = '';
-}
-
-    if (!navigator.onLine) {
-      offlineLogs.push(entry);
-      localStorage.setItem("offlineLogs", JSON.stringify(offlineLogs));
-      logEntry(entry);
-      return;
-    }
-
-    fetch(API_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(entry)
-    }).then(() => {
-      entry.synced = true;
-      logEntry(entry);
-      syncStoredLogs();
-    }).catch(() => {
-      offlineLogs.push(entry);
-      localStorage.setItem("offlineLogs", JSON.stringify(offlineLogs));
-      logEntry(entry);
-    });
-  }
-
-
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  input.focus();
-  input.select();
-});
-
-document.body.addEventListener("click", focusInput);
-
-window.addEventListener("online", () => {
-  status.textContent = "Online - syncing logs...";
-  syncStoredLogs();
-});
-window.addEventListener("offline", () => {
-  status.textContent = "Offline - logs will be saved locally.";
-});
-
-function clearLogs() {
-  localStorage.removeItem("logs");
-  localStorage.removeItem("offlineLogs");
-  logsDiv.innerHTML = '';
-  status.textContent = "Logs cleared.";
-}
-
-function stripLeadingZeros(str) {
-  return str.replace(/^0+/, '');
-}
-
-</script>
-            <!-- Footer -->
-            <div id="footerContainer"></div>
-    <!-- ✅ Footer Ad -->
-            <ins class="adsbygoogle"
-            style="display:block"
-            data-ad-client="ca-pub-4537208011192461"
-            data-ad-slot="1190959056"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
-       <script>
-           (adsbygoogle = window.adsbygoogle || []).push({});
-       </script>
+  <h2>Attendance Registration – Scan Your Card Below</h2>
+  <div class="main-container">
+    <div class="left-panel">
+      <p id="status">Waiting for scan...</p>
+      <p id="helloLabel"></p>
+      <input type="text" id="rfidInput" placeholder="Scan or type RFID..." autofocus />
+      <div id="logs"></div>
+    </div>
+    <div class="right-panel">
+      <button id="reloadBtn">Reload Registered List</button>
+      <button id="syncBtn">Sync Offline Data</button>
+    </div>
+  </div>
+  <div id="footerContainer"></div>
+  <!-- ✅ Footer Ad -->
+  <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-4537208011192461"
+      data-ad-slot="1190959056"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  <script src="crvf.js"></script>
 </body>
 
 </html>
