@@ -70,19 +70,33 @@ function getSlot() {
   const m = now.getMinutes();
   const current = h * 60 + m;
 
-  // Use custom slots if loaded
+  // Use custom slots if loaded and valid
   if (customTimeSlots) {
     for (const [slot, value] of Object.entries(customTimeSlots)) {
-      if (!value || !value.start || !value.end) continue; // Skip if missing
+      if (!value || !value.start || !value.end) continue;
       const [sh, sm] = value.start.split(":").map(Number);
       const [eh, em] = value.end.split(":").map(Number);
+      if (isNaN(sh) || isNaN(sm) || isNaN(eh) || isNaN(em)) continue;
       const startMin = sh * 60 + sm;
       const endMin = eh * 60 + em;
-      if (current >= startMin && current < endMin) {
-        return slot.replace("_", " ");
+
+      // Handle midnight wrap-around
+      if (endMin > startMin) {
+        if (current >= startMin && current < endMin) {
+          return slot.replace("_", " ");
+        }
+      } else {
+        // Slot wraps past midnight
+        if (current >= startMin || current < endMin) {
+          return slot.replace("_", " ");
+        }
       }
     }
-    return "PM OUT"; // fallback if not matched
+    // Fallback to default logic if no custom slot matches
+    if (h < 12) return "AM IN";
+    if (h >= 12 && h < 13) return "AM OUT";
+    if (h >= 13 && h < 17) return "PM IN";
+    return "PM OUT";
   }
 
   // Default fallback
@@ -93,14 +107,39 @@ function getSlot() {
 }
 
 function logEntry(entry) {
-  const div = document.createElement('div');
-  div.className = 'log-entry' + (entry.synced ? '' : ' unsynced');
-  // Only show name if available
-  let name = (entry.last_name || entry.first_name)
-    ? ` - ${entry.last_name}, ${entry.first_name}`.replace(/, $/, '') // Remove trailing comma if no first name
-    : '';
-  div.textContent = `${entry.time} - ${entry.rfid} (${entry.slot})${name}`;
-  logsDiv.prepend(div);
+  const logsDiv = document.getElementById('logs-main');
+  if (!logsDiv) return;
+
+  // Compose full name
+  const fullName = `${entry.last_name}, ${entry.first_name}${entry.middle_name ? ' ' + entry.middle_name : ''}`;
+  // Slot badge
+  const slotBadge = `<span class="slot-badge">${entry.slot || ''}</span>`;
+  // Late badge
+  const lateBadge = isLate(entry) ? `<span class="late-label">LATE</span>` : '';
+  // Organization
+  const org = entry.organization ? `<span class="org">${entry.organization}</span>` : '';
+  // Entry time
+  const time = `<span class="log-time">${entry.time}</span>`;
+
+  const logHtml = `
+    <li class="log-entry${entry.synced ? '' : ' unsynced'}">
+      <div class="log-main-row">
+        <span class="log-name">${fullName}</span>
+        ${slotBadge}
+        ${lateBadge}
+      </div>
+      <div class="log-meta-row">
+        ${time}
+        ${org}
+      </div>
+    </li>
+  `;
+
+  // Remove 'new' class from previous first log if needed
+  if (logsDiv.firstChild && logsDiv.firstChild.classList) logsDiv.firstChild.classList.remove('new');
+  const temp = document.createElement('div');
+  temp.innerHTML = logHtml;
+  logsDiv.prepend(temp.firstElementChild);
 }
 
 function saveOffline(entry) {
@@ -140,6 +179,58 @@ function syncStoredLogs() {
       status.textContent = "Some logs failed to sync.";
     }
   });
+}
+
+function isLate(entry) {
+  // Default cutoff times
+  let amLateHour = 9, amLateMinute = 0;
+  let pmLateHour = 13, pmLateMinute = 0;
+
+  // Check custom timeslots if available
+  if (customTimeSlots) {
+    // For AM IN, use AM_START as cutoff if present, else AM_IN.start
+    if (entry.slot === "AM IN") {
+      let cutoff = null;
+      if (customTimeSlots.AM_START && customTimeSlots.AM_START.start) {
+        cutoff = customTimeSlots.AM_START.start;
+      } else if (customTimeSlots.AM_IN && customTimeSlots.AM_IN.start) {
+        cutoff = customTimeSlots.AM_IN.start;
+      }
+      if (cutoff) {
+        const [h, m] = cutoff.split(":").map(Number);
+        amLateHour = h;
+        amLateMinute = m;
+      }
+    }
+    // For PM IN, use PM_START as cutoff if present, else PM_IN.start
+    if (entry.slot === "PM IN") {
+      let cutoff = null;
+      if (customTimeSlots.PM_START && customTimeSlots.PM_START.start) {
+        cutoff = customTimeSlots.PM_START.start;
+      } else if (customTimeSlots.PM_IN && customTimeSlots.PM_IN.start) {
+        cutoff = customTimeSlots.PM_IN.start;
+      }
+      if (cutoff) {
+        const [h, m] = cutoff.split(":").map(Number);
+        pmLateHour = h;
+        pmLateMinute = m;
+      }
+    }
+  }
+
+  // Parse entry time
+  const [h, m] = entry.time.split(":").map(Number);
+
+  if (entry.slot === "AM IN") {
+    // Late if after AM cutoff
+    return (h > amLateHour) || (h === amLateHour && m > amLateMinute);
+  }
+  if (entry.slot === "PM IN") {
+    // Late if after PM cutoff
+    return (h > pmLateHour) || (h === pmLateHour && m > pmLateMinute);
+  }
+  // You can add more rules for other slots if needed
+  return false;
 }
 
 
@@ -212,29 +303,36 @@ if (match) {
 
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  input.focus();
-  input.select();
-});
+function updateClock() {
+  const now = new Date();
+  const options = { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  };
+  document.getElementById('clock').textContent = now.toLocaleDateString('en-US', options);
+}
+setInterval(updateClock, 1000);
+document.addEventListener("DOMContentLoaded", updateClock);
+window.addEventListener('DOMContentLoaded', focusInput);
 
-document.body.addEventListener("click", focusInput);
-
-window.addEventListener("online", () => {
-  status.textContent = "Online - syncing logs...";
-  syncStoredLogs();
-});
-window.addEventListener("offline", () => {
-  status.textContent = "Offline - logs will be saved locally.";
-});
-
-function clearLogs() {
-  localStorage.removeItem("logs");
-  localStorage.removeItem("offlineLogs");
-  logsDiv.innerHTML = '';
-  status.textContent = "Logs cleared.";
+// Optionally update stats
+function updateStats(count) {
+  const stats = document.getElementById('stats');
+  if (stats) stats.textContent = `Today: ${count} attendees`;
 }
 
 function stripLeadingZeros(str) {
-  return str.replace(/^0+/, '');
+  return String(str).replace(/^0+/, '');
 }
 
+document.addEventListener('click', function(e) {
+  // Only refocus if the click is outside the input
+  if (e.target !== input) {
+    focusInput();
+  }
+});
