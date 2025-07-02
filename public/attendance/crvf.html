@@ -26,30 +26,66 @@
 
 
 <body>
-  <h2>Attendance Registration – Scan Your Card Below</h2>
-  <div class="main-container">
-    <div class="left-panel">
-      <p id="status">Waiting for scan...</p>
-      <p id="helloLabel"></p>
-      <input type="text" id="rfidInput" placeholder="Scan or type RFID..." autofocus />
-      <div id="logs"></div>
+  <div class="app-container">
+    <div class="header">
+      <div class="brand">
+        <div class="logo">
+          <i class="fas fa-id-card"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Attendance Registration</h1>
+          <p>Scan your RFID card to register attendance</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div id="clock"></div>
+        <div class="stats" id="stats"></div>
+      </div>
     </div>
-    <div class="right-panel">
-      <button id="reloadBtn">Reload Registered List</button>
-      <button id="syncBtn">Sync Offline Data</button>
+    
+    <div class="attendance-card">
+      <div class="scan-section">
+        <div id="helloLabel"></div>
+        <div class="input-container">
+          <input type="text" id="rfidInput" placeholder="Tap or type RFID card..." autofocus>
+          <div class="input-icon">
+            <i class="fas fa-rss"></i>
+          </div>
+        </div>
+        <div class="instructions info-box">
+          <i class="fas fa-info-circle"></i>
+          Place your card near the reader or manually enter the ID
+        </div>
+      </div>
+    </div>
+    
+    <div class="sidebar">
+
+      <div class="actions-card">
+                <div id="status" aria-live="polite">Ready for next scan</div>
+        <h3>System Actions</h3>
+        <button class="btn btn-primary" id="reloadBtn">
+          <i class="fas fa-sync"></i> Reload List
+        </button>
+        <button class="btn btn-secondary" id="syncBtn">
+          <i class="fas fa-cloud-upload-alt"></i> Sync Data
+        </button>
+      </div>
+    </div>
+
+    <!-- Place this after .attendance-card and .sidebar, before .footer -->
+    <div class="logs-fullwidth">
+      <h2 style="margin-bottom: 8px; font-size: 1.1em;">
+        <i class="fas fa-history"></i> Recent Attendance Logs
+      </h2>
+      <ul id="logs-main" class="logs-list"></ul>
+    </div>
+    
+    <div class="footer">
+      <p>RFID Attendance System v2.0 | CRVF Events | Secure, mobile-friendly, and easy to use</p>
     </div>
   </div>
-  <div id="footerContainer"></div>
-  <!-- ✅ Footer Ad -->
-  <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-4537208011192461"
-      data-ad-slot="1190959056"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
   <script src="crvf.js"></script>
 </body>
 
