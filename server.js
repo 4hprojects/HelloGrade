@@ -2656,7 +2656,14 @@ app.post('/api/blogs', async (req, res) => {
     }
   });
 
-
+// Add near your other API routes
+app.get('/api/check-auth', (req, res) => {
+  if (req.session && req.session.userId) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
+});
 
   app.get('/blogs/:blogId', (req, res) => {
     const { blogId } = req.params;     // e.g. 'blog6'
@@ -2701,4 +2708,3 @@ app.get("/ads.txt", (req, res) => {
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
 });
-
