@@ -113,24 +113,30 @@ function logEntry(entry) {
   // Compose full name
   const fullName = `${entry.last_name}, ${entry.first_name}${entry.middle_name ? ' ' + entry.middle_name : ''}`;
   // Slot badge
-  const slotBadge = `<span class="slot-badge">${entry.slot || ''}</span>`;
+  const slotBadge = `<span class="slot-badge" data-slot="${entry.slot || ''}">${entry.slot || ''}</span>`;
   // Late badge
   const lateBadge = isLate(entry) ? `<span class="late-label">LATE</span>` : '';
   // Organization
   const org = entry.organization ? `<span class="org">${entry.organization}</span>` : '';
   // Entry time
   const time = `<span class="log-time">${entry.time}</span>`;
+  // Pending sync badge
+  const logClass = entry.synced ? 'logged' : 'pending';
+  const pendingBadge = !entry.synced
+    ? `<span class="pending-label"><i class="fas fa-clock"></i> Pending Sync</span>`
+    : '';
 
   const logHtml = `
-    <li class="log-entry${entry.synced ? '' : ' unsynced'}">
+    <li class="log-entry ${logClass}">
       <div class="log-main-row">
         <span class="log-name">${fullName}</span>
-        ${slotBadge}
+        <span class="slot-badge">${entry.slot || ''}</span>
         ${lateBadge}
+        ${pendingBadge}
       </div>
       <div class="log-meta-row">
-        ${time}
-        ${org}
+        <span class="log-time">${entry.time}</span>
+        <span class="org">${entry.organization || ''}</span>
       </div>
     </li>
   `;
@@ -139,7 +145,9 @@ function logEntry(entry) {
   if (logsDiv.firstChild && logsDiv.firstChild.classList) logsDiv.firstChild.classList.remove('new');
   const temp = document.createElement('div');
   temp.innerHTML = logHtml;
-  logsDiv.prepend(temp.firstElementChild);
+  const newLog = temp.firstElementChild;
+  newLog.classList.add('new');
+  logsDiv.prepend(newLog);
 }
 
 function saveOffline(entry) {
@@ -157,6 +165,7 @@ function syncStoredLogs() {
 
   let logsToSync = [...offlineLogs];
   let syncedCount = 0;
+  let failed = false;
 
   offlineLogs.forEach(async (log, idx) => {
     try {
@@ -167,16 +176,16 @@ function syncStoredLogs() {
         body: JSON.stringify(log)
       });
       syncedCount++;
-      // Remove from offlineLogs after successful sync
       offlineLogs = offlineLogs.filter(l => l !== log);
       localStorage.setItem("offlineLogs", JSON.stringify(offlineLogs));
       logEntry({ ...log, synced: true });
-      if (syncedCount === logsToSync.length) {
+      if (syncedCount === logsToSync.length && !failed) {
         status.textContent = "All offline logs synced!";
       }
     } catch (e) {
-      console.error("Sync failed", e);
-      status.textContent = "Some logs failed to sync.";
+      failed = true;
+      status.innerHTML = `Sync failed. <button id="retrySyncBtn">Retry</button>`;
+      document.getElementById('retrySyncBtn').onclick = syncStoredLogs;
     }
   });
 }
@@ -331,8 +340,248 @@ function stripLeadingZeros(str) {
 }
 
 document.addEventListener('click', function(e) {
-  // Only refocus if the click is outside the input
+  // If modal is open, do not focus RFID input
+  const modal = document.getElementById('miniLoginModal');
+  if (modal && modal.style.display !== 'none') return;
   if (e.target !== input) {
     focusInput();
   }
 });
+
+function updateSystemIndicator() {
+  const indicator = document.getElementById('system-indicator');
+  if (!indicator) return;
+  if (navigator.onLine) {
+    indicator.classList.add('system-online');
+    indicator.classList.remove('system-offline');
+    status.innerHTML = `<span id="system-indicator" class="system-online"></span>Ready for next scan`;
+  } else {
+    indicator.classList.add('system-offline');
+    indicator.classList.remove('system-online');
+    status.innerHTML = `<span id="system-indicator" class="system-offline"></span>Offline - logs will be saved locally`;
+  }
+}
+window.addEventListener('online', () => {
+  updateSystemIndicator();
+  syncStoredLogs();
+});
+window.addEventListener('offline', updateSystemIndicator);
+document.addEventListener('DOMContentLoaded', updateSystemIndicator);
+
+function renderLogs(logs) {
+  const logsDiv = document.getElementById('logs-main');
+  logsDiv.innerHTML = '';
+  if (!logs || logs.length === 0) {
+    logsDiv.innerHTML = `
+      <div class="empty-logs">
+        <i class="fas fa-inbox"></i>
+        <div>No attendance logs yet.</div>
+      </div>
+    `;
+    return;
+  }
+  logs.forEach(entry => logEntry(entry));
+}
+
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  const actions = document.getElementById('sidebar-actions');
+  const expanded = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', !expanded);
+  actions.classList.toggle('open');
+});
+
+document.getElementById('downloadLogsBtn').addEventListener('click', function () {
+  // Only download offline logs
+  let logs = offlineLogs || [];
+
+  if (!logs.length) {
+    alert("No offline logs to download.");
+    return;
+  }
+
+  // Prepare CSV content
+  const headers = [
+    "RFID", "ID Number", "Last Name", "First Name", "Middle Name",
+    "Organization", "Contact No", "Date", "Time", "Slot", "Late", "Synced"
+  ];
+  const rows = logs.map(entry => [
+    entry.rfid,
+    entry.id_number,
+    entry.last_name,
+    entry.first_name,
+    entry.middle_name,
+    entry.organization,
+    entry.contact_no,
+    entry.date,
+    entry.time,
+    entry.slot,
+    isLate(entry) ? "Yes" : "No",
+    entry.synced ? "Yes" : "No"
+  ]);
+  const csvContent = [headers].concat(rows)
+    .map(row => row.map(val => `"${(val || '').toString().replace(/"/g, '""')}"`).join(","))
+    .join("\r\n");
+
+  // Create a Blob and trigger download
+  const blob = new Blob([csvContent], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "offline_attendance_logs.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+function downloadOfflineLogsXLSX() {
+  if (!offlineLogs || offlineLogs.length === 0) return;
+
+  const headers = [
+    "RFID", "ID Number", "Last Name", "First Name", "Middle Name",
+    "Organization", "Contact No", "Date", "Time", "Slot", "Late", "Synced"
+  ];
+  const data = offlineLogs.map(entry => [
+    entry.rfid,
+    entry.id_number,
+    entry.last_name,
+    entry.first_name,
+    entry.middle_name,
+    entry.organization,
+    entry.contact_no,
+    entry.date,
+    entry.time,
+    entry.slot,
+    isLate(entry) ? "Yes" : "No",
+    entry.synced ? "Yes" : "No"
+  ]);
+  const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Offline Logs");
+  XLSX.writeFile(wb, "offline_attendance_logs.xlsx");
+}
+
+window.addEventListener('beforeunload', function (e) {
+  if (offlineLogs && offlineLogs.length > 0) {
+    // Attempt to auto-download XLSX
+    downloadOfflineLogsXLSX();
+    e.preventDefault();
+    e.returnValue = 'You have unsynced attendance logs. They have been downloaded, but please sync or save before leaving!';
+    return e.returnValue;
+  }
+});
+
+// --- Mini Login Modal Logic ---
+function trapFocus(modal) {
+  const focusable = modal.querySelectorAll('input, button, [tabindex]:not([tabindex="-1"])');
+  let first = focusable[0];
+  let last = focusable[focusable.length - 1];
+  modal.addEventListener('keydown', function(e) {
+    if (e.key === 'Tab') {
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+  });
+}
+
+function showMiniLoginModal() {
+  const modal = document.getElementById('miniLoginModal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  modal.focus();
+  trapFocus(modal);
+  setTimeout(() => document.getElementById('miniUsername').focus(), 100);
+}
+
+function hideMiniLoginModal() {
+  document.getElementById('miniLoginModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function handleMiniLogin() {
+  document.getElementById('miniLoginForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const user = document.getElementById('miniUsername').value.trim();
+    const pass = document.getElementById('miniPassword').value;
+    const errorDiv = document.getElementById('miniLoginError');
+    errorDiv.textContent = '';
+    try {
+      const res = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentIDNumber: user, password: pass })
+      });
+      if (res.ok) {
+        window.location.reload();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        errorDiv.textContent = data.message || 'Invalid username or password.';
+        // Keep focus in modal for retry
+        setTimeout(() => {
+          if (!user) {
+            document.getElementById('miniUsername').focus();
+          } else {
+            document.getElementById('miniPassword').focus();
+          }
+        }, 10);
+      }
+    } catch {
+      errorDiv.textContent = 'Network error. Please try again.';
+      setTimeout(() => document.getElementById('miniUsername').focus(), 10);
+    }
+  };
+
+  // Show/hide password toggle
+  const pwInput = document.getElementById('miniPassword');
+  const toggle = document.getElementById('miniTogglePassword');
+  toggle.onclick = function() {
+    pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
+    toggle.textContent = pwInput.type === 'password' ? '👁️' : '🙈';
+  };
+  toggle.onkeydown = function(e) {
+    if (e.key === 'Enter' || e.key === ' ') toggle.click();
+  };
+}
+
+async function checkAuthAndShowModal() {
+  try {
+    const res = await fetch('/api/check-auth', { credentials: 'same-origin' });
+    if (res.ok) {
+      // Authenticated: hide modal, focus RFID input
+      hideMiniLoginModal();
+      focusInput();
+    } else {
+      // Not authenticated: show modal
+      showMiniLoginModal();
+      handleMiniLogin();
+    }
+  } catch {
+    // On error, show modal
+    showMiniLoginModal();
+    handleMiniLogin();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', checkAuthAndShowModal);
+
+// --- Logout Logic ---
+document.querySelector('.btn-logout').onclick = async function() {
+  // Download unsynced logs before logout
+  if (offlineLogs && offlineLogs.length > 0) {
+    downloadOfflineLogsXLSX();
+    await new Promise(r => setTimeout(r, 800)); // Give time for download
+  }
+  // Call backend logout
+  await fetch('/logout', { method: 'POST', credentials: 'same-origin' });
+  window.location.reload();
+};
