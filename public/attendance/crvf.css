@@ -514,7 +514,31 @@
       background: #fff;
     }
     
-    @media (max-width: 1024px) {
+    /* Make table rows more compact for reports */
+.logs-table td, .logs-table th {
+  padding: 6px 10px;
+  font-size: 0.95em;
+}
+
+/* Highlight late entries */
+.logs-table td:nth-child(10) {
+  color: #c00;
+  font-weight: bold;
+}
+
+/* Responsive table for small screens */
+@media (max-width: 600px) {
+  .logs-table-wrapper {
+    max-width: 100vw;
+    overflow-x: auto;
+  }
+  .logs-table th, .logs-table td {
+    font-size: 0.85em;
+    padding: 4px 6px;
+  }
+}
+
+@media (max-width: 1024px) {
       .app-container {
         grid-template-columns: 1fr;
         height: auto;
