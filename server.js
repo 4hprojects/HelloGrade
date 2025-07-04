@@ -1797,6 +1797,14 @@ app.post('/signup', async (req, res) => {
                 return res.status(400).json({ success: false, message: 'Student ID and password are required.' });
             }
 
+            if (
+                studentIDNumber !== "crvfadmin" &&
+                studentIDNumber !== "crvfuser" &&
+                !/^\d{7}$/.test(studentIDNumber)
+            ) {
+                return res.status(400).json({ success: false, message: 'Student ID must be exactly 7 digits or a valid admin/user username.' });
+            }
+
             const user = await usersCollection.findOne(
                 { studentIDNumber: studentIDNumber },
                 { projection: { firstName: 1, lastName: 1, studentIDNumber: 1, password: 1, role: 1, invalidLoginAttempts: 1, accountLockedUntil: 1, emaildb: 1 } }
@@ -1821,8 +1829,12 @@ app.post('/signup', async (req, res) => {
             const sanitizedStudentIDNumber = validator.trim(studentIDNumber);
 
 
-            if (!/^\d{7}$/.test(studentIDNumber)) {
-                return res.status(400).json({ success: false, message: 'Student ID must be exactly 7 digits.' });
+            if (
+                studentIDNumber !== "crvfadmin" &&
+                studentIDNumber !== "crvfuser" &&
+                !/^\d{7}$/.test(studentIDNumber)
+            ) {
+                return res.status(400).json({ success: false, message: 'Student ID must be exactly 7 digits or a valid admin/user username.' });
             }
             
 
@@ -2169,7 +2181,7 @@ app.get('/user-details', isAuthenticated, async (req, res) => {
         // Fetch user details from the database
         const user = await usersCollection.findOne(
             { studentIDNumber: studentIDNumber }, 
-            { projection: { firstName: 1, lastName: 1, studentIDNumber: 1, password: 1 } }
+            { projection: { firstName: 1, lastName: 1, studentIDNumber: 1, role: 1 } }
         );
 
         if (!user) {
@@ -2190,7 +2202,8 @@ app.get('/user-details', isAuthenticated, async (req, res) => {
             user: {
                 firstName: user.firstName,
                 lastName: user.lastName,
-                studentIDNumber: user.studentIDNumber
+                studentIDNumber: user.studentIDNumber,
+                role: user.role // <-- include role here
             }
         });
     } catch (error) {
