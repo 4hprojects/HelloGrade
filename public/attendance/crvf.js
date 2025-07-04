@@ -1,4 +1,4 @@
-const API_URL = 'https://script.google.com/macros/s/AKfycbyRXVvf9XDXGsIZyDIZoA4DbhNLcS3rL4GDnby_BQoemU2gSKmuFaH-ga9uvm2FTkEcLg/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbz8rsTh7FsEUbpq1FR33VMQ_2auDYpjuq6SJTbOmgzHqHSRThylSkpEe7ZTExBo8099jQ/exec';
 
 const input = document.getElementById('rfidInput');
 const status = document.getElementById('status');
