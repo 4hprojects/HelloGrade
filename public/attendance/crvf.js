@@ -254,7 +254,7 @@ input.addEventListener("keydown", function (e) {
 
     rfid = stripLeadingZeros(rfid);
 
-    const match = registeredList.find(entry => String(entry.rfid) === String(rfid));
+    const match = registeredList.find(entry => String(entry.rfid).replace(/^0+/, '') === rfid);
     const now = new Date();
     const entry = {
       rfid: rfid,
