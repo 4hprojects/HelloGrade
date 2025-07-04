@@ -377,8 +377,14 @@ app.get('/terms-and-conditions', (req, res) => {
   app.get('/events', (req, res) => {
     res.sendFile(__dirname + '/public/events.html');
   });
-    app.get('/attendance/crvf', (req, res) => {
-        res.sendFile(path.join(__dirname, 'public', 'attendance', 'crvf.html'));
+    app.get('/crvf/attendance', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'crvf', 'attendance.html'));
+    });
+        app.get('/crvf/register', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'crvf', 'register.html'));
+    });
+        app.get('/crvf/reports', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'crvf', 'reports.html'));
     });
 /*
   app.get('/events/2025bytefunrun', (req, res) => {
@@ -402,7 +408,24 @@ app.get('/books/the-way-of-the-shepherd/principle1', (req, res) => {
 app.get('/books/the-way-of-the-shepherd/principle2', (req, res) => {
     res.sendFile(__dirname + '/public/books/the-way-of-the-shepherd/principle2.html');
 });
+
 */
+
+app.post('/api/register', async (req, res) => {
+  try {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbz8rsTh7FsEUbpq1FR33VMQ_2auDYpjuq6SJTbOmgzHqHSRThylSkpEe7ZTExBo8099jQ/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...req.body, register: "1" })
+    });
+    const result = await response.json();
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ status: "error", message: err.toString() });
+  }
+});
+
+
 // 1) Redirect "/classrecords.html" => "/classrecords"
 app.get('/classrecords.html', (req, res) => {
     if (!req.session || !req.session.userId) {
