@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CRVF Registration</title>
+  <link rel="stylesheet" href="attendance.css">
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <div class="brand">
+        <div class="logo"><i class="fas fa-id-card"></i></div>
+        <div class="brand-text">
+          <h1>CRVF Registration</h1>
+          <p>Register your details for RFID attendance</p>
+        </div>
+      </div>
+    </div>
+    <form id="registerForm" class="attendance-card" style="max-width:400px;margin:auto;">
+      <label>RFID: <input type="text" name="rfid" required></label>
+      <label>ID Number: <input type="text" name="id_number" required></label>
+      <label>Last Name: <input type="text" name="last_name" required></label>
+      <label>First Name: <input type="text" name="first_name" required></label>
+      <label>Middle Name: <input type="text" name="middle_name"></label>
+      <label>Organization: <input type="text" name="organization"></label>
+      <label>Contact No: <input type="text" name="contact_no"></label>
+      <button type="submit" class="btn btn-primary" style="margin-top:1em;">Register</button>
+      <div id="regStatus" style="margin-top:1em;color:#1976d2;"></div>
+    </form>
+  </div>
+  <script src="register.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+</html>
