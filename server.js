@@ -35,9 +35,16 @@ const { ObjectId } = require('mongodb');
 
 const { google } = require('googleapis');
 
-//const dateFnsTz = require('date-fns-tz');
-//const { format, utcToZonedTime } = dateFnsTz;
+const attendanceApi = require('./routes/attendanceApi');
+const registerApi = require('./routes/registerApi');
+const eventsApi = require('./routes/eventsApi');
+const bulkRegisterApi = require('./routes/bulkRegisterApi');
 
+app.use('/api/bulk-register', bulkRegisterApi);
+app.use('/api/events', eventsApi);
+app.use('/api/attendees', registerApi); // for check-rfid and latest
+app.use('/api/register', registerApi);  // for POST registration
+app.use('/api/attendance', attendanceApi);
 
 // Security middleware
 app.use(helmet({ contentSecurityPolicy: false }));
@@ -2189,7 +2196,6 @@ app.post('/upload-grades', isAuthenticated, isAdmin, upload.single('gradesFile')
     }
 });
 
-
 // Fetch user details route
 app.get('/user-details', isAuthenticated, async (req, res) => {
     console.log("Session in /user-details:", req.session);
@@ -2463,7 +2469,6 @@ app.use((err, req, res, next) => {
     res.status(500).json({ success: false, message: 'Internal server error.' });
 });
 
-
 // Fetch Courses for a Student
 app.get('/get-courses/:studentIDNumber', isAuthenticated, async (req, res) => {
     const studentIDNumber = req.params.studentIDNumber;
@@ -2555,7 +2560,6 @@ app.post('/api/log-user', isAuthenticated, async (req, res) => {
     }
 });
 
-
 // Rate limiter for comment posting
 const commentLimiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minute
@@ -2632,7 +2636,6 @@ app.post('/api/comments/:blogId', commentLimiter, async (req, res) => {
         res.status(500).json({ success: false, message: 'An error occurred while posting your comment.' });
     }
 });
-
 
 // GET route to fetch comments
 app.get('/api/comments/:blogId', async (req, res) => {
