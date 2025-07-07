@@ -1,12 +1,12 @@
-const API_URL = 'https://script.google.com/macros/s/AKfycbz8rsTh7FsEUbpq1FR33VMQ_2auDYpjuq6SJTbOmgzHqHSRThylSkpEe7ZTExBo8099jQ/exec';
-
 const input = document.getElementById('rfidInput');
 const status = document.getElementById('status');
 const logsDiv = document.getElementById('logs');
 const reloadBtn = document.getElementById('reloadBtn');
 const syncBtn = document.getElementById('syncBtn');
-let registeredList = [];  // 💡 store attendees here
+let registeredList = [];
 let offlineLogs = JSON.parse(localStorage.getItem("offlineLogs") || "[]");
+let currentEventId = null;
+let currentEventName = "";
 
 // Manual sync button handler
 syncBtn.addEventListener("click", () => {
@@ -18,7 +18,7 @@ syncBtn.addEventListener("click", () => {
 async function loadRegisteredList() {
   status.textContent = "Loading registered data...";
   try {
-    const res = await fetch(API_URL);
+    const res = await fetch('/api/attendees/all');
     registeredList = await res.json();
     status.textContent = "Ready to scan.";
   } catch (e) {
@@ -27,21 +27,13 @@ async function loadRegisteredList() {
 }
 
 // Fetch registered list on load
-window.addEventListener("load", async () => {
-  try {
-    const res = await fetch(API_URL);
-    registeredList = await res.json();
-    status.textContent = "Ready to scan.";
-  } catch (e) {
-    status.textContent = "Failed to load registered data.";
-  }
-});
+window.addEventListener("load", loadRegisteredList);
 
 // Reload button handler
 reloadBtn.addEventListener("click", () => {
   loadRegisteredList();
   focusInput();
-  console.log("Registered List:", registeredList);
+  setTimeout(() => console.log("Registered List:", registeredList), 1000);
 });
 
 function focusInput() {
@@ -54,7 +46,7 @@ let customTimeSlots = null;
 // Fetch custom time slots on load
 async function loadTimeSlots() {
   try {
-    const res = await fetch(API_URL + '?timeslots=1');
+    const res = await fetch('/api/timeslots'); // Update this endpoint if needed
     customTimeSlots = await res.json();
     console.log("Loaded custom time slots:", customTimeSlots);
   } catch (e) {
@@ -70,7 +62,6 @@ function getSlot() {
   const m = now.getMinutes();
   const current = h * 60 + m;
 
-  // Use custom slots if loaded and valid
   if (customTimeSlots) {
     for (const [slot, value] of Object.entries(customTimeSlots)) {
       if (!value || !value.start || !value.end) continue;
@@ -79,27 +70,21 @@ function getSlot() {
       if (isNaN(sh) || isNaN(sm) || isNaN(eh) || isNaN(em)) continue;
       const startMin = sh * 60 + sm;
       const endMin = eh * 60 + em;
-
-      // Handle midnight wrap-around
       if (endMin > startMin) {
         if (current >= startMin && current < endMin) {
           return slot.replace("_", " ");
         }
       } else {
-        // Slot wraps past midnight
         if (current >= startMin || current < endMin) {
           return slot.replace("_", " ");
         }
       }
     }
-    // Fallback to default logic if no custom slot matches
     if (h < 12) return "AM IN";
     if (h >= 12 && h < 13) return "AM OUT";
     if (h >= 13 && h < 17) return "PM IN";
     return "PM OUT";
   }
-
-  // Default fallback
   if (h < 12) return "AM IN";
   if (h >= 12 && h < 13) return "AM OUT";
   if (h >= 13 && h < 17) return "PM IN";
@@ -109,23 +94,15 @@ function getSlot() {
 function logEntry(entry) {
   const logsDiv = document.getElementById('logs-main');
   if (!logsDiv) return;
-
-  // Compose full name
-  const fullName = `${entry.last_name}, ${entry.first_name}${entry.middle_name ? ' ' + entry.middle_name : ''}`;
-  // Slot badge
+  const fullName = `${entry.last_name}, ${entry.first_name || ''}${entry.middle_name ? ' ' + entry.middle_name : ''}`;
   const slotBadge = `<span class="slot-badge" data-slot="${entry.slot || ''}">${entry.slot || ''}</span>`;
-  // Late badge
   const lateBadge = isLate(entry) ? `<span class="late-label">LATE</span>` : '';
-  // Organization
   const org = entry.organization ? `<span class="org">${entry.organization}</span>` : '';
-  // Entry time
   const time = `<span class="log-time">${entry.time}</span>`;
-  // Pending sync badge
   const logClass = entry.synced ? 'logged' : 'pending';
   const pendingBadge = !entry.synced
     ? `<span class="pending-label"><i class="fas fa-clock"></i> Pending Sync</span>`
     : '';
-
   const logHtml = `
     <li class="log-entry ${logClass}">
       <div class="log-main-row">
@@ -140,8 +117,6 @@ function logEntry(entry) {
       </div>
     </li>
   `;
-
-  // Remove 'new' class from previous first log if needed
   if (logsDiv.firstChild && logsDiv.firstChild.classList) logsDiv.firstChild.classList.remove('new');
   const temp = document.createElement('div');
   temp.innerHTML = logHtml;
@@ -151,9 +126,9 @@ function logEntry(entry) {
 }
 
 function saveOffline(entry) {
-  const logs = JSON.parse(localStorage.getItem("logs") || "[]");
+  const logs = JSON.parse(localStorage.getItem("offlineLogs") || "[]");
   logs.push(entry);
-  localStorage.setItem("logs", JSON.stringify(logs));
+  localStorage.setItem("offlineLogs", JSON.stringify(logs));
 }
 
 function syncStoredLogs() {
@@ -162,16 +137,13 @@ function syncStoredLogs() {
     status.textContent = "No offline logs to sync.";
     return;
   }
-
   let logsToSync = [...offlineLogs];
   let syncedCount = 0;
   let failed = false;
-
   offlineLogs.forEach(async (log, idx) => {
     try {
-      await fetch(API_URL, {
+      await fetch('/api/attendance', {
         method: "POST",
-        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(log)
       });
@@ -191,13 +163,9 @@ function syncStoredLogs() {
 }
 
 function isLate(entry) {
-  // Default cutoff times
   let amLateHour = 9, amLateMinute = 0;
   let pmLateHour = 13, pmLateMinute = 0;
-
-  // Check custom timeslots if available
   if (customTimeSlots) {
-    // For AM IN, use AM_START as cutoff if present, else AM_IN.start
     if (entry.slot === "AM IN") {
       let cutoff = null;
       if (customTimeSlots.AM_START && customTimeSlots.AM_START.start) {
@@ -211,7 +179,6 @@ function isLate(entry) {
         amLateMinute = m;
       }
     }
-    // For PM IN, use PM_START as cutoff if present, else PM_IN.start
     if (entry.slot === "PM IN") {
       let cutoff = null;
       if (customTimeSlots.PM_START && customTimeSlots.PM_START.start) {
@@ -226,90 +193,69 @@ function isLate(entry) {
       }
     }
   }
-
-  // Parse entry time
-  const [h, m] = entry.time.split(":").map(Number);
-
+  const [h, m] = entry.time ? entry.time.split(":").map(Number) : [0, 0];
   if (entry.slot === "AM IN") {
-    // Late if after AM cutoff
     return (h > amLateHour) || (h === amLateHour && m > amLateMinute);
   }
   if (entry.slot === "PM IN") {
-    // Late if after PM cutoff
     return (h > pmLateHour) || (h === pmLateHour && m > pmLateMinute);
   }
-  // You can add more rules for other slots if needed
   return false;
 }
 
-
-
-input.addEventListener("keydown", function (e) {
+input.addEventListener("keydown", async function (e) {
   if (e.key === "Enter") {
-    let rfid = input.value.trim();
+    const scannedRfid = input.value.trim();
+    const match = registeredList.find(a => a.rfid === scannedRfid);
+
+    let now = new Date();
+    let entry = {
+      rfid: scannedRfid,
+      event_id: currentEventId,
+      timestamp: now.toISOString(),
+      status: "present",
+      slot: getSlot(),
+      time: now.toTimeString().slice(0,5),
+      date: now.toISOString().slice(0,10),
+      synced: false
+    };
+
+    if (match) {
+      entry.attendee_no = match.attendee_no;
+      entry.last_name = match.last_name;
+      entry.first_name = match.first_name;
+      entry.middle_name = match.middle_name;
+      entry.organization = match.organization;
+      entry.contact_no = match.contact_no;
+      entry.id_number = match.id_number;
+    } else {
+      entry.last_name = "unregistered";
+      entry.attendee_no = "unregistered";
+    }
+
+    // POST to backend (works for both registered and unregistered)
+    try {
+      const res = await fetch('/api/attendance', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(entry)
+      });
+      const result = await res.json();
+      if (result.status === "success") {
+        entry.synced = true;
+        logEntry(entry);
+        status.textContent = `Hello${match ? ', ' + match.first_name : ''}! Scan recorded.`;
+      } else {
+        saveOffline(entry);
+        status.textContent = "Scan saved offline (server error).";
+      }
+    } catch (err) {
+      saveOffline(entry);
+      status.textContent = "Scan saved offline (network error).";
+    }
     input.value = "";
     focusInput();
-
-    if (!rfid) return;
-
-    rfid = stripLeadingZeros(rfid);
-
-    const match = registeredList.find(entry => String(entry.rfid).replace(/^0+/, '') === rfid);
-    const now = new Date();
-    const entry = {
-      rfid: rfid,
-      id_number: match ? (match.id_number || "") : "",
-      last_name: match ? (match.last_name || "") : "",
-      first_name: match ? (match.first_name || "") : "",
-      middle_name: match ? (match.middle_name || "") : "",
-      organization: match ? (match.organization || "") : "",
-      contact_no: match ? String(match.contact_no || "") : "",
-      date: now.toISOString().split("T")[0],
-      time: now.toLocaleTimeString(),
-      slot: getSlot(),
-      synced: false
-      
-    };
-        console.log("Match:", match);
-        // Print name and contact number after scanning
-    if (match) {
-      status.textContent = `Registered: ${rfid} | Name: ${entry.last_name}, ${entry.first_name} `;
-    } else {
-      status.textContent = `Unregistered RFID: ${rfid}`;
-    }
-
-      const helloLabel = document.getElementById('helloLabel');
-// ...inside your input keydown handler, after creating entry...
-if (match) {
-  helloLabel.textContent = `Hello, ${entry.first_name} ${entry.last_name}`;
-} else {
-  helloLabel.textContent = '';
-}
-
-    if (!navigator.onLine) {
-      offlineLogs.push(entry);
-      localStorage.setItem("offlineLogs", JSON.stringify(offlineLogs));
-      logEntry(entry);
-      return;
-    }
-
-    fetch(API_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(entry)
-    }).then(() => {
-      entry.synced = true;
-      logEntry(entry);
-      syncStoredLogs();
-    }).catch(() => {
-      offlineLogs.push(entry);
-      localStorage.setItem("offlineLogs", JSON.stringify(offlineLogs));
-      logEntry(entry);
-    });
   }
-
-
 });
 
 function updateClock() {
@@ -329,7 +275,6 @@ setInterval(updateClock, 1000);
 document.addEventListener("DOMContentLoaded", updateClock);
 window.addEventListener('DOMContentLoaded', focusInput);
 
-// Optionally update stats
 function updateStats(count) {
   const stats = document.getElementById('stats');
   if (stats) stats.textContent = `Today: ${count} attendees`;
@@ -340,7 +285,6 @@ function stripLeadingZeros(str) {
 }
 
 document.addEventListener('click', function(e) {
-  // If modal is open, do not focus RFID input
   const modal = document.getElementById('miniLoginModal');
   if (modal && modal.style.display !== 'none') return;
   if (e.target !== input) {
@@ -383,7 +327,6 @@ function renderLogs(logs) {
   logs.forEach(entry => logEntry(entry));
 }
 
-// Sidebar toggle
 document.querySelector('.sidebar-toggle').addEventListener('click', function() {
   const actions = document.getElementById('sidebar-actions');
   const expanded = this.getAttribute('aria-expanded') === 'true';
@@ -392,15 +335,11 @@ document.querySelector('.sidebar-toggle').addEventListener('click', function() {
 });
 
 document.getElementById('downloadLogsBtn').addEventListener('click', function () {
-  // Only download offline logs
   let logs = offlineLogs || [];
-
   if (!logs.length) {
     alert("No offline logs to download.");
     return;
   }
-
-  // Prepare CSV content
   const headers = [
     "RFID", "ID Number", "Last Name", "First Name", "Middle Name",
     "Organization", "Contact No", "Date", "Time", "Slot", "Late", "Synced"
@@ -422,8 +361,6 @@ document.getElementById('downloadLogsBtn').addEventListener('click', function ()
   const csvContent = [headers].concat(rows)
     .map(row => row.map(val => `"${(val || '').toString().replace(/"/g, '""')}"`).join(","))
     .join("\r\n");
-
-  // Create a Blob and trigger download
   const blob = new Blob([csvContent], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -437,7 +374,6 @@ document.getElementById('downloadLogsBtn').addEventListener('click', function ()
 
 function downloadOfflineLogsXLSX() {
   if (!offlineLogs || offlineLogs.length === 0) return;
-
   const headers = [
     "RFID", "ID Number", "Last Name", "First Name", "Middle Name",
     "Organization", "Contact No", "Date", "Time", "Slot", "Late", "Synced"
@@ -464,7 +400,6 @@ function downloadOfflineLogsXLSX() {
 
 window.addEventListener('beforeunload', function (e) {
   if (offlineLogs && offlineLogs.length > 0) {
-    // Attempt to auto-download XLSX
     downloadOfflineLogsXLSX();
     e.preventDefault();
     e.returnValue = 'You have unsynced attendance logs. They have been downloaded, but please sync or save before leaving!';
@@ -526,7 +461,6 @@ function handleMiniLogin() {
       } else {
         const data = await res.json().catch(() => ({}));
         errorDiv.textContent = data.message || 'Invalid username or password.';
-        // Keep focus in modal for retry
         setTimeout(() => {
           if (!user) {
             document.getElementById('miniUsername').focus();
@@ -540,8 +474,6 @@ function handleMiniLogin() {
       setTimeout(() => document.getElementById('miniUsername').focus(), 10);
     }
   };
-
-  // Show/hide password toggle
   const pwInput = document.getElementById('miniPassword');
   const toggle = document.getElementById('miniTogglePassword');
   toggle.onclick = function() {
@@ -557,16 +489,13 @@ async function checkAuthAndShowModal() {
   try {
     const res = await fetch('/api/check-auth', { credentials: 'same-origin' });
     if (res.ok) {
-      // Authenticated: hide modal, focus RFID input
       hideMiniLoginModal();
       focusInput();
     } else {
-      // Not authenticated: show modal
       showMiniLoginModal();
       handleMiniLogin();
     }
   } catch {
-    // On error, show modal
     showMiniLoginModal();
     handleMiniLogin();
   }
@@ -574,14 +503,25 @@ async function checkAuthAndShowModal() {
 
 document.addEventListener('DOMContentLoaded', checkAuthAndShowModal);
 
-// --- Logout Logic ---
 document.querySelector('.btn-logout').onclick = async function() {
-  // Download unsynced logs before logout
   if (offlineLogs && offlineLogs.length > 0) {
     downloadOfflineLogsXLSX();
-    await new Promise(r => setTimeout(r, 800)); // Give time for download
+    await new Promise(r => setTimeout(r, 800));
   }
-  // Call backend logout
   await fetch('/logout', { method: 'POST', credentials: 'same-origin' });
   window.location.reload();
 };
+
+// Fetch the current/ongoing event from your backend
+async function loadCurrentEvent() {
+  try {
+    const res = await fetch('/api/events/current');
+    const event = await res.json();
+    currentEventId = event.id;
+    currentEventName = event.event_name;
+    document.getElementById('currentEventLabel').textContent = `${currentEventName}`;
+  } catch (e) {
+    document.getElementById('currentEventLabel').textContent = "No current event found.";
+  }
+}
+window.addEventListener("DOMContentLoaded", loadCurrentEvent);
