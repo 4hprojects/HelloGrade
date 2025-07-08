@@ -384,14 +384,14 @@ app.get('/terms-and-conditions', (req, res) => {
   app.get('/events', (req, res) => {
     res.sendFile(__dirname + '/public/events.html');
   });
-    app.get('/crvf/attendance', (req, res) => {
-        res.sendFile(path.join(__dirname, 'public', 'crvf', 'attendance.html'));
+    app.get('/crfv/attendance', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'crfv', 'attendance.html'));
     });
-        app.get('/crvf/register', (req, res) => {
-        res.sendFile(path.join(__dirname, 'public', 'crvf', 'register.html'));
+        app.get('/crfv/register', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'crfv', 'register.html'));
     });
-        app.get('/crvf/reports', (req, res) => {
-        res.sendFile(path.join(__dirname, 'public', 'crvf', 'reports.html'));
+        app.get('/crfv/reports', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'crfv', 'reports.html'));
     });
 /*
   app.get('/events/2025bytefunrun', (req, res) => {
@@ -1828,8 +1828,8 @@ app.post('/signup', async (req, res) => {
             }
 
             if (
-                studentIDNumber !== "crvfadmin" &&
-                studentIDNumber !== "crvfuser" &&
+                studentIDNumber !== "crfvadmin" &&
+                studentIDNumber !== "crfvuser" &&
                 !/^\d{7}$/.test(studentIDNumber)
             ) {
                 return res.status(400).json({ success: false, message: 'Student ID must be exactly 7 digits or a valid admin/user username.' });
@@ -1860,8 +1860,8 @@ app.post('/signup', async (req, res) => {
 
 
             if (
-                studentIDNumber !== "crvfadmin" &&
-                studentIDNumber !== "crvfuser" &&
+                studentIDNumber !== "crfvadmin" &&
+                studentIDNumber !== "crfvuser" &&
                 !/^\d{7}$/.test(studentIDNumber)
             ) {
                 return res.status(400).json({ success: false, message: 'Student ID must be exactly 7 digits or a valid admin/user username.' });
