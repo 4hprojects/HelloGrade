@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Registration</title>
+  <link rel="stylesheet" href="attendance.css">
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <h1>Register Attendee</h1>
+    </div>
+    <div class="register-container">
+      <form id="registerForm" class="form-horizontal" autocomplete="off">
+        <h2>Register</h2>
+        <div class="form-row">
+          <label for="first_name">First Name<span class="required">*</span></label>
+          <input type="text" id="first_name" name="first_name" required autofocus autocomplete="given-name" placeholder="Enter first name">
+        </div>
+        <div class="form-row">
+          <label for="middle_name">Middle Name</label>
+          <input type="text" id="middle_name" name="middle_name" autocomplete="additional-name" placeholder="Enter middle name">
+        </div>
+        <div class="form-row">
+          <label for="last_name">Last Name<span class="required">*</span></label>
+          <input type="text" id="last_name" name="last_name" required autocomplete="family-name" placeholder="Enter last name">
+        </div>
+        <div class="form-row">
+          <label for="organization">Organization<span class="required">*</span></label>
+          <input type="text" id="organization" name="organization" required placeholder="Enter organization">
+        </div>
+        <div class="form-row">
+          <label for="email">Email<span class="required">*</span></label>
+          <input type="email" id="email" name="email" required autocomplete="email" placeholder="Enter email">
+        </div>
+        <div class="form-row">
+          <label for="phone_no">Phone No</label>
+          <input type="text" id="phone_no" name="phone_no" autocomplete="tel" placeholder="Enter phone number">
+        </div>
+        <div class="form-row">
+          <label for="rfid">RFID</label>
+          <input type="text" id="rfid" name="rfid" placeholder="Enter RFID (optional)">
+        </div>
+        <div class="form-row">
+          <label for="event_id">Event Attending<span class="required">*</span></label>
+          <select id="event_id" name="event_id" required>
+            <option value="">Select an event</option>
+            <!-- Options will be populated by JS -->
+          </select>
+        </div>
+        <div id="eventDetails" style="margin:0.5em 0 1em 0; color:#1976d2;"></div>
+        <button type="submit" class="btn btn-primary" style="margin-top:1em;">Register</button>
+        <div id="regStatus" style="margin-top:1em;color:#1976d2;"></div>
+      </form>
+    </div>
+    <div id="latestPanel" style="margin-top:2em;">
+      <h2>Latest Registered</h2>
+      <ul id="latestList"></ul>
+    </div>
+
+    <div class="bulk-upload-panel" style="margin:2em 0;">
+      <h2>Bulk Register via Google Sheet</h2>
+      <p>
+        Click the button below to process all rows in the <b>BulkRegister</b> tab of the Google Sheet.<br>
+        The <b>Status</b> column will be updated for each row.<br>
+        You will receive a summary and can download the results as XLSX for backup.
+      </p>
+      <button type="button" id="processBulkRegisterBtn" class="btn btn-primary">Process BulkRegister Sheet</button>
+      <div id="bulkRegisterProgress" style="margin-top:1em;"></div>
+      <button type="button" id="downloadBulkResultsBtn" style="display:none;">Download Results as XLSX</button>
+    </div>
+
+    <div id="eventDetails" style="margin:0.5em 0 1em 0; color:#1976d2;"></div>
+  </div>
+ 
+<!-- Mini Login Modal and Spinner -->
+<div id="miniLoginModal" class="modal-overlay" style="display:none;" aria-modal="true" role="dialog" tabindex="-1">
+    <div class="modal-content">
+      <h2>Login Required</h2>
+      <form id="miniLoginForm" autocomplete="off">
+        <input type="text" id="miniUsername" placeholder="Username" required autofocus>
+        <div class="password-toggle">
+          <input type="password" id="miniPassword" placeholder="Password" required autocomplete="current-password">
+          <span id="miniTogglePassword" class="password-toggle-icon" tabindex="0" aria-label="Show or hide password" role="button">👁️</span>
+        </div>
+        <button type="submit" class="btn btn-sync">Login</button>
+        <div id="miniLoginError" class="error-message"></div>
+      </form>
+    </div>
+  </div>
+  <div id="loadingSpinner" style="display:none;">Loading...</div>
+
+<!-- Login Modal JS -->
+<script>
+function trapFocus(modal) {
+  const focusable = modal.querySelectorAll('input, button, [tabindex]:not([tabindex="-1"])');
+  let first = focusable[0];
+  let last = focusable[focusable.length - 1];
+  modal.addEventListener('keydown', function(e) {
+    if (e.key === 'Tab') {
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+  });
+}
+
+function showMiniLoginModal() {
+  const modal = document.getElementById('miniLoginModal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  modal.focus();
+  trapFocus(modal);
+  setTimeout(() => document.getElementById('miniUsername').focus(), 100);
+}
+
+function hideMiniLoginModal() {
+  document.getElementById('miniLoginModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function handleMiniLogin() {
+  document.getElementById('miniLoginForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const user = document.getElementById('miniUsername').value.trim();
+    const pass = document.getElementById('miniPassword').value;
+    const errorDiv = document.getElementById('miniLoginError');
+    errorDiv.textContent = '';
+    try {
+      const res = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentIDNumber: user, password: pass })
+      });
+      if (res.ok) {
+        window.location.reload();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        errorDiv.textContent = data.message || 'Invalid username or password.';
+        setTimeout(() => {
+          if (!user) {
+            document.getElementById('miniUsername').focus();
+          } else {
+            document.getElementById('miniPassword').focus();
+          }
+        }, 10);
+      }
+    } catch {
+      errorDiv.textContent = 'Network error. Please try again.';
+      setTimeout(() => document.getElementById('miniUsername').focus(), 10);
+    }
+  };
+
+  // Show/hide password toggle
+  const pwInput = document.getElementById('miniPassword');
+  const toggle = document.getElementById('miniTogglePassword');
+  toggle.onclick = function() {
+    pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
+    toggle.textContent = pwInput.type === 'password' ? '👁️' : '🙈';
+  };
+  toggle.onkeydown = function(e) {
+    if (e.key === 'Enter' || e.key === ' ') toggle.click();
+  };
+}
+
+async function checkAuthAndShowModal() {
+  try {
+    const res = await fetch('/api/check-auth', { credentials: 'same-origin' });
+    if (res.ok) {
+      hideMiniLoginModal();
+    } else {
+      showMiniLoginModal();
+      handleMiniLogin();
+    }
+  } catch {
+    showMiniLoginModal();
+    handleMiniLogin();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', checkAuthAndShowModal);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="register.js"></script>
+</body>
+</html>

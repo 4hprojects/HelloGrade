@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X5E3N182NE');
+  </script>
+  <meta charset="UTF-8">
+  <title>crfv Reports</title>
+  <link rel="stylesheet" href="attendance.css">
+  <link rel="stylesheet" href="reports.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <div class="brand">
+        <div class="brand-text">
+          <p>crfv Reports</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div id="clock"></div>
+        <button class="btn btn-logout" aria-label="Logout">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+
+    <div class="main-menu" style="margin-top:2em;">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="attendees">Attendees</button>
+        <button class="tab-btn" data-tab="attendance">Attendance</button>
+        <button class="tab-btn" data-tab="events">Events</button>
+      </div>
+
+      <!-- Attendees Tab -->
+      <div class="tab-content active" id="tab-attendees">
+        <div class="search-bar">
+          <input type="text" id="searchAttendees" placeholder="Search attendees...">
+          <button class="export-btn" id="exportAttendeesBtn"><i class="fas fa-file-excel"></i> Export XLSX</button>
+          <button class="refresh-btn" id="refreshAttendeesBtn" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+        </div>
+        <div class="pagination" id="attendeesPagination"></div>
+        <div class="table-container">
+          <table id="attendeesTable">
+            <thead>
+              <tr id="attendeesHeaderRow">
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Organization</th>
+                <th>Email</th>
+                <th>Contact No</th>
+                <th>RFID</th>
+                <th>Event </th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Attendance Tab -->
+      <div class="tab-content" id="tab-attendance">
+        <div class="search-bar">
+          <input type="text" id="searchAttendance" placeholder="Search attendance...">
+          <button class="export-btn" id="exportAttendanceBtn"><i class="fas fa-file-excel"></i> Export XLSX</button>
+        </div>
+                <div class="pagination" id="attendancePagination"></div>
+        <div class="table-container">
+          <table id="attendanceTable">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Attendee No</th>
+                <th>Name</th>
+                <th>Event Name</th>
+                <th>Slot</th>
+                <th>Status</th>
+                <th>Organization</th>
+                <th>Contact No</th>
+                <th>RFID</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- Events Tab -->
+      <div class="tab-content" id="tab-events">
+        <div class="search-bar">
+          <input type="text" id="searchEvents" placeholder="Search events...">
+          <button class="export-btn" id="exportEventsBtn"><i class="fas fa-file-excel"></i> Export XLSX</button>
+        </div>
+                <div class="pagination" id="eventsPagination"></div>
+        <div class="table-container">
+          <table id="eventsTable">
+            <thead>
+              <tr>
+                <th>Event Name</th>
+                <th>Date</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div id="loadingSpinner" style="display:none;text-align:center;margin:2em 0;">
+  <i class="fas fa-spinner fa-spin fa-2x"></i>
+</div>
+  <div style="position:fixed;top:100px;right:0;z-index:1000;width:320px;max-width:100%;">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-format="fluid"
+       data-ad-layout-key="-gw-3+1f-3d+2z"
+       data-ad-client="ca-pub-4537208011192461"
+       data-ad-slot="1905924631"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="reports.js"></script>
+  <!-- You will add your JS logic for tabs, search, pagination, export, and authentication here -->
+</body>
+</html>

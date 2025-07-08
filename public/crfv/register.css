@@ -1,0 +1,83 @@
+/* Add to register.css or in a <style> block */
+.register-container {
+  max-width: 500px;
+  margin: 2em auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px #0001;
+  padding: 2em;
+}
+form h2 {
+  text-align: center;
+  margin-bottom: 1em;
+}
+.form-horizontal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 0.2em;
+}
+.form-row label {
+  flex: 0 0 140px;
+  text-align: right;
+  margin-right: 0.5em;
+  font-weight: 500;
+  color: #222;
+  letter-spacing: 0.02em;
+}
+.form-row input[type="text"],
+.form-row input[type="email"],
+.form-row select {
+  flex: 1 1 200px;
+  padding: 0.5em 0.7em;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 1em;
+  transition: border 0.2s;
+}
+.form-row input[type="text"]:focus,
+.form-row input[type="email"]:focus,
+.form-row select:focus {
+  border-color: #0074b8;
+  outline: none;
+}
+.required {
+  color: #e00;
+  margin-left: 0.2em;
+}
+button[type="submit"] {
+  width: 100%;
+  padding: 0.7em;
+  background: #0074b8;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1em;
+  margin-top: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button[type="submit"]:hover {
+  background: #005a8c;
+}
+#regStatus {
+  margin-top: 1em;
+  text-align: center;
+  min-height: 1.5em;
+}
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .form-row label {
+    text-align: left;
+    margin-bottom: 0.2em;
+  }
+}
