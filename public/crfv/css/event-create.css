@@ -1,0 +1,139 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f5f7fa;
+  margin: 0;
+  padding: 0;
+}
+.app-container {
+  max-width: 420px;
+  margin: 32px auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px #0001;
+  padding: 1.5em 1.2em 1em 1.2em;
+}
+.header h1 {
+  text-align: center;
+  color: #1976d2;
+  font-size: 1.4em;
+  margin-bottom: 1em;
+}
+.attendance-card label {
+  display: block;
+  margin-bottom: 0.7em;
+  font-weight: 500;
+  color: #222;
+}
+.attendance-card input[type="text"],
+.attendance-card input[type="date"] {
+  width: 100%;
+  padding: 0.6em 0.8em;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 1em;
+  margin-top: 0.2em;
+  background: #fafbfc;
+  transition: border 0.2s;
+  box-sizing: border-box;
+}
+.attendance-card input:focus {
+  border: 1.5px solid #1976d2;
+  outline: none;
+  background: #fff;
+}
+.btn {
+  padding: 0.6em 1.2em;
+  border: none;
+  border-radius: 4px;
+  margin: 0 0.5em;
+  cursor: pointer;
+  background: #eee;
+  color: #222;
+  font-size: 1em;
+}
+.btn-primary {
+  background: #1976d2;
+  color: #fff;
+}
+.btn-primary:hover { background: #125ea2; }
+#eventStatus {
+  min-height: 1.2em;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+}
+.modal.show {
+  display: flex;
+}
+.modal-content {
+  background: #fff;
+  padding: 2em 1.5em;
+  border-radius: 8px;
+  max-width: 350px;
+  margin: auto;
+  text-align: center;
+  box-shadow: 0 2px 12px #0002;
+  outline: none;
+}
+.modal-content .btn {
+  width: 100%;
+  margin: 0;
+  font-size: 1.05em;
+  padding: 12px 0;
+  border-radius: 8px;
+  box-shadow: var(--shadow, 0 2px 12px rgba(0,0,0,0.05));
+}
+.modal-content .btn + .btn {
+  margin-top: 12px;
+}
+.two-panel-container {
+  display: flex;
+  gap: 2em;
+  max-width: 900px;
+  margin: 2em auto;
+  padding: 1em;
+}
+.panel {
+  flex: 1 1 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0001;
+  padding: 2em 1.5em;
+  min-width: 280px;
+}
+#latestEventsList li.event-even {
+  background: #f5f7fa;
+}
+#latestEventsList li.event-odd {
+  background: #e3f0fc;
+}
+#latestEventsList li {
+  padding: 1em;
+  border-radius: 8px;
+  margin-bottom: 0.7em;
+  transition: background 0.2s;
+}
+@media (max-width: 600px) {
+  .app-container {
+    max-width: 99vw;
+    margin: 8px auto;
+    padding: 0.7em 0.2em 0.7em 0.2em;
+  }
+  .modal-content {
+    max-width: 95vw;
+    padding: 1.2em 0.5em;
+  }
+}
+@media (max-width: 900px) {
+  .two-panel-container {
+    flex-direction: column;
+    gap: 1em;
+  }
+}
