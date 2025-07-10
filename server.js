@@ -39,7 +39,9 @@ const attendanceApi = require('./routes/attendanceApi');
 const registerApi = require('./routes/registerApi');
 const eventsApi = require('./routes/eventsApi');
 const bulkRegisterApi = require('./routes/bulkRegisterApi');
+const userRegisterApi = require('./routes/userRegisterApi');
 
+app.use('/api', userRegisterApi);
 app.use('/api/bulk-register', bulkRegisterApi);
 app.use('/api/events', eventsApi);
 app.use('/api/attendees', registerApi); // for check-rfid and latest
