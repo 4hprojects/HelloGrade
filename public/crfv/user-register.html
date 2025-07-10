@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-X5E3N182NE');
+    </script>
+     
+    <meta charset="UTF-8">
+    <meta name="author" content="Henson M. Sagorsor">
+    <meta name="google-adsense-account" content="ca-pub-4537208011192461">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Register for CRFV events. Sign up for conferences, seminars and organizational events.">
+    <meta name="keywords" content="CRFV, event registration, sign up, conferences, seminars">
+    
+    <title>CRFV Event Registration</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/user-register.css">    
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="material-icons">event</i>
+                <span>CRFV Event System</span>
+            </div>
+            <p>Register for upcoming conferences and seminars</p>
+        </div>
+    </header>
+
+    <!-- Progress Steps -->
+    <div class="register-container">
+        <div class="progress-steps">
+            <div class="progress-bar" id="progressBar" style="width: 33%;"></div>
+            <div class="step active">
+                <div class="step-circle">1</div>
+                <div class="step-label">Personal</div>
+            </div>
+            <div class="step">
+                <div class="step-circle">2</div>
+                <div class="step-label">Details</div>
+            </div>
+            <div class="step">
+                <div class="step-circle">3</div>
+                <div class="step-label">Review</div>
+            </div>
+        </div>
+        
+        <div class="form-header">
+            <h2>Event Registration</h2>
+            <p>Fill out the form to register for an upcoming event</p>
+        </div>
+        
+        <form id="userRegisterForm" class="form-horizontal" autocomplete="off">
+            <!-- Step 1: Event and Personal Info -->
+            <div class="step-section active" id="step1">
+                <div class="form-row">
+                    <label for="eventId" class="required">Select Event</label>
+                    <div class="input-group">
+                        <i class="material-icons input-icon">event</i>
+                        <select id="eventId" name="eventId" required>
+                            <option value="">Select an event</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label for="firstName" class="required">First Name</label>
+                    <div class="input-group">
+                        <i class="material-icons input-icon">person</i>
+                        <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label for="middleName">Middle Name</label>
+                    <div class="input-group">
+                        <i class="material-icons input-icon">person_outline</i>
+                        <input type="text" id="middleName" name="middleName" placeholder="Enter your middle name">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label for="lastName" class="required">Last Name</label>
+                    <div class="input-group">
+                        <i class="material-icons input-icon">person</i>
+                        <input type="text" id="lastName" name="lastName" required placeholder="Enter your last name">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label for="gender" class="required">Gender</label>
+                    <div class="input-group">
+                        <i class="material-icons input-icon">wc</i>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select your gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="nav-btn next" id="nextBtn1">Next</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Professional Details -->
+            <div class="step-section" id="step2">
+                <div class="form-row">
+                    <label for="designation" class="required">Designation</label>
+                    <div class="input-group">
+                        <i class="material-icons input-icon">work</i>
+                        <input type="text" id="designation" name="designation" required placeholder="Enter your job title">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label for="organization" class="required">Organization</label>
+                    <div class="input-group">
+                        <i class="material-icons input-icon">business</i>
+                        <input type="text" id="organization" name="organization" required placeholder="Enter organization name">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label for="email">Email Address</label>
+                    <div class="input-group">
+                        <i class="material-icons input-icon">mail</i>
+                        <input type="email" id="email" name="email" placeholder="Enter your email">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label for="contactNo">Contact Number</label>
+                    <div class="input-group">
+                        <i class="material-icons input-icon">phone</i>
+                        <input type="text" id="contactNo" name="contactNo" placeholder="Enter phone number">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label for="accommodation" class="required">Accommodation</label>
+                    <div class="input-group">
+                        <i class="material-icons input-icon">hotel</i>
+                        <select id="accommodation" name="accommodation" required>
+                            <option value="">Select accommodation type</option>
+                            <option value="Online / Virtual">Online / Virtual</option>
+                            <option value="Live-Out">Live-Out</option>
+                            <option value="FB Quad">FB Quad (4 person)</option>
+                            <option value="FB Triple">FB Triple (3 person)</option>
+                            <option value="FB Double">FB Double (2 person)</option>
+                            <option value="FB Single">FB Single</option>
+                            <option value="Others">Others (please specify)</option>
+                        </select>
+                    </div>
+                    <div class="accommodation-other" id="accommodationOtherContainer">
+                        <div class="input-group">
+                            <i class="material-icons input-icon">edit</i>
+                            <input type="text" id="accommodationOther" name="accommodationOther" placeholder="Please specify accommodation">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="nav-btn" id="prevBtn1">Back</button>
+                    <button type="button" class="nav-btn next" id="nextBtn2">Next</button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Review and Submit -->
+            <div class="step-section" id="step3">
+                <div class="form-row">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary); border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem;">
+                        Review Your Information
+                    </h3>
+                </div>
+                
+                <div class="review-section">
+                    <div class="review-item">
+                        <strong>Event:</strong> <span id="reviewEvent">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Name:</strong> <span id="reviewName">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Gender:</strong> <span id="reviewGender">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Designation:</strong> <span id="reviewDesignation">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Organization:</strong> <span id="reviewOrganization">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Email:</strong> <span id="reviewEmail">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Contact:</strong> <span id="reviewContact">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Accommodation:</strong> <span id="reviewAccommodation">-</span>
+                    </div>
+                </div>
+                
+                <div class="checkbox-container">
+                    <input type="checkbox" id="privacyAgree" name="privacyAgree" required>
+                    <label for="privacyAgree">
+                        I agree to the <a href="/crfv/privacy-policy.html" target="_blank">Data Privacy Policy</a>. 
+                        I understand that CRFV will process my information in accordance with their privacy policy.
+                    </label>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="nav-btn" id="prevBtn2">Back</button>
+                    <button type="submit" id="submitBtn">Complete Registration</button>
+                </div>
+            </div>
+            
+            <div id="registerMessage" aria-live="polite"></div>
+        </form>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2023 CRFV Event System. All rights reserved. | <a href="/crfv/privacy-policy.html">Privacy Policy</a></p>
+    </div>
+    
+    <!-- Google Ads -->
+    <div style="max-width: 600px; margin: 0 auto; padding: 0 16px;">
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-4537208011192461"
+            data-ad-slot="1190959056"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+    </div>
+    
+
+  <script src="js/user-register.js"></script>
+</body>
+</html>
