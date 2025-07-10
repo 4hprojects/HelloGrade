@@ -51,6 +51,7 @@ app.use('/api/attendance', attendanceApi);
 // Security middleware
 app.use(helmet({ contentSecurityPolicy: false }));
 app.disable('x-powered-by');
+app.use(eventsApi);
 
 //const sitemapRoutes = require('./routes/sitemapRoutes');
 //app.use('/', sitemapRoutes);
@@ -340,85 +341,6 @@ app.get('/login', (req, res) => {
     }
     res.sendFile(__dirname + '/public/login.html');
   });
-
-app.get('/blog', (req, res) => {
-    res.sendFile(__dirname + '/public/blogs.html');
-  });
-app.get('/blogs', (req, res) => {
-    res.sendFile(__dirname + '/public/blogs.html');
-  });
-app.get('/index', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
-  });
-app.get('/search', (req, res) => {
-    res.sendFile(__dirname + '/public/search.html');
-  });
-app.get('/contact', (req, res) => {
-    res.sendFile(__dirname + '/public/contact.html');
-  });
-app.get('/about', (req, res) => {
-    res.sendFile(__dirname + '/public/about.html');
-  });
-app.get('/help', (req, res) => {
-    res.sendFile(__dirname + '/public/help.html');
-  });
-app.get('/contact', (req, res) => {
-    res.sendFile(__dirname + '/public/contact.html');
-  });
-app.get('/privacy-policy', (req, res) => {
-    res.sendFile(__dirname + '/public/privacy-policy.html');
-  });
-app.get('/terms-and-conditions', (req, res) => {
-    res.sendFile(__dirname + '/public/terms-and-conditions.html');
-  });
-  app.get('/reset-password', (req, res) => {
-    res.sendFile(__dirname + '/public/reset-password.html');
-  });
-  app.get('/lessons', (req, res) => {
-    res.sendFile(__dirname + '/public/lessons.html');
-  });
-  app.get('/lesson', (req, res) => {
-    res.sendFile(__dirname + '/public/lessons.html');
-  });
-  app.get('/event', (req, res) => {
-    res.sendFile(__dirname + '/public/events.html');
-  });
-  app.get('/events', (req, res) => {
-    res.sendFile(__dirname + '/public/events.html');
-  });
-    app.get('/crfv/attendance', (req, res) => {
-        res.sendFile(path.join(__dirname, 'public', 'crfv', 'attendance.html'));
-    });
-        app.get('/crfv/register', (req, res) => {
-        res.sendFile(path.join(__dirname, 'public', 'crfv', 'register.html'));
-    });
-        app.get('/crfv/reports', (req, res) => {
-        res.sendFile(path.join(__dirname, 'public', 'crfv', 'reports.html'));
-    });
-/*
-  app.get('/events/2025bytefunrun', (req, res) => {
-    res.sendFile(__dirname + '/public/events/2025bytefunrun.html');
-});
-app.get('/events/2025bytefunruninfo', (req, res) => {
-    res.sendFile(__dirname + '/public/events/2025bytefunruninfo.html');
-});
-app.get('/events/bytefunrun2025results', (req, res) => {
-    res.sendFile(__dirname + '/public/events/bytefunrun2025results.html');
-});
-app.get('/events/itquizbee2025', (req, res) => {
-    res.sendFile(__dirname + '/public/events/itquizbee2025.html');
-});
-app.get('/events', (req, res) => {
-    res.sendFile(__dirname + '/public/events.html');
-});
-app.get('/books/the-way-of-the-shepherd/principle1', (req, res) => {
-    res.sendFile(__dirname + '/public/books/the-way-of-the-shepherd/principle1.html');
-});
-app.get('/books/the-way-of-the-shepherd/principle2', (req, res) => {
-    res.sendFile(__dirname + '/public/books/the-way-of-the-shepherd/principle2.html');
-});
-
-*/
 
 app.post('/api/register', async (req, res) => {
   try {
@@ -2745,6 +2667,26 @@ app.get("/ads.txt", (req, res) => {
     res.send("google.com, pub-4537208011192461, DIRECT, f08c47fec0942fa0");
 });
 
+// Serve HTML files without .html extension
+app.get('/:page', (req, res, next) => {
+    const page = req.params.page;
+    // Prevent directory traversal
+    if (!/^[a-zA-Z0-9\-_]+$/.test(page)) return next();
+    const filePath = path.join(__dirname, 'public', `${page}.html`);
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) return next(); // File doesn't exist, continue to 404
+        res.sendFile(filePath);
+    });
+});
+app.get('/:folder/:page', (req, res, next) => {
+    const { folder, page } = req.params;
+    if (!/^[a-zA-Z0-9\-_]+$/.test(folder) || !/^[a-zA-Z0-9\-_]+$/.test(page)) return next();
+    const filePath = path.join(__dirname, 'public', folder, `${page}.html`);
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) return next();
+        res.sendFile(filePath);
+    });
+});
 // Serve 404 page for non-existent routes
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
