@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { createClient } = require('@supabase/supabase-js');
-const { v4: uuidv4 } = require('uuid'); // npm install uuid
-require('dotenv').config();
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE);
+const { supabase } = require('../supabaseClient');
+const { v4: uuidv4 } = require('uuid');
 
 // Create new event
 router.post('/', async (req, res) => {
-      console.log('Received event POST:', req.body);
+  if (!req.user || req.user.role !== 'admin') {
+    return res.status(403).json({ status: "error", message: "Only admin can create events." });
+  }
+  console.log('Received event POST:', req.body);
   const { event_name, event_date, location } = req.body;
   if (!event_name || !event_date || !location) {
     return res.status(400).json({ status: "error", message: "All fields required." });
@@ -67,6 +68,23 @@ router.get('/all', async (req, res) => {
   } catch (err) {
     res.status(500).json({ status: "error", message: err.toString() });
   }
+});
+
+router.get('/', async (req, res) => {
+  // Only upcoming events if ?upcoming=1
+  let filter = {};
+  if (req.query.upcoming === '1') {
+    filter = { event_date: { gte: new Date().toISOString().slice(0, 10) } };
+  }
+  // Fetch events from Supabase
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .gte('event_date', new Date().toISOString().slice(0, 10))
+    .order('event_date', { ascending: true });
+
+  if (error) return res.status(500).json({ message: 'Failed to load events.' });
+  res.json({ events: data });
 });
 
 module.exports = router;
