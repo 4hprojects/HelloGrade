@@ -6,40 +6,60 @@ const { v4: uuidv4 } = require('uuid');
 
 // Create new event
 router.post('/', async (req, res) => {
+  try {
     console.log('Session ID:', req.sessionID);
-  console.log('Session User:', req.session.userId);
-  const { event_name, event_date, location } = req.body;
+    console.log('Session User:', req.session.userId);
+    
+    const { event_name, event_date, location } = req.body;
 
-  const { data: mapping, error: mappingError } = await supabase
-    .from('user_mapping')
-    .select('uuid')
-    .eq('object_id', req.session.userId)
-    .single();
+    // 1. Verify user exists in MongoDB first
+    const user = await usersCollection.findOne({ 
+      _id: new ObjectId(req.session.userId) 
+    });
+    
+    if (!user) {
+      console.error('User not found in MongoDB');
+      return res.status(400).json({ 
+        status: "error", 
+        message: "User not found" 
+      });
+    }
 
-  console.log('Mapping Query Result:', mapping);
-  console.log('Mapping Query Error:', mappingError);
+    // 2. Create event in Supabase using session userId directly
+    const { data, error } = await supabase
+      .from('events')
+      .insert([{
+        id: uuidv4(),
+        event_name,
+        event_date,
+        location,
+        user_id: req.session.userId // Use MongoDB _id directly
+      }])
+      .select()
+      .maybeSingle();
 
-  if (!mapping || mappingError) {
-    console.error('User mapping not found:', mappingError || 'No mapping for userId');
-    return res.status(400).json({ status: "error", message: "User mapping not found." });
+    if (error) {
+      console.error('Supabase insert error:', error);
+      return res.status(400).json({ 
+        status: "error", 
+        message: error.message 
+      });
+    }
+
+    // 3. Log successful creation
+    console.log('Event created successfully:', data);
+    res.json({ 
+      status: "success", 
+      event: data 
+    });
+
+  } catch (err) {
+    console.error('Server error in event creation:', err);
+    res.status(500).json({ 
+      status: "error", 
+      message: "Internal server error" 
+    });
   }
-
-  const userId = mapping.uuid;
-
-  const { data, error } = await supabase
-    .from('events')
-    .insert([{
-      id: uuidv4(),
-      event_name,
-      event_date,
-      location,
-      user_id: userId
-    }])
-    .select()
-    .maybeSingle();
-
-  if (error) return res.status(400).json({ status: "error", message: error.message });
-  res.json({ status: "success", event: data });
 });
 
 // Get latest events (last 5)
