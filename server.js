@@ -84,11 +84,13 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: mongoUri }),
     cookie: {
-        secure: false, // Set to true only if using HTTPS
+        secure: true, // update to true for production Set to true only if using HTTPS
         httpOnly: true,
-        sameSite: 'lax', // Adjust sameSite setting for better compatibility
+        domain: '.hellograde.online', // add on production
+        sameSite: 'None', // update to 'None' for production Adjust sameSite setting for better compatibility
         maxAge: 1 * 60 * 60 * 1000 // 2 hours
-    }
+    },
+    store: new (require('connect-pg-simple')(session))() // include in production
 }));
 
 app.use((req, res, next) => {
