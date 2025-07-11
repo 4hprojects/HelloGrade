@@ -58,8 +58,11 @@ app.use(eventsApi);
 //added these - to test
 const cors = require('cors');
 app.use(cors({
-  origin: 'https://hellograde.online',
-  credentials: true // Allow credentials
+  origin: [
+    'https://hellograde.online',
+    'http://localhost:3000' // Add for development
+  ],
+  credentials: true
 }));
 
 // Initialize Supabase
@@ -87,13 +90,17 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: mongoUri }), // Use ONLY MongoDB
-    cookie: {
-        secure: true,
-        httpOnly: true,
-        domain: '.hellograde.online',
-        sameSite: 'None',
-        maxAge: 1 * 30 * 60 * 1000
-    }
+  cookie: {
+    secure: process.env.NODE_ENV === 'production', // Only HTTPS in production
+    httpOnly: true,
+    domain: process.env.NODE_ENV === 'production' 
+      ? '.hellograde.online' 
+      : 'localhost',
+    sameSite: process.env.NODE_ENV === 'production' 
+      ? 'None' 
+      : 'Lax', // More flexible in dev
+    maxAge: 30 * 60 * 1000
+  }
 }));
 
 app.use((req, res, next) => {
