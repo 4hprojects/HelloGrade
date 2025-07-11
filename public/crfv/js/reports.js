@@ -1,3 +1,19 @@
+//reports.js
+// --- Define the columns for the Attendees tab ---
+const attendeesColumns = [
+  { key: 'last_name', label: 'Last Name' },
+  { key: 'first_name', label: 'First Name' },
+  { key: 'organization', label: 'Organization' },
+  { key: 'designation', label: 'Designation' },
+  { key: 'email', label: 'Email' },
+  { key: 'contact_no', label: 'Contact No' },
+  { key: 'rfid', label: 'RFID' },
+  { key: 'confirmation_code', label: 'Confirmation Code' },
+  { key: 'event_name', label: 'Event' },
+  { key: 'payment_status', label: 'Payment Status' },
+  { key: 'info_details', label: 'Info Details' },
+  { key: 'payment_details', label: 'Payment Details' }
+];
 // --- Tab Switching ---
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', function() {
@@ -475,38 +491,190 @@ document.getElementById('refreshAttendeesBtn').onclick = loadAttendees;
 document.getElementById('refreshAttendanceBtn').onclick = loadAttendance;
 document.getElementById('refreshEventsBtn').onclick = loadEvents;
 
-// --- Render Attendees Header ---
+
+
+// --- Render the table header ---
 function renderAttendeesHeader() {
-  const headerRow = document.getElementById('attendeesHeaderRow');
-  const columns = [
-    { label: "Last Name", key: "last_name" },
-    { label: "First Name", key: "first_name" },
-    { label: "Middle Name", key: "middle_name" },
-    { label: "Organization", key: "organization" },
-    { label: "Email", key: "email" },
-    { label: "Contact No", key: "contact_no" },
-    { label: "RFID", key: "rfid" },
-    { label: "Event Name", key: "event_name" }
-  ];
-  headerRow.innerHTML = columns.map(col => {
-    let arrow = '';
-    if (attendeesSort.key === col.key) {
-      arrow = attendeesSort.asc ? ' ▲' : ' ▼';
+  const header = document.getElementById('attendeesTableHeader');
+  header.innerHTML = `<tr>${attendeesColumns.map(col => `<th>${col.label}</th>`).join('')}</tr>`;
+}
+
+// Render the table body
+function renderAttendeesTable(attendees) {
+  const tbody = document.getElementById('attendeesTableBody');
+  tbody.innerHTML = attendees.map(att => `
+    <tr>
+      <td>${att.last_name || ''}</td>
+      <td>${att.first_name || ''}</td>
+      <td>${att.organization || ''}</td>
+      <td>${att.designation || ''}</td>
+      <td>${att.email || ''}</td>
+      <td>${att.contact_no || ''}</td>
+      <td>${att.rfid || ''}</td>
+      <td>${att.confirmation_code || ''}</td>
+      <td>${att.event_name || ''}</td>
+      <td>${att.payment_status || ''}</td>
+      <td>
+        <button class="btn btn-info" onclick="openInfoModal('${att.attendee_no}')">Edit Info</button>
+      </td>
+      <td>
+        <button class="btn btn-payment" onclick="openPaymentModal('${att.attendee_no}')">Edit Payment Info</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// Example: Fetch and render attendees on page load or tab switch
+async function loadAttendees() {
+  // Replace with your actual API endpoint
+  const res = await fetch('/api/attendees');
+  const attendees = await res.json();
+  renderAttendeesHeader();
+  renderAttendeesTable(attendees);
+}
+
+// Call this when the Attendees tab is shown
+loadAttendees();
+
+// --- Info Modal ---
+async function openInfoModal(attendee_no) {
+  const res = await fetch(`/api/attendees/${attendee_no}`);
+  const att = await res.json();
+  document.getElementById('modalRfid').value = att.rfid || '';
+  document.getElementById('modalInfoFields').innerHTML = `
+    <div>Last Name: ${att.last_name}</div>
+    <div>First Name: ${att.first_name}</div>
+    <div>Organization: ${att.organization}</div>
+    <div>Designation: ${att.designation}</div>
+    <div>Email: ${att.email}</div>
+    <div>Contact No: ${att.contact_no || ''}</div>
+    <div>Accommodation: ${att.accommodation || ''}</div>
+    <div>Event: ${att.event_name}</div>
+  `;
+  document.getElementById('infoModal').style.display = 'block';
+
+  document.getElementById('infoForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const rfid = document.getElementById('modalRfid').value;
+    await fetch(`/api/attendees/${attendee_no}/rfid`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rfid })
+    });
+    closeInfoModal();
+    loadAttendees();
+  };
+}
+function closeInfoModal() {
+  document.getElementById('infoModal').style.display = 'none';
+}
+
+// --- Payment Modal ---
+async function openPaymentModal(attendee_no) {
+  // Clear containers
+  document.getElementById('newPaymentFormContainer').innerHTML = '';
+  document.getElementById('paymentRecords').innerHTML = '';
+
+  // Render "Add New Payment" form
+  document.getElementById('newPaymentFormContainer').innerHTML = `
+    <form id="newPaymentForm">
+      <h4>Add New Payment</h4>
+      <label>Status: 
+        <select name="payment_status" required>
+          <option value="">Select status</option>
+          <option value="Fully Paid">Fully Paid</option>
+          <option value="Partially Paid">Partially Paid</option>
+          <option value="Others">Others</option>
+        </select>
+      </label>
+      <label>Amount: <input type="text" name="amount" required></label>
+      <label>Form of Payment: <input type="text" name="form_of_payment"></label>
+      <label>Date Full Payment: <input type="date" name="date_full_payment"></label>
+      <label>Date Partial Payment: <input type="date" name="date_partial_payment"></label>
+      <label>Account: <input type="text" name="account"></label>
+      <label>OR Number: <input type="text" name="or_number"></label>
+      <label>Quickbooks No: <input type="text" name="quickbooks_no"></label>
+      <label>Shipping Tracking No: <input type="text" name="shipping_tracking_no"></label>
+      <label>Notes: <input type="text" name="notes"></label>
+      <button type="submit">Add Payment</button>
+      <div id="newPaymentError" style="color:red;"></div>
+    </form>
+    <hr>
+  `;
+
+  // Handle new payment submission
+  document.getElementById('newPaymentForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(this));
+    formData.attendee_no = attendee_no;
+    const res = await fetch('/api/payments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    if (res.ok) {
+      openPaymentModal(attendee_no); // Refresh modal
+    } else {
+      const errMsg = (await res.json()).message || 'Failed to add payment.';
+      document.getElementById('newPaymentError').textContent = errMsg;
     }
-    return `<th class="${attendeesSort.key === col.key ? 'sorted-col' : ''}" data-key="${col.key}" style="cursor:pointer">${col.label}${arrow}</th>`;
-  }).join('');
-  // Re-attach click handlers
-  headerRow.querySelectorAll('th').forEach(th => {
-    th.onclick = function() {
-      const key = th.dataset.key;
-      if (attendeesSort.key === key) {
-        attendeesSort.asc = !attendeesSort.asc;
+  };
+
+  // Fetch and render existing payments
+  const res = await fetch(`/api/payments/${attendee_no}`);
+  let payments = await res.json();
+  payments = payments.filter(p => p && p.payment_id);
+
+  document.getElementById('paymentRecords').innerHTML = payments.length
+    ? payments.map(payment => `
+      <form class="paymentForm" data-payment-id="${payment.payment_id}">
+        <label>Status: 
+          <select name="payment_status">
+            <option value="Fully Paid" ${payment.payment_status === 'Fully Paid' ? 'selected' : ''}>Fully Paid</option>
+            <option value="Partially Paid" ${payment.payment_status === 'Partially Paid' ? 'selected' : ''}>Partially Paid</option>
+            <option value="Others" ${payment.payment_status === 'Others' ? 'selected' : ''}>Others</option>
+          </select>
+        </label>
+        <label>Amount: <input type="text" name="amount" value="${payment.amount || ''}"></label>
+        <label>Form of Payment: <input type="text" name="form_of_payment" value="${payment.form_of_payment || ''}"></label>
+        <label>Date Full Payment: <input type="date" name="date_full_payment" value="${payment.date_full_payment || ''}"></label>
+        <label>Date Partial Payment: <input type="date" name="date_partial_payment" value="${payment.date_partial_payment || ''}"></label>
+        <label>Account: <input type="text" name="account" value="${payment.account || ''}"></label>
+        <label>OR Number: <input type="text" name="or_number" value="${payment.or_number || ''}"></label>
+        <label>Quickbooks No: <input type="text" name="quickbooks_no" value="${payment.quickbooks_no || ''}"></label>
+        <label>Shipping Tracking No: <input type="text" name="shipping_tracking_no" value="${payment.shipping_tracking_no || ''}"></label>
+        <label>Notes: <input type="text" name="notes" value="${payment.notes || ''}"></label>
+        <button type="submit">Save</button>
+        <div class="paymentError" style="color:red;"></div>
+      </form>
+      <hr>
+    `).join('')
+    : '<div>No payment records yet.</div>';
+
+  document.getElementById('paymentModal').style.display = 'block';
+
+  // Handle existing payment edits
+  document.querySelectorAll('.paymentForm').forEach(form => {
+    form.onsubmit = async function(e) {
+      e.preventDefault();
+      const payment_id = form.dataset.paymentId;
+      const data = Object.fromEntries(new FormData(form));
+      const res = await fetch(`/api/payments/${payment_id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (res.ok) {
+        openPaymentModal(attendee_no); // Refresh modal after edit
       } else {
-        attendeesSort.key = key;
-        attendeesSort.asc = true;
+        const errMsg = (await res.json()).message || 'Failed to update payment.';
+        form.querySelector('.paymentError').textContent = errMsg;
       }
-      renderAttendeesHeader();
-      updateAttendeesTable();
     };
   });
+}
+
+function closePaymentModal() {
+  document.getElementById('paymentModal').style.display = 'none';
+  loadAttendees(); // Refresh main table after closing modal
 }
