@@ -1,5 +1,4 @@
-
-        :root {
+:root {
             --primary: #1a56db;
             --primary-dark: #0e3f9e;
             --primary-light: #e1effe;
@@ -366,6 +365,11 @@
             cursor: not-allowed;
         }
         
+        .nav-btn.back-btn, .nav-btn.event-details-btn, #prevBtn1, #prevBtn2, a[href="https://crfv-cpu.org"] {
+    font-size: 0.9em;
+    padding: 0.4em 1em;
+}
+        
         @media (max-width: 480px) {
             .header {
                 padding: 1.2rem 0;
@@ -405,4 +409,34 @@
     padding: 8px 16px !important;
     font-size: 14px !important;
     margin: 5px !important;
+}
+
+        .success-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        button#registerAgainBtn.nav-btn.small-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: white;
+    background: var(--primary);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button#registerAgainBtn.nav-btn.small-btn:hover {
+    background: var(--primary-dark);
+}
+
+button#registerAgainBtn.nav-btn.small-btn i {
+    font-size: 1rem;
 }
