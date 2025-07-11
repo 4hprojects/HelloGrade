@@ -1,3 +1,4 @@
+/*event-create.css*/
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   background: #f5f7fa;
@@ -45,10 +46,10 @@ body {
   padding: 0.6em 1.2em;
   border: none;
   border-radius: 4px;
-  margin: 0 0.5em;
+  margin: 1em 0 0 0;
   cursor: pointer;
-  background: #eee;
-  color: #222;
+  background: #1976d2;
+  color: #fff;
   font-size: 1em;
 }
 .btn-primary {
@@ -60,27 +61,23 @@ body {
   min-height: 1.2em;
 }
 .modal {
-  display: none;
   position: fixed;
-  z-index: 1000;
-  left: 0; top: 0;
-  width: 100vw; height: 100vh;
+  z-index: 9999;
+  left: 0; top: 0; right: 0; bottom: 0;
   background: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
-}
-.modal.show {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .modal-content {
   background: #fff;
-  padding: 2em 1.5em;
-  border-radius: 8px;
-  max-width: 350px;
-  margin: auto;
+  color: #222;
+  padding: 2em 2em 1em 2em;
+  border-radius: 12px;
+  min-width: 320px;
+  max-width: 90vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
   text-align: center;
-  box-shadow: 0 2px 12px #0002;
-  outline: none;
 }
 .modal-content .btn {
   width: 100%;
@@ -92,6 +89,11 @@ body {
 }
 .modal-content .btn + .btn {
   margin-top: 12px;
+}
+.error-message {
+  color: #d32f2f;
+  margin-top: 0.5em;
+  min-height: 1.5em;
 }
 .two-panel-container {
   display: flex;
@@ -136,4 +138,21 @@ body {
     flex-direction: column;
     gap: 1em;
   }
+}
+
+/* Ensure modals stack properly */
+.modal {
+  z-index: 1000;
+}
+
+/* Add backdrop for modals */
+.modal::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
 }
