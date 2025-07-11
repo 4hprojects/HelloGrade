@@ -1,3 +1,4 @@
+//user-register.js
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('userRegisterForm');
   const accommodation = document.getElementById('accommodation');
@@ -65,6 +66,16 @@ document.addEventListener('DOMContentLoaded', () => {
       registerMessage.textContent = 'You must agree to the Data Privacy Policy to register.';
       registerMessage.style.color = '#e53935';
       form.privacyAgree.focus();
+      return;
+    }
+
+    // Email validation
+    const emailValue = form.email.value.trim();
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (emailValue && !emailPattern.test(emailValue)) {
+      registerMessage.textContent = 'Please enter a valid email address (e.g., name@example.com)';
+      registerMessage.style.color = '#e53935';
+      form.email.focus();
       return;
     }
 
@@ -192,6 +203,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         field.style.borderColor = '#d1d5db';
                     }
                 });
+                const emailValue = form.email.value.trim();
+                if (emailValue && !isValidEmail(emailValue)) {
+                    form.email.classList.add('invalid');
+                    showMessage('Please enter a valid email address (e.g., name@example.com)', 'error');
+                    form.email.focus();
+                    isValid = false;
+                    return;
+                } else {
+                    form.email.classList.remove('invalid');
+                }
                 if (isValid) {
                     step2.classList.remove('active');
                     step3.classList.add('active');
@@ -306,6 +327,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            function isValidEmail(email) {
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                return emailPattern.test(email);
+            }
+
             // Form submission handler
             form.onsubmit = async function(e) {
                 e.preventDefault();
@@ -319,6 +345,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (accommodation.value === 'Others' && !accommodationOther.value.trim()) {
                     showMessage('Please specify your accommodation.', 'error');
                     accommodationOther.focus();
+                    return;
+                }
+                // Email validation
+                const emailValue = form.email.value.trim();
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (emailValue && !emailPattern.test(emailValue)) {
+                    showMessage('Please enter a valid email address (e.g., name@example.com)', 'error');
+                    form.email.focus();
                     return;
                 }
                 // Disable submit button
@@ -365,6 +399,3 @@ document.addEventListener('DOMContentLoaded', () => {
                 form.submitBtn.textContent = 'Register';
             };
         });
-//fix email validation
-//lessen the size of the back button
-//lessen the size of the event details button
