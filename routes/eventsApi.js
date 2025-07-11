@@ -1,3 +1,4 @@
+//eventApi.js
 const express = require('express');
 const router = express.Router();
 const { supabase } = require('../supabaseClient');
@@ -5,20 +6,36 @@ const { v4: uuidv4 } = require('uuid');
 
 // Create new event
 router.post('/', async (req, res) => {
-  if (!req.user || req.user.role !== 'admin') {
-    return res.status(403).json({ status: "error", message: "Only admin can create events." });
-  }
-  console.log('Received event POST:', req.body);
   const { event_name, event_date, location } = req.body;
-  if (!event_name || !event_date || !location) {
-    return res.status(400).json({ status: "error", message: "All fields required." });
+
+  const { data: mapping, error: mappingError } = await supabase
+    .from('user_mapping')
+    .select('uuid')
+    .eq('object_id', req.session.userId)
+    .single();
+
+  console.log('Mapping Query Result:', mapping);
+  console.log('Mapping Query Error:', mappingError);
+
+  if (!mapping || mappingError) {
+    console.error('User mapping not found:', mappingError || 'No mapping for userId');
+    return res.status(400).json({ status: "error", message: "User mapping not found." });
   }
-  const id = uuidv4(); // Generate a unique ID
+
+  const userId = mapping.uuid;
+
   const { data, error } = await supabase
     .from('events')
-    .insert([{ id, event_name, event_date, location }])
+    .insert([{
+      id: uuidv4(),
+      event_name,
+      event_date,
+      location,
+      user_id: userId
+    }])
     .select()
     .maybeSingle();
+
   if (error) return res.status(400).json({ status: "error", message: error.message });
   res.json({ status: "success", event: data });
 });
@@ -71,6 +88,7 @@ router.get('/all', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
+  console.log('Session in /api/events:', req.session);
   // Only upcoming events if ?upcoming=1
   let filter = {};
   if (req.query.upcoming === '1') {
