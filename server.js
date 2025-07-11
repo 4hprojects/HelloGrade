@@ -52,17 +52,12 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.disable('x-powered-by');
 app.use(eventsApi);
 
-
-//const sitemapRoutes = require('./routes/sitemapRoutes');
-//app.use('/', sitemapRoutes);
-//const data = fs.readFileSync(path.join(__dirname, 'public', 'blogPool.json'), 'utf8');
-//const blogList = JSON.parse(data);
-// Configure CORS appropriately
-//app.use(cors({
-//    origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:3000/', 'https://4hprojects.github.io'],
-//    methods: ['GET', 'POST'],
-//    credentials: true
-//}));
+//added these - to test
+const cors = require('cors');
+app.use(cors({
+  origin: 'https://hellograde.online',
+  credentials: true // Allow credentials
+}));
 
 const mongoUri = process.env.MONGODB_URI;
 const client = new MongoClient(mongoUri);
