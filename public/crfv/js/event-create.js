@@ -1,3 +1,4 @@
+//event-create.js
 document.addEventListener('DOMContentLoaded', async () => {
   const authModal = document.getElementById('authModal');
   const goHomeBtn = document.getElementById('goHomeBtn');
