@@ -1,4 +1,8 @@
 //event-create.js
+// In frontend code
+const API_BASE = window.location.protocol + '//' + window.location.host;
+fetch(`${API_BASE}/api/check-auth`);
+
 document.addEventListener('DOMContentLoaded', async () => {
   const authModal = document.getElementById('authModal');
   const goHomeBtn = document.getElementById('goHomeBtn');
