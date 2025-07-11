@@ -92,7 +92,7 @@ app.use(session({
         httpOnly: true,
         domain: '.hellograde.online',
         sameSite: 'None',
-        maxAge: 1 * 60 * 60 * 1000
+        maxAge: 1 * 30 * 60 * 1000
     }
 }));
 
