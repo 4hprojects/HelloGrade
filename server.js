@@ -35,23 +35,23 @@ const { ObjectId } = require('mongodb');
 
 const { google } = require('googleapis');
 
+
+
 const attendanceApi = require('./routes/attendanceApi');
 const registerApi = require('./routes/registerApi');
 const eventsApi = require('./routes/eventsApi');
 const bulkRegisterApi = require('./routes/bulkRegisterApi');
 const userRegisterApi = require('./routes/userRegisterApi');
 
-app.use('/api', userRegisterApi);
-app.use('/api/bulk-register', bulkRegisterApi);
-app.use('/api/events', eventsApi);
-app.use('/api/attendees', registerApi); // for check-rfid and latest
-app.use('/api/register', registerApi);  // for POST registration
-app.use('/api/attendance', attendanceApi);
+
+
+
 
 // Security middleware
 app.use(helmet({ contentSecurityPolicy: false }));
 app.disable('x-powered-by');
 app.use(eventsApi);
+
 
 //const sitemapRoutes = require('./routes/sitemapRoutes');
 //app.use('/', sitemapRoutes);
@@ -77,6 +77,36 @@ let attemptsCollection;
 let classesCollection;
 let countersCollection;
 
+// Session management with MongoDB store
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: mongoUri }),
+    cookie: {
+        secure: false, // Set to true only if using HTTPS
+        httpOnly: true,
+        sameSite: 'lax', // Adjust sameSite setting for better compatibility
+        maxAge: 1 * 60 * 60 * 1000 // 2 hours
+    }
+}));
+
+app.use((req, res, next) => {
+  if (req.session && req.session.userId) {
+    req.user = {
+      userId: req.session.userId,
+      role: req.session.role
+    };
+  }
+  next();
+});
+
+app.use('/api', userRegisterApi);
+app.use('/api/bulk-register', bulkRegisterApi);
+app.use('/api/events', eventsApi);
+app.use('/api/attendees', registerApi); // for check-rfid and latest
+app.use('/api/register', registerApi);  // for POST registration
+app.use('/api/attendance', attendanceApi);
 // Call the database connection function
 connectToDatabase()
   .then(() => {
@@ -100,19 +130,7 @@ connectToDatabase()
 
 // Place all route definitions here
 
-// Session management with MongoDB store
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: mongoUri }),
-    cookie: {
-        secure: false, // Set to true only if using HTTPS
-        httpOnly: true,
-        sameSite: 'lax', // Adjust sameSite setting for better compatibility
-        maxAge: 1 * 60 * 60 * 1000 // 2 hours
-    }
-}));
+
 
 app.get('/api/config', (req, res) => {
     res.json({
@@ -282,13 +300,7 @@ app.use(express.json());
         });
 ///---until here--
 
-app.use((req, res, next) => {
-    if (req.session && req.session.role) {
-        console.log('Session role:', req.session.role); // Debugging
-    }
-    res.set('Cache-Control', 'no-store');
-    next();
-});
+
 
 const { fetchClassSectionFromMasterList, fetchClassRecordFromSheet } = require('./utils/googleSheetsUtils.js');
 
@@ -2163,14 +2175,6 @@ app.get('/user-details', isAuthenticated, async (req, res) => {
         console.error('Error fetching user details(server/user-details):', error);
         res.status(500).json({ success: false, message: 'Error fetching user details.' });
     }
-});
-
-app.use((req, res, next) => {
-    if (req.session && req.session.role) {
-        console.log('Session role:', req.session.role); // Debugging
-    }
-    res.set('Cache-Control', 'no-store');
-    next();
 });
 
 app.get('/signup', (req, res) => {
