@@ -2,8 +2,6 @@
 require('dotenv').config();
 const express = require('express');
 
-const { createClient } = require('@supabase/supabase-js');
-
 const { MongoClient } = require('mongodb');
 const sgMail = require('@sendgrid/mail');
 const bcrypt = require('bcrypt');
@@ -13,7 +11,6 @@ const rateLimit = require('express-rate-limit');
 const fetch = require('node-fetch'); 
 const Filter = require('bad-words');
 const filter = new Filter();
-
 
 const helmet = require('helmet');
 const validator = require('validator');
@@ -47,29 +44,10 @@ const bulkRegisterApi = require('./routes/bulkRegisterApi');
 const userRegisterApi = require('./routes/userRegisterApi');
 
 
-
-
-
 // Security middleware
 app.use(helmet({ contentSecurityPolicy: false }));
 app.disable('x-powered-by');
 app.use(eventsApi);
-
-//added these - to test
-const cors = require('cors');
-app.use(cors({
-  origin: [
-    'https://hellograde.online',
-    'http://localhost:3000' // Add for development
-  ],
-  credentials: true
-}));
-
-// Initialize Supabase
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE
-);
 
 const mongoUri = process.env.MONGODB_URI;
 const client = new MongoClient(mongoUri);
@@ -89,18 +67,15 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: mongoUri }), // Use ONLY MongoDB
-  cookie: {
-    secure: process.env.NODE_ENV === 'production', // Only HTTPS in production
-    httpOnly: true,
-    domain: process.env.NODE_ENV === 'production' 
-      ? '.hellograde.online' 
-      : 'localhost',
-    sameSite: process.env.NODE_ENV === 'production' 
-      ? 'None' 
-      : 'Lax', // More flexible in dev
-    maxAge: 30 * 60 * 1000
-  }
+    store: MongoStore.create({ mongoUrl: mongoUri }),
+    cookie: {
+        secure: false, // update to true for production Set to true only if using HTTPS
+        httpOnly: true,
+       // domain: '.hellograde.online', // add on production
+        sameSite: 'lax', // update to 'None' for production Adjust sameSite setting for better compatibility
+        maxAge: 1 * 60 * 60 * 1000 // 2 hours
+    },
+   // store: new (require('connect-pg-simple')(session))() // include in production
 }));
 
 app.use((req, res, next) => {
@@ -2642,15 +2617,6 @@ app.get('/api/check-auth', (req, res) => {
   } else {
     res.sendStatus(401);
   }
-});
-
-app.get('/session-info', (req, res) => {
-  res.json({
-    session: req.session,
-    userId: req.session?.userId,
-    studentIDNumber: req.session?.studentIDNumber,
-    role: req.session?.role
-  });
 });
 
   app.get('/blogs/:blogId', (req, res) => {
