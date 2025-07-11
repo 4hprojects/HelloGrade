@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
       <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
   <script>
@@ -11,8 +11,8 @@
   </script>
   <meta charset="UTF-8">
   <title>crfv Reports</title>
-  <link rel="stylesheet" href="attendance.css">
-  <link rel="stylesheet" href="reports.css">
+  <link rel="stylesheet" href="css/attendance.css">
+  <link rel="stylesheet" href="css/reports.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
      crossorigin="anonymous"></script>
 </head>
@@ -47,20 +47,11 @@
           <button class="refresh-btn" id="refreshAttendeesBtn" title="Refresh"><i class="fas fa-sync-alt"></i></button>
         </div>
         <div class="pagination" id="attendeesPagination"></div>
+<!-- Use this inside #tab-attendees -->
         <div class="table-container">
-          <table id="attendeesTable">
-            <thead>
-              <tr id="attendeesHeaderRow">
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>Organization</th>
-                <th>Email</th>
-                <th>Contact No</th>
-                <th>RFID</th>
-                <th>Event </th>
-              </tr>
-            </thead>
-            <tbody></tbody>
+          <table>
+            <thead id="attendeesTableHeader"></thead>
+            <tbody id="attendeesTableBody"></tbody>
           </table>
         </div>
       </div>
@@ -131,9 +122,33 @@
        (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
 </div>
+  <div id="infoModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Edit Attendee Info</h3>
+    <form id="infoForm">
+      <label>RFID: <input type="text" id="modalRfid" name="rfid"></label>
+      <div id="modalInfoFields"></div>
+      <button type="submit">Save</button>
+      <button type="button" onclick="closeInfoModal()">Cancel</button>
+    </form>
+  </div>
+</div>
+  <!-- Payment Modal -->
+<div id="paymentModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Edit Payment Details</h3>
+    <div id="newPaymentFormContainer"></div>
+    <div id="paymentRecords"></div>
+    <button type="button" onclick="closePaymentModal()">Close</button>
+  </div>
+</div>
+  <table>
+  <thead id="attendeesTableHeader"></thead>
+  <tbody id="attendeesTableBody"></tbody>
+</table>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="reports.js"></script>
+  <script src="js/reports.js"></script>
   <!-- You will add your JS logic for tabs, search, pagination, export, and authentication here -->
 </body>
 </html>
