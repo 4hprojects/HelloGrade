@@ -1,80 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-X5E3N182NE');
-  </script>
-  <meta charset="UTF-8">
-  <title>crfv Main Menu</title>
-  <link rel="stylesheet" href="attendance.css">
-  <style>
-    .main-menu {
-      max-width: 400px;
-      margin: 60px auto;
-      padding: 2em;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      text-align: center;
-    }
-    .main-menu h1 {
-      margin-bottom: 1.5em;
-      font-size: 2em;
-      color: #1976d2;
-    }
-    .main-menu .menu-links {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2em;
-    }
-    .main-menu a {
-      display: block;
-      padding: 1em;
-      font-size: 1.1em;
-      background: #1976d2;
-      color: #fff;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .main-menu a:hover {
-      background: #125ea2;
-    }
-  </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-X5E3N182NE');
+    </script>
+     
+    <meta charset="UTF-8">
+    <meta name="author" content="Henson M. Sagorsor">
+    <meta name="google-adsense-account" content="ca-pub-4537208011192461">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Updated Meta Description and Keywords for SEO Optimization -->
+    <meta name="description" content="Welcome to the CRFV Event System main menu. Access attendance, register attendees, create events, and view reports for your organization’s events.">
+    <meta name="keywords" content="CRFV, event system, event management, attendance, registration, create event, reports, seminars, conferences, organization events">
+    
+    <title>CRFV Event System | Main Menu</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <link rel="stylesheet" href="/dist/output.css">
+
+    <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
+
+    <meta property="og:title" content="CRFV Event System Main Menu">
+    <meta property="og:description" content="Access all CRFV event management tools: attendance, registration, event creation, and reports.">
+    <meta property="og:image" content="https://hellograde.online/images/hellograde-blog-banner.jpg">
+    <meta property="og:url" content="https://hellograde.online/crfv/index.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CRFV Event System">
+      <link rel="stylesheet" href="css/index.css">
+
 </head>
 <body>
-  <div class="main-menu">
-    <h1>crfv Event System</h1>
-    <div class="menu-links">
-      <a href="attendance.html" target="_blank" rel="noopener noreferrer"><i class="fas fa-id-card"></i> Attendance</a>
-      <a href="register.html" target="_blank" rel="noopener noreferrer"><i class="fas fa-user-plus"></i> Register Attendee</a>
-      <a href="event-create.html" target="_blank" rel="noopener noreferrer"><i class="fas fa-calendar-plus"></i> Create Event</a>
-      <a href="reports.html" target="_blank" rel="noopener noreferrer"><i class="fas fa-chart-bar"></i> Reports</a>
-    </div>
-  </div>
-  <div style="display:flex;gap:2em;">
-  <main style="flex:1;">
-    <!-- Your main blog content here -->
-  </main>
-  <aside style="width:320px;max-width:100%;">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-format="fluid"
-         data-ad-layout-key="-gw-3+1f-3d+2z"
-         data-ad-client="ca-pub-4537208011192461"
-         data-ad-slot="1905924631"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
+    <header class="fixed-header">
+        <div class="header-title">
+            <i class="material-icons">event</i>
+            <span>CRFV Event System</span>
+        </div>
+        <nav class="header-nav" id="headerNav">
+            <a href="attendance.html" target="_blank" >
+                <i class="material-icons">how_to_reg</i>
+                <span>Attendance</span>
+            </a>
+            <a href="user-register.html" target="_blank" >
+                <i class="material-icons">person_add</i>
+                <span>Register</span>
+            </a>
+            <a href="event-create.html" target="_blank" >
+                <i class="material-icons">event</i>
+                <span>Create Event</span>
+            </a>
+            <a href="reports.html" target="_blank" >
+                <i class="material-icons">bar_chart</i>
+                <span>Reports</span>
+            </a>
+        </nav>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="material-icons">menu</i>
+        </button>
+    </header>
+    
+    <main class="main-content">
+        <div class="container">
+            <h1 class="sr-only">CRFV Event System Main Menu</h1>
+            <div class="three-panel-container">
+                <!-- Panel 1: System Details -->
+                <section class="panel panel-details">
+                    <h2>Welcome to the CRFV Event System</h2>
+                    <p>
+                        Manage your organization's events with ease: track attendance, register participants, create new events, and generate insightful reports—all in one place.
+                    </p>
+                    <ul class="system-features">
+                        <li>
+                            <i class="material-icons">event_available</i>
+                            <span>Real-time attendance tracking</span>
+                        </li>
+                        <li>
+                            <i class="material-icons">person_add</i>
+                            <span>Quick attendee registration</span>
+                        </li>
+                        <li>
+                            <i class="material-icons">add_circle</i>
+                            <span>Effortless event creation</span>
+                        </li>
+                        <li>
+                            <i class="material-icons">bar_chart</i>
+                            <span>Automated reports</span>
+                        </li>
+                        <li>
+                            <i class="material-icons">devices</i>
+                            <span>Mobile-friendly access</span>
+                        </li>
+                    </ul>
+                </section>
+                
+                <!-- Panel 2: Menu Buttons -->
+                <section class="panel panel-menu">
+                    <div class="menu-grid">
+                        <a href="attendance.html" target="_blank"  class="menu-square">
+                            <i class="material-icons">how_to_reg</i>
+                            <span>Attendance</span>
+                        </a>
+                        <a href="user-register.html" target="_blank"  class="menu-square">
+                            <i class="material-icons">person_add</i>
+                            <span>Register</span>
+                        </a>
+                        <a href="event-create.html" target="_blank"  class="menu-square">
+                            <i class="material-icons">event</i>
+                            <span>Create Event</span>
+                        </a>
+                        <a href="reports.html" target="_blank"  class="menu-square">
+                            <i class="material-icons">bar_chart</i>
+                            <span>Reports</span>
+                        </a>
+                    </div>
+                </section>
+                
+                <!-- Panel 3: Login/User -->
+                <aside class="panel panel-login" id="sidePanel"></aside>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="fixed-footer">
+        © 2025 CRFV. All rights reserved.
+    </footer>
+  <script src="js/index.js"></script>
+
     </script>
-  </aside>
-</div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-     crossorigin="anonymous"></script>
 </body>
 </html>
