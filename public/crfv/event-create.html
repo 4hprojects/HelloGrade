@@ -1,27 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Create Event</title>
-  <link rel="stylesheet" href="attendance.css">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-X5E3N182NE');
+    </script>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://hellograde.online/crfv/event-create.html">
+
+    <!-- Google AdSense -->
+    <meta name="google-adsense-account" content="ca-pub-4537208011192461">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="author" content="Henson M. Sagorsor">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create new events in the CRFV Event System. Organize seminars, conferences, and more with ease.">
+    <meta name="keywords" content="CRFV, create event, event management, seminar, conference, event system">
+
+    <title>Create Event | CRFV Event System</title>
+
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="Create Event - CRFV Event System">
+    <meta property="og:description" content="Easily create and manage events, seminars, and conferences with the CRFV Event System.">
+    <meta property="og:image" content="https://hellograde.online/images/hellograde-blog-banner.jpg">
+    <meta property="og:url" content="https://hellograde.online/crfv/event-create.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CRFV Event System">
+
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/dist/output.css">
+    <link rel="stylesheet" href="css/event-create.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-  <div class="app-container">
-    <div class="header">
-      <h1>Create New Event</h1>
-    </div>
-    <form id="eventForm" class="attendance-card" autocomplete="off">
-      <label>Event Name: <input type="text" name="event_name" required></label>
-      <label>Event Date: <input type="date" name="event_date" required></label>
-      <label>Location: <input type="text" name="location" required></label>
-      <button type="submit" class="btn btn-primary" style="margin-top:1em;">Create Event</button>
-      <div id="eventStatus" style="margin-top:1em;color:#1976d2;"></div>
-    </form>
-    <div id="latestEventsPanel" style="margin-top:2em;">
-      <h2>Latest Events</h2>
+    <header class="fixed-header">
+        <div class="header-title">
+            <i class="material-icons">event</i>
+            <span>CRFV Event System</span>
+        </div>
+        <nav class="header-nav" id="headerNav">
+            <a href="index.html" target="_self">
+                <i class="material-icons">home</i>
+                <span>Home</span>
+            </a>
+            <a href="attendance.html" target="_blank" >
+                <i class="material-icons">how_to_reg</i>
+                <span>Attendance</span>
+            </a>
+            <a href="register.html" target="_blank" >
+                <i class="material-icons">person_add</i>
+                <span>Register</span>
+            </a>
+            <a href="event-create.html" target="_blank" >
+                <i class="material-icons">event</i>
+                <span>Create Event</span>
+            </a>
+            <a href="reports.html" target="_blank" >
+                <i class="material-icons">bar_chart</i>
+                <span>Reports</span>
+            </a>
+        </nav>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="material-icons">menu</i>
+        </button>
+    </header>
+  <main class="two-panel-container">
+    <!-- Panel 1: Create Event or Message -->
+    <section class="panel" id="createPanel">
+      <!-- Content will be rendered dynamically -->
+    </section>
+    
+    <!-- Panel 2: Upcoming Events -->
+    <section class="panel" id="eventsPanel">
+      <h2>Upcoming Events</h2>
       <ul id="latestEventsList"></ul>
+    </section>
+  </main>
+  
+  <!-- Auth Modal (Admin Only) -->
+  <div id="authModal" class="modal">
+    <div class="modal-content" tabindex="0">
+      <h2>Admin Login Required</h2>
+      <p>You must be logged in as an admin to access this page.</p>
+      <div class="modal-actions">
+        <button id="goHomeBtn" class="btn btn-primary">Go to Home Page</button>
+      </div>
     </div>
   </div>
-  <script src="event-create.js"></script>
+  
+
+  <!-- QR Code Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+  <script src="js/event-create.js"></script>
 </body>
 </html>
