@@ -6,6 +6,8 @@ const { v4: uuidv4 } = require('uuid');
 
 // Create new event
 router.post('/', async (req, res) => {
+    console.log('Session ID:', req.sessionID);
+  console.log('Session User:', req.session.userId);
   const { event_name, event_date, location } = req.body;
 
   const { data: mapping, error: mappingError } = await supabase
