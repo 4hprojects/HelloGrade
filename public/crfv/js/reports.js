@@ -35,7 +35,7 @@ async function checkAuthAndShowModal() {
     window.location.href = "attendance.html";
   }
 }
-document.addEventListener('DOMContentLoaded', checkAuthAndShowModal);
+//document.addEventListener('DOMContentLoaded', checkAuthAndShowModal);
 
 // --- Logout Button ---
 document.querySelector('.btn-logout').onclick = async function() {
