@@ -401,3 +401,8 @@
                 font-size: 0.95rem;
             }
         }
+.nav-btn, .back-btn, #submitBtn {
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    margin: 5px !important;
+}
