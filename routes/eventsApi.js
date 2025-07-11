@@ -9,7 +9,12 @@ router.post('/', async (req, res) => {
   try {
     console.log('Session ID:', req.sessionID);
     console.log('Session User:', req.session.userId);
-    
+    // In login route after setting session
+console.log('Session created:', {
+  userId: req.session.userId,
+  sessionID: req.sessionID,
+  cookies: req.headers.cookie
+});
     const { event_name, event_date, location } = req.body;
 
     // 1. Verify user exists in MongoDB first
