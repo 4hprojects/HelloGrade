@@ -2,6 +2,8 @@
 require('dotenv').config();
 const express = require('express');
 
+const { createClient } = require('@supabase/supabase-js');
+
 const { MongoClient } = require('mongodb');
 const sgMail = require('@sendgrid/mail');
 const bcrypt = require('bcrypt');
@@ -11,7 +13,7 @@ const rateLimit = require('express-rate-limit');
 const fetch = require('node-fetch'); 
 const Filter = require('bad-words');
 const filter = new Filter();
-const pgSession = require('connect-pg-simple')(session);
+
 
 const helmet = require('helmet');
 const validator = require('validator');
@@ -60,6 +62,12 @@ app.use(cors({
   credentials: true // Allow credentials
 }));
 
+// Initialize Supabase
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE
+);
+
 const mongoUri = process.env.MONGODB_URI;
 const client = new MongoClient(mongoUri);
 // Initialize tblLogs collection
@@ -78,15 +86,14 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: mongoUri }),
+    store: MongoStore.create({ mongoUrl: mongoUri }), // Use ONLY MongoDB
     cookie: {
-        secure: true, // update to true for production Set to true only if using HTTPS
+        secure: true,
         httpOnly: true,
-        domain: '.hellograde.online', // add on production
-        sameSite: 'None', // update to 'None' for production Adjust sameSite setting for better compatibility
-        maxAge: 1 * 60 * 60 * 1000 // 2 hours
-    },
-    store: new (require('connect-pg-simple')(session))() // include in production
+        domain: '.hellograde.online',
+        sameSite: 'None',
+        maxAge: 1 * 60 * 60 * 1000
+    }
 }));
 
 app.use((req, res, next) => {
@@ -2628,6 +2635,15 @@ app.get('/api/check-auth', (req, res) => {
   } else {
     res.sendStatus(401);
   }
+});
+
+app.get('/session-info', (req, res) => {
+  res.json({
+    session: req.session,
+    userId: req.session?.userId,
+    studentIDNumber: req.session?.studentIDNumber,
+    role: req.session?.role
+  });
 });
 
   app.get('/blogs/:blogId', (req, res) => {
