@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Participation Agreement - CRFV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #0e3f9e;
+            --primary-light: #e1effe;
+            --secondary: #3f83f8;
+            --success: #0e9f6e;
+            --warning: #d97706;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --background: #f9fafb;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        nav a:hover {
+            opacity: 0.9;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(120deg, var(--primary-light) 0%, rgba(225, 239, 254, 0.7) 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: var(--primary);
+            opacity: 0.05;
+            border-radius: 50%;
+        }
+        
+        .hero::after {
+            content: "";
+            position: absolute;
+            bottom: -80px;
+            left: -50px;
+            width: 300px;
+            height: 300px;
+            background: var(--success);
+            opacity: 0.05;
+            border-radius: 50%;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .event-details {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            box-shadow: var(--shadow);
+        }
+        
+        .event-details h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            text-align: left;
+        }
+        
+        .detail-item {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .detail-item i {
+            color: var(--primary);
+            min-width: 24px;
+        }
+        
+        /* Agreement Content */
+        .agreement-container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .agreement-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(58, 130, 247, 0.1);
+        }
+        
+        .agreement-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--primary), var(--success));
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .section-title i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .agreement-content {
+            padding-left: 2.5rem;
+        }
+        
+        .agreement-content h3 {
+            color: var(--primary);
+            margin: 1.8rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .agreement-content p {
+            margin-bottom: 1.2rem;
+            color: var(--text-dark);
+        }
+        
+        .agreement-content ul {
+            margin: 1.2rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .agreement-content li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .agreement-content li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .highlight-box {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        .warning-box {
+            background: #fffbeb;
+            border-left: 4px solid var(--warning);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        /* Acceptance Section */
+        .acceptance-section {
+            background: var(--primary-light);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .acceptance-box {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .accept-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.8rem 2.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        .accept-btn:hover {
+            background: #0d8b60;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .contact-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .contact-btn {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .footer-about p {
+            color: #cbd5e0;
+            margin: 1rem 0;
+        }
+        
+        .footer-links h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-links h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e0;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 1rem;
+            }
+            
+            nav.active ul {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .agreement-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .agreement-content {
+                padding-left: 1rem;
+            }
+            
+            .contact-section {
+                padding: 2rem;
+            }
+            
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 3rem 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .agreement-card {
+                padding: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .agreement-content h3 {
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .agreement-card {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .agreement-card:nth-child(2) { animation-delay: 0.1s; }
+        .agreement-card:nth-child(3) { animation-delay: 0.2s; }
+        .agreement-card:nth-child(4) { animation-delay: 0.3s; }
+        .agreement-card:nth-child(5) { animation-delay: 0.4s; }
+        .agreement-card:nth-child(6) { animation-delay: 0.5s; }
+
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 99;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-calendar-check"></i>
+                <span>CRFV Event System</span>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav id="nav">
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-user-check"></i> Attendance</a></li>
+                    <li><a href="#"><i class="fas fa-user-plus"></i> Register</a></li>
+                    <li><a href="#"><i class="fas fa-calendar-plus"></i> Create Event</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> Reports</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Event Participation Agreement</h1>
+            <p>By registering for any Council for the Restoration of Filipino Values, Inc. (CRFV) event, you agree to the following terms and conditions. Please read this agreement carefully.</p>
+            <div class="last-update">
+                <i class="fas fa-history"></i> Last Updated: July 12, 2025
+            </div>
+            
+            
+        </div>
+    </section>
+
+    <!-- Agreement Content -->
+    <div class="agreement-container">
+        <div class="agreement-card">
+            <div class="section-title">
+                <i class="fas fa-camera"></i>
+                <h2>1. Media Release Authorization</h2>
+            </div>
+            <div class="agreement-content">
+                <p>By participating in this event, you grant Council for the Restoration of Filipino Values, Inc. (CRFV) the irrevocable, perpetual, and worldwide rights to:</p>
+                
+                <ul>
+                    <li>Capture photographs, video recordings, and audio recordings during the event (both in-person and virtual sessions)</li>
+                    <li>Use, reproduce, modify, and distribute such media in all promotional materials, publications, social media, websites, and any other platforms</li>
+                    <li>Use your name, likeness, and voice in connection with such media</li>
+                </ul>
+                
+                <div class="highlight-box">
+                    <p><i class="fas fa-info-circle"></i> This authorization applies to all current and future media formats and platforms. No compensation or opt-out option is provided for media usage.</p>
+                </div>
+                
+                <p>You understand that Council for the Restoration of Filipino Values, Inc. (CRFV) may use these materials for promotional, educational, and informational purposes without limitation.</p>
+            </div>
+        </div>
+
+        <div class="agreement-card">
+            <div class="section-title">
+                <i class="fas fa-undo-alt"></i>
+                <h2>2. Item Return Policy</h2>
+            </div>
+            <div class="agreement-content">
+                <p>Participants agree to return all provided items upon completion of the event. This includes but is not limited to:</p>
+                
+                <ul>
+                    <li>Proximity cards or access devices</li>
+                    <li>Training materials and equipment</li>
+                    <li>Any other items provided by Council for the Restoration of Filipino Values, Inc. (CRFV) for the event</li>
+                </ul>
+                
+                <div class="warning-box">
+                    <p><i class="fas fa-exclamation-triangle"></i> Failure to return items by the end of the event will result in a fine of <strong>₱500.00 per item</strong>, payable within 15 days of the event's conclusion.</p>
+                </div>
+                
+                <p>Items must be returned to the designated collection point at the event venue, or by prepaid mail if taken off-site.</p>
+
+            </div>
+        </div>
+
+        <div class="agreement-card">
+            <div class="section-title">
+                <i class="fas fa-certificate"></i>
+                <h2>3. Completion Certificate Requirements</h2>
+            </div>
+            <div class="agreement-content">
+                <p>Council for the Restoration of Filipino Values, Inc. (CRFV) reserves the right to withhold the issuance of completion certificates if participants fail to meet the following requirements:</p>
+                
+                <ul>
+                    <li><strong>Full Attendance:</strong> Participants must attend 100% of mandatory sessions (verified via attendance tracking)</li>
+                    <li><strong>Assessment Completion:</strong> Successful completion of all required assessments and assignments</li>
+                    <li><strong>Item Return:</strong> Return of all provided items as specified in Section 2</li>
+                    <li><strong>Code of Conduct:</strong> Adherence to all event rules and regulations</li>
+                </ul>
+                
+                <div class="highlight-box">
+                <p><i class="fas fa-info-circle"></i> Certificates are expected to be issued within 7 business days after the event, provided all requirements are completed. While we aim to meet this timeline, unforeseen delays may occur beyond the organiser’s control.</p>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="agreement-card">
+            <div class="section-title">
+                <i class="fas fa-shield-alt"></i>
+                <h2>4. Data Privacy Compliance</h2>
+            </div>
+            <div class="agreement-content">
+                <p>Council for the Restoration of Filipino Values, Inc. (CRFV) is committed to protecting your personal information in compliance with:</p>
+                
+                <ul>
+                    <li>The <strong>Philippine Data Privacy Act (RA 10173)</strong></li>
+                    <li>International data protection standards where applicable</li>
+                </ul>
+                
+                <p>By agreeing to this participation agreement, you also consent to the terms of our Privacy Policy:</p>
+                
+                <div class="highlight-box">
+                    <p><i class="fas fa-link"></i> <a href="https://hellograde.online/crfv/privacy-policy" target="_blank">Council for the Restoration of Filipino Values, Inc. (CRFV) Privacy Policy</a></p>
+                </div>
+                
+                <p>Your personal data will be used solely for event administration, communications, and the purposes outlined in this agreement.</p>
+            </div>
+        </div>
+
+        <div class="agreement-card">
+            <div class="section-title">
+                <i class="fas fa-file-contract"></i>
+                <h2>5. General Terms</h2>
+            </div>
+            <div class="agreement-content">
+                <ul>
+                    <li><strong>Governing Law:</strong> This agreement is governed by the laws of the Republic of the Philippines</li>
+                    <li><strong>Amendments:</strong> Council for the Restoration of Filipino Values, Inc. (CRFV) reserves the right to update these terms. Changes will apply to future events</li>
+                    <li><strong>Liability:</strong> Council for the Restoration of Filipino Values, Inc. (CRFV) is not liable for any loss or damage to personal property during the event</li>
+                    <li><strong>Termination:</strong> Council for the Restoration of Filipino Values, Inc. (CRFV) reserves the right to remove participants who violate event policies</li>
+                </ul>
+                
+                <div class="warning-box">
+                    <p><i class="fas fa-exclamation-triangle"></i> Non-compliance with any terms of this agreement may result in exclusion from future Council for the Restoration of Filipino Values, Inc. (CRFV) events.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2>Questions or Concerns?</h2>
+            <p>If you have any questions about this agreement or our events, please contact us:</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>info@crfv-cpu.org</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>(+63) 912 345 6789</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Baguio City, Philippines</span>
+                </div>
+            </div>
+            
+            <a href="mailto:info@crfv-cpu.org" class="contact-btn">
+                <i class="fas fa-paper-plane"></i> Contact Event Team
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <i class="fas fa-calendar-check"></i>
+                    Council for the Restoration of Filipino Values, Inc. (CRFV) Events
+                </div>
+                <p>Professional event management and training solutions for organizations across the Philippines.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Upcoming Events</a></li>
+                    <li><a href="#">Training Programs</a></li>
+                    <li><a href="#">Registration Portal</a></li>
+                    <li><a href="#">Resource Center</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Participation Agreement</a></li>
+                    <li><a href="#">GDPR Compliance</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Event Guides</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Support Tickets</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 Council for the Restoration of Filipino Values, Inc. (CRFV) Event System. All rights reserved. | Compliant with Philippine Data Privacy Act (RA 10173)</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile Navigation Toggle
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('nav').classList.toggle('active');
+        });
+        
+        // Agreement Acceptance
+        document.getElementById('acceptBtn').addEventListener('click', function() {
+            const checkbox = document.getElementById('agreementCheckbox');
+            if(checkbox.checked) {
+                alert('Thank you for accepting the Event Participation Agreement. Your response has been recorded.');
+                // In a real implementation, you would submit the form here
+            } else {
+                alert('Please check the box to indicate your agreement before proceeding.');
+            }
+        });
+        
+        // Scroll to top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        
+        window.onscroll = function() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollToTopBtn.style.display = 'flex';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        };
+        
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Animate sections when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.agreement-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
