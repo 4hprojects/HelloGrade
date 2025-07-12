@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const accommodationOther = document.getElementById('accommodationOther');
   const eventSelect = document.getElementById('eventId');
   const registerMessage = document.getElementById('registerMessage');
+  const certificateNameInput = document.getElementById('certificateName');
+  const reviewCertificateName = document.getElementById('reviewCertificateName');
+  const eventAgree = document.getElementById('eventAgree');
  
   // Populate events dropdown with upcoming events
   fetch('/api/events?upcoming=1')
@@ -35,6 +38,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Certificate name real-time update
+  if (certificateNameInput && reviewCertificateName) {
+    certificateNameInput.addEventListener('input', function() {
+      reviewCertificateName.textContent = certificateNameInput.value || '-';
+    });
+  }
+
+  // Event agreement logic
+  if (eventAgree && certificateNameInput) {
+    eventAgree.addEventListener('change', function() {
+      certificateNameInput.disabled = !this.checked;
+      if (!this.checked) {
+        certificateNameInput.value = '';
+        reviewCertificateName.textContent = '-';
+      }
+    });
+  }
+
   // Form submission
   form.onsubmit = async (e) => {
     e.preventDefault();
@@ -50,7 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
       contactNo: form.contactNo.value.trim(),
       accommodation: form.accommodation.value,
       accommodationOther: form.accommodationOther.value.trim(),
-      event_id: form.eventId.value // <-- use event_id to match backend/db
+      event_id: form.eventId.value, // <-- use event_id to match backend/db
+      certificateName: form.certificateName.value.trim() // <-- add this line
     };
 
     // Basic validation for "Others"
@@ -137,6 +159,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const prevBtn1 = document.getElementById('prevBtn1');
             const prevBtn2 = document.getElementById('prevBtn2');
             const progressBar = document.getElementById('progressBar');
+            const certificateNameInput = document.getElementById('certificateName');
+            const reviewCertificateName = document.getElementById('reviewCertificateName');
+            const eventAgree = document.getElementById('eventAgree');
 
             // Populate events dropdown with upcoming events
             fetch('/api/events?upcoming=1')
@@ -166,6 +191,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     accommodationOther.value = '';
                 }
             });
+
+            // Certificate name real-time update
+            if (certificateNameInput && reviewCertificateName) {
+                certificateNameInput.addEventListener('input', function() {
+                    reviewCertificateName.textContent = certificateNameInput.value || '-';
+                });
+            }
+
+            // Event agreement logic
+            if (eventAgree && certificateNameInput) {
+                eventAgree.addEventListener('change', function() {
+                    certificateNameInput.disabled = !this.checked;
+                    if (!this.checked) {
+                      certificateNameInput.value = '';
+                      reviewCertificateName.textContent = '-';
+                    }
+                });
+            }
 
             // Step navigation handlers
             nextBtn1.addEventListener('click', function() {
@@ -218,6 +261,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     step3.classList.add('active');
                     progressBar.style.width = '100%';
                     updateStep(3);
+  const certificateName = document.getElementById('certificateName');
+  const privacyAgree = document.getElementById('privacyAgree');
+  const eventAgree = document.getElementById('eventAgree');
+  const infoCorrect = document.getElementById('infoCorrect');
                     updateReview();
                 } else {
                     showMessage('Please fill all required fields', 'error');
@@ -273,6 +320,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     accommodationText += ` (${document.getElementById('accommodationOther').value})`;
                 }
                 document.getElementById('reviewAccommodation').textContent = accommodationText;
+                document.getElementById('reviewCertificateName').textContent =
+                    document.getElementById('certificateName').value || '-';
             }
 
             // Unified showMessage function
@@ -371,7 +420,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     contactNo: form.contactNo.value.trim(),
                     accommodation: form.accommodation.value,
                     accommodationOther: form.accommodationOther.value.trim(),
-                    event_id: form.eventId.value
+                    event_id: form.eventId.value,
+                    certificateName: form.certificateName.value.trim() // <-- add this line
                 };
 
                 try {
