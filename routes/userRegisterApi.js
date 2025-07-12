@@ -1,3 +1,4 @@
+//userRegisterApi.js
 const express = require('express');
 const router = express.Router();
 const { supabase } = require('../supabaseClient');
@@ -9,7 +10,8 @@ router.post('/user-register', async (req, res) => {
   try {
     const {
       firstName, middleName, lastName, gender, designation, organization,
-      email, contactNo, accommodation, accommodationOther, event_id
+      email, contactNo, accommodation, accommodationOther, event_id,
+      certificateName // <-- add this
     } = req.body;
 
     // Generate confirmation code
@@ -67,7 +69,8 @@ router.post('/user-register', async (req, res) => {
         accommodation,
         accommodation_other: accommodationOther,
         confirmation_code: confirmationCode,
-        event_id
+        event_id,
+        certificate_name: certificateName,
       }]);
 
     if (insertError) {
@@ -91,20 +94,42 @@ router.post('/user-register', async (req, res) => {
         },
         subject: 'CRFV Event Registration Confirmation',
         html: `
-        <p>Dear ${firstName} ${lastName},</p>
-        <p>Thank you for registering for <strong>${eventName}</strong>.</p>
-        
-        <h3>Registration Details:</h3>
-        <table>
-            <tr><td><strong>Event:</strong></td><td>${eventName}</td></tr>
-            <tr><td><strong>Date:</strong></td><td>${eventDate}</td></tr>
-            <tr><td><strong>Attendee #:</strong></td><td>${attendee_no}</td></tr>
-            <tr><td><strong>Confirmation Code:</strong></td><td>${confirmationCode}</td></tr>
-            <tr><td><strong>Accommodation:</strong></td><td>${accommodation}${accommodationOther ? ' (' + accommodationOther + ')' : ''}</td></tr>
-        </table>
-        <br>
-      <p>Please keep this code for your records. You may be asked to present it during event check-in.<br>
-      If you have questions, contact the event organizer directly.</p>
+<p>Dear ${firstName} ${lastName},</p>
+
+<p>Thank you for registering for <strong>${eventName}</strong>.</p>
+
+<h3>Registration Details:</h3>
+<table>
+  <tr><td><strong>Event:</strong></td><td>${eventName}</td></tr>
+  <tr><td><strong>Date:</strong></td><td>${eventDate}</td></tr>
+  <tr><td><strong>Attendee #:</strong></td><td>${attendee_no}</td></tr>
+  <tr><td><strong>Confirmation Code:</strong></td><td>${confirmationCode}</td></tr>
+  <tr><td><strong>Accommodation:</strong></td><td>${accommodation}${accommodationOther ? ' (' + accommodationOther + ')' : ''}</td></tr>
+  <tr><td><strong>Name on Certificate:</strong></td><td>${certificateName}</td></tr>
+</table>
+
+<br>
+
+<div style="border:1px solid #e0e6ed;padding:16px 18px;border-radius:8px;background:#f8fafc;margin-bottom:18px;">
+  <strong>Please take note of the following reminders to ensure smooth and successful participation:</strong>
+
+  <ul style="margin:12px 0 0 18px;padding:0;">
+    <li>Full attendance in all sessions is required to receive a certificate.</li>
+    <li>Attendance will be monitored and recorded for each session.</li>
+    <li>Participants are expected to comply with all event guidelines and schedules.</li>
+    <li><strong>The proximity card must be returned</strong> after the event, along with any other borrowed materials, as applicable. Items should be returned to the designated collection point or by prepaid mail if taken off-site.</li>
+  </ul>
+
+  <p>We appreciate your cooperation and look forward to your active participation.</p>
+
+  <div style="margin-top:10px;">
+    For full details, please review the 
+    <a href="https://hellograde.online/crfv/event-agreement" target="_blank" rel="noopener">Event Participation Agreement</a>.
+  </div>
+</div>
+
+<p>Keep your confirmation code for reference. You may be asked to present it during event check-in.<br>
+If you have any questions, please contact the event organiser directly.</p>
 
 <p>
   Sincerely,<br>
@@ -113,13 +138,20 @@ router.post('/user-register', async (req, res) => {
   Registration System Host – <a href="https://hellograde.online" target="_blank">hellograde.online</a>
 </p>
 
-      <hr>
-      <p style="font-size:0.95em;color:#888;">
-        By registering, you agree to our <a href="https://hellograde.online/crfv/privacy-policy.html" target="_blank">Data Privacy Policy</a>.
-      </p>
-      <p style="font-size:0.95em;color:#888;">
-        This is an automated message. Please do not reply directly to this email.
-      </p>
+<hr>
+
+<p style="font-size:0.95em;color:#888;">
+  By registering, you agree to our <a href="https://hellograde.online/crfv/privacy-policy.html" target="_blank">Data Privacy Policy</a>.
+</p>
+
+<p style="font-size:0.95em;color:#888;">
+  This is an automated message. Please do not reply directly to this email.
+</p>
+
+<p style="color:#2a5298;">
+  <strong>Note:</strong> Certificates are expected to be issued within 7 business days after the event, once all requirements are fulfilled. While we aim to meet this timeline, delays may occur due to factors beyond the organiser's control.
+</p>
+
 
         `
       };
@@ -141,6 +173,8 @@ router.post('/user-register', async (req, res) => {
   }
 });
 
-console.log('SENDGRID_FROM_EMAIL:', process.env.SENDER_EMAIL);
+//console.log('SENDGRID_FROM_EMAIL:', process.env.SENDER_EMAIL);
 
 module.exports = router;
+
+//address of location and venue should be compelted by the event organiser
