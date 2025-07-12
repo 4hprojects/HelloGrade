@@ -180,12 +180,50 @@
             
             <!-- Step 3: Review and Submit -->
             <div class="step-section" id="step3">
+                <!-- Attendance/Compliance Message -->
+                <div class="form-row">
+                    <div style="background:#f8fafc;border:1px solid #e0e6ed;padding:1em 1.2em;border-radius:8px;margin-bottom:1em;">
+                        <strong>Important:</strong> By registering, you acknowledge that <b>full participation in all event sessions is required to receive a certificate</b>. Attendance will be checked and recorded for each session. Adherence to the event schedule and guidelines is mandatory. For complete details, please review the <a href="https://hellograde.online/crfv/event-agreement" target="_blank">Event Participation Agreement</a>.
+                        <ul style="margin:10px 0 0 18px;padding:0;">
+                            <li>Full attendance in all sessions is required for certificate eligibility.</li>
+                            <li>Attendance will be monitored and recorded for each session.</li>
+                            <li>Participants must comply with all event guidelines and schedules.</li>
+                        </ul>
+                        <div style="margin-top:8px;font-size:0.97em;">For complete details, see the <a href="https://hellograde.online/crfv/event-agreement" target="_blank">Event Participation Agreement</a>.</div>
+                    </div>
+                </div>
+
+                <!-- Checkbox 1: Privacy Policy -->
+                <div class="checkbox-container">
+                    <input type="checkbox" id="privacyAgree" name="privacyAgree" required>
+                    <label for="privacyAgree">
+                        I agree to the <a href="/crfv/privacy-policy.html" target="_blank">Data Privacy Policy</a> and understand that CRFV will process my information in accordance with their privacy policy.
+                    </label>
+                </div>
+
+                <!-- Checkbox 2: Event Participation Agreement -->
+                <div class="checkbox-container">
+                    <input type="checkbox" id="eventAgree" name="eventAgree" required>
+                    <label for="eventAgree">
+                        I have read and agree to the <a href="/crfv/event-agreement.html" target="_blank">Event Participation Agreement</a>.
+                    </label>
+                </div>
+
+                <!-- Name on Certificate input -->
+                <div class="form-row">
+                    <label for="certificateName" class="required">Name on Certificate</label>
+                    <div class="input-group">
+                        <i class="material-icons input-icon">badge</i>
+                        <input type="text" id="certificateName" name="certificateName" required placeholder="Enter the name to appear on your certificate" disabled>
+                    </div>
+                </div>
+
+                <!-- Registration Summary -->
                 <div class="form-row">
                     <h3 style="margin-bottom: 1rem; color: var(--primary); border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem;">
                         Review Your Information
                     </h3>
                 </div>
-                
                 <div class="review-section">
                     <div class="review-item">
                         <strong>Event:</strong> <span id="reviewEvent">-</span>
@@ -211,16 +249,19 @@
                     <div class="review-item">
                         <strong>Accommodation:</strong> <span id="reviewAccommodation">-</span>
                     </div>
+                    <div class="review-item">
+                        <strong>Name on Certificate:</strong> <span id="reviewCertificateName">-</span>
+                    </div>
                 </div>
-                
+
+                <!-- Checkbox 3: Info Correctness -->
                 <div class="checkbox-container">
-                    <input type="checkbox" id="privacyAgree" name="privacyAgree" required>
-                    <label for="privacyAgree">
-                        I agree to the <a href="/crfv/privacy-policy.html" target="_blank">Data Privacy Policy</a>. 
-                        I understand that CRFV will process my information in accordance with their privacy policy.
+                    <input type="checkbox" id="infoCorrect" name="infoCorrect" required>
+                    <label for="infoCorrect">
+                        I confirm that all information provided above is true and correct to the best of my knowledge.
                     </label>
                 </div>
-                
+
                 <div class="form-navigation">
                     <button type="button" id="prevBtn2" class="nav-btn back-btn">Back</button>
                     <button type="submit" id="submitBtn">Complete Registration</button>
