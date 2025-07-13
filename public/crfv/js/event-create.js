@@ -73,12 +73,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    // Validate start date is not in the past
-    if (new Date(form.start_date.value) < new Date()) {
-      alert("Start date cannot be in the past.");
-      return;
-    }
-
     try {
       const formData = {
         event_name: form.event_name.value.trim(),
@@ -132,20 +126,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (events.length > 0) {
         list.innerHTML = events.map((ev, i) => `
-          <div class="event-card ${i % 2 === 0 ? 'event-even' : 'event-odd'}" data-event-id="${ev.id}">
-            <div>
-              <strong>${ev.event_name}</strong>
-              (${formatEventDate(ev.start_date, ev.end_date)})
-              ${ev.venue ? ' - ' + ev.venue : ''}
-              ${ev.location ? ' - ' + ev.location : ''}
-            </div>
-            <div class="event-actions">
-              <span class="event-action edit-btn" data-id="${ev.id}">Edit</span>
-              <span class="event-action archive-btn" data-id="${ev.id}">
-                ${ev.status === 'archived' ? 'Un-archive' : 'Archive'}
-              </span>
-            </div>
-          </div>
+          <li class="${i % 2 === 0 ? 'event-even' : 'event-odd'}" data-event-id="${ev.id}">
+            <strong>${ev.event_name}</strong>
+            (${formatEventDate(ev.start_date, ev.end_date)})
+            ${ev.venue ? ' - ' + ev.venue : ''}
+            ${ev.location ? ' - ' + ev.location : ''}
+            <span class="event-action edit-btn" data-id="${ev.id}">Edit</span>
+            <span class="event-action archive-btn" data-id="${ev.id}">
+              ${ev.status === 'archived' ? 'Un-archive' : 'Archive'}
+            </span>
+          </li>
         `).join('');
       } else {
         list.innerHTML = "<li>No upcoming events found</li>";
@@ -214,7 +204,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     modal.style.display = 'flex';
   }
   document.getElementById('closeEditModal').onclick = () => {
-    document.getElementById('eventEditModal').style.display = 'none';
+    if (confirm("Are you sure you want to cancel editing? Unsaved changes will be lost.")) {
+      document.getElementById('eventEditModal').style.display = 'none';
+    }
   };
 
   // Handle edit form submission
@@ -225,11 +217,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Validate date range
     if (new Date(form.end_date.value) < new Date(form.start_date.value)) {
       alert("End date cannot be before start date.");
-      return;
-    }
-    // Validate start date is not in the past
-    if (new Date(form.start_date.value) < new Date()) {
-      alert("Start date cannot be in the past.");
       return;
     }
     if (!confirm("Are you sure you want to save these changes?")) return;
