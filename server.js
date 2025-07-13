@@ -47,7 +47,7 @@ const userRegisterApi = require('./routes/userRegisterApi');
 // Security middleware
 app.use(helmet({ contentSecurityPolicy: false }));
 app.disable('x-powered-by');
-app.use(eventsApi);
+//app.use(eventsApi);
 
 const mongoUri = process.env.MONGODB_URI;
 const client = new MongoClient(mongoUri);
