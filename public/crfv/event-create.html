@@ -44,7 +44,7 @@
     <link rel="stylesheet" href="css/event-create.css">
     <link rel="stylesheet" href="css/index.css">
 </head>
-<body>
+<body> 
     <header class="fixed-header">
         <div class="header-title">
             <i class="material-icons">event</i>
@@ -80,12 +80,22 @@
     <!-- Panel 1: Create Event or Message -->
     <section class="panel" id="createPanel">
       <!-- Content will be rendered dynamically -->
+      <label>
+        Event Start Date:
+        <input type="date" id="start_date" name="start_date" required>
+      </label>
+      <label>
+        Event End Date:
+        <input type="date" id="end_date" name="end_date" required>
+      </label>
     </section>
     
     <!-- Panel 2: Upcoming Events -->
     <section class="panel" id="eventsPanel">
-      <h2>Upcoming Events</h2>
-      <ul id="latestEventsList"></ul>
+      <div class="panel-content-centered">
+        <h2>Upcoming Events</h2>
+        <ul id="latestEventsList"></ul>
+      </div>
     </section>
   </main>
   
