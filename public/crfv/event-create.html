@@ -80,14 +80,34 @@
     <!-- Panel 1: Create Event or Message -->
     <section class="panel" id="createPanel">
       <!-- Content will be rendered dynamically -->
-      <label>
-        Event Start Date:
-        <input type="date" id="start_date" name="start_date" required>
-      </label>
-      <label>
-        Event End Date:
-        <input type="date" id="end_date" name="end_date" required>
-      </label>
+      <form id="eventForm" class="attendance-card" autocomplete="off">
+        <label>
+          Event Name:
+          <input type="text" id="event_name" name="event_name" required>
+        </label>
+        <label>
+          Event Start Date:
+          <input type="date" id="start_date" name="start_date" required>
+        </label>
+        <label>
+          Event End Date:
+          <input type="date" id="end_date" name="end_date" required>
+        </label>
+        <label>
+          Location:
+          <input type="text" id="location" name="location" required>
+        </label>
+        <label>
+          Venue:
+          <input type="text" id="venue" name="venue" required>
+        </label>
+        <label>
+          Event ID:
+          <input type="text" id="event_id" name="event_id" readonly style="background:#f3f3f3;">
+        </label>
+        <button type="submit" class="btn btn-primary mt-4">Create Event</button>
+        <div id="eventStatus" class="mt-4 text-blue-600"></div>
+      </form>
     </section>
     
     <!-- Panel 2: Upcoming Events -->
