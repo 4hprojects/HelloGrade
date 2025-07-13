@@ -6,38 +6,63 @@ const { v4: uuidv4 } = require('uuid');
 
 // Create new event
 router.post('/', async (req, res) => {
-  const { event_name, start_date, end_date, location, venue } = req.body; // <-- updated line
+  const { event_id, event_name, start_date, end_date, location, venue } = req.body;
 
-  if (new Date(start_date) < new Date()) {
-    return res.status(400).json({ message: "Start date cannot be in the past." });
+  // Validate required fields
+  if (!event_id || !event_name || !start_date || !location || !venue) {
+    return res.status(400).json({ status: "error", message: "Missing required fields." });
   }
 
-  const { data: mapping, error: mappingError } = await supabase
-    .from('user_mapping')
-    .select('uuid')
-    .eq('object_id', req.session.userId)
-    .single();
+  // Check for duplicate event_id
+  const { data: existing, error: existingError } = await supabase
+    .from('events')
+    .select('event_id')
+    .eq('event_id', event_id)
+    .maybeSingle();
 
-  if (!mapping || mappingError) {
-    console.error('User mapping not found:', mappingError || 'No mapping for userId');
-    return res.status(400).json({ status: "error", message: "User mapping not found." });
+  if (existing) {
+    return res.status(409).json({ status: "error", message: "Event ID already exists. Please choose a different name or date." });
   }
 
-  const userId = mapping.uuid;
+  // User mapping logic (if needed)
+  let userId = 'admin';
+  if (req.session && req.session.userId) {
+    const { data: mapping, error: mappingError } = await supabase
+      .from('user_mapping')
+      .select('uuid')
+      .eq('object_id', req.session.userId)
+      .single();
+    if (mapping && !mappingError) {
+      userId = mapping.uuid;
+    }
+  }
 
+  // Insert the event
   const { data, error } = await supabase
     .from('events')
     .insert([{
-      id: uuidv4(),
+      event_id,
       event_name,
-      start_date, // <-- updated line
-      end_date, // <-- updated line
+      start_date,
+      end_date,
       location,
-      venue, // <-- add venue here
+      venue,
       user_id: userId
     }])
     .select()
     .maybeSingle();
+
+  // Audit trail
+  await supabase
+    .from('audit_trail')
+    .insert([{
+      user_id: req.user?.id || 'admin',
+      user_role: req.user?.role || 'admin',
+      user_name: req.user?.name || event_name,
+      action: 'CREATE_EVENT',
+      user_agent: req.headers['user-agent'],
+      ip_address: req.ip
+    }]);
 
   if (error) return res.status(400).json({ status: "error", message: error.message });
   res.json({ status: "success", event: data });
