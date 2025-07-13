@@ -34,6 +34,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location.href = '/crfv/index.html';
   });
 
+  function generateEventId(eventName, startDate) {
+    const prefix = eventName.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 4);
+    if (!startDate) return prefix;
+    const dateObj = new Date(startDate);
+    const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const dd = String(dateObj.getDate()).padStart(2, '0');
+    const yy = String(dateObj.getFullYear()).slice(-2);
+    return `${prefix}${mm}${dd}${yy}`;
+  }
+
   function renderCreatePanel(user) {
     createPanel.innerHTML = `
       <div class="app-container">
@@ -46,12 +56,24 @@ document.addEventListener('DOMContentLoaded', async () => {
           <label>End Date: <input type="date" name="end_date" required></label>
           <label>Location: <input type="text" name="location" required></label>
           <label>Venue: <input type="text" name="venue" required></label>
+          <label>Event ID: <input type="text" name="event_id" id="event_id" readonly style="background:#f3f3f3;"></label>
           <button type="submit" class="btn btn-primary mt-4">Create Event</button>
           <div id="eventStatus" class="mt-4 text-blue-600"></div>
         </form>
       </div>
     `;
     document.getElementById('eventForm').addEventListener('submit', handleEventCreate);
+
+    // Auto-generate event_id as user types
+    const eventNameInput = document.querySelector('input[name="event_name"]');
+    const startDateInput = document.querySelector('input[name="start_date"]');
+    const eventIdInput = document.getElementById('event_id');
+
+    function updateEventId() {
+      eventIdInput.value = generateEventId(eventNameInput.value, startDateInput.value);
+    }
+    eventNameInput.addEventListener('input', updateEventId);
+    startDateInput.addEventListener('input', updateEventId);
   }
 
   async function handleEventCreate(e) {
@@ -59,13 +81,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const form = e.target;
     const statusDiv = document.getElementById('eventStatus');
     statusDiv.textContent = "Creating event...";
-    console.log('Form Data:', {
-      event_name: form.event_name.value.trim(),
-      start_date: form.start_date.value,
-      end_date: form.end_date.value,
-      location: form.location.value.trim(),
-      venue: form.venue.value.trim()
-    });
 
     // Validate date range
     if (new Date(form.end_date.value) < new Date(form.start_date.value)) {
@@ -73,8 +88,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
+    // Generate event_id
+    const event_id = generateEventId(form.event_name.value.trim(), form.start_date.value);
+
     try {
       const formData = {
+        event_id,
         event_name: form.event_name.value.trim(),
         start_date: form.start_date.value,
         end_date: form.end_date.value,
@@ -95,6 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (res.ok && result.status === "success") {
         statusDiv.textContent = "Event created successfully!";
         form.reset(); // Reset the form fields
+        document.getElementById('event_id').value = '';
         loadLatestEvents(); // Reload the latest events list
       } else {
         throw new Error(result.message || "Event creation failed");
