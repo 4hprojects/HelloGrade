@@ -98,7 +98,7 @@ body {
 .two-panel-container {
   display: flex;
   gap: 2em;
-  max-width: 900px;
+  max-width: 1100px; /* increase overall width if needed */
   margin: 2em auto;
   padding: 1em;
 }
@@ -122,6 +122,46 @@ body {
   margin-bottom: 0.7em;
   transition: background 0.2s;
 }
+.event-action {
+  font-weight: bold;
+  color: #1a56db;
+  cursor: pointer;
+  margin-left: 1em;
+  transition: color 0.2s;
+}
+.event-action:hover {
+  color: #0e3f9e;
+  text-decoration: underline;
+}
+.event-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1em;
+  margin-top: 0.4em;
+}
+.event-card {
+  background: #f5f7fa;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px #0001;
+  margin-bottom: 0.7em;
+  padding: 0.7em;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.event-card.event-odd {
+  background: #e3f0fc;
+}
+.event-card:hover {
+  box-shadow: 0 2px 8px #0002;
+  background: #eaf3fc;
+}
+.event-card div {
+  font-size: 0.95em; /* Slightly smaller text for event details */
+}
+.event-action {
+  font-size: 0.9em; /* Slightly smaller text for actions */
+}
 @media (max-width: 600px) {
   .app-container {
     max-width: 99vw;
@@ -131,6 +171,13 @@ body {
   .modal-content {
     max-width: 95vw;
     padding: 1.2em 0.5em;
+  }
+  .event-card {
+    padding: 0.5em; /* Reduce padding further on small screens */
+  }
+
+  .event-actions {
+    justify-content: center; /* Center actions on small screens */
   }
 }
 @media (max-width: 900px) {
@@ -155,4 +202,56 @@ body {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: -1;
+}
+
+/* Compact panel and form styles */
+.panel {
+  padding: 1em 0.7em !important;
+}
+
+.attendance-card label {
+  margin-bottom: 0.3em !important;
+  font-size: 0.97em;
+}
+
+.attendance-card input[type="text"],
+.attendance-card input[type="date"] {
+  padding: 0.35em 0.6em !important;
+  font-size: 0.97em;
+  margin-top: 0.1em !important;
+}
+
+.btn {
+  padding: 0.4em 0.8em !important;
+  font-size: 0.97em !important;
+  margin-top: 0.5em !important;
+}
+
+.header h1 {
+  margin-bottom: 0.5em !important;
+  font-size: 1.1em !important;
+}
+
+/* Make Panel 2 (Upcoming Events) wider */
+#eventsPanel {
+  flex: 2 1 0;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically if you want */
+}
+
+.panel-content-centered {
+  width: 100%;
+  max-width: 500px; /* or whatever width looks best */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#latestEventsList {
+  width: 100%;
+  padding: 0; /* Remove unnecessary padding */
+  margin: 0; /* Remove unnecessary margin */
 }
