@@ -146,13 +146,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (events.length > 0) {
         list.innerHTML = events.map((ev, i) => `
-          <li class="${i % 2 === 0 ? 'event-even' : 'event-odd'}" data-event-id="${ev.id}">
+          <li class="${i % 2 === 0 ? 'event-even' : 'event-odd'}" data-event-id="${ev.event_id}">
             <strong>${ev.event_name}</strong>
             (${formatEventDate(ev.start_date, ev.end_date)})
             ${ev.venue ? ' - ' + ev.venue : ''}
             ${ev.location ? ' - ' + ev.location : ''}
-            <span class="event-action edit-btn" data-id="${ev.id}">Edit</span>
-            <span class="event-action archive-btn" data-id="${ev.id}">
+            <span class="event-action edit-btn" data-id="${ev.event_id}">Edit</span>
+            <span class="event-action archive-btn" data-id="${ev.event_id}">
               ${ev.status === 'archived' ? 'Un-archive' : 'Archive'}
             </span>
           </li>
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function openEditModal(eventId) {
     console.log('Edit clicked for eventId:', eventId);
     console.log('Available event IDs:', events.map(ev => ev.id));
-    const event = events.find(ev => ev.id === eventId);
+    const event = events.find(ev => ev.event_id === eventId);
     if (!event) {
       alert('Event not found.');
       return;
