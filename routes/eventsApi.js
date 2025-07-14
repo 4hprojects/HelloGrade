@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { supabase } = require('../supabaseClient');
 const { v4: uuidv4 } = require('uuid');
+const { logAuditTrail } = require('../utils/auditTrail');
 
 // Create new event
 router.post('/', async (req, res) => {
@@ -53,16 +54,11 @@ router.post('/', async (req, res) => {
     .maybeSingle();
 
   // Audit trail
-  await supabase
-    .from('audit_trail')
-    .insert([{
-      user_id: req.user?.id || 'admin',
-      user_role: req.user?.role || 'admin',
-      user_name: req.user?.name || event_name,
-      action: 'CREATE_EVENT',
-      user_agent: req.headers['user-agent'],
-      ip_address: req.ip
-    }]);
+  await logAuditTrail({
+    req,
+    action: 'CREATE_EVENT',
+    userNameFallback: req.body.event_name
+});
 
   if (error) return res.status(400).json({ status: "error", message: error.message });
   res.json({ status: "success", event: data });
@@ -151,7 +147,7 @@ router.put('/:id', async (req, res) => {
   const { data, error } = await supabase
     .from('events')
     .update({ event_name, start_date, end_date, location, venue })
-    .eq('event_id', id) // <-- FIXED: use event_id, not id
+    .eq('event_id', id)
     .select()
     .maybeSingle();
   // Add validation
@@ -162,6 +158,14 @@ router.put('/:id', async (req, res) => {
     console.error('Update error:', error);
     return res.status(400).json({ message: error?.message || 'Update failed.' });
   }
+
+  // Audit trail for update/edit
+  await logAuditTrail({
+    req,
+    action: 'UPDATE_EVENT',
+    userNameFallback: req.body.event_name
+});
+
   res.json({ status: 'success', event: data });
   console.log('Update request body:', req.body);
   console.log('Update params:', req.params);
@@ -176,10 +180,18 @@ router.patch('/:id/status', async (req, res) => {
   const { data, error } = await supabase
     .from('events')
     .update({ status })
-    .eq('event_id', id) // <-- FIXED: use event_id, not id
+    .eq('event_id', id)
     .select()
     .maybeSingle();
   if (error || !data) return res.status(400).json({ message: error?.message || 'Status update failed.' });
+
+  // Audit trail for archive/un-archive
+  await logAuditTrail({
+    req,
+    action: status === 'archived' ? 'ARCHIVE_EVENT' : 'UNARCHIVE_EVENT',
+    userNameFallback: data.event_name
+});
+
   res.json({ status: 'success', event: data });
 });
 
