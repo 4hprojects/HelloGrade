@@ -1,3 +1,4 @@
+//attendance.js
 const input = document.getElementById('rfidInput');
 const status = document.getElementById('status');
 const logsDiv = document.getElementById('logs');
@@ -94,7 +95,9 @@ function getSlot() {
 function logEntry(entry) {
   const logsDiv = document.getElementById('logs-main');
   if (!logsDiv) return;
-  const fullName = `${entry.last_name}, ${entry.first_name || ''}${entry.middle_name ? ' ' + entry.middle_name : ''}`;
+  const fullName = entry.last_name === "unregistered"
+    ? "Unregistered ID"
+    : `${entry.last_name}, ${entry.first_name}${entry.middle_name ? ' ' + entry.middle_name : ''}`;
   const slotBadge = `<span class="slot-badge" data-slot="${entry.slot || ''}">${entry.slot || ''}</span>`;
   const lateBadge = isLate(entry) ? `<span class="late-label">LATE</span>` : '';
   const org = entry.organization ? `<span class="org">${entry.organization}</span>` : '';
@@ -126,13 +129,19 @@ function logEntry(entry) {
 }
 
 function saveOffline(entry) {
+  const enhancedEntry = {
+    ...entry,
+    is_unregistered: entry.last_name === "unregistered",
+    sync_version: 2
+  };
   const logs = JSON.parse(localStorage.getItem("offlineLogs") || "[]");
-  logs.push(entry);
+  logs.push(enhancedEntry);
   localStorage.setItem("offlineLogs", JSON.stringify(logs));
 }
 
 function syncStoredLogs() {
   if (!navigator.onLine) return;
+  let offlineLogs = JSON.parse(localStorage.getItem("offlineLogs") || "[]");
   if (!offlineLogs.length) {
     status.textContent = "No offline logs to sync.";
     return;
@@ -140,26 +149,35 @@ function syncStoredLogs() {
   let logsToSync = [...offlineLogs];
   let syncedCount = 0;
   let failed = false;
-  offlineLogs.forEach(async (log, idx) => {
-    try {
-      await fetch('/api/attendance', {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(log)
-      });
-      syncedCount++;
-      offlineLogs = offlineLogs.filter(l => l !== log);
-      localStorage.setItem("offlineLogs", JSON.stringify(offlineLogs));
-      logEntry({ ...log, synced: true });
-      if (syncedCount === logsToSync.length && !failed) {
-        status.textContent = "All offline logs synced!";
+
+  // Use for...of for sequential sync and easier removal
+  (async () => {
+    for (let i = 0; i < logsToSync.length; i++) {
+      const log = logsToSync[i];
+      const normalized = normalizeLogEntry(log);
+      try {
+        const res = await fetch('/api/attendance', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(normalized)
+        });
+        const result = await res.json();
+        if (result.status === "success") {
+          syncedCount++;
+          // Remove from offlineLogs
+          offlineLogs = offlineLogs.filter((l, idx) => idx !== i);
+        } else {
+          failed = true;
+        }
+      } catch (err) {
+        failed = true;
       }
-    } catch (e) {
-      failed = true;
-      status.innerHTML = `Sync failed. <button id="retrySyncBtn">Retry</button>`;
-      document.getElementById('retrySyncBtn').onclick = syncStoredLogs;
     }
-  });
+    localStorage.setItem("offlineLogs", JSON.stringify(offlineLogs));
+    status.textContent = failed
+      ? `Some logs failed to sync. ${syncedCount} synced.`
+      : `All offline logs synced! (${syncedCount})`;
+  })();
 }
 
 function isLate(entry) {
@@ -206,34 +224,23 @@ function isLate(entry) {
 input.addEventListener("keydown", async function (e) {
   if (e.key === "Enter") {
     const scannedRfid = input.value.trim();
-    const match = registeredList.find(a => a.rfid === scannedRfid);
-
+    let match = rfidToAttendee[scannedRfid];
     let now = new Date();
     let entry = {
       rfid: scannedRfid,
-      event_id: currentEventId,
+      event_id: currentEvent?.event_id,
       timestamp: now.toISOString(),
       status: "present",
       slot: getSlot(),
       time: now.toTimeString().slice(0,5),
       date: now.toISOString().slice(0,10),
-      synced: false
+      synced: false,
+      first_name: match?.first_name || "",
+      last_name: match?.last_name || "unregistered",
+      attendee_no: match?.attendee_no || "unregistered",
+      is_unregistered: !match
     };
 
-    if (match) {
-      entry.attendee_no = match.attendee_no;
-      entry.last_name = match.last_name;
-      entry.first_name = match.first_name;
-      entry.middle_name = match.middle_name;
-      entry.organization = match.organization;
-      entry.contact_no = match.contact_no;
-      entry.id_number = match.id_number;
-    } else {
-      entry.last_name = "unregistered";
-      entry.attendee_no = "unregistered";
-    }
-
-    // POST to backend (works for both registered and unregistered)
     try {
       const res = await fetch('/api/attendance', {
         method: "POST",
@@ -244,7 +251,17 @@ input.addEventListener("keydown", async function (e) {
       if (result.status === "success") {
         entry.synced = true;
         logEntry(entry);
-        status.textContent = `Hello${match ? ', ' + match.first_name : ''}! Scan recorded.`;
+        if (match) {
+          status.textContent = `Hello, ${match.first_name}! Scan recorded.`;
+        } else {
+          status.textContent = "Scan recorded, but ID is unregistered.";
+        }
+      } else if (
+        result.message &&
+        result.message.includes("row-level security policy")
+      ) {
+        saveOffline(entry);
+        status.textContent = "Scan could not be saved: permission error. Saved offline.";
       } else {
         saveOffline(entry);
         status.textContent = "Scan saved offline (server error).";
@@ -312,19 +329,20 @@ window.addEventListener('online', () => {
 window.addEventListener('offline', updateSystemIndicator);
 document.addEventListener('DOMContentLoaded', updateSystemIndicator);
 
-function renderLogs(logs) {
-  const logsDiv = document.getElementById('logs-main');
-  logsDiv.innerHTML = '';
-  if (!logs || logs.length === 0) {
-    logsDiv.innerHTML = `
-      <div class="empty-logs">
-        <i class="fas fa-inbox"></i>
-        <div>No attendance logs yet.</div>
-      </div>
-    `;
-    return;
+function normalizeLogEntry(entry) {
+  if (entry.attendee) {
+    return {
+      ...entry,
+      ...entry.attendee,
+      organization: entry.attendee.organization || ''
+    };
   }
-  logs.forEach(entry => logEntry(entry));
+  return entry;
+}
+
+function renderLogs(logs) {
+  logsDiv.innerHTML = '';
+  logs.map(normalizeLogEntry).forEach(logEntry);
 }
 
 document.querySelector('.sidebar-toggle').addEventListener('click', function() {
@@ -512,16 +530,51 @@ document.querySelector('.btn-logout').onclick = async function() {
   window.location.reload();
 };
 
-// Fetch the current/ongoing event from your backend
-async function loadCurrentEvent() {
+let currentEvent = null;
+let attendees = [];
+let rfidToAttendee = {};
+
+async function loadCurrentEventAndAttendees() {
   try {
-    const res = await fetch('/api/events/current');
-    const event = await res.json();
-    currentEventId = event.id;
-    currentEventName = event.event_name;
-    document.getElementById('currentEventLabel').textContent = `${currentEventName}`;
+    // 1. Load current event
+    const eventRes = await fetch('/api/attendance/latest-event');
+    const eventData = await eventRes.json();
+    if (!eventData || !eventData.event_id) throw new Error("No current event found");
+    currentEvent = eventData;
+    document.getElementById('currentEventLabel').textContent = `${currentEvent.event_name} (${currentEvent.start_date})`;
+
+    // 2. Load attendees for this event
+    const attendeesRes = await fetch(`/api/attendance/attendees/by-event/${currentEvent.event_id}`);
+    attendees = await attendeesRes.json();
+
+    // 3. Build RFID lookup map for fast scan
+    rfidToAttendee = {};
+    attendees.forEach(a => {
+      if (a.rfid) rfidToAttendee[String(a.rfid).trim()] = a;
+    });
+
+    // 4. Ready for scan
+    setStatus('Ready for next scan', true);
   } catch (e) {
     document.getElementById('currentEventLabel').textContent = "No current event found.";
+    setStatus('Error loading event or attendees', false);
   }
 }
-window.addEventListener("DOMContentLoaded", loadCurrentEvent);
+
+// Call on page load
+window.addEventListener('DOMContentLoaded', loadCurrentEventAndAttendees);
+
+function setStatus(msg, online = true) {
+  const statusDiv = document.getElementById('status');
+  if (statusDiv) {
+    statusDiv.textContent = msg;
+    if (online) {
+      statusDiv.classList.remove('offline');
+      statusDiv.classList.add('online');
+    } else {
+      statusDiv.classList.remove('online');
+      statusDiv.classList.add('offline');
+    }
+  }
+}
+
