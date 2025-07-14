@@ -1,26 +1,34 @@
 //reports.js
-// --- Define the columns for the Attendees tab ---
+// --- Attendees Table Columns ---
 const attendeesColumns = [
+  // { key: 'select', label: '<input type="checkbox" id="selectAllAttendees">' }, // Removed checkbox column
+  { key: 'attendee_no', label: 'Attendee No' },
   { key: 'last_name', label: 'Last Name' },
   { key: 'first_name', label: 'First Name' },
   { key: 'organization', label: 'Organization' },
-  { key: 'designation', label: 'Designation' },
-  { key: 'email', label: 'Email' },
-  { key: 'contact_no', label: 'Contact No' },
   { key: 'rfid', label: 'RFID' },
-  { key: 'confirmation_code', label: 'Confirmation Code' },
-  { key: 'event_name', label: 'Event' },
+  { key: 'confirmation_code', label: 'Confirmation No' },
   { key: 'payment_status', label: 'Payment Status' },
-  { key: 'info_details', label: 'Info Details' },
-  { key: 'payment_details', label: 'Payment Details' }
+  { key: 'actions', label: 'Actions' }
 ];
+
+// --- State ---
+let attendeesData = [];
+let attendeesPage = 1, attendeesPerPage = 10;
+let attendeesSort = { key: null, asc: true };
+let selectedAttendees = new Set();
+
 // --- Tab Switching ---
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', function() {
+    // Remove active from all buttons and contents
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    this.classList.add('active');
-    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    // Activate clicked tab and its content
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    // Hide bulk action bar when switching tabs
+    document.getElementById('bulk-action-bar').style.display = 'none';
   });
 });
 
@@ -35,18 +43,33 @@ async function checkAuthAndShowModal() {
     window.location.href = "attendance.html";
   }
 }
-//document.addEventListener('DOMContentLoaded', checkAuthAndShowModal);
+document.addEventListener('DOMContentLoaded', checkAuthAndShowModal);
 
 // --- Logout Button ---
-document.querySelector('.btn-logout').onclick = async function() {
-  await fetch('/logout', { method: 'POST', credentials: 'same-origin' });
-  window.location.reload();
-};
+document.addEventListener('DOMContentLoaded', function() {
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.onclick = async function() {
+      await fetch('/logout', { method: 'POST', credentials: 'same-origin' });
+      window.location.reload();
+    };
+  }
+});
 
 // --- Clock ---
 function updateClock() {
   const now = new Date();
-  document.getElementById('clock').textContent = now.toLocaleString();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const dateStr = now.toLocaleDateString('en-US', options);
+  let hours = now.getHours();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12;
+  const timeStr = [
+    hours.toString().padStart(2, '0'),
+    now.getMinutes().toString().padStart(2, '0'),
+    now.getSeconds().toString().padStart(2, '0')
+  ].join(':') + ' ' + ampm;
+  document.getElementById('clock').innerText = `${dateStr} | ${timeStr}`;
 }
 setInterval(updateClock, 1000);
 updateClock();
@@ -59,64 +82,107 @@ function hideSpinner() {
   document.getElementById('loadingSpinner').style.display = 'none';
 }
 
-// --- Data holders and sorting state ---
-let attendeesData = [], attendanceData = [], eventsData = [];
-let attendeesPage = 1, attendeesPerPage = 10;
-let attendancePage = 1, attendancePerPage = 10;
-let eventsPage = 1, eventsPerPage = 10;
-let attendeesSort = { key: null, asc: true };
-let attendanceSort = { key: null, asc: true };
-let eventsSort = { key: null, asc: true };
-
-// --- Fetch and Render Attendees ---
+// --- Fetch Attendees ---
 async function loadAttendees() {
   showSpinner();
   try {
-    const res = await fetch('/api/attendees/all');
-    attendeesData = await res.json();
+    const res = await fetch('/api/reports/attendees');
+    const data = await res.json();
+    attendeesData = data.attendees || [];
     attendeesPage = 1;
     updateAttendeesTable();
   } catch (err) {
-    document.querySelector('#attendeesTable tbody').innerHTML =
-      `<tr><td colspan="7">Failed to load attendees.</td></tr>`;
+    document.getElementById('attendeesTableBody').innerHTML =
+      `<tr><td colspan="${attendeesColumns.length}">Failed to load attendees.</td></tr>`;
   }
   hideSpinner();
 }
+
+// --- Filter, Sort, Paginate ---
 function filterAttendees(query) {
   query = query.trim().toLowerCase();
   if (!query) return attendeesData;
   return attendeesData.filter(a =>
-    [a.last_name, a.first_name, a.middle_name, a.attendee_no, a.rfid, a.organization, a.contact_no]
-      .filter(Boolean)
-      .join(' ')
-      .toLowerCase()
-      .includes(query)
+    [
+      a.last_name,
+      a.first_name,
+      a.attendee_no,
+      a.rfid,
+      a.organization,
+      a.contact_no,
+      a.payment_status // <-- Add this line
+    ]
+    .filter(Boolean).join(' ').toLowerCase().includes(query)
   );
+}
+function sortAttendees(data) {
+  if (!attendeesSort.key) return data;
+  return [...data].sort((a, b) => {
+    let valA = a[attendeesSort.key] || '';
+    let valB = b[attendeesSort.key] || '';
+    return attendeesSort.asc
+      ? String(valA).localeCompare(String(valB))
+      : String(valB).localeCompare(String(valA));
+  });
 }
 function paginateAttendees(data) {
   if (attendeesPerPage === 'all') return data;
   const start = (attendeesPage - 1) * attendeesPerPage;
   return data.slice(start, start + Number(attendeesPerPage));
 }
-function renderAttendeesTable(data) {
-  const tbody = document.querySelector('#attendeesTable tbody');
-  if (!data.length) {
-    tbody.innerHTML = `<tr><td colspan="7">No attendees found.</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = data.map(a => `
-    <tr>
-      <td>${a.last_name || ''}</td>
-      <td>${a.first_name || ''}</td>
-      <td>${a.middle_name || ''}</td>
-      <td>${a.organization || ''}</td>
-      <td>${a.email || ''}</td>
-      <td>${a.contact_no || ''}</td>
-      <td>${a.rfid || ''}</td>
-      <td>${a.event?.event_name || ''}</td>
-    </tr>
-  `).join('');
+
+// --- Render Table Header ---
+function renderAttendeesTableHeader() {
+  const headerRow = attendeesColumns.map(col => {
+    let arrow = '';
+    if (attendeesSort.key === col.key) {
+      arrow = attendeesSort.asc ? ' ▲' : ' ▼';
+    }
+    return `<th class="sortable" data-key="${col.key}">${col.label}${arrow}</th>`;
+  }).join('');
+  document.getElementById('attendeesTableHeader').innerHTML = `<tr>${headerRow}</tr>`;
+
+  // Add sorting event listeners
+  document.querySelectorAll('#attendeesTableHeader th.sortable').forEach(th => {
+    // Don't sort on the "Actions" column
+    if (th.dataset.key === 'actions') return;
+    th.style.cursor = 'pointer';
+    th.onclick = function() {
+      if (attendeesSort.key === th.dataset.key) {
+        attendeesSort.asc = !attendeesSort.asc;
+      } else {
+        attendeesSort.key = th.dataset.key;
+        attendeesSort.asc = true;
+      }
+      updateAttendeesTable();
+    };
+  });
 }
+
+// --- Render Table Body ---
+function renderAttendeesTableBody(attendees) {
+  const rows = attendees.map(att => `
+  <tr>
+    <!--<td><input type="checkbox" class="attendee-checkbox" value="${att.attendee_no}" ${selectedAttendees.has(att.attendee_no) ? 'checked' : ''}></td>--> <!-- Removed checkbox cell -->
+    <td>${att.attendee_no}</td>
+    <td>${att.last_name || ''}</td>
+    <td>${att.first_name || ''}</td>
+    <td>${att.organization || ''}</td>
+    <td>${att.rfid || ''}</td>
+    <td>${att.confirmation_code || ''}</td>
+    <td>${att.payment_status || 'Accounts Recievable'}</td>
+    <td>
+      <button class="btn btn-info" onclick="openInfoModal('${att.attendee_no}')">Edit Info</button>
+      <button class="btn btn-payment" onclick="openPaymentModal('${att.attendee_no}')">Edit Payment</button>
+    </td>
+  </tr>
+`).join('');
+  document.getElementById('attendeesTableBody').innerHTML = rows;
+
+  // Remove checkbox logic since checkboxes are gone
+}
+
+// --- Pagination ---
 function renderAttendeesPagination(filtered) {
   const pagDiv = document.getElementById('attendeesPagination');
   const total = filtered.length;
@@ -150,33 +216,37 @@ function renderAttendeesPagination(filtered) {
     if (attendeesPage < pages) { attendeesPage++; updateAttendeesTable(); }
   };
 }
+
+// --- Update Table (Filter, Sort, Paginate, Render) ---
 function updateAttendeesTable() {
   const query = document.getElementById('searchAttendees').value;
   let filtered = filterAttendees(query);
-  if (attendeesSort.key) {
-    filtered = sortData(filtered, attendeesSort.key, attendeesSort.asc);
-  }
+  filtered = sortAttendees(filtered);
   const paged = paginateAttendees(filtered);
-  renderAttendeesTable(paged);
+  renderAttendeesTableHeader();
+  renderAttendeesTableBody(paged);
   renderAttendeesPagination(filtered);
 }
+
+// --- Search ---
 document.getElementById('searchAttendees').addEventListener('input', () => {
   attendeesPage = 1;
   updateAttendeesTable();
 });
+
+// --- Export ---
 document.getElementById('exportAttendeesBtn').onclick = function () {
   const query = document.getElementById('searchAttendees').value;
-  const filtered = filterAttendees(query);
+  const filtered = sortAttendees(filterAttendees(query));
   const paged = paginateAttendees(filtered);
-  const headers = ["Last Name", "First Name", "Organization", "Email", "Contact No", "RFID", "Event ID"];
+  const headers = attendeesColumns.slice(1, -1).map(col => col.label.replace(/<[^>]+>/g, '')); // Remove HTML from label
   const rows = paged.map(a => [
+    a.attendee_no || "",
     a.last_name || "",
     a.first_name || "",
     a.organization || "",
-    a.email || "",
-    a.contact_no || "",
     a.rfid || "",
-    a.event_id || ""
+    a.payment_status || ""
   ]);
   if (typeof XLSX === "undefined") {
     alert("XLSX library not loaded.");
@@ -188,493 +258,511 @@ document.getElementById('exportAttendeesBtn').onclick = function () {
   XLSX.writeFile(wb, "attendees_report.xlsx");
 };
 
-// --- Fetch and Render Attendance ---
-async function loadAttendance() {
-  showSpinner();
-  try {
-    const res = await fetch('/api/attendance/all');
-    attendanceData = await res.json();
-    attendancePage = 1;
-    updateAttendanceTable();
-  } catch (err) {
-    document.querySelector('#attendanceTable tbody').innerHTML =
-      `<tr><td colspan="10">Failed to load attendance records.</td></tr>`;
-  }
-  hideSpinner();
+// --- Bulk Action Bar ---
+function toggleBulkActionBar() {
+  const bar = document.getElementById('bulk-action-bar');
+  bar.style.display = selectedAttendees.size > 0 ? 'flex' : 'none';
 }
-function filterAttendance(query) {
-  query = query.trim().toLowerCase();
-  if (!query) return attendanceData;
-  return attendanceData.filter(r => {
-    const name = r.attendee
-      ? [r.attendee.last_name, r.attendee.first_name, r.attendee.middle_name].filter(Boolean).join(', ')
-      : '';
-    return [
-      r.date, r.time, r.slot, r.status, r.rfid,
-      r.organization, r.contact_no,
-      r.attendee?.attendee_no, name,
-      r.event?.event_name
-    ].filter(Boolean).join(' ').toLowerCase().includes(query);
-  });
-}
-function paginateAttendance(data) {
-  if (attendancePerPage === 'all') return data;
-  const start = (attendancePage - 1) * attendancePerPage;
-  return data.slice(start, start + Number(attendancePerPage));
-}
-function renderAttendanceTable(data) {
-  const tbody = document.querySelector('#attendanceTable tbody');
-  if (!data.length) {
-    tbody.innerHTML = `<tr><td colspan="10">No attendance records found.</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = data.map(r => `
-    <tr>
-      <td>${r.date || ''}</td>
-      <td>${r.time || ''}</td>
-      <td>${r.attendee?.attendee_no || ''}</td>
-      <td>${r.attendee
-        ? [r.attendee.last_name, r.attendee.first_name, r.attendee.middle_name].filter(Boolean).join(', ')
-        : ''}</td>
-      <td>${r.event?.event_name || ''}</td>
-      <td>${r.slot || ''}</td>
-      <td>${r.status || ''}</td>
-      <td>${r.organization || r.attendee?.organization || ''}</td>
-      <td>${r.contact_no || r.attendee?.contact_no || ''}</td>
-      <td>${r.rfid || r.attendee?.rfid || ''}</td>
-    </tr>
-  `).join('');
-}
-function renderAttendancePagination(filtered) {
-  const pagDiv = document.getElementById('attendancePagination');
-  const total = filtered.length;
-  const perPage = attendancePerPage === 'all' ? total : attendancePerPage;
-  const pages = perPage === 0 ? 1 : Math.ceil(total / perPage);
-
-  let html = `
-    <label>Show
-      <select id="attendancePerPage">
-        <option value="10" ${attendancePerPage==10?'selected':''}>10</option>
-        <option value="20" ${attendancePerPage==20?'selected':''}>20</option>
-        <option value="all" ${attendancePerPage==='all'?'selected':''}>All</option>
-      </select>
-    </label>
-    <span>Page ${attendancePage} of ${pages}</span>
-    <button id="attendancePrev" ${attendancePage<=1?'disabled':''}>&lt; Prev</button>
-    <button id="attendanceNext" ${attendancePage>=pages?'disabled':''}>Next &gt;</button>
-  `;
-  pagDiv.innerHTML = html;
-
-  document.getElementById('attendancePerPage').onchange = e => {
-    attendancePerPage = e.target.value === 'all' ? 'all' : Number(e.target.value);
-    attendancePage = 1;
-    updateAttendanceTable();
-  };
-  document.getElementById('attendancePrev').onclick = () => {
-    if (attendancePage > 1) { attendancePage--; updateAttendanceTable(); }
-  };
-  document.getElementById('attendanceNext').onclick = () => {
-    const pages = Math.ceil(filtered.length / (attendancePerPage === 'all' ? filtered.length : attendancePerPage));
-    if (attendancePage < pages) { attendancePage++; updateAttendanceTable(); }
-  };
-}
-function updateAttendanceTable() {
-  const query = document.getElementById('searchAttendance').value;
-  let filtered = filterAttendance(query);
-  if (attendanceSort.key) {
-    filtered = sortData(filtered, attendanceSort.key, attendanceSort.asc, true);
-  }
-  const paged = paginateAttendance(filtered);
-  renderAttendanceTable(paged);
-  renderAttendancePagination(filtered);
-}
-document.getElementById('searchAttendance').addEventListener('input', () => {
-  attendancePage = 1;
-  updateAttendanceTable();
-});
-document.getElementById('exportAttendanceBtn').onclick = function () {
-  const query = document.getElementById('searchAttendance').value;
-  const filtered = filterAttendance(query);
-  const paged = paginateAttendance(filtered);
-  const headers = ["Date", "Time", "Attendee No", "Name", "Event Name", "Slot", "Status", "Organization", "Contact No", "RFID"];
-  const rows = paged.map(r => [
-    r.date || "",
-    r.time || "",
-    r.attendee?.attendee_no || "",
-    r.attendee
-      ? [r.attendee.last_name, r.attendee.first_name, r.attendee.middle_name].filter(Boolean).join(', ')
-      : "",
-    r.event?.event_name || "",
-    r.slot || "",
-    r.status || "",
-    r.organization || r.attendee?.organization || "",
-    r.contact_no || r.attendee?.contact_no || "",
-    r.rfid || r.attendee?.rfid || ""
-  ]);
-  if (typeof XLSX === "undefined") {
-    alert("XLSX library not loaded.");
-    return;
-  }
-  const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Attendance");
-  XLSX.writeFile(wb, "attendance_report.xlsx");
-};
-
-// --- Fetch and Render Events ---
-async function loadEvents() {
-  showSpinner();
-  try {
-    const res = await fetch('/api/events/all');
-    eventsData = await res.json();
-    eventsPage = 1;
-    updateEventsTable();
-  } catch (err) {
-    document.querySelector('#eventsTable tbody').innerHTML =
-      `<tr><td colspan="3">Failed to load events.</td></tr>`;
-  }
-  hideSpinner();
-}
-function filterEvents(query) {
-  query = query.trim().toLowerCase();
-  if (!query) return eventsData;
-  return eventsData.filter(e =>
-    [e.event_name, e.event_date, e.location]
-      .filter(Boolean)
-      .join(' ')
-      .toLowerCase()
-      .includes(query)
-  );
-}
-function paginateEvents(data) {
-  if (eventsPerPage === 'all') return data;
-  const start = (eventsPage - 1) * eventsPerPage;
-  return data.slice(start, start + Number(eventsPerPage));
-}
-function renderEventsTable(data) {
-  const tbody = document.querySelector('#eventsTable tbody');
-  if (!data.length) {
-    tbody.innerHTML = `<tr><td colspan="3">No events found.</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = data.map(e => `
-    <tr>
-      <td>${e.event_name || ''}</td>
-      <td>${e.event_date || ''}</td>
-      <td>${e.location || ''}</td>
-    </tr>
-  `).join('');
-}
-function renderEventsPagination(filtered) {
-  const pagDiv = document.getElementById('eventsPagination');
-  const total = filtered.length;
-  const perPage = eventsPerPage === 'all' ? total : eventsPerPage;
-  const pages = perPage === 0 ? 1 : Math.ceil(total / perPage);
-
-  let html = `
-    <label>Show
-      <select id="eventsPerPage">
-        <option value="10" ${eventsPerPage==10?'selected':''}>10</option>
-        <option value="20" ${eventsPerPage==20?'selected':''}>20</option>
-        <option value="all" ${eventsPerPage==='all'?'selected':''}>All</option>
-      </select>
-    </label>
-    <span>Page ${eventsPage} of ${pages}</span>
-    <button id="eventsPrev" ${eventsPage<=1?'disabled':''}>&lt; Prev</button>
-    <button id="eventsNext" ${eventsPage>=pages?'disabled':''}>Next &gt;</button>
-  `;
-  pagDiv.innerHTML = html;
-
-  document.getElementById('eventsPerPage').onchange = e => {
-    eventsPerPage = e.target.value === 'all' ? 'all' : Number(e.target.value);
-    eventsPage = 1;
-    updateEventsTable();
-  };
-  document.getElementById('eventsPrev').onclick = () => {
-    if (eventsPage > 1) { eventsPage--; updateEventsTable(); }
-  };
-  document.getElementById('eventsNext').onclick = () => {
-    const pages = Math.ceil(filtered.length / (eventsPerPage === 'all' ? filtered.length : eventsPerPage));
-    if (eventsPage < pages) { eventsPage++; updateEventsTable(); }
-  };
-}
-function updateEventsTable() {
-  const query = document.getElementById('searchEvents').value;
-  let filtered = filterEvents(query);
-  if (eventsSort.key) {
-    filtered = sortData(filtered, eventsSort.key, eventsSort.asc);
-  }
-  const paged = paginateEvents(filtered);
-  renderEventsTable(paged);
-  renderEventsPagination(filtered);
-}
-document.getElementById('searchEvents').addEventListener('input', () => {
-  eventsPage = 1;
-  updateEventsTable();
-});
-document.getElementById('exportEventsBtn').onclick = function () {
-  const query = document.getElementById('searchEvents').value;
-  const filtered = filterEvents(query);
-  const paged = paginateEvents(filtered);
-  const headers = ["Event Name", "Date", "Location"];
-  const rows = paged.map(e => [
-    e.event_name || "",
-    e.event_date || "",
-    e.location || ""
-  ]);
-  if (typeof XLSX === "undefined") {
-    alert("XLSX library not loaded.");
-    return;
-  }
-  const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Events");
-  XLSX.writeFile(wb, "events_report.xlsx");
-};
-
-// --- Sorting helpers ---
-function sortData(data, key, asc = true, nested = false) {
-  return [...data].sort((a, b) => {
-    let valA = nested ? getNestedValue(a, key) : a[key];
-    let valB = nested ? getNestedValue(b, key) : b[key];
-    valA = valA === undefined || valA === null ? '' : valA;
-    valB = valB === undefined || valB === null ? '' : valB;
-    if (!isNaN(valA) && !isNaN(valB)) {
-      return asc ? valA - valB : valB - valA;
-    }
-    return asc
-      ? String(valA).localeCompare(String(valB))
-      : String(valB).localeCompare(String(valA));
-  });
-}
-function getNestedValue(obj, path) {
-  return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : ''), obj);
-}
-
-// --- Header click handlers for sorting ---
-function setupSortableHeaders(tableId, sortState, updateFn, keys) {
-  const ths = document.querySelectorAll(`#${tableId} th`);
-  ths.forEach((th, idx) => {
-    th.style.cursor = 'pointer';
-    th.onclick = function() {
-      const key = keys[idx];
-      if (sortState.key === key) {
-        sortState.asc = !sortState.asc;
-      } else {
-        sortState.key = key;
-        sortState.asc = true;
-      }
-      updateFn();
-      // Optional: add sort indicator
-      ths.forEach(header => header.classList.remove('sorted-asc', 'sorted-desc'));
-      th.classList.add(sortState.asc ? 'sorted-asc' : 'sorted-desc');
-    };
-  });
-}
-
-// --- Initial fetch and setup ---
-document.addEventListener('DOMContentLoaded', async () => {
-  await loadAttendees();
-  await loadAttendance();
-  await loadEvents();
-
-  setupSortableHeaders('attendeesTable', attendeesSort, updateAttendeesTable,
-    ['last_name', 'first_name', 'organization', 'email', 'contact_no', 'rfid', 'event_id']);
-  setupSortableHeaders('attendanceTable', attendanceSort, updateAttendanceTable,
-    ['date', 'time', 'attendee.attendee_no', 'attendee.last_name', 'event.event_name', 'slot', 'status', 'organization', 'contact_no', 'rfid']);
-  setupSortableHeaders('eventsTable', eventsSort, updateEventsTable,
-    ['event_name', 'event_date', 'location']);
-});
-
-// --- Refresh Buttons ---
-document.getElementById('refreshAttendeesBtn').onclick = loadAttendees;
-document.getElementById('refreshAttendanceBtn').onclick = loadAttendance;
-document.getElementById('refreshEventsBtn').onclick = loadEvents;
-
-
-
-// --- Render the table header ---
-function renderAttendeesHeader() {
-  const header = document.getElementById('attendeesTableHeader');
-  header.innerHTML = `<tr>${attendeesColumns.map(col => `<th>${col.label}</th>`).join('')}</tr>`;
-}
-
-// Render the table body
-function renderAttendeesTable(attendees) {
-  const tbody = document.getElementById('attendeesTableBody');
-  tbody.innerHTML = attendees.map(att => `
-    <tr>
-      <td>${att.last_name || ''}</td>
-      <td>${att.first_name || ''}</td>
-      <td>${att.organization || ''}</td>
-      <td>${att.designation || ''}</td>
-      <td>${att.email || ''}</td>
-      <td>${att.contact_no || ''}</td>
-      <td>${att.rfid || ''}</td>
-      <td>${att.confirmation_code || ''}</td>
-      <td>${att.event_name || ''}</td>
-      <td>${att.payment_status || ''}</td>
-      <td>
-        <button class="btn btn-info" onclick="openInfoModal('${att.attendee_no}')">Edit Info</button>
-      </td>
-      <td>
-        <button class="btn btn-payment" onclick="openPaymentModal('${att.attendee_no}')">Edit Payment Info</button>
-      </td>
-    </tr>
-  `).join('');
-}
-
-// Example: Fetch and render attendees on page load or tab switch
-async function loadAttendees() {
-  // Replace with your actual API endpoint
-  const res = await fetch('/api/attendees');
-  const attendees = await res.json();
-  renderAttendeesHeader();
-  renderAttendeesTable(attendees);
-}
-
-// Call this when the Attendees tab is shown
-loadAttendees();
-
-// --- Info Modal ---
-async function openInfoModal(attendee_no) {
-  const res = await fetch(`/api/attendees/${attendee_no}`);
-  const att = await res.json();
-  document.getElementById('modalRfid').value = att.rfid || '';
-  document.getElementById('modalInfoFields').innerHTML = `
-    <div>Last Name: ${att.last_name}</div>
-    <div>First Name: ${att.first_name}</div>
-    <div>Organization: ${att.organization}</div>
-    <div>Designation: ${att.designation}</div>
-    <div>Email: ${att.email}</div>
-    <div>Contact No: ${att.contact_no || ''}</div>
-    <div>Accommodation: ${att.accommodation || ''}</div>
-    <div>Event: ${att.event_name}</div>
-  `;
-  document.getElementById('infoModal').style.display = 'block';
-
-  document.getElementById('infoForm').onsubmit = async function(e) {
-    e.preventDefault();
-    const rfid = document.getElementById('modalRfid').value;
-    await fetch(`/api/attendees/${attendee_no}/rfid`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ rfid })
-    });
-    closeInfoModal();
+document.getElementById('bulk-mark-paid').onclick = function() {
+  if (selectedAttendees.size === 0) return;
+  if (!confirm('Mark selected attendees as paid?')) return;
+  fetch('/api/reports/bulk-update-payment', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({attendee_nos: Array.from(selectedAttendees)})
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert('Marked as paid!');
+    selectedAttendees.clear();
     loadAttendees();
-  };
+    toggleBulkActionBar();
+  });
+};
+document.getElementById('bulk-export-xlsx').onclick = function() {
+  exportSelectedAttendees('xlsx');
+};
+document.getElementById('bulk-export-pdf').onclick = function() {
+  exportSelectedAttendees('pdf');
+};
+function exportSelectedAttendees(format) {
+  if (selectedAttendees.size === 0) return;
+  window.open(`/api/reports/export?format=${format}&attendee_nos=${Array.from(selectedAttendees).join(',')}`);
 }
-function closeInfoModal() {
-  document.getElementById('infoModal').style.display = 'none';
-}
 
-// --- Payment Modal ---
-async function openPaymentModal(attendee_no) {
-  // Clear containers
-  document.getElementById('newPaymentFormContainer').innerHTML = '';
-  document.getElementById('paymentRecords').innerHTML = '';
+// --- Open Edit Info Modal
+window.openInfoModal = async function(attendee_no) {
+  showSpinner();
+  try {
+    const res = await fetch(`/api/attendees/${attendee_no}`);
+    const data = await res.json();
+    const modal = document.getElementById('infoModal');
+    modal.querySelector('.modal-content').innerHTML = `
+      <h3>Edit Attendee Info</h3>
+      <form id="infoForm" class="modal-form-grid">
+        <div class="section-title">System Info</div>
+        <label>Attendee No
+          <input type="text" name="attendee_no" value="${data.attendee_no || ''}" readonly>
+        </label>
+        <label>Confirmation Code
+          <input type="text" name="confirmation_code" value="${data.confirmation_code || ''}" readonly>
+        </label>
+                <label>Contact No
+          <input type="text" name="contact_no" value="${data.contact_no || ''}">
+        </label>
+        <label class="highlighted"><b>RFID <span>*</span></b>
+          <input type="text" name="rfid" value="${data.rfid || ''}" required autofocus>
+        </label>
+        <div class="section-title">Personal Info</div>
+        <label>First Name <span>*</span>
+          <input type="text" name="first_name" value="${data.first_name || ''}" required>
+        </label>
+        <label>Middle Name
+          <input type="text" name="middle_name" value="${data.middle_name || ''}">
+        </label>
+        <label>Last Name <span>*</span>
+          <input type="text" name="last_name" value="${data.last_name || ''}" required>
+        </label>
+        <label>Email
+          <input type="email" name="email" value="${data.email || ''}">
+        </label>
 
-  // Render "Add New Payment" form
-  document.getElementById('newPaymentFormContainer').innerHTML = `
-    <form id="newPaymentForm">
-      <h4>Add New Payment</h4>
-      <label>Status: 
-        <select name="payment_status" required>
-          <option value="">Select status</option>
-          <option value="Fully Paid">Fully Paid</option>
-          <option value="Partially Paid">Partially Paid</option>
-          <option value="Others">Others</option>
-        </select>
-      </label>
-      <label>Amount: <input type="text" name="amount" required></label>
-      <label>Form of Payment: <input type="text" name="form_of_payment"></label>
-      <label>Date Full Payment: <input type="date" name="date_full_payment"></label>
-      <label>Date Partial Payment: <input type="date" name="date_partial_payment"></label>
-      <label>Account: <input type="text" name="account"></label>
-      <label>OR Number: <input type="text" name="or_number"></label>
-      <label>Quickbooks No: <input type="text" name="quickbooks_no"></label>
-      <label>Shipping Tracking No: <input type="text" name="shipping_tracking_no"></label>
-      <label>Notes: <input type="text" name="notes"></label>
-      <button type="submit">Add Payment</button>
-      <div id="newPaymentError" style="color:red;"></div>
-    </form>
-    <hr>
-  `;
+        <div class="section-title">Event Info</div>
+        <label>Event ID <span>*</span>
+          <input type="text" name="event_id" value="${data.event_id || ''}" required>
+        </label>
+        <label>Organization <span>*</span>
+          <input type="text" name="organization" value="${data.organization || ''}" required>
+        </label>
+        <label>Designation <span>*</span>
+          <input type="text" name="designation" value="${data.designation || ''}" required>
+        </label>
 
-  // Handle new payment submission
-  document.getElementById('newPaymentForm').onsubmit = async function(e) {
-    e.preventDefault();
-    const formData = Object.fromEntries(new FormData(this));
-    formData.attendee_no = attendee_no;
-    const res = await fetch('/api/payments', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    });
-    if (res.ok) {
-      openPaymentModal(attendee_no); // Refresh modal
-    } else {
-      const errMsg = (await res.json()).message || 'Failed to add payment.';
-      document.getElementById('newPaymentError').textContent = errMsg;
-    }
-  };
-
-  // Fetch and render existing payments
-  const res = await fetch(`/api/payments/${attendee_no}`);
-  let payments = await res.json();
-  payments = payments.filter(p => p && p.payment_id);
-
-  document.getElementById('paymentRecords').innerHTML = payments.length
-    ? payments.map(payment => `
-      <form class="paymentForm" data-payment-id="${payment.payment_id}">
-        <label>Status: 
-          <select name="payment_status">
-            <option value="Fully Paid" ${payment.payment_status === 'Fully Paid' ? 'selected' : ''}>Fully Paid</option>
-            <option value="Partially Paid" ${payment.payment_status === 'Partially Paid' ? 'selected' : ''}>Partially Paid</option>
-            <option value="Others" ${payment.payment_status === 'Others' ? 'selected' : ''}>Others</option>
+        
+        <label>Gender <span>*</span>
+          <select name="gender" required>
+            <option value="">Select</option>
+            <option value="Male" ${data.gender === 'Male' ? 'selected' : ''}>Male</option>
+            <option value="Female" ${data.gender === 'Female' ? 'selected' : ''}>Female</option>
+            <option value="Other" ${data.gender === 'Other' ? 'selected' : ''}>Prefer not to say</option>
           </select>
         </label>
-        <label>Amount: <input type="text" name="amount" value="${payment.amount || ''}"></label>
-        <label>Form of Payment: <input type="text" name="form_of_payment" value="${payment.form_of_payment || ''}"></label>
-        <label>Date Full Payment: <input type="date" name="date_full_payment" value="${payment.date_full_payment || ''}"></label>
-        <label>Date Partial Payment: <input type="date" name="date_partial_payment" value="${payment.date_partial_payment || ''}"></label>
-        <label>Account: <input type="text" name="account" value="${payment.account || ''}"></label>
-        <label>OR Number: <input type="text" name="or_number" value="${payment.or_number || ''}"></label>
-        <label>Quickbooks No: <input type="text" name="quickbooks_no" value="${payment.quickbooks_no || ''}"></label>
-        <label>Shipping Tracking No: <input type="text" name="shipping_tracking_no" value="${payment.shipping_tracking_no || ''}"></label>
-        <label>Notes: <input type="text" name="notes" value="${payment.notes || ''}"></label>
-        <button type="submit">Save</button>
-        <div class="paymentError" style="color:red;"></div>
+
+        <div class="section-title">Accommodation Info</div>
+        <label>Accommodation <span>*</span>
+          <select name="accommodation" required>
+            <option value="">Select</option>
+            <option value="Online / Virtual" ${data.accommodation === 'Online / Virtual' ? 'selected' : ''}>Online / Virtual</option>
+            <option value="Live-Out" ${data.accommodation === 'Live-Out' ? 'selected' : ''}>Live-Out</option>
+            <option value="FB Quad" ${data.accommodation === 'FB Quad' ? 'selected' : ''}>FB Quad</option>
+            <option value="FB Triple" ${data.accommodation === 'FB Triple' ? 'selected' : ''}>FB Triple</option>
+            <option value="FB Double" ${data.accommodation === 'FB Double' ? 'selected' : ''}>FB Double</option>
+            <option value="FB Single" ${data.accommodation === 'FB Single' ? 'selected' : ''}>FB Single</option>
+            <option value="Others" ${data.accommodation === 'Others' ? 'selected' : ''}>Others</option>
+          </select>
+        </label>
+        <label>Accommodation (Other)
+          <input type="text" name="accommodation_other" value="${data.accommodation_other || ''}">
+        </label>
+        <label>Certificate Name
+          <input type="text" name="certificate_name" value="${data.certificate_name || ''}">
+        </label>
+        <div class="modal-actions full-row">
+                  <button type="button" class="btn btn-cancel" onclick="closeInfoModal()"><i class="fas fa-times"></i> Cancel</button>
+          <button type="submit" class="btn btn-save-exit"><i class="fas fa-save"></i> Save</button>
+
+        </div>
       </form>
-      <hr>
-    `).join('')
-    : '<div>No payment records yet.</div>';
-
-  document.getElementById('paymentModal').style.display = 'block';
-
-  // Handle existing payment edits
-  document.querySelectorAll('.paymentForm').forEach(form => {
-    form.onsubmit = async function(e) {
+    `;
+    modal.style.display = 'flex';
+    document.getElementById('infoForm').onsubmit = async function(e) {
       e.preventDefault();
-      const payment_id = form.dataset.paymentId;
-      const data = Object.fromEntries(new FormData(form));
-      const res = await fetch(`/api/payments/${payment_id}`, {
+      if (!confirm('Are you sure you want to save changes and exit?')) return;
+      const form = e.target;
+      const payload = {
+        attendee_no: form.attendee_no.value,
+        confirmation_code: form.confirmation_code.value,
+        rfid: form.rfid.value,
+        first_name: form.first_name.value,
+        middle_name: form.middle_name.value,
+        last_name: form.last_name.value,
+        email: form.email.value,
+        contact_no: form.contact_no.value,
+        organization: form.organization.value,
+        event_id: form.event_id.value,
+        gender: form.gender.value,
+        designation: form.designation.value,
+        accommodation: form.accommodation.value,
+        accommodation_other: form.accommodation_other.value,
+        certificate_name: form.certificate_name.value
+      };
+      await fetch(`/api/attendees/${attendee_no}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
       });
-      if (res.ok) {
-        openPaymentModal(attendee_no); // Refresh modal after edit
-      } else {
-        const errMsg = (await res.json()).message || 'Failed to update payment.';
-        form.querySelector('.paymentError').textContent = errMsg;
-      }
+      closeInfoModal();
+      loadAttendees();
     };
-  });
+    const cancelBtn = modal.querySelector('.btn-cancel');
+    if (cancelBtn) {
+      cancelBtn.onclick = function() {
+        if (confirm('Are you sure you want to cancel? Unsaved changes will be lost.')) {
+          closeInfoModal();
+        }
+      };
+    }
+  } catch (err) {
+    alert('Failed to load attendee info.');
+  }
+  hideSpinner();
+};
+
+window.closeInfoModal = function() {
+  document.getElementById('infoModal').style.display = 'none';
+};
+
+// --- Open Edit Payment Modal
+window.openPaymentModal = async function(attendee_no) {
+  if (!attendee_no) {
+    alert('Invalid attendee number.');
+    return;
+  }
+  showSpinner();
+  try {
+    const res = await fetch(`/api/payments/${attendee_no}`);
+    const payments = await res.json();
+    const modal = document.getElementById('paymentModal');
+    if (!payments.length) {
+      modal.querySelector('.modal-content').innerHTML = `
+        <h3>Edit Payment Records</h3>
+        <div>No payment records found for this attendee.</div>
+        <button type="button" class="btn" id="addPaymentBtn">Add Payment</button>
+        <button type="button" class="btn" onclick="closePaymentModal()">Close</button>
+      `;
+      modal.style.display = 'flex';
+      hideSpinner();
+
+      document.getElementById('addPaymentBtn').onclick = function() {
+        modal.querySelector('.modal-content').innerHTML = `
+          <h3>Add Payment Record</h3>
+          <form id="addPaymentForm">
+            <div class="modal-form-grid">
+              <label for="payment_status">Payment Status</label>
+              <select class="field" id="payment_status" name="payment_status" required>
+                <option value="Accounts Recievable">Accounts Recievable</option>
+                <option value="Fully Paid">Fully Paid</option>
+                <option value="Partially Paid">Partially Paid</option>
+                <option value="Scholar">Scholar</option>
+                <option value="Others">Others</option>
+              </select>
+
+              <label for="amount">Amount</label>
+              <input class="field" id="amount" name="amount" type="number" step="0.01" required>
+
+              <label for="form_of_payment">Form of Payment</label>
+              <div class="field" style="display:flex;gap:8px;">
+                <select class="form-of-payment-select" id="form_of_payment" name="form_of_payment" style="flex:1;" required>
+                  <option value="Cash">Cash</option>
+                  <option value="Check">Check</option>
+                  <option value="Cash Deposit">Cash Deposit</option>
+                  <option value="Check Deposit">Check Deposit</option>
+                  <option value="ADA/LDDAP">ADA/LDDAP</option>
+                  <option value="Bank Transfer">Bank Transfer</option>
+                  <option value="Others">Others</option>
+                </select>
+                <input type="text" name="form_of_payment_other" class="form-of-payment-other" placeholder="Please specify" style="display:none;flex:1;">
+              </div>
+
+              <label for="date_full_payment">Date Full Payment</label>
+              <input class="field" id="date_full_payment" name="date_full_payment" type="date" required>
+
+              <label for="or_number">OR Number</label>
+              <input class="field" id="or_number" name="or_number" type="text" required>
+
+              <label for="quickbooks_no">QuickBooks No</label>
+              <input class="field" id="quickbooks_no" name="quickbooks_no" type="text">
+
+              <label for="shipping_tracking_no">Shipping Tracking No</label>
+              <input class="field" id="shipping_tracking_no" name="shipping_tracking_no" type="text">
+
+              <label class="notes-label">Notes:</label>
+              <textarea class="field notes-field" id="notes" name="notes" rows="2"></textarea>
+
+              <div class="modal-actions full-row">
+                <button type="button" class="btn btn-cancel" id="cancelPaymentBtn">Cancel</button>
+                <button type="submit" class="btn btn-save-exit">Save and Exit</button>
+
+              </div>
+            </div>
+          </form>
+        `;
+
+        // Set today's date as default for date fields
+        const today = new Date().toISOString().slice(0, 10);
+        modal.querySelector('#date_full_payment').value = today;
+
+        // Show/hide "Others" textbox for form_of_payment
+        const formOfPaymentSelect = modal.querySelector('.form-of-payment-select');
+        const formOfPaymentOther = modal.querySelector('.form-of-payment-other');
+        formOfPaymentSelect.addEventListener('change', function() {
+          if (formOfPaymentSelect.value === 'Others') {
+            formOfPaymentOther.style.display = 'inline-block';
+          } else {
+            formOfPaymentOther.style.display = 'none';
+            formOfPaymentOther.value = '';
+          }
+        });
+
+        // Handle form submission
+        modal.querySelector('#addPaymentForm').onsubmit = async function(e) {
+          e.preventDefault();
+          // Always get the elements from the form itself
+          const form = e.target;
+          const payment_status = form.payment_status?.value;
+          const amount = form.amount?.value;
+          const formOfPaymentSelect = form.querySelector('.form-of-payment-select');
+          const formOfPaymentOther = form.querySelector('.form-of-payment-other');
+          let form_of_payment = formOfPaymentSelect?.value;
+          const date_full_payment = form.date_full_payment?.value;
+          const or_number = form.or_number?.value;
+          if (form_of_payment === 'Others') {
+            if (!formOfPaymentOther.value.trim()) {
+              alert('Please specify the form of payment.');
+              return;
+            }
+            form_of_payment = formOfPaymentOther.value.trim();
+          }
+          const payload = {
+            attendee_no,
+            payment_status,
+            amount,
+            form_of_payment,
+            date_full_payment,
+            date_partial_payment: form.date_partial_payment ? form.date_partial_payment.value : null,
+            account: form.account ? form.account.value : null,
+            or_number,
+            quickbooks_no: form.quickbooks_no.value,
+            shipping_tracking_no: form.shipping_tracking_no.value,
+            notes: form.notes.value
+          };
+          await fetch('/api/payments', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(payload)
+          });
+          loadAttendees();
+          closePaymentModal();
+        };
+
+        // Cancel button
+        modal.querySelector('#cancelPaymentBtn').onclick = function() {
+          if (confirm('Are you sure you want to cancel? Unsaved changes will be lost.')) {
+            closePaymentModal();
+          }
+        };
+      };
+      return;
+    }
+    // If payments exist, show forms for each
+    modal.querySelector('.modal-content').innerHTML = `
+      <h3>Edit Payment Records</h3>
+      <div>
+        ${payments.map(p => `
+          <form class="paymentForm" data-id="${p.payment_id}">
+        <div class="modal-form-grid">
+          <label>Status:</label>
+          <select name="payment_status" class="field" required>
+            <option value="Accounts Recievable" ${!p.payment_status || p.payment_status === 'Accounts Recievable' ? 'selected' : ''}>Accounts Recievable</option>
+            <option value="Fully Paid" ${p.payment_status === 'Fully Paid' ? 'selected' : ''}>Fully Paid</option>
+            <option value="Partially Paid" ${p.payment_status === 'Partially Paid' ? 'selected' : ''}>Partially Paid</option>
+            <option value="Scholar" ${p.payment_status === 'Scholar' ? 'selected' : ''}>Scholar</option>
+            <option value="Others" ${p.payment_status === 'Others' ? 'selected' : ''}>Others</option>
+          </select>
+
+          <label>Amount:</label>
+          <input type="number" name="amount" class="field" value="${p.amount || ''}" min="0" step="0.01" required>
+
+          <label>Form of Payment:</label>
+          <div class="field" style="display:flex;gap:8px;">
+            <select name="form_of_payment" class="form-of-payment-select" style="flex:1;" required>
+              <option value="Cash" ${p.form_of_payment === 'Cash' ? 'selected' : ''}>Cash</option>
+              <option value="Check" ${p.form_of_payment === 'Check' ? 'selected' : ''}>Check</option>
+              <option value="Cash Deposit" ${p.form_of_payment === 'Cash Deposit' ? 'selected' : ''}>Cash Deposit</option>
+              <option value="Check Deposit" ${p.form_of_payment === 'Check Deposit' ? 'selected' : ''}>Check Deposit</option>
+              <option value="ADA/LDDAP" ${p.form_of_payment === 'ADA/LDDAP' ? 'selected' : ''}>ADA/LDDAP</option>
+              <option value="Bank Transfer" ${p.form_of_payment === 'Bank Transfer' ? 'selected' : ''}>Bank Transfer</option>
+              <option value="Others" ${p.form_of_payment === 'Others' ? 'selected' : ''}>Others</option>
+            </select>
+            <input type="text" name="form_of_payment_other" class="form-of-payment-other" placeholder="Please specify" style="display:${p.form_of_payment === 'Others' ? 'inline-block' : 'none'};flex:1;" value="${p.form_of_payment_other || ''}">
+          </div>
+
+          <label>Date Full Payment:</label>
+          <input type="date" name="date_full_payment" class="field" value="${p.date_full_payment ? p.date_full_payment.substring(0,10) : ''}" required>
+
+          <label>Date Partial Payment:</label>
+          <input type="date" name="date_partial_payment" class="field" value="${p.date_partial_payment ? p.date_partial_payment.substring(0,10) : ''}">
+
+          <label>Account:</label>
+          <input type="text" name="account" class="field" value="${p.account || ''}">
+
+          <label>OR Number:</label>
+          <input type="text" name="or_number" class="field" value="${p.or_number || ''}" required>
+
+          <label>Quickbooks No:</label>
+          <input type="text" name="quickbooks_no" class="field" value="${p.quickbooks_no || ''}">
+
+          <label>Shipping Tracking No:</label>
+          <input type="text" name="shipping_tracking_no" class="field" value="${p.shipping_tracking_no || ''}">
+
+<label class="notes-label">Notes:</label>
+<textarea name="notes" class="field notes-field" rows="2">${p.notes || ''}</textarea>
+
+          <div class="modal-actions full-row">
+            <button type="button" class="btn btn-cancel" id="cancelPaymentBtn-${p.payment_id}">Cancel</button>
+            <button type="submit" class="btn btn-save-exit">Save and Exit</button>
+
+          </div>
+        </div>
+          </form>
+        `).join('<hr>')}
+      </div>
+    `;
+    modal.style.display = 'flex';
+
+    // Show/hide the "Others" textbox based on dropdown selection
+    modal.querySelectorAll('.form-of-payment-select').forEach(select => {
+      select.addEventListener('change', function() {
+        const otherInput = select.parentElement.querySelector('.form-of-payment-other');
+        if (select.value === 'Others') {
+          otherInput.style.display = 'inline-block';
+        } else {
+          otherInput.style.display = 'none';
+          otherInput.value = '';
+        }
+      });
+    });
+
+    // Update form submission to include the "Others" value if selected
+    modal.querySelectorAll('.paymentForm').forEach(form => {
+      form.onsubmit = async function(e) {
+        e.preventDefault();
+        if (!confirm('Are you sure you want to save changes and exit?')) return;
+        const payment_id = form.getAttribute('data-id');
+        let form_of_payment = form.form_of_payment.value;
+        let form_of_payment_other = form.form_of_payment_other.value;
+        if (form_of_payment === 'Others') {
+          if (!form_of_payment_other.trim()) {
+            alert('Please specify the form of payment.');
+            return;
+          }
+          form_of_payment = form_of_payment_other.trim();
+        }
+        const payload = {
+          payment_status: form.payment_status.value,
+          amount: form.amount.value,
+          form_of_payment,
+          date_full_payment: form.date_full_payment.value || null,
+          date_partial_payment: form.date_partial_payment.value || null,
+          account: form.account.value,
+          or_number: form.or_number.value,
+          quickbooks_no: form.quickbooks_no.value,
+          shipping_tracking_no: form.shipping_tracking_no.value,
+          notes: form.notes.value
+        };
+        await fetch(`/api/payments/${payment_id}`, {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        loadAttendees();
+        closePaymentModal();
+      };
+
+      // Cancel confirmation
+      const cancelBtn = form.querySelector('.btn-cancel');
+      if (cancelBtn) {
+        cancelBtn.onclick = function() {
+          if (confirm('Are you sure you want to cancel? Unsaved changes will be lost.')) {
+            closePaymentModal();
+          }
+        };
+      }
+    });
+  } catch (err) {
+    alert('Failed to load payment info.');
+  }
+  hideSpinner();
+};
+
+// --- Authentication ---
+async function checkAuthAndShowModal() {
+  try {
+    const res = await fetch('/api/check-auth', { credentials: 'same-origin' });
+    if (!res.ok) {
+      window.location.href = "attendance.html";
+    }
+  } catch {
+    window.location.href = "attendance.html";
+  }
+}
+document.addEventListener('DOMContentLoaded', checkAuthAndShowModal);
+
+// --- Logout Button ---
+document.addEventListener('DOMContentLoaded', function() {
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.onclick = async function() {
+      await fetch('/logout', { method: 'POST', credentials: 'same-origin' });
+      window.location.reload();
+    };
+  }
+});
+
+// --- Clock ---
+function updateClock() {
+  const now = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const dateStr = now.toLocaleDateString('en-US', options);
+  let hours = now.getHours();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12;
+  const timeStr = [
+    hours.toString().padStart(2, '0'),
+    now.getMinutes().toString().padStart(2, '0'),
+    now.getSeconds().toString().padStart(2, '0')
+  ].join(':') + ' ' + ampm;
+  document.getElementById('clock').innerText = `${dateStr} | ${timeStr}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// --- Spinner ---
+function showSpinner() {
+  document.getElementById('loadingSpinner').style.display = '';
+}
+function hideSpinner() {
+  document.getElementById('loadingSpinner').style.display = 'none';
 }
 
-function closePaymentModal() {
-  document.getElementById('paymentModal').style.display = 'none';
-  loadAttendees(); // Refresh main table after closing modal
+// --- Initial Load ---
+document.addEventListener('DOMContentLoaded', loadAttendees);
+
+// --- Auto-Refresh ---
+setInterval(() => {
+  if (document.querySelector('.tab-btn.active').dataset.tab === 'attendees') {
+    loadAttendees();
+  }
+}, 1000000);
+
+// --- Spinner Helpers ---
+function showSpinner() {
+  document.getElementById('loadingSpinner').style.display = '';
 }
+function hideSpinner() {
+  document.getElementById('loadingSpinner').style.display = 'none';
+}
+
+window.closePaymentModal = function() {
+  document.getElementById('paymentModal').style.display = 'none';
+};
