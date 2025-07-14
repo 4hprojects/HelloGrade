@@ -11,47 +11,83 @@
   </script>
   <meta charset="UTF-8">
   <title>crfv Reports</title>
-  <link rel="stylesheet" href="css/attendance.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/reports.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
      crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="app-container">
-    <div class="header">
-      <div class="brand">
-        <div class="brand-text">
-          <p>crfv Reports</p>
-        </div>
-      </div>
-      <div class="header-right">
-        <div id="clock"></div>
-        <button class="btn btn-logout" aria-label="Logout">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-      </div>
+  
+  <header class="fixed-header">
+    <div class="header-title">
+        <i class="material-icons">event</i>
+        <span>CRFV Event System Reports</span>
     </div>
+    <nav class="header-nav" id="headerNav">
+        <a href="index.html" target="_self">
+            <i class="material-icons">home</i>
+            <span>Home</span>
+        </a>
+        <a href="attendance.html" target="_blank" >
+            <i class="material-icons">how_to_reg</i>
+            <span>Attendance</span>
+        </a>
+        <a href="register.html" target="_blank" >
+            <i class="material-icons">person_add</i>
+            <span>Register</span>
+        </a>
+        <a href="event-create.html" target="_blank" >
+            <i class="material-icons">event</i>
+            <span>Create Event</span>
+        </a>
+        <a href="reports.html" target="_blank" >
+            <i class="material-icons">bar_chart</i>
+            <span>Reports</span>
+        </a>
+    </nav>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="material-icons">menu</i>
+    </button>
+</header>
 
-    <div class="main-menu" style="margin-top:2em;">
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="attendees">Attendees</button>
-        <button class="tab-btn" data-tab="attendance">Attendance</button>
-        <button class="tab-btn" data-tab="events">Events</button>
+  <div class="app-container">
+      <div class="brand">
       </div>
+      <div class="main-menu" style="margin-top:2em;">
+  <!-- Unified Tabs -->
+  <div class="tabs-row">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="attendees">Attendees</button>
+    <button class="tab-btn" data-tab="attendance">Attendance</button>
+    <button class="tab-btn" data-tab="events">Events</button>
+    <button class="tab-btn" data-tab="logs">Logs</button>
+  </div>
+  <div class="header-right" style="display: flex; justify-content: flex-end; align-items: center; gap: 1em; margin: 1em 0;">
+    <div id="clock"></div>
+    <button id="logoutBtn" class="btn btn-logout" aria-label="Logout">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+  </div>
+</div>
 
       <!-- Attendees Tab -->
       <div class="tab-content active" id="tab-attendees">
-        <div class="search-bar">
-          <input type="text" id="searchAttendees" placeholder="Search attendees...">
-          <button class="export-btn" id="exportAttendeesBtn"><i class="fas fa-file-excel"></i> Export XLSX</button>
-          <button class="refresh-btn" id="refreshAttendeesBtn" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+        <div class="search-bar" style="display: flex; align-items: center; justify-content: space-between; gap: 1em;">
+          <input type="text" id="searchAttendees" placeholder="Search attendees..." style="flex:1;">
+          <button class="export-btn" id="exportAttendeesBtn">
+            <i class="fas fa-file-excel"></i> Export XLSX
+          </button>
         </div>
         <div class="pagination" id="attendeesPagination"></div>
-<!-- Use this inside #tab-attendees -->
         <div class="table-container">
           <table>
             <thead id="attendeesTableHeader"></thead>
-            <tbody id="attendeesTableBody"></tbody>
+            <tbody id="attendeesTableBody">
+              
+            </tbody>
           </table>
         </div>
       </div>
@@ -67,16 +103,12 @@
           <table id="attendanceTable">
             <thead>
               <tr>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Attendee No</th>
-                <th>Name</th>
-                <th>Event Name</th>
-                <th>Slot</th>
-                <th>Status</th>
-                <th>Organization</th>
-                <th>Contact No</th>
+                <th>Date & Time</th>
+                <th>Last Name</th>
+                <th>First Name</th>
                 <th>RFID</th>
+                <th>Session</th>
+                <th>Event ID</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -96,9 +128,13 @@
           <table id="eventsTable">
             <thead>
               <tr>
+                <th>Event ID</th>
                 <th>Event Name</th>
-                <th>Date</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
                 <th>Location</th>
+                <th>Venue</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -106,8 +142,49 @@
         </div>
 
       </div>
+
+      <!-- Logs Tab -->
+      <div class="tab-content" id="tab-logs">
+        <div class="table-container">
+          <table id="logs-table" class="table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Action</th>
+                <th>Time</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
+  <!-- Bulk action bar (appears only when needed) -->
+<div id="bulk-action-bar" style="display:none;">
+  <button id="bulk-mark-paid" class="btn btn-success">Mark as Paid</button>
+  <button id="bulk-export-xlsx" class="btn btn-primary">Export Selected (XLSX)</button>
+  <button id="bulk-export-pdf" class="btn btn-secondary">Export Selected (PDF)</button>
+</div>
+
+<!-- Modals -->
+<div id="infoModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Edit Attendee Info</h3>
+    <form id="infoForm">
+      <label>RFID: <input type="text" id="modalRfid" name="rfid"></label>
+      <div id="modalInfoFields"></div>
+      <button type="submit">Save</button>
+      <button type="button" onclick="closeInfoModal()">Cancel</button>
+    </form>
+  </div>
+</div>
+<div id="paymentModal" class="modal" style="display: none;">
+  <div class="modal-content"></div>
+</div>
+
   <div id="loadingSpinner" style="display:none;text-align:center;margin:2em 0;">
   <i class="fas fa-spinner fa-spin fa-2x"></i>
 </div>
@@ -122,33 +199,10 @@
        (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
 </div>
-  <div id="infoModal" class="modal" style="display:none;">
-  <div class="modal-content">
-    <h3>Edit Attendee Info</h3>
-    <form id="infoForm">
-      <label>RFID: <input type="text" id="modalRfid" name="rfid"></label>
-      <div id="modalInfoFields"></div>
-      <button type="submit">Save</button>
-      <button type="button" onclick="closeInfoModal()">Cancel</button>
-    </form>
-  </div>
-</div>
-  <!-- Payment Modal -->
-<div id="paymentModal" class="modal" style="display:none;">
-  <div class="modal-content">
-    <h3>Edit Payment Details</h3>
-    <div id="newPaymentFormContainer"></div>
-    <div id="paymentRecords"></div>
-    <button type="button" onclick="closePaymentModal()">Close</button>
-  </div>
-</div>
-  <table>
-  <thead id="attendeesTableHeader"></thead>
-  <tbody id="attendeesTableBody"></tbody>
-</table>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="js/reports.js"></script>
+  <script src="js/reportsTabs.js"></script>
   <!-- You will add your JS logic for tabs, search, pagination, export, and authentication here -->
 </body>
 </html>
