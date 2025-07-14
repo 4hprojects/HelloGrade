@@ -72,7 +72,7 @@ router.post('/', async (req, res) => {
 router.get('/latest', async (req, res) => {
   const { data, error } = await supabase
     .from('events')
-    .select('id, event_name, start_date, end_date, venue, location, status') // <-- include id and status
+    .select('event_id, event_name, start_date, end_date, venue, location, status')
     .eq('status', 'active')
     .order('start_date', { ascending: true })
     .limit(5);
@@ -83,7 +83,7 @@ router.get('/upcoming', async (req, res) => {
   const today = new Date().toISOString().slice(0, 10);
   const { data, error } = await supabase
     .from('events')
-    .select('id,event_name,start_date,end_date,location,venue')
+    .select('event_id, event_name, start_date, end_date, location, venue')
     .gte('end_date', today)
     .order('start_date', { ascending: true });
   res.json(data || []);
@@ -93,7 +93,7 @@ router.get('/current', async (req, res) => {
   const today = new Date().toISOString().slice(0, 10);
   const { data, error } = await supabase
     .from('events')
-    .select('id, event_name, event_date')
+    .select('event_id, event_name, event_date')
     .gte('event_date', today)
     .order('event_date', { ascending: true })
     .limit(1)
@@ -138,8 +138,8 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const { data, error } = await supabase
     .from('events')
-    .select('id, event_name, start_date, end_date, location, venue, status')
-    .eq('id', id)
+    .select('event_id, event_name, start_date, end_date, location, venue, status')
+    .eq('event_id', id)
     .maybeSingle();
   if (error || !data) return res.status(404).json({ message: 'Event not found.' });
   res.json(data);
@@ -151,10 +151,10 @@ router.put('/:id', async (req, res) => {
   const { data, error } = await supabase
     .from('events')
     .update({ event_name, start_date, end_date, location, venue })
-    .eq('id', id)
+    .eq('event_id', id) // <-- FIXED: use event_id, not id
     .select()
     .maybeSingle();
-    // Add validation
+  // Add validation
   if (!event_name || !start_date || !end_date || !location) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
@@ -176,7 +176,7 @@ router.patch('/:id/status', async (req, res) => {
   const { data, error } = await supabase
     .from('events')
     .update({ status })
-    .eq('id', id)
+    .eq('event_id', id) // <-- FIXED: use event_id, not id
     .select()
     .maybeSingle();
   if (error || !data) return res.status(400).json({ message: error?.message || 'Status update failed.' });
