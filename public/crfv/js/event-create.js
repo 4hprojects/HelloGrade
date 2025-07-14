@@ -285,5 +285,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 });
-
-//update and archive event not fully working
