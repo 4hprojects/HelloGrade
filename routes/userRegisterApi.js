@@ -1,63 +1,521 @@
-//userRegisterApi.js
-const express = require('express');
-const router = express.Router();
-const { supabase } = require('../supabaseClient');
-const { v4: uuidv4 } = require('uuid');
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+//user-register.js
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('userRegisterForm');
+  const accommodation = document.getElementById('accommodation');
+  const accommodationOther = document.getElementById('accommodationOther');
+  const eventSelect = document.getElementById('eventId');
+  const registerMessage = document.getElementById('registerMessage');
+  const certificateNameInput = document.getElementById('certificateName');
+  const reviewCertificateName = document.getElementById('reviewCertificateName');
+  const eventAgree = document.getElementById('eventAgree');
+ 
+  // Populate events dropdown with upcoming events
+  fetch('/api/events/latest')
+    .then(res => res.json())
+    .then(events => {
+      eventSelect.innerHTML = '';
+      if (Array.isArray(events) && events.length > 0) {
+        eventSelect.innerHTML = '<option value="">Select event...</option>';
+        events.forEach(ev => {
+          eventSelect.innerHTML += `<option value="${ev.event_id}">${ev.event_name} (${ev.start_date})</option>`;
+        });
+        eventSelect.disabled = false;
+      } else {
+        eventSelect.innerHTML = '<option value="">No upcoming events</option>';
+        eventSelect.disabled = true;
+      }
+    })
+    .catch(() => {
+      eventSelect.innerHTML = '<option value="">Failed to load events</option>';
+      eventSelect.disabled = true;
+    });
 
-router.post('/user-register', async (req, res) => {
-  try {
-    const {
-      firstName, middleName, lastName, gender, designation, organization,
-      email, contactNo, accommodation, accommodationOther, event_id,
-      certificateName // <-- add this
-    } = req.body;
+  // Accommodation "Others" logic (container-based)
+  accommodation.addEventListener('change', function() {
+    if (this.value === 'Others') {
+      accommodationOther.style.display = 'block';
+      accommodationOther.required = true;
+    } else {
+      accommodationOther.style.display = 'none';
+      accommodationOther.required = false;
+      accommodationOther.value = '';
+    }
+  });
 
-    // Generate confirmation code
-    const confirmationCode = uuidv4().split('-')[0].toUpperCase();
-    const id = uuidv4();
+  // Certificate name real-time update
+  if (certificateNameInput && reviewCertificateName) {
+    certificateNameInput.addEventListener('input', function() {
+      reviewCertificateName.textContent = certificateNameInput.value || '-';
+    });
+  }
 
-    // Fetch event date and name
+  // Event agreement logic
+  if (eventAgree && certificateNameInput) {
+    eventAgree.addEventListener('change', function() {
+      certificateNameInput.disabled = !this.checked;
+      if (!this.checked) {
+        certificateNameInput.value = '';
+        reviewCertificateName.textContent = '-';
+      }
+    });
+  }
+
+  // Form submission
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    registerMessage.textContent = 'Submitting...';
+    const formData = {
+      firstName: form.firstName.value.trim(),
+      middleName: form.middleName.value.trim(),
+      lastName: form.lastName.value.trim(),
+      gender: form.gender.value,
+      designation: form.designation.value.trim(),
+      organization: form.organization.value.trim(),
+      email: form.email.value.trim(),
+      contactNo: form.contactNo.value.trim(),
+      accommodation: form.accommodation.value,
+      accommodationOther: form.accommodationOther.value.trim(),
+      event_id: form.eventId.value, // <-- use event_id to match backend/db
+      certificateName: form.certificateName.value.trim() // <-- add this line
+    };
+
+    // Basic validation for "Others"
+    if (accommodation.value === 'Others' && !accommodationOther.value.trim()) {
+      registerMessage.textContent = 'Please specify your accommodation.';
+      registerMessage.style.color = '#e53935';
+      accommodationOther.focus();
+      return;
+    }
+
+    // Data privacy checkbox validation
+    if (!form.privacyAgree.checked) {
+      registerMessage.textContent = 'You must agree to the Data Privacy Policy to register.';
+      registerMessage.style.color = '#e53935';
+      form.privacyAgree.focus();
+      return;
+    }
+
+    // Email validation
+    const emailValue = form.email.value.trim();
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (emailValue && !emailPattern.test(emailValue)) {
+      registerMessage.textContent = 'Please enter a valid email address (e.g., name@example.com)';
+      registerMessage.style.color = '#e53935';
+      form.email.focus();
+      return;
+    }
+
+    // Disable button to prevent double submit
+    form.submitBtn.disabled = true;
+    form.submitBtn.textContent = 'Registering...';
+
+    try {
+      const res = await fetch('/api/user-register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if (res.ok) {
+        form.reset();
+        accommodationOther.style.display = 'none';
+        registerMessage.style.color = '#388e3c';
+        registerMessage.innerHTML = `
+          Registration successful!<br>
+          <strong>Your confirmation code:</strong> <span id="confCode">${data.confirmationCode}</span>
+          <br><small>Please check your email for details.</small>
+        `;
+        document.getElementById('copyCodeBtn').onclick = function() {
+          navigator.clipboard.writeText(data.confirmationCode);
+          this.textContent = "Copied!";
+        };
+      } else {
+        registerMessage.innerHTML = `<span style="color:red;">${data.message || 'Registration failed.'}</span>`;
+        registerMessage.style.color = '#e53935';
+      }
+    } catch (err) {
+      registerMessage.innerHTML = `<span style="color:red;">Network error. Please try again.</span>`;
+      registerMessage.style.color = '#e53935';
+    }
+    form.submitBtn.disabled = false;
+    form.submitBtn.textContent = 'Register';
+  };
+});
+
+
+        // Google Ads
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        
+        // Form functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const form = document.getElementById('userRegisterForm');
+            const accommodation = document.getElementById('accommodation');
+            const accommodationOther = document.getElementById('accommodationOther');
+            const accommodationOtherContainer = document.getElementById('accommodationOtherContainer');
+            const eventSelect = document.getElementById('eventId');
+            const registerMessage = document.getElementById('registerMessage');
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const step3 = document.getElementById('step3');
+            const nextBtn1 = document.getElementById('nextBtn1');
+            const nextBtn2 = document.getElementById('nextBtn2');
+            const prevBtn1 = document.getElementById('prevBtn1');
+            const prevBtn2 = document.getElementById('prevBtn2');
+            const progressBar = document.getElementById('progressBar');
+            const certificateNameInput = document.getElementById('certificateName');
+            const reviewCertificateName = document.getElementById('reviewCertificateName');
+            const eventAgree = document.getElementById('eventAgree');
+
+            // Populate events dropdown with upcoming events
+            fetch('/api/events/latest')
+                .then(res => res.json())
+                .then(events => {
+                    eventSelect.innerHTML = '';
+                    if (Array.isArray(events) && events.length > 0) {
+                      eventSelect.innerHTML = '<option value="">Select event...</option>';
+                      events.forEach(ev => {
+                        eventSelect.innerHTML += `<option value="${ev.event_id}">${ev.event_name} (${ev.start_date})</option>`;
+                      });
+                      eventSelect.disabled = false;
+                    } else {
+                      eventSelect.innerHTML = '<option value="">No upcoming events</option>';
+                      eventSelect.disabled = true;
+                    }
+                })
+                .catch(() => {
+                    eventSelect.innerHTML = '<option value="">Failed to load events</option>';
+                    eventSelect.disabled = true;
+                });
+
+            // Accommodation "Others" logic (container-based)
+            accommodation.addEventListener('change', function() {
+                if (this.value === 'Others') {
+                    accommodationOtherContainer.style.display = 'block';
+                    accommodationOther.required = true;
+                } else {
+                    accommodationOtherContainer.style.display = 'none';
+                    accommodationOther.required = false;
+                    accommodationOther.value = '';
+                }
+            });
+
+            // Certificate name real-time update
+            if (certificateNameInput && reviewCertificateName) {
+                certificateNameInput.addEventListener('input', function() {
+                    reviewCertificateName.textContent = certificateNameInput.value || '-';
+                });
+            }
+
+            // Event agreement logic
+            if (eventAgree && certificateNameInput) {
+                eventAgree.addEventListener('change', function() {
+                    certificateNameInput.disabled = !this.checked;
+                    if (!this.checked) {
+                      certificateNameInput.value = '';
+                      reviewCertificateName.textContent = '-';
+                    }
+                });
+            }
+
+            // Step navigation handlers
+            nextBtn1.addEventListener('click', function() {
+                const requiredFields = step1.querySelectorAll('[required]');
+                let firstInvalid = null;
+                let isValid = true;
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        field.style.borderColor = 'var(--warning)';
+                        if (!firstInvalid) firstInvalid = field;
+                        isValid = false;
+                    } else {
+                        field.style.borderColor = '#d1d5db';
+                    }
+                });
+                if (isValid) {
+                    step1.classList.remove('active');
+                    step2.classList.add('active');
+                    progressBar.style.width = '66%';
+                    updateStep(2);
+                } else {
+                    showMessage('Please fill all required fields', 'error');
+                    if (firstInvalid) firstInvalid.focus();
+                }
+            });
+
+            nextBtn2.addEventListener('click', function() {
+                const requiredFields = step2.querySelectorAll('[required]');
+                let isValid = true;
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        field.style.borderColor = 'var(--warning)';
+                        isValid = false;
+                    } else {
+                        field.style.borderColor = '#d1d5db';
+                    }
+                });
+                const emailValue = form.email.value.trim();
+                if (emailValue && !isValidEmail(emailValue)) {
+                    form.email.classList.add('invalid');
+                    showMessage('Please enter a valid email address (e.g., name@example.com)', 'error');
+                    form.email.focus();
+                    isValid = false;
+                    return;
+                } else {
+                    form.email.classList.remove('invalid');
+                }
+                if (isValid) {
+                    step2.classList.remove('active');
+                    step3.classList.add('active');
+                    progressBar.style.width = '100%';
+                    updateStep(3);
+  const certificateName = document.getElementById('certificateName');
+  const privacyAgree = document.getElementById('privacyAgree');
+  const eventAgree = document.getElementById('eventAgree');
+  const infoCorrect = document.getElementById('infoCorrect');
+                    updateReview();
+                } else {
+                    showMessage('Please fill all required fields', 'error');
+                }
+            });
+
+            prevBtn1.addEventListener('click', function() {
+                step2.classList.remove('active');
+                step1.classList.add('active');
+                progressBar.style.width = '33%';
+                updateStep(1);
+            });
+
+            prevBtn2.addEventListener('click', function() {
+                step3.classList.remove('active');
+                step2.classList.add('active');
+                progressBar.style.width = '66%';
+                updateStep(2);
+            });
+
+            function updateStep(step) {
+                document.querySelectorAll('.step').forEach((stepEl, index) => {
+                    if (index < step) {
+                        stepEl.classList.add('active');
+                    } else {
+                        stepEl.classList.remove('active');
+                    }
+                });
+            }
+
+            function updateReview() {
+                document.getElementById('reviewEvent').textContent =
+                    document.querySelector('#eventId option:checked').text || '-';
+                const firstName = document.getElementById('firstName').value;
+                const middleName = document.getElementById('middleName').value;
+                const lastName = document.getElementById('lastName').value;
+                let fullName = firstName;
+                if (middleName) fullName += ` ${middleName}`;
+                fullName += ` ${lastName}`;
+                document.getElementById('reviewName').textContent = fullName;
+                document.getElementById('reviewGender').textContent =
+                    document.querySelector('#gender option:checked').text || '-';
+                document.getElementById('reviewDesignation').textContent =
+                    document.getElementById('designation').value || '-';
+                document.getElementById('reviewOrganization').textContent =
+                    document.getElementById('organization').value || '-';
+                document.getElementById('reviewEmail').textContent =
+                    document.getElementById('email').value || '-';
+                document.getElementById('reviewContact').textContent =
+                    document.getElementById('contactNo').value || '-';
+                let accommodationText = document.querySelector('#accommodation option:checked').text || '-';
+                if (accommodation.value === 'Others') {
+                    accommodationText += ` (${document.getElementById('accommodationOther').value})`;
+                }
+                document.getElementById('reviewAccommodation').textContent = accommodationText;
+                document.getElementById('reviewCertificateName').textContent =
+                    document.getElementById('certificateName').value || '-';
+            }
+
+            // Unified showMessage function
+            function showMessage(message, type) {
+                registerMessage.className = '';
+                registerMessage.style.backgroundColor = '';
+                registerMessage.style.color = '';
+                registerMessage.style.border = '';
+
+                if (type === 'success') {
+                    registerMessage.classList.add('success-message');
+                    registerMessage.innerHTML = `
+                        <div>${message}</div>
+                        <div style="margin-top:1em;">
+                            <button id="registerAgainBtn" class="nav-btn" style="margin-right:1em;">Register Another</button>
+                            <br><br>
+                            <a href="https://crfv-cpu.org" class="nav-btn" style="text-decoration:none;">Event Details</a>
+                        </div>
+                    `;
+                    // Hide submit and back buttons
+                    document.getElementById('submitBtn').style.display = 'none';
+                    document.getElementById('prevBtn2').style.display = 'none';
+                    // Register Another button handler
+                    document.getElementById('registerAgainBtn').onclick = function() {
+                        form.reset();
+                        document.getElementById('privacyAgree').checked = true;
+                        accommodationOtherContainer.style.display = 'none';
+                        step3.classList.remove('active');
+                        step1.classList.add('active');
+                        progressBar.style.width = '33%';
+                        updateStep(1);
+                        registerMessage.innerHTML = '';
+                        // Show buttons again
+                        document.getElementById('submitBtn').style.display = '';
+                        document.getElementById('prevBtn2').style.display = '';
+                    };
+                } else if (type === 'error') {
+                    registerMessage.classList.add('error-message');
+                    registerMessage.textContent = message;
+                    setTimeout(() => {
+                        registerMessage.textContent = '';
+                        registerMessage.className = '';
+                    }, 5000);
+                } else {
+                    registerMessage.style.backgroundColor = '#e1effe';
+                    registerMessage.style.color = 'var(--primary)';
+                    registerMessage.style.border = '1px solid var(--primary-light)';
+                    registerMessage.textContent = message;
+                    setTimeout(() => {
+                        registerMessage.textContent = '';
+                        registerMessage.className = '';
+                    }, 5000);
+                }
+            }
+
+            function isValidEmail(email) {
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                return emailPattern.test(email);
+            }
+
+            // Form submission handler
+            form.onsubmit = async function(e) {
+                e.preventDefault();
+                // Validate privacy checkbox
+                if (!form.privacyAgree.checked) {
+                    showMessage('You must agree to the Data Privacy Policy to register.', 'error');
+                    form.privacyAgree.focus();
+                    return;
+                }
+                // Validate "Others" accommodation
+                if (accommodation.value === 'Others' && !accommodationOther.value.trim()) {
+                    showMessage('Please specify your accommodation.', 'error');
+                    accommodationOther.focus();
+                    return;
+                }
+                // Email validation
+                const emailValue = form.email.value.trim();
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (emailValue && !emailPattern.test(emailValue)) {
+                    showMessage('Please enter a valid email address (e.g., name@example.com)', 'error');
+                    form.email.focus();
+                    return;
+                }
+                // Disable submit button
+                form.submitBtn.disabled = true;
+                form.submitBtn.textContent = 'Registering...';
+
+                // Prepare form data
+                const formData = {
+                    firstName: form.firstName.value.trim(),
+                    middleName: form.middleName.value.trim(),
+                    lastName: form.lastName.value.trim(),
+                    gender: form.gender.value,
+                    designation: form.designation.value.trim(),
+                    organization: form.organization.value.trim(),
+                    email: form.email.value.trim(),
+                    contactNo: form.contactNo.value.trim(),
+                    accommodation: form.accommodation.value,
+                    accommodationOther: form.accommodationOther.value.trim(),
+                    event_id: form.eventId.value,
+                    certificateName: form.certificateName.value.trim() // <-- add this line
+                };
+
+                try {
+                    const res = await fetch('/api/user-register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    const data = await res.json();
+                    if (res.ok) {
+                        showMessage(
+                            `Registration successful!<br>
+                            <strong>Your confirmation code:</strong> <span id="confCode">${data.confirmationCode}</span>
+                            <br><small>Please check your email for details.</small>`,
+                            'success'
+                        );
+
+                    } else {
+                        showMessage(data.message || 'Registration failed.', 'error');
+                    }
+                } catch (err) {
+                    showMessage('Network error. Please try again.', 'error');
+                }
+                form.submitBtn.disabled = false;
+                form.submitBtn.textContent = 'Register';
+            };
+        });
+// Server-side registration logic (Node.js + Supabase)
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+app.post('/api/user-register', async (req, res) => {
+  const {
+    firstName,
+    middleName,
+    lastName,
+    gender,
+    designation,
+    organization,
+    email,
+    contactNo,
+    accommodation,
+    accommodationOther,
+    event_id,
+    certificateName
+  } = req.body;
+
+  // Input validation (basic)
+  if (!firstName || !lastName || !email || !contactNo) {
+    return res.status(400).json({ success: false, message: 'Please fill all required fields.' });
+  }
+
+  // Email uniqueness check
+  const { data: existingUser, error: emailCheckError } = await supabase
+    .from('users')
+    .select('id')
+    .eq('email', email)
+    .single();
+
+  if (emailCheckError) {
+    return res.status(500).json({ success: false, message: 'Error checking email.' });
+  }
+
+  if (existingUser) {
+    return res.status(400).json({ success: false, message: 'Email is already registered.' });
+  }
+
+  // Only validate event if event_id is provided
+  if (event_id) {
     const { data: eventData, error: eventError } = await supabase
       .from('events')
-      .select('event_date, event_name')
+      .select('event_name, start_date')
       .eq('id', event_id)
       .maybeSingle();
 
     if (eventError || !eventData) {
       return res.status(400).json({ success: false, message: 'Invalid event.' });
     }
+  }
 
-    const eventDate = eventData.event_date;
-    const eventName = eventData.event_name;
-    const yymmdd = eventDate.replace(/-/g, '').slice(2, 8);
-
-    // Get the MAX attendee_no for this event
-    const { data: maxData, error: maxError } = await supabase
-      .from('attendees')
-      .select('attendee_no')
-      .eq('event_id', event_id)
-      .like('attendee_no', `${yymmdd}%`)
-      .order('attendee_no', { ascending: false })
-      .limit(1)
-      .single();
-
-    let nextSeq = 1;
-    if (!maxError && maxData?.attendee_no) {
-      const lastSeq = parseInt(maxData.attendee_no.slice(-3), 10);
-      nextSeq = lastSeq + 1;
-    }
-
-    // Directly use the next sequence number without duplicate checks
-    const attendee_no = `${yymmdd}${String(nextSeq).padStart(3, '0')}`;
-
-    // Insert with conflict handling
-    const { data, error: insertError } = await supabase
-      .from('attendees')
-      .insert([{
-        id,
-        attendee_no,
+  // Insert into the correct table (attendees)
+  const { data: newUser, error: userError } = await supabase
+    .from('attendees')
+    .insert([
+      {
         first_name: firstName,
         middle_name: middleName,
         last_name: lastName,
@@ -68,113 +526,16 @@ router.post('/user-register', async (req, res) => {
         contact_no: contactNo,
         accommodation,
         accommodation_other: accommodationOther,
-        confirmation_code: confirmationCode,
         event_id,
-        certificate_name: certificateName,
-      }]);
-
-    if (insertError) {
-      // Handle unique violation specifically
-      if (insertError.code === '23505') {
-        return res.status(409).json({
-          success: false,
-          message: 'Duplicate registration detected. Please try again.'
-        });
+        certificate_name: certificateName
       }
-      return res.status(400).json({ success: false, message: insertError.message });
-    }
+    ])
+    .single();
 
-    // Send confirmation email if email is provided
-    if (email) {
-      const msg = {
-        to: email,
-        from: {
-          email: process.env.SENDER_EMAIL,
-          name: "CRFV Events"
-        },
-        subject: 'CRFV Event Registration Confirmation',
-        html: `
-<p>Dear ${firstName} ${lastName},</p>
-
-<p>Thank you for registering for <strong>${eventName}</strong>.</p>
-
-<h3>Registration Details:</h3>
-<table>
-  <tr><td><strong>Event:</strong></td><td>${eventName}</td></tr>
-  <tr><td><strong>Date:</strong></td><td>${eventDate}</td></tr>
-  <tr><td><strong>Attendee #:</strong></td><td>${attendee_no}</td></tr>
-  <tr><td><strong>Confirmation Code:</strong></td><td>${confirmationCode}</td></tr>
-  <tr><td><strong>Accommodation:</strong></td><td>${accommodation}${accommodationOther ? ' (' + accommodationOther + ')' : ''}</td></tr>
-  <tr><td><strong>Name on Certificate:</strong></td><td>${certificateName}</td></tr>
-</table>
-
-<br>
-
-<div style="border:1px solid #e0e6ed;padding:16px 18px;border-radius:8px;background:#f8fafc;margin-bottom:18px;">
-  <strong>Please take note of the following reminders to ensure smooth and successful participation:</strong>
-
-  <ul style="margin:12px 0 0 18px;padding:0;">
-    <li>Full attendance in all sessions is required to receive a certificate.</li>
-    <li>Attendance will be monitored and recorded for each session.</li>
-    <li>Participants are expected to comply with all event guidelines and schedules.</li>
-    <li><strong>The proximity card must be returned</strong> after the event, along with any other borrowed materials, as applicable. Items should be returned to the designated collection point or by prepaid mail if taken off-site.</li>
-  </ul>
-
-  <p>We appreciate your cooperation and look forward to your active participation.</p>
-
-  <div style="margin-top:10px;">
-    For full details, please review the 
-    <a href="https://hellograde.online/crfv/event-agreement" target="_blank" rel="noopener">Event Participation Agreement</a>.
-  </div>
-</div>
-
-<p>Keep your confirmation code for reference. You may be asked to present it during event check-in.<br>
-If you have any questions, please contact the event organiser directly.</p>
-
-<p>
-  Sincerely,<br>
-  The CRFV Event Registration Team<br>
-  Event Host – <a href="https://crfv-cpu.org" target="_blank">crfv-cpu.org</a><br>
-  Registration System Host – <a href="https://hellograde.online" target="_blank">hellograde.online</a>
-</p>
-
-<hr>
-
-<p style="font-size:0.95em;color:#888;">
-  By registering, you agree to our <a href="https://hellograde.online/crfv/privacy-policy.html" target="_blank">Data Privacy Policy</a>.
-</p>
-
-<p style="font-size:0.95em;color:#888;">
-  This is an automated message. Please do not reply directly to this email.
-</p>
-
-<p style="color:#2a5298;">
-  <strong>Note:</strong> Certificates are expected to be issued within 7 business days after the event, once all requirements are fulfilled. While we aim to meet this timeline, delays may occur due to factors beyond the organiser's control.
-</p>
-
-
-        `
-      };
-      await sgMail.send(msg);
-    }
-
-    res.json({
-      success: true,
-      confirmationCode,
-      message: 'Registration successful! Please check your email for your confirmation code.'
-    });
-  } catch (err) {
-    if (err.response && err.response.body && err.response.body.errors) {
-      console.error('SendGrid error:', err.response.body.errors);
-    } else {
-      console.error('Registration error:', err);
-    }
-    res.status(500).json({ success: false, message: 'Server error.' });
+  if (userError) {
+    return res.status(500).json({ success: false, message: 'Error registering user.' });
   }
+
+  // Success response
+  res.status(201).json({ success: true, message: 'Registration successful.', confirmationCode: newUser.id });
 });
-
-//console.log('SENDGRID_FROM_EMAIL:', process.env.SENDER_EMAIL);
-
-module.exports = router;
-
-//address of location and venue should be compelted by the event organiser
