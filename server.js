@@ -146,22 +146,6 @@ const studentEthnicityRoutes = require('./routes/studentEthnicityRoutes');
 // Mount it
 app.use('/api/student-ethnicity', studentEthnicityRoutes);
 
-app.get('/api/attendance-records', async (req, res) => {
-  // Example: fetch from MongoDB or your DB
-  const records = await client.db('myDatabase').collection('attendance_records').find({}).toArray();
-  res.json(records);
-});
-
-app.get('/api/audit-trail', async (req, res) => {
-  const logs = await client.db('myDatabase').collection('audit_trail').find({}).toArray();
-  res.json(logs);
-});
-
-app.get('/api/reports/attendees', async (req, res) => {
-  const attendees = await client.db('myDatabase').collection('attendees').find({}).toArray();
-  res.json(attendees);
-});
-
 
 //-----------------------------------------------------------------
 // BYTe Fun Run 2025: Sign-Up POST Route
