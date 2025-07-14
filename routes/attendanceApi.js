@@ -1,3 +1,4 @@
+//attendanceApi.js
 require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 const fetch = require('node-fetch');
@@ -5,38 +6,55 @@ const express = require('express');
 const router = express.Router();
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE);
 
+// Middleware to flag unregistered
+router.use('/attendance', (req, res, next) => {
+  if (req.body.attendee_no === "unregistered") {
+    req.body.is_unregistered = true;
+  }
+  next();
+});
+
 async function logAttendance(req, res) {
   try {
-    const { rfid, attendee_no, event_id, status, timestamp } = req.body;
+    const { rfid, attendee_no, event_id, status, timestamp, first_name, last_name, time, date, slot } = req.body;
 
-    // 1. Find attendee_id in Supabase
+    // Find attendee by event_id and either attendee_no or rfid
     const { data: attendees } = await supabase
       .from('attendees')
       .select('id')
-      .or(`attendee_no.eq.${attendee_no},rfid.eq.${rfid}`)
+      .or(
+        `and(event_id.eq.${event_id},attendee_no.eq.${attendee_no}),and(event_id.eq.${event_id},rfid.eq.${rfid})`
+      )
       .limit(1);
+
+    const is_unregistered = !attendees || attendees.length === 0;
 
     let record = {
       event_id,
       status: status || 'present',
       timestamp: timestamp || new Date().toISOString(),
       rfid,
-      attendee_id: null,
-      note: null,
-      time: req.body.time,
-      date: req.body.date,
-      slot: req.body.slot
+      attendee_id: is_unregistered ? null : attendees[0].id,
+      note: is_unregistered ? `Unregistered RFID: ${rfid}` : null,
+      time,
+      date,
+      slot,
+      raw_rfid: rfid,
+      raw_first_name: last_name === "unregistered" ? null : first_name,
+      raw_last_name: last_name === "unregistered" ? null : last_name,
+      is_unregistered
     };
 
-    if (attendees && attendees.length > 0) {
-      // Registered
-      record.attendee_id = attendees[0].id;
-    } else {
-      // Unregistered
-      record.note = "unregistered";
+    if (is_unregistered) {
+      record = {
+        ...record,
+        last_name: "unregistered",
+        first_name: "",
+        attendee_no: "unregistered"
+      };
     }
 
-    // 2. Insert attendance record in Supabase
+    // Insert attendance record
     const { error: insertError } = await supabase
       .from('attendance_records')
       .insert([record]);
@@ -44,13 +62,11 @@ async function logAttendance(req, res) {
       return res.status(500).json({ status: "error", message: insertError.message });
     }
 
-    // 3. Relay to Google Sheets (Apps Script)
-    // Build the payload for Google Sheets
+    // Relay to Google Sheets (optional)
     const sheetPayload = {
       ...req.body,
       id_number: req.body.attendee_no || "unregistered"
     };
-
     await fetch('https://script.google.com/macros/s/AKfycbz8rsTh7FsEUbpq1FR33VMQ_2auDYpjuq6SJTbOmgzHqHSRThylSkpEe7ZTExBo8099jQ/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -59,47 +75,83 @@ async function logAttendance(req, res) {
 
     res.json({ status: "success" });
   } catch (err) {
-    console.error(err); // Add this line to log the error in your server console
+    console.error(err);
     res.status(500).json({ status: "error", message: err.toString() });
   }
 }
 
 router.post('/', logAttendance);
 
-// GET /api/attendance/all - returns all attendance records with attendee and event info
+// GET all attendance records, merging registered and raw fields
 router.get('/all', async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('attendance_records')
       .select(`
-        id,
-        date,
-        time,
-        slot,
-        status,
-        rfid,
-        attendee_id,
-        event_id,
-        note,
-        attendee:attendee_id (
-          attendee_no,
-          first_name,
-          middle_name,
-          last_name,
-          organization,
-          contact_no,
-          rfid
-        ),
-        event:event_id (
-          event_name,
-          event_date,
-          location
-        )
+        *,
+        attendee:attendee_id (first_name, last_name, attendee_no)
       `)
-      .order('date', { ascending: false })
-      .order('time', { ascending: false });
+      .order('timestamp', { ascending: false });
+    if (error) return res.status(500).json({ status: "error", message: error.message });
+
+    const mergedData = data.map(record => ({
+      ...record,
+      first_name: record.attendee?.first_name || record.raw_first_name,
+      last_name: record.attendee?.last_name || record.raw_last_name,
+      attendee_no: record.attendee?.attendee_no || "unregistered"
+    }));
+
+    res.json(mergedData);
+  } catch (err) {
+    res.status(500).json({ status: "error", message: err.toString() });
+  }
+});
+
+// Fetch attendees for an event
+router.get('/attendees/by-event/:event_id', async (req, res) => {
+  const { event_id } = req.params;
+  const { data, error } = await supabase
+    .from('attendees')
+    .select('*')
+    .eq('event_id', event_id);
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
+
+// Get latest event
+router.get('/latest-event', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('events')
+      .select('*')
+      .order('start_date', { ascending: false })
+      .limit(1)
+      .single();
+
     if (error) return res.status(500).json({ status: "error", message: error.message });
     res.json(data);
+  } catch (err) {
+    res.status(500).json({ status: "error", message: err.toString() });
+  }
+});
+
+// Set current event (optional)
+router.post('/set-current-event', async (req, res) => {
+  const { event_id } = req.body;
+  try {
+    const { data: eventData, error: eventError } = await supabase
+      .from('events')
+      .select('*')
+      .eq('id', event_id)
+      .single();
+
+    if (eventError) throw new Error(eventError.message);
+
+    if (!eventData || !(eventData.event_id || eventData.id)) throw new Error("No current event found");
+    const currentEvent = eventData;
+    currentEvent.event_id = currentEvent.event_id || currentEvent.id;
+
+    res.json({ status: "success", event: currentEvent });
   } catch (err) {
     res.status(500).json({ status: "error", message: err.toString() });
   }
