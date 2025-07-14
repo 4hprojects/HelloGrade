@@ -1,9 +1,16 @@
 const { supabase } = require('../supabaseClient');
 
-async function logAuditTrail({ req, action, userNameFallback = 'admin' }) {
-  const user_id = req.user?.studentIDNumber || req.user?.userId || 'admin';
-  const user_role = req.user?.role || 'admin';
-  const user_name = req.user?.name || req.user?.studentIDNumber || req.user?.userId || userNameFallback || 'admin';
+async function logAuditTrail({
+  req,
+  action,
+  userNameFallback = 'admin',
+  userIdOverride,
+  userRoleOverride,
+  userNameOverride
+}) {
+  const user_id = userIdOverride || req.user?.studentIDNumber || req.user?.userId || 'admin';
+  const user_role = userRoleOverride || req.user?.role || 'admin';
+  const user_name = userNameOverride || req.user?.name || userNameFallback || 'admin';
 
   await supabase
     .from('audit_trail')
