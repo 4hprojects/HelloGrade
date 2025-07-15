@@ -119,7 +119,8 @@ router.post('/user-register', async (req, res) => {
       userNameOverride: req.body.email // or full name if you prefer
     });
 
-    /* Send confirmation email if email is provided
+    // Send confirmation email if email is provided
+    let emailSent = true;
     if (email) {
       const msg = {
         to: email,
@@ -129,7 +130,7 @@ router.post('/user-register', async (req, res) => {
         },
         subject: 'CRFV Event Registration Confirmation',
         html: `
-<p>Dear ${firstName} ${lastName},</p>*/
+<p>Dear ${firstName} ${lastName},</p>
 
 <p>Thank you for registering for <strong>${eventName}</strong>.</p>
 
@@ -190,13 +191,21 @@ If you have any questions, please contact the event organiser directly.</p>
 
         `
       };
-      await sgMail.send(msg);
+      try {
+        await sgMail.send(msg);
+      } catch (emailErr) {
+        emailSent = false;
+        console.error('SendGrid error:', emailErr);
+        // Optionally log this to your audit trail or notify admin
+      }
     }
 
     res.json({
       success: true,
       confirmationCode,
-      message: 'Registration successful! Please check your email for your confirmation code.'
+      message: emailSent
+        ? 'Registration successful! Please check your email for your confirmation code.'
+        : 'Registration successful! However, we could not send a confirmation email at this time. Please contact the organizer if you need assistance.'
     });
   } catch (err) {
     if (err.response && err.response.body && err.response.body.errors) {
