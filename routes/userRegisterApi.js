@@ -119,7 +119,7 @@ router.post('/user-register', async (req, res) => {
       userNameOverride: req.body.email // or full name if you prefer
     });
 
-    // Send confirmation email if email is provided
+    /* Send confirmation email if email is provided
     if (email) {
       const msg = {
         to: email,
@@ -129,7 +129,7 @@ router.post('/user-register', async (req, res) => {
         },
         subject: 'CRFV Event Registration Confirmation',
         html: `
-<p>Dear ${firstName} ${lastName},</p>
+<p>Dear ${firstName} ${lastName},</p>*/
 
 <p>Thank you for registering for <strong>${eventName}</strong>.</p>
 
