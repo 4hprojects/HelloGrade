@@ -12,23 +12,33 @@ const attendeesColumns = [
   { key: 'actions', label: 'Actions' }
 ];
 
+// --- Accommodation Table Columns ---
+const accommodationColumns = [
+  { key: 'first_name', label: 'First Name' },
+  { key: 'last_name', label: 'Last Name' },
+  { key: 'organization', label: 'Organization' },
+  { key: 'accommodation', label: 'Accommodation' }
+];
+
 // --- State ---
 let attendeesData = [];
 let attendeesPage = 1, attendeesPerPage = 10;
 let attendeesSort = { key: null, asc: true };
 let selectedAttendees = new Set();
 
+let accommodationPage = 1, accommodationPerPage = 10;
+let accommodationSort = { key: null, asc: true };
+
 // --- Tab Switching ---
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', function() {
-    // Remove active from all buttons and contents
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-    // Activate clicked tab and its content
     btn.classList.add('active');
     document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-    // Hide bulk action bar when switching tabs
-    document.getElementById('bulk-action-bar').style.display = 'none';
+    if (btn.dataset.tab === 'accommodation') {
+      updateAccommodationTable();
+    }
   });
 });
 
@@ -131,6 +141,37 @@ function paginateAttendees(data) {
   return data.slice(start, start + Number(attendeesPerPage));
 }
 
+// --- Accommodation Filter, Sort, Paginate ---
+function filterAccommodation(query) {
+  query = query.trim().toLowerCase();
+  if (!query) return attendeesData;
+  return attendeesData.filter(a =>
+    [
+      a.last_name,
+      a.first_name,
+      a.attendee_no,
+      a.organization,
+      a.accommodation,
+      a.accommodation_other
+    ].filter(Boolean).join(' ').toLowerCase().includes(query)
+  );
+}
+function sortAccommodation(data) {
+  if (!accommodationSort.key) return data;
+  return [...data].sort((a, b) => {
+    let valA = a[accommodationSort.key] || '';
+    let valB = b[accommodationSort.key] || '';
+    return accommodationSort.asc
+      ? String(valA).localeCompare(String(valB))
+      : String(valB).localeCompare(String(valA));
+  });
+}
+function paginateAccommodation(data) {
+  if (accommodationPerPage === 'all') return data;
+  const start = (accommodationPage - 1) * accommodationPerPage;
+  return data.slice(start, start + Number(accommodationPerPage));
+}
+
 // --- Render Table Header ---
 function renderAttendeesTableHeader() {
   const headerRow = attendeesColumns.map(col => {
@@ -182,6 +223,19 @@ function renderAttendeesTableBody(attendees) {
   // Remove checkbox logic since checkboxes are gone
 }
 
+// --- Render Accommodation Table Body ---
+function renderAccommodationTableBody(accommodation) {
+  const rows = accommodation.map(a => `
+    <tr>
+      <td>${a.first_name || ''}</td>
+      <td>${a.last_name || ''}</td>
+      <td>${a.organization || ''}</td>
+      <td>${a.accommodation || ''}</td>
+    </tr>
+  `).join('');
+  document.getElementById('accommodationTableBody').innerHTML = rows;
+}
+
 // --- Pagination ---
 function renderAttendeesPagination(filtered) {
   const pagDiv = document.getElementById('attendeesPagination');
@@ -217,6 +271,41 @@ function renderAttendeesPagination(filtered) {
   };
 }
 
+// --- Pagination ---
+function renderAccommodationPagination(filtered) {
+  const pagDiv = document.getElementById('accommodationPagination');
+  const total = filtered.length;
+  const perPage = accommodationPerPage === 'all' ? total : accommodationPerPage;
+  const pages = perPage === 0 ? 1 : Math.ceil(total / perPage);
+
+  let html = `
+    <label>Show
+      <select id="accommodationPerPage">
+        <option value="10" ${accommodationPerPage==10?'selected':''}>10</option>
+        <option value="20" ${accommodationPerPage==20?'selected':''}>20</option>
+        <option value="all" ${accommodationPerPage==='all'?'selected':''}>All</option>
+      </select>
+    </label>
+    <span>Page ${accommodationPage} of ${pages}</span>
+    <button id="accommodationPrev" ${accommodationPage<=1?'disabled':''}>&lt; Prev</button>
+    <button id="accommodationNext" ${accommodationPage>=pages?'disabled':''}>Next &gt;</button>
+  `;
+  pagDiv.innerHTML = html;
+
+  document.getElementById('accommodationPerPage').onchange = e => {
+    accommodationPerPage = e.target.value === 'all' ? 'all' : Number(e.target.value);
+    accommodationPage = 1;
+    updateAccommodationTable();
+  };
+  document.getElementById('accommodationPrev').onclick = () => {
+    if (accommodationPage > 1) { accommodationPage--; updateAccommodationTable(); }
+  };
+  document.getElementById('accommodationNext').onclick = () => {
+    const pages = Math.ceil(filtered.length / (accommodationPerPage === 'all' ? filtered.length : accommodationPerPage));
+    if (accommodationPage < pages) { accommodationPage++; updateAccommodationTable(); }
+  };
+}
+
 // --- Update Table (Filter, Sort, Paginate, Render) ---
 function updateAttendeesTable() {
   const query = document.getElementById('searchAttendees').value;
@@ -226,12 +315,53 @@ function updateAttendeesTable() {
   renderAttendeesTableHeader();
   renderAttendeesTableBody(paged);
   renderAttendeesPagination(filtered);
+  updateAttendeesCounters(filtered); // <-- Add this line
+  updateAccommodationCounters(filtered); // <-- Add this line
+}
+
+// --- Update Accommodation Table ---
+function updateAccommodationTable() {
+  const query = document.getElementById('searchAccommodation').value;
+  let filtered = filterAccommodation(query);
+  filtered = sortAccommodation(filtered);
+  const paged = paginateAccommodation(filtered);
+  renderAccommodationTableHeader();
+  renderAccommodationTableBody(paged);
+  renderAccommodationPagination(filtered);
+}
+
+// --- Update Attendees Counters ---
+function updateAttendeesCounters(filtered) {
+  // filtered: the currently displayed/filtered attendees
+  document.getElementById('countTotal').textContent = filtered.length;
+  document.getElementById('countFullyPaid').textContent = filtered.filter(a => (a.payment_status || '').toLowerCase() === 'fully paid').length;
+  document.getElementById('countPartial').textContent = filtered.filter(a => (a.payment_status || '').toLowerCase() === 'partially paid').length;
+  document.getElementById('countAR').textContent = filtered.filter(a => !a.payment_status || a.payment_status.toLowerCase() === 'accounts recievable').length;
+}
+
+// --- Update Accommodation Counters ---
+function updateAccommodationCounters(filtered) {
+  const getCount = (type) => filtered.filter(a => (a.accommodation || '').toLowerCase() === type).length;
+  document.getElementById('countVirtual').textContent = getCount('online / virtual');
+  document.getElementById('countLiveOut').textContent = getCount('live-out');
+  document.getElementById('countQuad').textContent = getCount('fb quad');
+  document.getElementById('countTriple').textContent = getCount('fb triple');
+  document.getElementById('countDouble').textContent = getCount('fb double');
+  document.getElementById('countSingle').textContent = getCount('fb single');
+  document.getElementById('countAccOthers').textContent = filtered.filter(a =>
+    a.accommodation &&
+    !['online / virtual','live-out','fb quad','fb triple','fb double','fb single'].includes(a.accommodation.toLowerCase())
+  ).length;
 }
 
 // --- Search ---
 document.getElementById('searchAttendees').addEventListener('input', () => {
   attendeesPage = 1;
   updateAttendeesTable();
+});
+document.getElementById('searchAccommodation').addEventListener('input', () => {
+  accommodationPage = 1;
+  updateAccommodationTable();
 });
 
 // --- Export ---
@@ -256,6 +386,28 @@ document.getElementById('exportAttendeesBtn').onclick = function () {
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Attendees");
   XLSX.writeFile(wb, "attendees_report.xlsx");
+};
+document.getElementById('exportAccommodationBtn').onclick = function () {
+  const query = document.getElementById('searchAccommodation').value;
+  const filtered = sortAccommodation(filterAccommodation(query));
+  const paged = paginateAccommodation(filtered);
+  const headers = accommodationColumns.map(col => col.label);
+  const rows = paged.map(a => [
+    a.attendee_no || "",
+    a.last_name || "",
+    a.first_name || "",
+    a.organization || "",
+    a.accommodation || "",
+    a.accommodation_other || ""
+  ]);
+  if (typeof XLSX === "undefined") {
+    alert("XLSX library not loaded.");
+    return;
+  }
+  const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Accommodation");
+  XLSX.writeFile(wb, "accommodation_report.xlsx");
 };
 
 // --- Bulk Action Bar ---
@@ -766,3 +918,14 @@ function hideSpinner() {
 window.closePaymentModal = function() {
   document.getElementById('paymentModal').style.display = 'none';
 };
+
+// --- Update Accommodation Table on Data Load ---
+function updateAllAccommodationUI() {
+  updateAccommodationCounters(attendeesData);
+  updateAccommodationTable();
+}
+
+// Call this after attendeesData is loaded
+// In your loadAttendees() function, after attendeesData = data.attendees || [];
+// add:
+updateAllAccommodationUI();
