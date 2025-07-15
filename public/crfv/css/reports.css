@@ -620,3 +620,61 @@
         grid-column: 1 / -1;
       }
     }
+    .attendees-counters {
+      display: flex;
+      gap: 2em;
+      margin-bottom: 1.5em;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .counter-box {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(44, 111, 187, 0.07);
+      padding: 1em 1.5em;
+      min-width: 180px;
+      gap: 1em;
+      border-left: 6px solid #e0e0e0;
+      transition: box-shadow 0.2s;
+    }
+    .counter-box i {
+      font-size: 2em;
+      opacity: 0.7;
+    }
+    .counter-label {
+      font-size: 1em;
+      color: #666;
+      font-weight: 500;
+    }
+    .counter-value {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #2c6fbb;
+      margin-top: 2px;
+    }
+    .counter-box.total { border-left-color: #2c6fbb; }
+    .counter-box.paid { border-left-color: #4caf50; }
+    .counter-box.partial { border-left-color: #ff9800; }
+    .counter-box.ar { border-left-color: #f44336; }
+    .counter-box.paid .counter-value { color: #4caf50; }
+    .counter-box.partial .counter-value { color: #ff9800; }
+    .counter-box.ar .counter-value { color: #f44336; }
+    .counter-box.acc-virtual { border-left-color: #6c63ff; }
+    .counter-box.acc-liveout { border-left-color: #00b894; }
+    .counter-box.acc-quad { border-left-color: #00bcd4; }
+    .counter-box.acc-triple { border-left-color: #ffb347; }
+    .counter-box.acc-double { border-left-color: #ff7675; }
+    .counter-box.acc-single { border-left-color: #fd79a8; }
+    .counter-box.acc-others { border-left-color: #636e72; }
+    .counter-box.acc-virtual .counter-value { color: #6c63ff; }
+    .counter-box.acc-liveout .counter-value { color: #00b894; }
+    .counter-box.acc-quad .counter-value { color: #00bcd4; }
+    .counter-box.acc-triple .counter-value { color: #ffb347; }
+    .counter-box.acc-double .counter-value { color: #ff7675; }
+    .counter-box.acc-single .counter-value { color: #fd79a8; }
+    .counter-box.acc-others .counter-value { color: #636e72; }
+    .counter-box:hover {
+      box-shadow: 0 4px 16px rgba(44, 111, 187, 0.13);
+    }
