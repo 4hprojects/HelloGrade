@@ -369,15 +369,36 @@ document.getElementById('exportAttendeesBtn').onclick = function () {
   const query = document.getElementById('searchAttendees').value;
   const filtered = sortAttendees(filterAttendees(query));
   const paged = paginateAttendees(filtered);
-  const headers = attendeesColumns.slice(1, -1).map(col => col.label.replace(/<[^>]+>/g, '')); // Remove HTML from label
+
+  // All attendee fields from schema
+  const headers = [
+    "id", "created_at", "first_name", "last_name", "middle_name", "email",
+    "attendee_no", "contact_no", "organization", "rfid", "event_id", "gender",
+    "designation", "accommodation", "accommodation_other", "confirmation_code",
+    "certificate_name", "old_event_id"
+  ];
+
   const rows = paged.map(a => [
-    a.attendee_no || "",
-    a.last_name || "",
+    a.id || "",
+    a.created_at || "",
     a.first_name || "",
+    a.last_name || "",
+    a.middle_name || "",
+    a.email || "",
+    a.attendee_no || "",
+    a.contact_no || "",
     a.organization || "",
     a.rfid || "",
-    a.payment_status || ""
+    a.event_id || "",
+    a.gender || "",
+    a.designation || "",
+    a.accommodation || "",
+    a.accommodation_other || "",
+    a.confirmation_code || "",
+    a.certificate_name || "",
+    a.old_event_id || ""
   ]);
+
   if (typeof XLSX === "undefined") {
     alert("XLSX library not loaded.");
     return;
@@ -391,15 +412,36 @@ document.getElementById('exportAccommodationBtn').onclick = function () {
   const query = document.getElementById('searchAccommodation').value;
   const filtered = sortAccommodation(filterAccommodation(query));
   const paged = paginateAccommodation(filtered);
-  const headers = accommodationColumns.map(col => col.label);
+
+  // All attendee fields from schema
+  const headers = [
+    "id", "created_at", "first_name", "last_name", "middle_name", "email",
+    "attendee_no", "contact_no", "organization", "rfid", "event_id", "gender",
+    "designation", "accommodation", "accommodation_other", "confirmation_code",
+    "certificate_name", "old_event_id"
+  ];
+
   const rows = paged.map(a => [
-    a.attendee_no || "",
-    a.last_name || "",
+    a.id || "",
+    a.created_at || "",
     a.first_name || "",
+    a.last_name || "",
+    a.middle_name || "",
+    a.email || "",
+    a.attendee_no || "",
+    a.contact_no || "",
     a.organization || "",
+    a.rfid || "",
+    a.event_id || "",
+    a.gender || "",
+    a.designation || "",
     a.accommodation || "",
-    a.accommodation_other || ""
+    a.accommodation_other || "",
+    a.confirmation_code || "",
+    a.certificate_name || "",
+    a.old_event_id || ""
   ]);
+
   if (typeof XLSX === "undefined") {
     alert("XLSX library not loaded.");
     return;
