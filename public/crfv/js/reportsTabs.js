@@ -3,13 +3,24 @@ async function loadAttendanceRecords() {
   try {
     const res = await fetch('/api/attendance-records');
     const data = await res.json();
-    attendanceData = data;
-    // Default sort: date_time descending
+    console.log('Attendance API response:', data); // Debug line
+    // Try all possible formats
+    attendanceData = Array.isArray(data) ? data :
+                     data.records ? data.records :
+                     data.attendance ? data.attendance :
+                     [];
     attendanceSort = [{ key: 'date_time', asc: false }];
     attendanceSearch = '';
     renderAttendanceTable(attendanceData);
     updateSortIndicators('#attendanceTable', attendanceSort, ['date_time', 'raw_last_name', 'raw_first_name', 'raw_rfid', 'slot', 'event_id']);
+    // Fetch attendees for registered/unregistered summary
+    const attendeesRes = await fetch('/api/reports/attendees');
+    const attendeesData = (await attendeesRes.json()).attendees || [];
+    console.log('Attendees:', attendeesData); // Debug line
+    console.log('Attendance Records:', attendanceData); // Debug line
+    updateAttendanceCounters(attendanceData, attendeesData);
   } catch (err) {
+    console.error('Attendance load error:', err); // Debug line
     document.querySelector('#attendanceTable tbody').innerHTML =
       `<tr><td colspan="6">Failed to load attendance records.</td></tr>`;
   }
@@ -138,20 +149,23 @@ document.addEventListener('DOMContentLoaded', () => {
       let key = keyMap[idx];
       let multi = e.shiftKey;
       let arr = attendanceSort;
-      let found = arr.find(s => s.key === key);
-      if (!multi) arr.length = 0;
-      if (found) {
-        if (found.asc) {
-          // Was ascending: set to descending
-          found.asc = false;
+      let foundIdx = arr.findIndex(s => s.key === key);
+
+      if (!multi) arr.length = 0; // Single column sort resets all
+
+      if (foundIdx !== -1) {
+        if (arr[foundIdx].asc) {
+          // Ascending → Descending
+          arr[foundIdx].asc = false;
         } else {
-          // Was descending: remove from sort
-          arr = arr.filter(s => s.key !== key);
+          // Descending → Remove sort
+          arr.splice(foundIdx, 1);
         }
       } else {
         // Not sorted yet: add as ascending
         arr.push({ key, asc: true });
       }
+
       renderAttendanceTable(attendanceData);
       updateSortIndicators('#attendanceTable', arr, keyMap);
     });
@@ -195,6 +209,26 @@ document.addEventListener('DOMContentLoaded', () => {
     eventsSearch = e.target.value.toLowerCase();
     renderEventsTable(eventsData);
   });
+
+  document.getElementById('exportAttendanceBtn').onclick = function () {
+    const headers = ['Date & Time', 'Last Name', 'First Name', 'RFID', 'Session', 'Event ID'];
+    const rows = attendanceData.map(rec => [
+      (rec.date || '') + ' ' + (rec.time || ''),
+      rec.raw_last_name || '',
+      rec.raw_first_name || '',
+      rec.raw_rfid || '',
+      rec.slot || '',
+      rec.event_id || ''
+    ]);
+    if (typeof XLSX === "undefined") {
+      alert("XLSX library not loaded.");
+      return;
+    }
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Attendance");
+    XLSX.writeFile(wb, "attendance_report.xlsx");
+  };
 });
 
 // Helper to update sort indicators
@@ -205,6 +239,104 @@ function updateSortIndicators(tableSelector, sortArr, keyMap) {
     if (sort) th.textContent += sort.asc ? ' ▲' : ' ▼';
   });
 }
+
+function setCounter(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+function updateAttendanceCounters(records, attendees) {
+  const sessions = ['AM In', 'AM Out', 'PM In', 'PM Out'];
+  const sessionSets = {};
+  sessions.forEach(s => sessionSets[s] = new Set());
+
+  // Build a map of valid RFIDs to attendee names
+  const rfidToAttendee = {};
+  (attendees || []).forEach(a => {
+    if (a.rfid && a.first_name && a.last_name) {
+      rfidToAttendee[a.rfid] = a;
+    }
+  });
+
+  const validRFIDs = new Set(Object.keys(rfidToAttendee));
+  const uniqueValidRFIDs = new Set();
+  const uniqueInvalidRFIDs = new Set();
+  const allUniqueRFIDs = new Set();
+
+  let registered = new Set();
+  let unregistered = new Set();
+
+  records.forEach(rec => {
+    const rfid = rec.raw_rfid;
+    if (rfid) allUniqueRFIDs.add(rfid);
+
+    const slotNorm = normalizeSlot(rec.slot);
+    if (sessions.includes(slotNorm) && validRFIDs.has(rfid)) {
+      sessionSets[slotNorm].add(rfid);
+      uniqueValidRFIDs.add(rfid);
+      registered.add(rfid);
+    } else if (sessions.includes(slotNorm)) {
+      uniqueInvalidRFIDs.add(rfid);
+      unregistered.add(rfid);
+    }
+  });
+
+  setCounter('countAMIn', sessionSets['AM In'].size);
+  setCounter('countAMOut', sessionSets['AM Out'].size);
+  setCounter('countPMIn', sessionSets['PM In'].size);
+  setCounter('countPMOut', sessionSets['PM Out'].size);
+  setCounter('countRegistered', registered.size);
+  setCounter('countUnregistered', unregistered.size);
+  setCounter('countValidRFIDs', uniqueValidRFIDs.size);
+  setCounter('countInvalidRFIDs', uniqueInvalidRFIDs.size);
+  setCounter('countTotalUniqueRFIDs', allUniqueRFIDs.size);
+  console.log('Valid RFIDs:', validRFIDs);
+  records.forEach(rec => console.log('Slot:', rec.slot, 'RFID:', rec.raw_rfid));
+
+  const invalidRows = [];
+  records.forEach(rec => {
+    const rfid = rec.raw_rfid;
+    const slotNorm = normalizeSlot(rec.slot);
+    if (sessions.includes(slotNorm) && !validRFIDs.has(rfid)) {
+      invalidRows.push(rec);
+    }
+  });
+  console.log('Invalid Attendance Records:', invalidRows);
+
+  const invalidRowsHtml = invalidRows.map(rec => `
+    <tr>
+      <td>${rec.date ? rec.date + ' ' + (rec.time || '') : ''}</td>
+      <td>${rec.raw_last_name || ''}</td>
+      <td>${rec.raw_first_name || ''}</td>
+      <td>${rec.raw_rfid || ''}</td>
+      <td>${rec.slot || ''}</td>
+      <td>${rec.event_id || ''}</td>
+    </tr>
+  `).join('');
+  document.getElementById('invalidAttendanceList').innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Date & Time</th>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>RFID</th>
+          <th>Session</th>
+          <th>Event ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${invalidRowsHtml}
+      </tbody>
+    </table>
+  `;
+}
+
+function normalizeSlot(slot) {
+  return slot.replace('_', ' ').replace('IN', 'In').replace('OUT', 'Out');
+}
+
+
 
 let attendanceData = [];
 let attendanceSort = [];
