@@ -126,6 +126,40 @@
 
       <!-- Attendance Tab -->
       <div class="tab-content" id="tab-attendance">
+        <div id="attendanceCounters" class="attendees-counters">
+  <div class="counter-box am-in">
+    <div class="counter-label">AM In</div>
+    <div class="counter-value" id="countAMIn">0</div>
+  </div>
+  <div class="counter-box am-out">
+    <div class="counter-label">AM Out</div>
+    <div class="counter-value" id="countAMOut">0</div>
+  </div>
+  <div class="counter-box pm-in">
+    <div class="counter-label">PM In</div>
+    <div class="counter-value" id="countPMIn">0</div>
+  </div>
+  <div class="counter-box pm-out">
+    <div class="counter-label">PM Out</div>
+    <div class="counter-value" id="countPMOut">0</div>
+  </div>
+  <div class="counter-box registered">
+    <div class="counter-label">Registered</div>
+    <div class="counter-value" id="countRegistered">0</div>
+  </div>
+  <div class="counter-box unregistered">
+    <div class="counter-label">Unregistered</div>
+    <div class="counter-value" id="countUnregistered">0</div>
+  </div>
+  <div class="counter-box valid-rfid">
+    <div class="counter-label">Valid RFIDs</div>
+    <div class="counter-value" id="countValidRFIDs">0</div>
+  </div>
+  <div class="counter-box invalid-rfid">
+    <div class="counter-label">Invalid RFIDs</div>
+    <div class="counter-value" id="countInvalidRFIDs">0</div>
+  </div>
+</div>
         <div class="search-bar">
           <input type="text" id="searchAttendance" placeholder="Search attendance...">
           <button class="export-btn" id="exportAttendanceBtn"><i class="fas fa-file-excel"></i> Export XLSX</button>
@@ -146,7 +180,7 @@
             <tbody></tbody>
           </table>
         </div>
-
+        <div id="invalidAttendanceList"></div>
       </div>
 
       <!-- Events Tab -->
