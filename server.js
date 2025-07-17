@@ -43,6 +43,7 @@ const eventsApi = require('./routes/eventsApi');
 const bulkRegisterApi = require('./routes/bulkRegisterApi');
 const userRegisterApi = require('./routes/userRegisterApi');
 const reportsApi = require('./routes/reportsApi');
+const attendanceSummaryApi = require('./routes/attendanceSummaryApi');
 
 // Security middleware
 app.use(helmet({ contentSecurityPolicy: false }));
@@ -88,6 +89,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/api/attendance-summary', attendanceSummaryApi);
 app.use('/api', userRegisterApi);
 app.use('/api/bulk-register', bulkRegisterApi);
 app.use('/api/events', eventsApi);
