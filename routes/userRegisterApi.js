@@ -1,7 +1,8 @@
 //userRegisterApi.js
 const express = require('express');
 const router = express.Router();
-const { supabase } = require('../supabaseClient');
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE);
 const { v4: uuidv4 } = require('uuid');
 const sgMail = require('@sendgrid/mail');
 const { logAuditTrail } = require('../utils/auditTrail');
@@ -10,10 +11,17 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 router.post('/user-register', async (req, res) => {
   try {
     const {
-      firstName, middleName, lastName, gender, designation, organization,
-      email, contactNo, accommodation, accommodationOther, event_id,
-      certificateName // <-- add this
+      firstName, middleName, lastName, gender, designation, organizationType, organization,
+      province, municipality, barangay, email, contactNo, accommodation, accommodationOther, event_id,
+      certificateName,
+      organization_type,   // <-- add this
+      organization_name    // <-- add this
     } = req.body;
+
+    // Basic validation
+    if (!firstName || !lastName || !email ) {
+      return res.status(400).json({ success: false, message: 'Please fill all required fields.' });
+    }
 
     // Generate confirmation code
     const confirmationCode = uuidv4().split('-')[0].toUpperCase();
@@ -64,39 +72,38 @@ router.post('/user-register', async (req, res) => {
       }
       attendee_no = `${yymmdd}${String(nextSeq).padStart(3, '0')}`;
     } else {
-      attendee_no = uuidv4().split('-')[0].toUpperCase(); // fallback
+      attendee_no = 'X' + uuidv4().slice(0, 8); // fallback
     }
 
-    // Insert with conflict handling
-    const { data, error: insertError } = await supabase
-      .from('attendees')
-      .insert([{
-        id,
-        attendee_no,
-        first_name: firstName,
-        middle_name: middleName,
-        last_name: lastName,
-        gender,
-        designation,
-        organization,
-        email,
-        contact_no: contactNo,
-        accommodation,
-        accommodation_other: accommodationOther,
-        confirmation_code: confirmationCode,
-        event_id,
-        certificate_name: certificateName,
-      }]);
 
+    const attendeeData = {
+      id,
+      attendee_no,
+      first_name: firstName,
+      middle_name: middleName,
+      last_name: lastName,
+      gender,
+      designation,
+      organization_type,
+      organization_name,
+      organization: organization_name, // <-- add this line
+      province,
+      municipality,
+      barangay,
+      email,
+      contact_no: contactNo,
+      accommodation,
+      accommodation_other: accommodationOther,
+      confirmation_code: confirmationCode,
+      event_id,
+      certificate_name: certificateName,
+      status: 'Pending' // default status
+    };
+
+    const { data, insertError } = await safeInsertAttendee(attendeeData, event_id, yymmdd, supabase);
     if (insertError) {
-      // Handle unique violation specifically
-      if (insertError.code === '23505') {
-        return res.status(409).json({
-          success: false,
-          message: 'Duplicate registration detected. Please try again.'
-        });
-      }
-      return res.status(400).json({ success: false, message: insertError.message });
+      console.error('Database insert error:', insertError);
+      return res.status(500).json({ success: false, message: 'Database registration failed.', error: insertError });
     }
 
     // Log the registration action in the audit trail
@@ -187,7 +194,7 @@ If you have any questions, please contact the event organiser directly.</p>
 <p style="color:#2a5298;">
   <strong>Note:</strong> Certificates are expected to be issued within 7 business days after the event, once all requirements are fulfilled. While we aim to meet this timeline, delays may occur due to factors beyond the organiser's control.
 </p>
-
+ 
 
         `
       };
@@ -222,3 +229,47 @@ If you have any questions, please contact the event organiser directly.</p>
 module.exports = router;
 
 //address of location and venue should be compelted by the event organiser
+
+// Generate attendee_no using max+1 with retry (for event registrations)
+async function getNextAttendeeNo(event_id, yymmdd, supabase) {
+  const { data: maxData } = await supabase
+    .from('attendees')
+    .select('attendee_no')
+    .eq('event_id', event_id)
+    .like('attendee_no', `${yymmdd}%`)
+    .order('attendee_no', { ascending: false })
+    .limit(1);
+
+  let nextSeq = 1;
+  if (maxData && maxData.length > 0 && maxData[0]?.attendee_no) {
+    const lastNo = maxData[0].attendee_no;
+    const lastSeq = parseInt(lastNo.slice(-3), 10);
+    nextSeq = lastSeq + 1;
+  }
+  return `${yymmdd}${String(nextSeq).padStart(3, '0')}`;
+}
+
+async function safeInsertAttendee(attendeeData, event_id, yymmdd, supabase, maxRetries = 5) {
+  let attempt = 0;
+  let insertError = null;
+  let data = null;
+  while (attempt < maxRetries) {
+    attendeeData.attendee_no = await getNextAttendeeNo(event_id, yymmdd, supabase);
+    console.log(`Attempt ${attempt + 1}: Trying attendee_no ${attendeeData.attendee_no}`);
+    const result = await supabase.from('attendees').insert([attendeeData]);
+    data = result.data;
+    insertError = result.error;
+    if (!insertError) break;
+    if (insertError.code !== '23505') break; // Only retry on duplicate key error
+    attempt++;
+  }
+  // Fallback: If still duplicate after retries, use a random unique attendee_no
+  if (insertError && insertError.code === '23505') {
+    attendeeData.attendee_no = `${yymmdd}${Math.floor(1000 + Math.random() * 9000)}`; // 4 random digits
+    console.log(`Fallback: Trying attendee_no ${attendeeData.attendee_no}`);
+    const result = await supabase.from('attendees').insert([attendeeData]);
+    data = result.data;
+    insertError = result.error;
+  }
+  return { data, insertError };
+}
