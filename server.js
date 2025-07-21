@@ -45,7 +45,7 @@ const reportsApi = require('./routes/reportsApi');
 const paymentReportsApi = require('./routes/paymentReportsApi');
 const attendanceSummaryApi = require('./routes/attendanceSummaryApi');
 const emailApi = require('./routes/emailApi');
-const { sendEmail } = require('./utils/emailSender');
+
 
 // Security middleware
 app.use(helmet({ contentSecurityPolicy: false }));
