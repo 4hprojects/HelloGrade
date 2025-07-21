@@ -223,25 +223,13 @@ document.addEventListener('DOMContentLoaded', () => {
       registerMessage.innerHTML = `
         <div>${message}</div>
         <div style="margin-top:1em;">
-          <button id="registerAgainBtn" class="nav-btn" style="margin-right:1em;">Register Another</button>
+          <a href="/crfv/user-register.html" target="_blank" class="nav-btn" style="margin-right:1em;">Register Another</a>
           <br><br>
           <a href="https://crfv-cpu.org" target="_blank" class="nav-btn" style="text-decoration:none;">Event Details</a>
         </div>
       `;
       document.getElementById('submitBtn').style.display = 'none';
       document.getElementById('prevBtn2').style.display = 'none';
-      document.getElementById('registerAgainBtn').onclick = function() {
-        form.reset();
-        document.getElementById('privacyAgree').checked = true;
-        accommodationOtherContainer.style.display = 'none';
-        step3.classList.remove('active');
-        step1.classList.add('active');
-        progressBar.style.width = '33%';
-        updateStep(1);
-        registerMessage.innerHTML = '';
-        document.getElementById('submitBtn').style.display = '';
-        document.getElementById('prevBtn2').style.display = '';
-      };
     } else if (type === 'error') {
       registerMessage.classList.add('error-message');
       registerMessage.textContent = message;
@@ -384,6 +372,8 @@ document.addEventListener('DOMContentLoaded', () => {
       form.email.focus();
       return;
     }
+    // Always generate a new token before submit
+    document.getElementById('registration_token').value = crypto.randomUUID();
     // Disable submit button
     form.submitBtn.disabled = true;
     form.submitBtn.textContent = 'Registering...';
@@ -405,7 +395,8 @@ document.addEventListener('DOMContentLoaded', () => {
       accommodation: form.accommodation.value,
       accommodationOther: form.accommodationOther.value.trim(),
       event_id: form.eventId.value,
-      certificateName: form.certificateName.value.trim()
+      certificateName: form.certificateName.value.trim(),
+      registration_token: document.getElementById('registration_token').value
     };
 
     let organization_type = '';
@@ -434,18 +425,55 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        showMessage('Server error: Invalid response.', 'error');
+        return;
+      }
       if (res.ok) {
-        showMessage(
-          `Registration successful!<br>
-          <strong>Your confirmation code:</strong> <span id="confCode">${data.confirmationCode}</span>
-          <br><small>Please check your email for details.</small>`,
-          'success'
-        );
+          showMessage(
+            `Registration successful!<br>
+            <strong>Your confirmation code:</strong>
+            <span id="confCode" style="font-size:1.3em;letter-spacing:2px;background:#f1f5f9;padding:4px 10px;border-radius:6px;margin:0 6px 0 2px;">${data.confirmationCode}</span>
+            <button id="copyAllDetailsBtn" class="nav-btn small-btn" style="padding:4px 10px;font-size:0.95em;margin-left:4px;" type="button">
+              <i class="fa fa-copy"></i> Copy All Details
+            </button>
+            <br><small>Please check your email for details. If you did not receive an email, take a screenshot or copy your details for your reference.</small>`,
+            'success'
+          );
+          setTimeout(() => {
+            const copyAllBtn = document.getElementById('copyAllDetailsBtn');
+            const confCode = document.getElementById('confCode');
+            if (copyAllBtn && confCode) {
+              // Build the details string
+              const details =
+                `Event: ${form.eventId.options[form.eventId.selectedIndex]?.text?.trim() || '-'}\n` +
+                `Name: ${form.firstName.value} ${form.middleName.value} ${form.lastName.value}\n` +
+                `Gender: ${form.gender.options[form.gender.selectedIndex]?.text?.trim() || '-'}\n` +
+                `Designation: ${form.designation.value}\n` +
+                `Organization Type: ${form.organizationType.value}\n` +
+                `Organization Name: ${form.organization.value}\n` +
+                `Email: ${form.email.value}\n` +
+                `Contact: ${form.contactNo.value}\n` +
+                `Accommodation: ${form.accommodation.options[form.accommodation.selectedIndex]?.text?.trim() || '-'}${form.accommodation.value === 'Others' ? ' (' + form.accommodationOther.value + ')' : ''}\n` +
+                `Name on Certificate: ${form.certificateName.value}\n\n` +
+                `Registration successful!\nYour confirmation code: ${confCode.textContent.trim()}`;
+              copyAllBtn.onclick = function() {
+                navigator.clipboard.writeText(details);
+                copyAllBtn.innerHTML = '<i class="fa fa-check"></i> Copied!';
+                setTimeout(() => {
+                  copyAllBtn.innerHTML = '<i class="fa fa-copy"></i> Copy All Details';
+                }, 1500);
+              };
+            }
+          }, 100);
       } else {
         showMessage(data.message || 'Registration failed.', 'error');
       }
     } catch (err) {
+      console.error('Registration error:', err);
       showMessage('Network error. Please try again.', 'error');
     }
     form.submitBtn.disabled = false;
@@ -454,4 +482,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Load Location Data on Page Load ---
   loadLocationData();
+
+
 });
