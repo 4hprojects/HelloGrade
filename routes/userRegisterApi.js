@@ -6,6 +6,7 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SER
 const { v4: uuidv4 } = require('uuid');
 const sgMail = require('@sendgrid/mail');
 const { logAuditTrail } = require('../utils/auditTrail');
+const { sendEmail } = require('../utils/emailSender');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 router.post('/user-register', async (req, res) => {
@@ -15,12 +16,25 @@ router.post('/user-register', async (req, res) => {
       province, municipality, barangay, email, contactNo, accommodation, accommodationOther, event_id,
       certificateName,
       organization_type,   // <-- add this
-      organization_name    // <-- add this
+      organization_name,    // <-- add this
+      registration_token
     } = req.body;
 
     // Basic validation
     if (!firstName || !lastName || !email ) {
       return res.status(400).json({ success: false, message: 'Please fill all required fields.' });
+    }
+
+    // Check for duplicate registration token
+    if (registration_token) {
+      const { data: existing } = await supabase
+        .from('attendees')
+        .select('id')
+        .eq('registration_token', registration_token)
+        .maybeSingle();
+      if (existing) {
+        return res.status(409).json({ success: false, message: 'Duplicate submission detected.' });
+      }
     }
 
     // Generate confirmation code
@@ -129,14 +143,11 @@ router.post('/user-register', async (req, res) => {
     // Send confirmation email if email is provided
     let emailSent = true;
     if (email) {
-      const msg = {
-        to: email,
-        from: {
-          email: process.env.SENDER_EMAIL,
-          name: "CRFV Events"
-        },
-        subject: 'CRFV Event Registration Confirmation',
-        html: `
+      try {
+        const result = await sendEmail({
+          to: email,
+          subject: 'CRFV Event Registration Confirmation',
+          html: `
 <p>Dear ${firstName} ${lastName},</p>
 
 <p>Thank you for registering for <strong>${eventName}</strong>.</p>
@@ -197,13 +208,16 @@ If you have any questions, please contact the event organiser directly.</p>
  
 
         `
-      };
-      try {
-        await sgMail.send(msg);
+        });
+        if (!result.success) {
+          emailSent = false;
+          console.error('Email send error:', result.error);
+        } else {
+          console.log(`[EMAIL] Confirmation sent via ${result.provider} to: ${email}`);
+        }
       } catch (emailErr) {
         emailSent = false;
-        console.error('SendGrid error:', emailErr);
-        // Optionally log this to your audit trail or notify admin
+        console.error('Email send error:', emailErr);
       }
     }
 
