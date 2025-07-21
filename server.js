@@ -405,22 +405,6 @@ function isValidPassword(password) {
     return passwordRegex.test(password);
 }
 
-async function sendEmail(to, subject, htmlContent) {
-    const msg = {
-        to: to,
-        from: process.env.SENDER_EMAIL,
-        subject: subject,
-        html: htmlContent
-    };
-
-    try {
-        await sgMail.send(msg);
-        console.log('Email sent to ' + to);
-    } catch (error) {
-        console.error('Error sending email:', error);
-    }
-}
-
 function generateOTP() {
     return Math.floor(100000 + Math.random() * 900000).toString();
 }
