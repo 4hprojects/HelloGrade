@@ -36,14 +36,16 @@ const { ObjectId } = require('mongodb');
 const { google } = require('googleapis');
 
 
-
 const attendanceApi = require('./routes/attendanceApi');
 const registerApi = require('./routes/registerApi');
 const eventsApi = require('./routes/eventsApi');
 const bulkRegisterApi = require('./routes/bulkRegisterApi');
 const userRegisterApi = require('./routes/userRegisterApi');
 const reportsApi = require('./routes/reportsApi');
+const paymentReportsApi = require('./routes/paymentReportsApi');
 const attendanceSummaryApi = require('./routes/attendanceSummaryApi');
+const emailApi = require('./routes/emailApi');
+const { sendEmail } = require('./utils/emailSender');
 
 // Security middleware
 app.use(helmet({ contentSecurityPolicy: false }));
@@ -89,7 +91,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/attendance-summary', attendanceSummaryApi);
+app.use('/api', emailApi);
 app.use('/api', userRegisterApi);
 app.use('/api/bulk-register', bulkRegisterApi);
 app.use('/api/events', eventsApi);
@@ -97,6 +99,9 @@ app.use('/api/attendees', registerApi); // for check-rfid and latest
 app.use('/api/register', registerApi);  // for POST registration
 app.use('/api/attendance', attendanceApi);
 app.use('/api', reportsApi);
+app.use('/api', paymentReportsApi);
+app.use('/api/attendance-summary', attendanceSummaryApi);
+
 // Call the database connection function
 connectToDatabase()
   .then(() => {
