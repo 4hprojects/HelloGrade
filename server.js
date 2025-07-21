@@ -42,7 +42,7 @@ const eventsApi = require('./routes/eventsApi');
 const bulkRegisterApi = require('./routes/bulkRegisterApi');
 const userRegisterApi = require('./routes/userRegisterApi');
 const reportsApi = require('./routes/reportsApi');
-const paymentReportsApi = require('./routes/paymentReportsApi');
+//const paymentReportsApi = require('./routes/paymentReportsApi');
 const attendanceSummaryApi = require('./routes/attendanceSummaryApi');
 const emailApi = require('./routes/emailApi');
 const { sendEmail } = require('./utils/emailSender');
@@ -100,7 +100,7 @@ app.use('/api/attendees', registerApi); // for check-rfid and latest
 app.use('/api/register', registerApi);  // for POST registration
 app.use('/api/attendance', attendanceApi);
 app.use('/api', reportsApi);
-app.use('/api', paymentReportsApi);
+//app.use('/api', paymentReportsApi);
 app.use('/api/attendance-summary', attendanceSummaryApi);
 
 // Call the database connection function
