@@ -36,21 +36,26 @@ const { ObjectId } = require('mongodb');
 const { google } = require('googleapis');
 
 
+
 const attendanceApi = require('./routes/attendanceApi');
 const registerApi = require('./routes/registerApi');
 const eventsApi = require('./routes/eventsApi');
 const bulkRegisterApi = require('./routes/bulkRegisterApi');
 const userRegisterApi = require('./routes/userRegisterApi');
 const reportsApi = require('./routes/reportsApi');
-//const paymentReportsApi = require('./routes/paymentReportsApi');
+const paymentReportsApi = require('./routes/paymentsReportsApi');
 const attendanceSummaryApi = require('./routes/attendanceSummaryApi');
 const emailApi = require('./routes/emailApi');
 const { sendEmail } = require('./utils/emailSender');
 const signupApi = require('./routes/signupApi');
+const confirmEmailApi = require('./routes/confirmEmailApi');
+const resendConfirmationApi = require('./routes/resendConfirmationApi');
+const paymentsReportApi = require('./routes/paymentsReportsApi');
 
-
+app.use('/api/payments-report', paymentsReportApi);
+app.use('/resend-confirmation', resendConfirmationApi);
+app.use('/confirm-email', confirmEmailApi);
 app.use('/signup', signupApi);
-
 // Security middleware
 app.use(helmet({ contentSecurityPolicy: false }));
 app.disable('x-powered-by');
@@ -103,8 +108,10 @@ app.use('/api/attendees', registerApi); // for check-rfid and latest
 app.use('/api/register', registerApi);  // for POST registration
 app.use('/api/attendance', attendanceApi);
 app.use('/api', reportsApi);
-//app.use('/api', paymentReportsApi);
+app.use('/api', paymentReportsApi);
 app.use('/api/attendance-summary', attendanceSummaryApi);
+
+app.use(express.static(path.join(__dirname, "public")));
 
 // Call the database connection function
 connectToDatabase()
@@ -153,10 +160,14 @@ const serviceAccount = {
     universe_domain: process.env.GOOGLE_UNIVERSE_DOMAIN
 };
 
+
+
 // Import the new route file
 const studentEthnicityRoutes = require('./routes/studentEthnicityRoutes');
 // Mount it
 app.use('/api/student-ethnicity', studentEthnicityRoutes);
+
+
 
 
 //-----------------------------------------------------------------
@@ -299,7 +310,7 @@ app.use(express.json());
 
 
 
-const { fetchClassSectionFromMasterList, fetchClassRecordFromSheet } = require('./utils/googleSheetsUtils.js');
+const { fetchClassSectionFromMasterList, fetchClassRecordFromSheet } = require('./utils/googleSheetsUtils');
 
 
 
@@ -632,10 +643,9 @@ app.get('/api/assignments/student', isAuthenticated, async (req, res) => {
                     isAssignedToStudent = true;
                 }
             } else {
-                // assignedStudents is empty => means entire class is assigned
-                // we must confirm that the classDoc indeed has the student
-                const cls = await classesCollection.findOne({ _id: asn.classId, students: studentIDNumber });
-                if (cls) {
+                // assigned to entire class
+                const classDoc = await classesCollection.findOne({ _id: asn.classId, students: studentIDNumber });
+                if (classDoc) {
                     isAssignedToStudent = true;
                 }
             }
@@ -1645,96 +1655,6 @@ app.get('/api/quizzes/:quizId', isAuthenticated, async (req, res) => {
 });
 
 
-
-// Sign Up Route
-app.post('/signup', async (req, res) => {
-    console.log('Received signup request:', req.body);
-    const { firstName, lastName, email, password, confirmPassword, studentIDNumber, termsCheckbox } = req.body;
-
-    // Check if terms are agreed
-    if (!termsCheckbox) {
-        return res.status(400).json({ success: false, message: 'You must agree to the Terms and Conditions.' });
-    }
-
-    try {
-        // Input validation
-        if (!firstName || !lastName || !email || !password || !confirmPassword || !studentIDNumber) {
-            return res.status(400).json({ success: false, message: 'All fields are required.' });
-        }
-        
-        // Check if passwords match
-        if (password !== confirmPassword) {
-            return res.status(400).json({ success: false, message: 'Passwords do not match.' });
-        }
-        
-
-        // Validate email format
-        if (!validator.isEmail(email)) {
-            return res.status(400).json({ success: false, message: 'Invalid email format.' });
-        }
-
-        // Validate password criteria
-        if (!isValidPassword(password)) {
-            return res.status(400).json({ success: false, message: 'Password must meet all criteria.' });
-        }
-
-        // Validate studentIDNumber
-        if (!/^\d{1,7}$/.test(studentIDNumber)) {
-            return res.status(400).json({ success: false, message: 'Student ID must be a number with up to 7 digits.' });
-        }
-
-        // Check if email already exists
-        const existingEmail = await usersCollection.findOne({ emaildb: email });
-        if (existingEmail) {
-            return res.status(400).json({
-                success: false,
-                message: 'The email is already registered. Please log in or reset your password.'
-            });
-        }
-
-        // Check if student ID already exists
-        const existingStudentID = await usersCollection.findOne({ studentIDNumber });
-        if (existingStudentID) {
-            return res.status(400).json({
-                success: false,
-                message: 'Student ID already exists. If you think this is a mistake, please contact support.'
-            });
-        }
-
-        // Hash the password
-        const hashedPassword = await hashPassword(password);
-
-        // Create a new user object
-        const newUser = {
-            firstName,
-            lastName,
-            emaildb: email,
-            password: hashedPassword,
-            createdAt: new Date(),
-            invalidLoginAttempts: 0,
-            accountLockedUntil: null,
-            invalidResetAttempts: 0,
-            accountDisabled: false,
-            role: "student",
-            studentIDNumber
-        };
-
-        // Insert the new user into the database
-        const insertResult = await usersCollection.insertOne(newUser);
-
-        if (insertResult.acknowledged) {
-            res.json({ success: true, message: 'Account created successfully!' });
-        } else {
-            res.status(500).json({ success: false, message: 'Failed to create account.' });
-        }
-    } catch (error) {
-        console.error('Error creating account:', error);
-        res.status(500).json({ success: false, message: 'An internal server error occurred.' });
-    }
-});
-
-
-
     // Login Route with Rate Limiting
     app.post('/login', async (req, res) => {
         const { studentIDNumber, password } = req.body;
@@ -1805,7 +1725,7 @@ app.post('/signup', async (req, res) => {
                         <p>You are locked out from logging in for 30 minutes, but you can reset your password immediately if you need.</p>
                         <p>Best regards,<br/>HelloGrade Student Portal Team</p>
                     `;
-                    await sendEmail(user.emaildb, 'Account Locked', emailContent);
+                    await sendEmail({ to: user.emaildb, subject: 'Account Locked', html: emailContent });
     
                     return res.status(403).json({ 
                         success: false, 
@@ -1942,7 +1862,7 @@ app.post('/signup', async (req, res) => {
           }
       
           // Now we can call sendEmail, referencing the same `emailContent` variable
-          await sendEmail(email, 'Your Password Reset Code', emailContent);
+          await sendEmail({ to: email, subject: 'Your Password Reset Code', html: emailContent });
       
           return res.json({
             success: true, 
@@ -2676,3 +2596,4 @@ app.get('/:folder/:page', (req, res, next) => {
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
 });
+//app.use(eventsApi);
