@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/css/ustyles.css">
     <link rel="stylesheet" href="/css/signup.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     
@@ -24,20 +25,20 @@
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">             
-                    <li><a href="/index" title="Home"><span class="material-icons">home</span></a></li>
-                    <li><a href="#" title="Search" onclick="toggleSearchOverlay()"><span class="material-icons">search</span></a></li>
-                    <li><a href="/blog" title="Blogs"><span class="material-icons">article</span></a></li>
-                    <li><a href="/events" title="Events"><span class="material-icons">event</span></a></li>
-                    <li><a href="/lessons" title="Lessons"><span class="material-icons">menu_book</span></a></li>
-                    <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
+                <li><a href="/index" title="Home"><span class="material-icons">home</span></a></li>
+                <li><a href="/search" title="Search"><span class="material-icons">search</span></a></li>
+                <li><a href="/blog" title="Blogs"><span class="material-icons">article</span></a></li>
+                <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
             </ul>
         </nav>
     </header>
     <main class="background flex-grow">
+
         <form id="signupForm" action="/signup" method="post" class="form-container compact-form">
             <h2 align="center">Create an Account</h2>
         
             <!-- First Name and Last Name -->
+            <br>
             <div class="flex-container">
                 <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
                 <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
@@ -73,6 +74,9 @@
             </div>
         
             <div id="errorMessage" class="notification" aria-live="polite"></div>
+
+            <!-- reCAPTCHA -->
+            <div class="g-recaptcha" data-sitekey="6LejKosrAAAAAJzaoo6ayNniUxqCnOvxRqbyie3L"></div>
           
             <button type="submit">Sign Up</button>
         
