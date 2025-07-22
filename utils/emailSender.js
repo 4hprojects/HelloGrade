@@ -18,6 +18,15 @@ async function sendEmail({ to, subject, html }) {
   const quotaCol = db.collection('emailQuota');
   const today = new Date().toISOString().slice(0, 10);
 
+  // For monthly MailerSend quota
+  const thisMonth = new Date().toISOString().slice(0, 7); // e.g., "2025-07"
+  const mailersendQuotaCol = db.collection('mailersendQuota');
+  let mailersendQuota = await mailersendQuotaCol.findOne({ _id: thisMonth });
+  if (!mailersendQuota) {
+    mailersendQuota = { _id: thisMonth, count: 0 };
+    await mailersendQuotaCol.insertOne(mailersendQuota);
+  }
+
   let quota = await quotaCol.findOne({ _id: today });
   if (!quota) {
     quota = { _id: today, resendCount: 0, elasticCount: 0, mailersendCount: 0, sendgridCount: 0 };
@@ -38,20 +47,8 @@ async function sendEmail({ to, subject, html }) {
 
   console.log('Quota for today:', quota);
 
-  // Reset logic - Uncomment to enable
-  /*
-  const resetDate = new Date('YYYY-MM-DD');
-  if (new Date() >= resetDate) {
-    await db.emailQuota.updateOne(
-      { _id: 'YYYY-MM-DD' },
-      { $set: { resendCount: 50, elasticCount: 0, sendgridCount: 0 } }
-    );
-    console.log('Quota reset for date:', 'YYYY-MM-DD');
-  }
-  */
-
   // 1. Try RESEND
-  if (quota.resendCount < 95) {
+  if (quota.resendCount < 50) {
     console.log('Trying RESEND...');
     try {
       const response = await resend.emails.send({
@@ -100,9 +97,8 @@ async function sendEmail({ to, subject, html }) {
     }
   }
 
-  // 3. Try MAILERSEND
-  if (quota.mailersendCount === undefined) quota.mailersendCount = 0;
-  if (quota.mailersendCount < 95) {
+  // 3. Try MAILERSEND (monthly quota)
+  if (mailersendQuota.count < 99) {
     console.log('Trying MAILERSEND...');
     try {
       const mailersend = new MailerSend({ apiKey: process.env.MAILERSEND_API_KEY });
@@ -117,13 +113,16 @@ async function sendEmail({ to, subject, html }) {
       const response = await mailersend.email.send(emailParams);
       console.log('[MAILERSEND RESPONSE]', response.body ? await response.body.text() : response);
 
-      await quotaCol.updateOne({ _id: today }, { $inc: { mailersendCount: 1 } });
+      await mailersendQuotaCol.updateOne({ _id: thisMonth }, { $inc: { count: 1 } });
+      await quotaCol.updateOne({ _id: today }, { $inc: { mailersendCount: 1 } }); // still track daily for reporting
       console.log(`[EMAIL] Sent via MAILERSEND to: ${to}`);
       return { success: true, provider: 'MAILERSEND' };
     } catch (err) {
       console.error('MAILERSEND error:', err);
       // Fall through to SendGrid
     }
+  } else {
+    console.log('MAILERSEND monthly quota reached.');
   }
 
   // 4. Try SENDGRID
