@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blogPool = [
         {
+            id: "gfunds-dividends",
+            title: "GFunds That Pay You: Exploring Dividends for Young Investors",
+            date: "July 23, 2025",
+            image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjIc2Q-hchzLiGg-vrLtTbDtJaPB_3XgGIIlTkZOnBW2Y8gYaKtrYwlur4BhIHxGnsPP3NUDXAcCBl94NR2ECWaRFPDV68zOYrG9Ta8H9ymBJH2IpIq8lLOP6In5GlQm7HifsMm8QwR0i4/s3073/GCash+logo+horizontal.png",
+            link: "https://hellograde.online/blogs/finance/gfunds-dividends",
+            description: "Learn how GFunds with dividends work, especially for Filipino beginners. Find out how to invest as low as ₱1,000 in dividend-paying mutual funds like ALFM and Manulife for passive income."
+        },
+        {
             id: "tailwind-intro",
             title: "Mastering Tailwind CSS: A Beginner-Friendly Introduction",
             date: "June 20, 2025",
