@@ -578,11 +578,11 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Maximise your semestral break with tips for rest, skill development, and exciting activities."
         },
         {
-            id: "blog6",
+            id: "baguio-smart-city-challenge-bsu",
             title: "Baguio Smart City Challenge",
             date: "December 11, 2024",
             image: "/images/blog6.webp",
-            link: "/blogs/blog6",
+            link: "/blogs/baguio-smart-city-challenge-bsu",
             description: "Explore the projects, lessons, and insights from this transformative experience."
         },
         {
