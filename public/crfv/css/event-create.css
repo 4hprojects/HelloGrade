@@ -86,7 +86,7 @@ body {
   padding: 12px 0;
   border-radius: 8px;
   box-shadow: var(--shadow, 0 2px 12px rgba(0,0,0,0.05));
-}
+} 
 .modal-content .btn + .btn {
   margin-top: 12px;
 }
@@ -98,7 +98,7 @@ body {
 .two-panel-container {
   display: flex;
   gap: 2em;
-  max-width: 1100px; /* increase overall width if needed */
+  max-width: 100%; /* increase overall width if needed */
   margin: 2em auto;
   padding: 1em;
 }
@@ -162,6 +162,132 @@ body {
 .event-action {
   font-size: 0.9em; /* Slightly smaller text for actions */
 }
+.events-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+}
+.events-table th, .events-table td {
+  padding: 0.7em 0.5em;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+.events-table th {
+  background: #f3f6fa;
+  font-weight: 600;
+  color: #1976d2;
+}
+.event-row-even {
+  background: #f5f7fa;
+}
+.event-row-odd {
+  background: #e3f0fc;
+}
+.events-table tr:hover {
+  background: #eaf3fc;
+}
+.collapsible {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  font-size: 1.25em;
+  font-weight: 600;
+  color: #1976d2;
+  text-align: left;
+  width: 100%;
+  padding-left: 0.2em;
+  margin-bottom: 0.5em;
+}
+.collapse-icon {
+  font-size: 1em;
+  margin-right: 0.5em;
+  transition: transform 0.2s;
+}
+.collapsible.collapsed .collapse-icon {
+  transform: rotate(-90deg);
+}
+.panel-content-centered {
+  width: 100%;
+  max-width: 1000px; /* or whatever width looks best */
+  margin: 0 auto 2em auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-items: flex-start;
+}
+#latestEventsList {
+  width: 100%;
+  padding: 0; /* Remove unnecessary padding */
+  margin: 0; /* Remove unnecessary margin */
+}
+/* Style for modal dropdown */
+#editEventStatus {
+  width: 100%;
+  padding: 0.5em 2em 0.5em 0.8em;
+  border: 1px solid #bdbdbd;
+  border-radius: 6px;
+  background: #f8fafc url("data:image/svg+xml,%3Csvg width='16' height='16' fill='gray' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='gray' stroke-width='2' fill='none'/%3E%3C/svg%3E") no-repeat right 0.8em center/1em;
+  font-size: 1em;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+#editEventStatus:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+.form-row label {
+  min-width: 80px;
+  font-weight: 500;
+}
+.form-row select {
+  width: 100%;
+  padding: 0.5em 2em 0.5em 0.8em;
+  border: 1px solid #bdbdbd;
+  border-radius: 6px;
+  background: #f8fafc url("data:image/svg+xml,%3Csvg width='16' height='16' fill='gray' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='gray' stroke-width='2' fill='none'/%3E%3C/svg%3E") no-repeat right 0.8em center/1em;
+  font-size: 1em;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.form-row select:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+.status-label {
+  flex: 0 0 33%;
+  max-width: 33%;
+  font-weight: 500;
+}
+.status-select {
+  flex: 0 0 67%;
+  max-width: 67%;
+  width: 100%;
+  padding: 0.5em 2em 0.5em 0.8em;
+  border: 1px solid #bdbdbd;
+  border-radius: 6px;
+  background: #f8fafc url("data:image/svg+xml,%3Csvg width='16' height='16' fill='gray' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='gray' stroke-width='2' fill='none'/%3E%3C/svg%3E") no-repeat right 0.8em center/1em;
+  font-size: 1em;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.status-select:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+
 @media (max-width: 600px) {
   .app-container {
     max-width: 99vw;
@@ -178,6 +304,48 @@ body {
 
   .event-actions {
     justify-content: center; /* Center actions on small screens */
+  }
+
+  /* Mobile improvements for header user section */
+  .header-user {
+    gap: 0.5em;
+    padding: 0.3em 0.2em;
+    font-size: 0.97em;
+  }
+  #userName {
+    padding: 0.3em 0.7em;
+    font-size: 0.97em;
+    border-radius: 16px;
+    box-shadow: none;
+    background: #e3f0fc;
+    color: #1565c0;
+    min-width: 80px;
+    text-align: center;
+  }
+  .icon-btn {
+    padding: 0.25em 0.4em;
+    font-size: 1.2em;
+    border-radius: 50%;
+    box-shadow: none;
+  }
+  .home-btn, .logout-btn {
+    min-width: 36px;
+    min-height: 36px;
+    background: #f3f6fa;
+  }
+  .home-btn .material-icons,
+  .logout-btn .material-icons {
+    font-size: 1.3em;
+  }
+
+  /* Make header itself more compact on mobile */
+  .fixed-header {
+    padding: 0.5em 0.2em;
+    font-size: 0.97em;
+  }
+  .header-title {
+    font-size: 1em;
+    gap: 0.5em;
   }
 }
 @media (max-width: 900px) {
@@ -235,23 +403,91 @@ body {
 /* Make Panel 2 (Upcoming Events) wider */
 #eventsPanel {
   flex: 2 1 0;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center horizontally */
-  justify-content: center; /* Center vertically if you want */
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2em 2em 2em 2em;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px #0001;
 }
 
-.panel-content-centered {
-  width: 100%;
-  max-width: 500px; /* or whatever width looks best */
-  margin: 0 auto;
+/* Professional header user styles */
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-left: auto;
+}
+
+#userName {
+  font-weight: 500;
+  padding: 0.4em 1em;
+  background: #f3f6fa;
+  border-radius: 20px;
+  color: #1a237e; /* Deep blue for contrast */
+  box-shadow: 0 1px 4px #0001;
+  letter-spacing: 0.02em;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.35em 0.6em;
+  border-radius: 50%;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px #0001;
+}
+
+.home-btn {
+  background: #e3f0fc;
+}
+
+.home-btn .material-icons {
+  color: #1565c0; /* Professional blue */
+}
+
+.home-btn:hover {
+  background: #bbdefb;
+}
+
+.home-btn:hover .material-icons {
+  color: #0d47a1;
+}
+
+.logout-btn {
+  background: #fbe9e7;
+}
+
+.logout-btn .material-icons {
+  color: #c62828; /* Professional red */
+}
+
+.logout-btn:hover {
+  background: #ffcdd2;
+}
+
+.logout-btn:hover .material-icons {
+  color: #b71c1c;
+}
+
+.form-row {
+  display: flex;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+.form-row label {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  font-weight: 500;
 }
-#latestEventsList {
-  width: 100%;
-  padding: 0; /* Remove unnecessary padding */
-  margin: 0; /* Remove unnecessary margin */
+.form-row input[type="date"] {
+  margin-top: 0.3em;
+  padding: 0.4em;
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+  font-size: 1em;
 }
