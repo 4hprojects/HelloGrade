@@ -101,7 +101,15 @@ async function renderSidePanel(loggedIn, user) {
           </a>
           <a href="settings.html" target="_blank" class="menu-square" data-role="all">
             <i class="material-icons">settings</i>
-            <span>Settings</span>
+            <span>System Settings</span>
+          </a>
+          <a href="settings.html" target="_blank" class="menu-square" data-role="all">
+            <i class="material-icons" aria-hidden="true">settings</i>
+            <span>Account Settings</span>
+          </a>
+          <a href="audittrail.html" target="_blank" class="menu-square" data-role="all">
+            <i class="material-icons" aria-hidden="true">assessment</i>
+            <span>System Reports</span>
           </a>
         </div>
       `;
