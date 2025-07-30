@@ -6,7 +6,8 @@ async function logAuditTrail({
   userNameFallback = 'admin',
   userIdOverride,
   userRoleOverride,
-  userNameOverride
+  userNameOverride,
+  details
 }) {
   const user_id = userIdOverride || req.user?.studentIDNumber || req.user?.userId || 'admin';
   const user_role = userRoleOverride || req.user?.role || 'admin';
@@ -19,6 +20,7 @@ async function logAuditTrail({
       user_role,
       user_name,
       action,
+      details, // <-- add this column to your DB if not present
       user_agent: req.headers['user-agent'],
       ip_address: req.ip
     }]);
