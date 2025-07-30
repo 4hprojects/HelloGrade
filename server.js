@@ -51,7 +51,9 @@ const signupApi = require('./routes/signupApi');
 const confirmEmailApi = require('./routes/confirmEmailApi');
 const resendConfirmationApi = require('./routes/resendConfirmationApi');
 const paymentsReportApi = require('./routes/paymentsReportsApi');
+const userSignInOutApi = require('./routes/userSignInOutApi');
 
+app.use('/api', userSignInOutApi);
 app.use('/api/payments-report', paymentsReportApi);
 app.use('/resend-confirmation', resendConfirmationApi);
 app.use('/confirm-email', confirmEmailApi);
@@ -111,6 +113,8 @@ app.use('/api', reportsApi);
 app.use('/api', paymentReportsApi);
 app.use('/api/attendance-summary', attendanceSummaryApi);
 
+app.use('/api/attendees', require('./routes/attendeesApi'));
+app.use('/api/events', require('./routes/eventsApi'));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Call the database connection function
@@ -1791,15 +1795,16 @@ app.get('/api/quizzes/:quizId', isAuthenticated, async (req, res) => {
                 }
     
                 res.clearCookie('connect.sid');
+                res.json({ success: true });
     
                 // Set headers to prevent caching
-                res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-                res.setHeader('Pragma', 'no-cache');
-                res.setHeader('Expires', '0');
-                res.setHeader('Surrogate-Control', 'no-store');
+               // res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+              //  res.setHeader('Pragma', 'no-cache');
+               // res.setHeader('Expires', '0');
+               // res.setHeader('Surrogate-Control', 'no-store');
     
                 // Redirect to index.html after logout
-                return res.redirect('/index.html');
+               // return res.redirect('/index.html');
             });
         } catch (error) {
             console.error('Error during logout:', error);
@@ -2197,7 +2202,7 @@ function parseCSVFile(filePath) {
 
     // Search for students based on different criteria
 // Search for students based on different criteria
-app.get('/search', isAuthenticated, async (req, res) => {
+app.get('/search', async (req, res) => {
     
     try {
         const { query } = req.query; // Get search query from request
