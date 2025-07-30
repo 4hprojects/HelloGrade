@@ -9,7 +9,7 @@
         gtag('js', new Date());
         gtag('config', 'G-X5E3N182NE');
     </script>
-     
+      
     <meta charset="UTF-8">
     <meta name="author" content="Henson M. Sagorsor">
     <meta name="google-adsense-account" content="ca-pub-4537208011192461">
@@ -37,42 +37,52 @@
     <meta property="og:url" content="https://hellograde.online/crfv/index.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="CRFV Event System">
-      <link rel="stylesheet" href="css/index.css">
+    
+    <link rel="stylesheet" href="css/index.css">
 
 </head>
 <body>
     <header class="fixed-header">
-        <div class="header-title">
-            <i class="material-icons">event</i>
+        <div class="header-title" aria-label="CRFV Event Management System">
+            <i class="material-icons" aria-hidden="true">event</i>
             <span>CRFV Event Management System</span>
         </div>
-        <nav class="header-nav" id="headerNav">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-controls="headerNav" aria-expanded="false">
+            <i class="material-icons" aria-hidden="true">menu</i>
+        </button>
+        <nav class="header-nav" id="headerNav" aria-label="Main navigation">
             <a href="index.html" target="_self">
-                <i class="material-icons">home</i>
+                <i class="material-icons" aria-hidden="true">home</i>
                 <span>Home</span>
             </a>
-            <a href="attendance.html" target="_blank" >
-                <i class="material-icons">how_to_reg</i>
+            <a href="attendance.html" target="_blank">
+                <i class="material-icons" aria-hidden="true">how_to_reg</i>
                 <span>Attendance</span>
             </a>
-            <a href="admin-register.html" target="_blank" >
-                <i class="material-icons">person_add</i>
+            <a href="admin-register.html" target="_blank">
+                <i class="material-icons" aria-hidden="true">person_add</i>
                 <span>Register</span>
             </a>
-            <a href="event-create.html" target="_blank" >
-                <i class="material-icons">event</i>
-                <span>Create Event</span>
-            </a>
-            <a href="reports.html" target="_blank" >
-                <i class="material-icons">bar_chart</i>
+            <a href="reports.html" target="_blank">
+                <i class="material-icons" aria-hidden="true">bar_chart</i>
                 <span>Reports</span>
             </a>
+                        <a href="event-create.html" target="_blank">
+                <i class="material-icons" aria-hidden="true">event</i>
+                <span>Create Event</span>
+            </a>
+            <a href="settings.html" target="_blank">
+                <i class="material-icons" aria-hidden="true">settings</i>
+                <span>Settings</span>
+            </a>
+            <a href="#" class="menu-square" id="menuSignInOut">
+                <i class="material-icons" aria-hidden="true">login</i>
+                <span>Sign In/Out</span>
+            </a>
         </nav>
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="material-icons">menu</i>
-        </button>
+
     </header>
-    
+    <div id="menuBackdrop" class="menu-backdrop"></div>
     <main class="main-content">
         <div class="container">
             <h1 class="sr-only">CRFV Event Management System Main Menu</h1>
@@ -110,26 +120,31 @@
                 <!-- Panel 2: Menu Buttons -->
                 <section class="panel panel-menu">
                     <div class="menu-grid">
-                        <a href="attendance.html" target="_blank" class="menu-square">
+                        <a href="attendance.html" target="_blank" class="menu-square" data-role="all staff">
                             <i class="material-icons">how_to_reg</i>
                             <span>Attendance</span>
                         </a>
-                        <a href="admin-register.html" target="_blank" class="menu-square">
+                        <a href="user-register.html" target="_blank" class="menu-square" data-role="all staff">
                             <i class="material-icons">person_add</i>
                             <span>Register</span>
                         </a>
-                        <a href="event-create.html" target="_blank" class="menu-square">
-                            <i class="material-icons">event</i>
-                            <span>Create Event</span>
-                        </a>
-                        <a href="reports.html" target="_blank" class="menu-square">
+                        <a href="reports.html" target="_blank" class="menu-square" data-role="all staff">
                             <i class="material-icons">bar_chart</i>
                             <span>Reports</span>
                         </a>
-                        <a href="attendanceSummary.html" target="_blank" class="menu-square">
+                        <a href="attendanceSummary.html" target="_blank" class="menu-square" data-role="all staff">
                             <i class="material-icons">fact_check</i>
                             <span>Attendance Summary</span>
                         </a>
+                        <a href="event-create.html" target="_blank" class="menu-square" data-role="all">
+                            <i class="material-icons">event</i>
+                            <span>Create Event</span>
+                        </a>
+                        <a href="settings.html" target="_blank" class="menu-square" data-role="all">
+                            <i class="material-icons">settings</i>
+                            <span>Settings</span>
+                        </a>
+
                     </div>
                 </section>
                 
@@ -138,12 +153,18 @@
             </div>
         </div>
     </main>
-    
-    <footer class="fixed-footer">
-        © 2025 CRFV. All rights reserved.
-    </footer>
-  <script src="js/index.js"></script>
 
-    </script>
+  <script src="js/index.js"></script>
+  
+  <!-- Footer Section -->
+  <div id="footer"></div>
+  <script>
+    fetch('/crfv/footer.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('footer').innerHTML = html);
+  </script>
+
+
+
 </body>
 </html>
