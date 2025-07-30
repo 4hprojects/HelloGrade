@@ -339,10 +339,16 @@ body {
   }
 
   /* Make header itself more compact on mobile */
-  .fixed-header {
-    padding: 0.5em 0.2em;
-    font-size: 0.97em;
-  }
+    .fixed-header {
+      background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      z-index: 100;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
   .header-title {
     font-size: 1em;
     gap: 0.5em;
@@ -490,4 +496,15 @@ body {
   border-radius: 5px;
   border: 1px solid #bdbdbd;
   font-size: 1em;
+}
+
+.fixed-header {
+  background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  z-index: 100;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
