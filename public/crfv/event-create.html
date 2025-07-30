@@ -24,7 +24,7 @@
     <meta name="description" content="Create new events in the CRFV Event System. Organize seminars, conferences, and more with ease.">
     <meta name="keywords" content="CRFV, create event, event management, seminar, conference, event system">
 
-    <title>Create Event | CRFV Event System</title>
+    <title>Create Event | CRFV Event Management System</title>
 
     <!-- Open Graph for social sharing -->
     <meta property="og:title" content="Create Event - CRFV Event System">
@@ -36,45 +36,32 @@
 
     <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/dist/output.css">
     <link rel="stylesheet" href="css/event-create.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/index.css"> <!--for header and footer-->
 </head>
 <body> 
     <header class="fixed-header">
         <div class="header-title">
             <i class="material-icons">event</i>
-            <span>CRFV Event System</span>
+            <a href="/crfv/index.html" style="text-decoration:none;color:inherit;">
+              CRFV Event Management System
+            </a>
         </div>
-        <nav class="header-nav" id="headerNav">
-            <a href="index.html" target="_self">
-                <i class="material-icons">home</i>
-                <span>Home</span>
-            </a>
-            <a href="attendance.html" target="_blank" >
-                <i class="material-icons">how_to_reg</i>
-                <span>Attendance</span>
-            </a>
-            <a href="register.html" target="_blank" >
-                <i class="material-icons">person_add</i>
-                <span>Register</span>
-            </a>
-            <a href="event-create.html" target="_blank" >
-                <i class="material-icons">event</i>
-                <span>Create Event</span>
-            </a>
-            <a href="reports.html" target="_blank" >
-                <i class="material-icons">bar_chart</i>
-                <span>Reports</span>
-            </a>
-        </nav>
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="material-icons">menu</i>
+      <div class="header-user" id="headerUser" style="display:flex;align-items:center;gap:1em;margin-left:auto;">
+        <span id="userName" style="font-weight:500;padding:0.4em 1em;background:#f3f6fa;border-radius:20px;color:#1a237e;box-shadow:0 1px 4px #0001;">
+          <!-- JS will populate this -->
+        </span>
+        <a href="/crfv/index.html" title="Home" class="icon-btn home-btn" style="background:#e3f0fc;border-radius:50%;box-shadow:0 1px 4px #0001;">
+          <i class="material-icons" style="font-size:1.5em;color:#1565c0;">home</i>
+        </a>
+        <button id="logoutBtn" title="Logout" class="icon-btn logout-btn" style="background:#fbe9e7;border-radius:50%;box-shadow:0 1px 4px #0001;">
+          <i class="material-icons" style="font-size:1.5em;color:#c62828;">logout</i>
         </button>
+      </div>
     </header>
   <main class="two-panel-container">
     <!-- Panel 1: Create Event or Message -->
@@ -105,16 +92,75 @@
           Event ID:
           <input type="text" id="event_id" name="event_id" readonly style="background:#f3f3f3;">
         </label>
+        <label>Created By (Student ID): <input type="text" name="creator_student_id" id="creator_student_id" readonly style="background:#f3f3f3;"></label>
         <button type="submit" class="btn btn-primary mt-4">Create Event</button>
+        <br><br><br>
         <div id="eventStatus" class="mt-4 text-blue-600"></div>
       </form>
     </section>
     
-    <!-- Panel 2: Upcoming Events -->
+    <!-- Panel 2: Upcoming Events, Completed Events, All Events -->
     <section class="panel" id="eventsPanel">
+      <br>
       <div class="panel-content-centered">
-        <h2>Upcoming Events</h2>
-        <ul id="latestEventsList"></ul>
+        <h2 class="collapsible" data-target="latestEventsTable">
+          <span class="collapse-icon">▼</span> Upcoming Events
+        </h2>
+        <!-- Upcoming Events Table -->
+<table class="events-table" id="latestEventsTable" style="display:table;">
+  <thead> 
+    <tr>
+      <th>Event ID</th>
+      <th>Event Name</th>
+      <th>Date</th>
+      <th>Venue</th>
+      <th>Location</th>
+      <th>Action</th> <!-- For Upcoming -->
+    </tr>
+  </thead>
+  <tbody id="latestEventsList"></tbody>
+</table>
+
+      </div>
+      <div class="panel-content-centered mt-8">
+        <h2 class="collapsible" data-target="archivedEventsTable">
+          <span class="collapse-icon">▼</span> Completed Events (Archived)
+        </h2>
+        <!-- Archived Events Table -->
+<table class="events-table" id="archivedEventsTable" style="display:table;">
+  <thead>
+    <tr>
+      <th>Event ID</th>
+      <th>Event Name</th>
+      <th>Date</th>
+      <th>Venue</th>
+      <th>Location</th>
+      <th>Status</th> <!-- For All/Archived -->
+    </tr>
+  </thead>
+  <tbody id="archivedEventsList"></tbody>
+</table>
+
+      </div>
+      <div class="panel-content-centered mt-8">
+        <h2 class="collapsible" data-target="allEventsTable">
+          <span class="collapse-icon">▼</span> All Events
+        </h2>
+        <!-- All Events Table -->
+<table class="events-table" id="allEventsTable" style="display:table;">
+  <thead>
+    <tr>
+      <th>Event ID</th>
+      <th>Event Name</th>
+      <th>Date</th>
+      <th>Venue</th>
+      <th>Location</th>
+      <th>Status</th> <!-- For All/Archived -->
+    </tr>
+  </thead>
+  <tbody id="allEventsList"></tbody>
+</table>
+
       </div>
     </section>
   </main>
@@ -134,5 +180,25 @@
   <!-- QR Code Library -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
   <script src="js/event-create.js"></script>
+
+  <!-- Advertisement Section -->
+  <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-4537208011192461"
+      data-ad-slot="1190959056"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  
+  <!-- Footer Section -->
+  <div id="footer"></div>
+  <script>
+    fetch('/crfv/footer.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('footer').innerHTML = html);
+  </script>
+
 </body>
 </html>
