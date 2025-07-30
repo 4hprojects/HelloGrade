@@ -227,6 +227,12 @@
 .menu-square:nth-child(6) {
   background: linear-gradient(135deg, #17615e 0%, #9b8189 100%);
 }
+.menu-square:nth-child(7) {
+  background: linear-gradient(135deg, #8e54e9 0%, #4776e6 100%);
+}
+.menu-square:nth-child(8) {
+  background: linear-gradient(135deg, #577a9d 0%, #34495e 100%);
+}
 
 /* Hover effect: brighten and add subtle overlay */
 .menu-square:hover {
@@ -627,3 +633,5 @@
           opacity: 0.5;
           filter: grayscale(0.7);
         }
+        #logs-table { display: table !important; }
+#logs-table tbody { display: table-row-group !important; }
