@@ -8,7 +8,7 @@ let registeredList = [];
 let offlineLogs = JSON.parse(localStorage.getItem("offlineLogs") || "[]");
 let currentEventId = null;
 let currentEventName = "";
-
+ 
 // Manual sync button handler
 syncBtn.addEventListener("click", () => {
   status.textContent = "Manual sync started...";
@@ -24,6 +24,7 @@ async function loadRegisteredList() {
     status.textContent = "Ready to scan.";
   } catch (e) {
     status.textContent = "Failed to load registered data.";
+    showError("Could not load registered attendees. Please check your connection.");
   }
 }
 
@@ -47,12 +48,13 @@ let customTimeSlots = null;
 // Fetch custom time slots on load
 async function loadTimeSlots() {
   try {
-    const res = await fetch('/api/timeslots'); // Update this endpoint if needed
+    const res = await fetch('/api/timeslots');
     customTimeSlots = await res.json();
     console.log("Loaded custom time slots:", customTimeSlots);
   } catch (e) {
     customTimeSlots = null;
     console.warn("Using default time slots.");
+    showError("Could not load custom time slots. Using defaults.");
   }
 }
 window.addEventListener("load", loadTimeSlots);
@@ -92,6 +94,29 @@ function getSlot() {
   return "PM OUT";
 }
 
+function updateLogEntryStatus(entry) {
+  const logsDiv = document.getElementById('logs-main');
+  if (!logsDiv) return;
+  const logItems = logsDiv.querySelectorAll('.log-entry');
+  logItems.forEach(item => {
+    // Find the log entry by its unique id
+    if (item.dataset.id === entry.id) {
+      if (entry.synced) {
+        item.classList.remove('pending');
+        item.classList.add('logged');
+        const pendingLabel = item.querySelector('.pending-label');
+        if (pendingLabel) pendingLabel.textContent = '✔️ Synced';
+      } else {
+        item.classList.remove('logged');
+        item.classList.add('pending');
+        const pendingLabel = item.querySelector('.pending-label');
+        if (pendingLabel) pendingLabel.textContent = '⏳ Pending Sync';
+      }
+    }
+  });
+}
+
+// Update logEntry to add a retry button for pending logs
 function logEntry(entry) {
   const logsDiv = document.getElementById('logs-main');
   if (!logsDiv) return;
@@ -104,10 +129,11 @@ function logEntry(entry) {
   const time = `<span class="log-time">${entry.time}</span>`;
   const logClass = entry.synced ? 'logged' : 'pending';
   const pendingBadge = !entry.synced
-    ? `<span class="pending-label"><i class="fas fa-clock"></i> Pending Sync</span>`
-    : '';
+    ? `<span class="pending-label"><i class="fas fa-clock"></i> Pending Sync</span>
+       <button class="retry-btn" data-id="${entry.id}" style="margin-left:8px;">Retry</button>`
+    : `<span class="pending-label">✔️ Synced</span>`;
   const logHtml = `
-    <li class="log-entry ${logClass}">
+    <li class="log-entry ${logClass}" data-id="${entry.id}">
       <div class="log-main-row">
         <span class="log-name">${fullName}</span>
         <span class="slot-badge">${entry.slot || ''}</span>
@@ -126,18 +152,60 @@ function logEntry(entry) {
   const newLog = temp.firstElementChild;
   newLog.classList.add('new');
   logsDiv.prepend(newLog);
+
+  // Add retry handler for pending logs
+  if (!entry.synced) {
+    newLog.querySelector('.retry-btn').onclick = async function() {
+      try {
+        const res = await fetch('/api/attendance', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(entry)
+        });
+        const result = await res.json();
+        if (result.status === "success") {
+          entry.synced = true;
+          updateLogEntryStatus(entry);
+          status.textContent = "Scan synced!";
+        } else {
+          status.textContent = "Retry failed. Still pending.";
+        }
+      } catch (err) {
+        status.textContent = "Network error. Still pending.";
+      }
+    };
+  }
 }
 
 function saveOffline(entry) {
-  const enhancedEntry = {
+  const logs = JSON.parse(localStorage.getItem("offlineLogs") || "[]");
+  // Prevent duplicates: check for same RFID within last 1 minute
+  const now = new Date(entry.timestamp);
+  const duplicate = logs.some(log =>
+    log.rfid === entry.rfid &&
+    Math.abs(new Date(log.timestamp) - now) < 60000 // 60,000 ms = 1 min
+  );
+  if (duplicate) return; // Skip saving duplicate
+
+  // Clean up logs older than 1 day
+  const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
+  const recentLogs = logs.filter(log => new Date(log.timestamp).getTime() > oneDayAgo);
+
+  recentLogs.push({
     ...entry,
     is_unregistered: entry.last_name === "unregistered",
     sync_version: 2
-  };
-  const logs = JSON.parse(localStorage.getItem("offlineLogs") || "[]");
-  logs.push(enhancedEntry);
-  localStorage.setItem("offlineLogs", JSON.stringify(logs));
+  });
+  localStorage.setItem("offlineLogs", JSON.stringify(recentLogs));
 }
+
+// Optionally, call this on page load to clean up old logs
+window.addEventListener('DOMContentLoaded', () => {
+  const logs = JSON.parse(localStorage.getItem("offlineLogs") || "[]");
+  const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
+  const recentLogs = logs.filter(log => new Date(log.timestamp).getTime() > oneDayAgo);
+  localStorage.setItem("offlineLogs", JSON.stringify(recentLogs));
+});
 
 function syncStoredLogs() {
   if (!navigator.onLine) return;
@@ -222,17 +290,20 @@ function isLate(entry) {
 }
 
 input.addEventListener("keydown", async function (e) {
-  if (e.key === "Enter") {
+  if (e.key === "Enter" && !input.disabled) {
+    input.disabled = true; // Prevent new entry
+
     const scannedRfid = input.value.trim();
     let match = rfidToAttendee[scannedRfid];
     let now = new Date();
     let entry = {
+      id: `${scannedRfid}_${now.getTime()}`, // Unique ID for UI tracking
       rfid: scannedRfid,
       event_id: currentEvent?.event_id,
       timestamp: now.toISOString(),
       status: "present",
       slot: getSlot(),
-      time: now.toTimeString().slice(0,5),
+      time: now.toLocaleTimeString('en-US', { hour12: false }) + '.' + now.getMilliseconds(),
       date: now.toISOString().slice(0,10),
       synced: false,
       first_name: match?.first_name || "",
@@ -241,6 +312,10 @@ input.addEventListener("keydown", async function (e) {
       is_unregistered: !match
     };
 
+    // 1. Instantly display in log as "Pending"
+    logEntry(entry);
+
+    // 2. Proceed with async save (Step 2 will update status)
     try {
       const res = await fetch('/api/attendance', {
         method: "POST",
@@ -250,6 +325,7 @@ input.addEventListener("keydown", async function (e) {
       const result = await res.json();
       if (result.status === "success") {
         entry.synced = true;
+        updateLogEntryStatus(entry);
         logEntry(entry);
         if (match) {
           status.textContent = `Hello, ${match.first_name}! Scan recorded.`;
@@ -271,6 +347,7 @@ input.addEventListener("keydown", async function (e) {
       status.textContent = "Scan saved offline (network error).";
     }
     input.value = "";
+    input.disabled = false; // Allow next entry
     focusInput();
   }
 });
@@ -308,6 +385,39 @@ document.addEventListener('click', function(e) {
     focusInput();
   }
 });
+
+function showError(message) {
+  const errorDiv = document.getElementById('errorMessage');
+  if (!errorDiv) return;
+  errorDiv.textContent = message;
+  errorDiv.style.display = 'block';
+  setTimeout(() => {
+    errorDiv.style.display = 'none';
+    errorDiv.textContent = '';
+  }, 5000); // Hide after 5 seconds
+}
+
+function updateSystemStatus(isOnline) {
+  const indicator = document.getElementById('system-indicator');
+  const statusText = document.getElementById('system-status-text');
+  if (!indicator || !statusText) return;
+  if (isOnline) {
+    indicator.className = 'system-online';
+    indicator.innerHTML = '<i class="fas fa-wifi"></i>';
+    statusText.textContent = 'Online: Ready for syncing and scanning';
+  } else {
+    indicator.className = 'system-offline';
+    indicator.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+    statusText.textContent = 'Offline: Logs will be saved locally';
+  }
+}
+
+// Listen for online/offline events
+window.addEventListener('online', () => updateSystemStatus(true));
+window.addEventListener('offline', () => updateSystemStatus(false));
+
+// Initial status check on load
+window.addEventListener('load', () => updateSystemStatus(navigator.onLine));
 
 function updateSystemIndicator() {
   const indicator = document.getElementById('system-indicator');
@@ -558,6 +668,7 @@ async function loadCurrentEventAndAttendees() {
   } catch (e) {
     document.getElementById('currentEventLabel').textContent = "No current event found.";
     setStatus('Error loading event or attendees', false);
+    showError("Could not load event or attendee list. Please check your connection.");
   }
 }
 
@@ -577,4 +688,50 @@ function setStatus(msg, online = true) {
     }
   }
 }
+
+async function loadEventsForToday() {
+  const select = document.getElementById('eventSelect');
+  select.innerHTML = '<option value="">Loading events...</option>';
+  try {
+    const res = await fetch('/api/events/today');
+    const events = await res.json();
+    if (events.length === 0) {
+      select.innerHTML = '<option value="">No events today</option>';
+      select.disabled = true;
+      return;
+    }
+    select.innerHTML = events.map(ev =>
+      `<option value="${ev.event_id}">${ev.event_name} (${ev.start_date})</option>`
+    ).join('');
+    select.disabled = false;
+    // Optionally auto-select first event
+    select.value = events[0].event_id;
+    loadAttendeesForEvent(events[0].event_id);
+  } catch (e) {
+    select.innerHTML = '<option value="">Error loading events</option>';
+    select.disabled = true;
+  }
+}
+
+async function loadAttendeesForEvent(eventId) {
+  status.textContent = "Loading attendees...";
+  try {
+    const res = await fetch(`/api/attendance/attendees/by-event/${eventId}`);
+    registeredList = await res.json();
+    currentEventId = eventId;
+    status.textContent = "Ready to scan.";
+  } catch (e) {
+    status.textContent = "Failed to load attendees.";
+    showError("Could not load attendees for selected event.");
+  }
+}
+
+// Listen for event selection changes
+document.getElementById('eventSelect').addEventListener('change', function() {
+  const eventId = this.value;
+  if (eventId) loadAttendeesForEvent(eventId);
+});
+
+// On page load, fetch today's events
+window.addEventListener('DOMContentLoaded', loadEventsForToday);
 
