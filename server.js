@@ -52,7 +52,9 @@ const confirmEmailApi = require('./routes/confirmEmailApi');
 const resendConfirmationApi = require('./routes/resendConfirmationApi');
 const paymentsReportApi = require('./routes/paymentsReportsApi');
 const userSignInOutApi = require('./routes/userSignInOutApi');
+const auditTrailApi = require('./routes/auditTrailApi');
 
+app.use('/api', auditTrailApi);
 app.use('/api', userSignInOutApi);
 app.use('/api/payments-report', paymentsReportApi);
 app.use('/resend-confirmation', resendConfirmationApi);
