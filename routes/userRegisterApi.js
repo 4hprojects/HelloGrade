@@ -111,7 +111,7 @@ router.post('/user-register', async (req, res) => {
       confirmation_code: confirmationCode,
       event_id,
       certificate_name: certificateName,
-      status: 'Pending' // default status
+      att_status: 'Pending' // default status
     };
 
     const { data, insertError } = await safeInsertAttendee(attendeeData, event_id, yymmdd, supabase);
@@ -287,3 +287,4 @@ async function safeInsertAttendee(attendeeData, event_id, yymmdd, supabase, maxR
   }
   return { data, insertError };
 }
+
