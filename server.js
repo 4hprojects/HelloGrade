@@ -54,6 +54,8 @@ const paymentsReportApi = require('./routes/paymentsReportsApi');
 const userSignInOutApi = require('./routes/userSignInOutApi');
 const auditTrailApi = require('./routes/auditTrailApi');
 
+
+app.use('/api', require('./routes/reportsApi'));
 app.use('/api', auditTrailApi);
 app.use('/api', userSignInOutApi);
 app.use('/api/payments-report', paymentsReportApi);
@@ -108,14 +110,14 @@ app.use('/api', emailApi);
 app.use('/api', userRegisterApi);
 app.use('/api/bulk-register', bulkRegisterApi);
 app.use('/api/events', eventsApi);
-app.use('/api/attendees', registerApi); // for check-rfid and latest
+
 app.use('/api/register', registerApi);  // for POST registration
 app.use('/api/attendance', attendanceApi);
 app.use('/api', reportsApi);
 app.use('/api', paymentReportsApi);
 app.use('/api/attendance-summary', attendanceSummaryApi);
 
-app.use('/api/attendees', require('./routes/attendeesApi'));
+
 app.use('/api/events', require('./routes/eventsApi'));
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -2603,4 +2605,3 @@ app.get('/:folder/:page', (req, res, next) => {
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html'); // Ensure the file path is correct
 });
-//app.use(eventsApi);
