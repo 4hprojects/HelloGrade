@@ -1,3 +1,5 @@
+//reportscounter.js
+
 // Normalizes the payment status string to a standard format
 function normalizeStatus(status) {
   if (!status) return 'ar';
