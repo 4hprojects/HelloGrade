@@ -2,43 +2,78 @@
 const express = require('express');
 const router = express.Router();
 const { createClient } = require('@supabase/supabase-js');
-const { ObjectId } = require('mongodb');
 const { logAuditTrail } = require('../utils/auditTrail');
 const { paymentUpdateSummary } = require('../utils/auditTrailUtils');
 
-// Initialize Supabase client (adjust with your env vars)
+// Initialize Supabase client
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE);
 
-// GET /api/attendees - List all attendees with event and payment status
-router.get('/attendees', async (req, res) => {
+// --- Get all events ---
+router.get('/events', async (req, res) => {
   try {
-    // Join attendees, events, and payment_info (latest payment_status)
-    const { data: attendees, error } = await supabase
-      .from('attendees')
-      .select(`
-        attendee_no, last_name, first_name, organization, designation, email, contact_no, rfid, confirmation_code, accommodation, event_id, event_name:events(event_name),
-        payment_info:payment_info(payment_status)
-      `);
+    const { data, error } = await supabase
+      .from('events')
+      .select('event_id, event_name, start_date, end_date, status, location, venue')
+      .order('start_date', { ascending: false });
+    if (error) throw error;
+    res.json(data);
+  } catch (err) {
+    console.error('Events API error:', err);
+    res.json([]); // Always return an array, even on error
+  }
+});
 
+
+
+// --- Get accommodation data with event filtering ---
+router.get('/accommodation', async (req, res) => {
+  try {
+    const { event_id } = req.query;
+    let query = supabase
+      .from('attendees')
+      .select('first_name, last_name, organization, accommodation, event_id, events(event_name)')
+      .order('last_name', { ascending: true });
+
+    if (event_id) {
+      query = query.eq('event_id', event_id);
+    }
+
+    const { data, error } = await query;
     if (error) throw error;
 
-    // Flatten payment_status (show latest if multiple)
-    const result = attendees.map(att => ({
-      ...att,
-      event_name: att.event_name?.event_name || '',
-      payment_status: Array.isArray(att.payment_info) && att.payment_info.length > 0
-        ? att.payment_info[att.payment_info.length - 1].payment_status
-        : '',
+    // Flatten event_name for each row
+    const result = data.map(row => ({
+      ...row,
+      event_name: row.events?.event_name || ''
     }));
 
     res.json(result);
   } catch (err) {
-    console.error('Error fetching attendees:', err);
-    res.status(500).json({ status: 'error', message: 'Failed to fetch attendees.' });
+    res.status(500).json({ error: 'Failed to fetch accommodation data' });
   }
 });
 
-// GET /api/attendees/:attendee_no - Get single attendee
+// --- Get attendance data with event filtering ---
+router.get('/attendance', async (req, res) => {
+  try {
+    const { event_id } = req.query;
+    let query = supabase
+      .from('attendance_records')
+      .select('date, time, raw_last_name, raw_first_name, raw_rfid, slot, event_id');
+
+    if (event_id) {
+      query = query.eq('event_id', event_id);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch attendance data' });
+  }
+});
+
+// --- Get single attendee ---
 router.get('/attendees/:attendee_no', async (req, res) => {
   try {
     const { attendee_no } = req.params;
@@ -54,7 +89,7 @@ router.get('/attendees/:attendee_no', async (req, res) => {
   }
 });
 
-// PUT /api/attendees/:attendee_no/rfid - Update RFID
+// --- Update RFID ---
 router.put('/attendees/:attendee_no/rfid', async (req, res) => {
   try {
     const { attendee_no } = req.params;
@@ -70,23 +105,27 @@ router.put('/attendees/:attendee_no/rfid', async (req, res) => {
   }
 });
 
-// PUT /api/attendees/:attendee_no - Update attendee info
+// --- Update attendee info ---
 router.put('/attendees/:attendee_no', async (req, res) => {
   try {
     const { attendee_no } = req.params;
-    const updateFields = req.body;
-    const { error } = await supabase
+    const updates = req.body;
+
+    const { data, error } = await supabase
       .from('attendees')
-      .update(updateFields)
-      .eq('attendee_no', attendee_no);
+      .update(updates)
+      .eq('attendee_no', attendee_no)
+      .select()
+      .single();
+
     if (error) throw error;
-    res.json({ status: 'success' });
+    res.json(data);
   } catch (err) {
     res.status(500).json({ status: 'error', message: 'Failed to update attendee.' });
   }
 });
 
-// GET /api/payments/:attendee_no - Get all payments for attendee
+// --- Get all payments for attendee ---
 router.get('/payments/:attendee_no', async (req, res) => {
   try {
     const { attendee_no } = req.params;
@@ -102,11 +141,10 @@ router.get('/payments/:attendee_no', async (req, res) => {
   }
 });
 
-// PUT /api/payments/:payment_id - Update payment record
+// --- Update payment record ---
 router.put('/payments/:payment_id', async (req, res) => {
   const { payment_id } = req.params;
   const updates = req.body;
-  const user = req.user;
 
   // Fetch old payment for comparison
   const { data: oldPayment, error: fetchError } = await supabase
@@ -155,7 +193,7 @@ router.put('/payments/:payment_id', async (req, res) => {
   res.json({ success: true, updated });
 });
 
-// POST /api/payments - Add new payment record
+// --- Add new payment record ---
 router.post('/payments', async (req, res) => {
   try {
     const payment = req.body;
@@ -169,39 +207,7 @@ router.post('/payments', async (req, res) => {
   }
 });
 
-// GET /api/reports/attendees - Get all attendees for report
-router.get('/reports/attendees', async (req, res) => {
-  try {
-    // Get all attendees
-    const { data: attendees, error: attendeesError } = await supabase
-      .from('attendees')
-      .select('*');
-    if (attendeesError) throw attendeesError;
-
-    // For each attendee, get their latest payment_info record
-    const attendeesWithStatus = await Promise.all(attendees.map(async att => {
-      const { data: paymentData, error: paymentError } = await supabase
-        .from('payment_info')
-        .select('payment_status')
-        .eq('attendee_no', att.attendee_no)
-        .order('date_full_payment', { ascending: false })
-        .order('created_at', { ascending: false })
-        .limit(1);
-      if (paymentError) {
-        return { ...att, payment_status: null };
-      }
-      const latestPayment = paymentData && paymentData[0];
-      return { ...att, payment_status: latestPayment ? latestPayment.payment_status : null };
-    }));
-
-    res.json({ attendees: attendeesWithStatus });
-  } catch (err) {
-    console.error('Error fetching attendees for report:', err);
-    res.status(500).json({ status: 'error', message: 'Failed to fetch attendees for report.' });
-  }
-});
-
-// PUT /api/attendees/:attendee_no/payment-info - Update payment info
+// --- Update payment info for attendee ---
 router.put('/attendees/:attendee_no/payment-info', async (req, res) => {
   try {
     const { attendee_no } = req.params;
@@ -220,13 +226,13 @@ router.put('/attendees/:attendee_no/payment-info', async (req, res) => {
   }
 });
 
-// Example: For each attendee, get the latest payment_info record
+// --- Get attendees with latest payments ---
 router.get('/attendees/latest-payments', async (req, res) => {
   try {
     const { data: attendees, error } = await supabase
       .from('attendees')
       .select(`
-        attendee_no, last_name, first_name, organization, designation, email, contact_no, rfid, confirmation_code, accommodation, event_id, event_name:events(event_name),
+        attendee_no, last_name, first_name, organization, designation, email, contact_no, rfid, confirmation_code, accommodation, event_id,
         payment_info:payment_info(payment_status)
       `);
 
@@ -235,7 +241,6 @@ router.get('/attendees/latest-payments', async (req, res) => {
     // Flatten payment_status (show latest if multiple)
     const result = attendees.map(att => ({
       ...att,
-      event_name: att.event_name?.event_name || '',
       payment_status: Array.isArray(att.payment_info) && att.payment_info.length > 0
         ? att.payment_info[att.payment_info.length - 1].payment_status
         : '',
@@ -267,13 +272,13 @@ router.get('/attendees/latest-payments', async (req, res) => {
   }
 });
 
-// Add this inside your search bar for attendees
+// --- Filter attendees by payment status ---
 router.get('/attendees/filter', async (req, res) => {
   try {
     const { status } = req.query;
     let query = supabase.from('attendees').select(`
-      attendee_no, last_name, first_name, organization, designation, email, contact_no, rfid, confirmation_code, accommodation, event_id, event_name:events(event_name),
-      payment_info:payment_info(payment_status)
+      attendee_no, last_name, first_name, organization, designation, email, contact_no, rfid, confirmation_code, accommodation, event_id,
+      payment_info:payment_info(payment_status), att_status
     `);
 
     if (status) {
@@ -287,7 +292,6 @@ router.get('/attendees/filter', async (req, res) => {
     // Flatten payment_status (show latest if multiple)
     const result = attendees.map(att => ({
       ...att,
-      event_name: att.event_name?.event_name || '',
       payment_status: Array.isArray(att.payment_info) && att.payment_info.length > 0
         ? att.payment_info[att.payment_info.length - 1].payment_status
         : '',
@@ -300,7 +304,7 @@ router.get('/attendees/filter', async (req, res) => {
   }
 });
 
-// Attendance records
+// --- Get attendance records ---
 router.get('/attendance-records', async (req, res) => {
   const { data, error } = await supabase
     .from('attendance_records')
@@ -309,14 +313,7 @@ router.get('/attendance-records', async (req, res) => {
   res.json(data);
 });
 
-// Events
-router.get('/events', async (req, res) => {
-  const { data, error } = await supabase
-    .from('events')
-    .select('event_id, event_name, start_date, end_date, status, location, venue');
-  if (error) return res.status(500).json([]);
-  res.json(data);
-});
+
 
 // Audit trail
 router.get('/audit-trail', async (req, res) => {
@@ -325,6 +322,43 @@ router.get('/audit-trail', async (req, res) => {
     .select('user_name, user_role, action, action_time, ip_address, details');
   if (error) return res.status(500).json([]);
   res.json(data);
+});
+
+
+router.get('/attendees', async (req, res) => {
+  try {
+    const { event_id } = req.query;
+    let query = supabase
+      .from('attendees')
+      .select(`
+        *,
+        payment_info:payment_info(payment_status, created_at)
+      `)
+      .order('last_name', { ascending: true });
+
+    if (event_id) {
+      query = query.eq('event_id', event_id);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    // Attach the latest payment_status to each attendee
+    const attendeesWithStatus = data.map(att => {
+      let latestStatus = '';
+      if (Array.isArray(att.payment_info) && att.payment_info.length > 0) {
+        // Sort by created_at descending and get the latest
+        att.payment_info.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        latestStatus = att.payment_info[0].payment_status;
+      }
+      return { ...att, payment_status: latestStatus };
+    });
+
+    res.json(attendeesWithStatus);
+  } catch (err) {
+    console.error('Attendees API error:', err);
+    res.status(500).json({ error: err.message || 'Failed to fetch attendees.' });
+  }
 });
 
 module.exports = router;
