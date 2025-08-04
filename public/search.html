@@ -31,40 +31,63 @@
       <a href="https://hellograde.online/">
         <img src="images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3">
       </a>
-      <p class="text-xl font-bold">HelloGrade</p>
+      <h1 class="text-xl font-bold">HelloGrade</h1>
     </div>
     <nav>
       <ul id="navMenu" class="flex flex-row gap-4">             
         <!-- Link user here to load the inline search page -->
-                    <li><a href="/index" title="Home"><span class="material-icons">home</span></a></li>
-                    <li><a href="#" title="Search" onclick="toggleSearchOverlay()"><span class="material-icons">search</span></a></li>
-                    <li><a href="/blog" title="Blogs"><span class="material-icons">article</span></a></li>
-                    <li><a href="/events" title="Events"><span class="material-icons">event</span></a></li>
-                    <li><a href="/lessons" title="Lessons"><span class="material-icons">menu_book</span></a></li>
-                    <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
+        <li><a href="/index" title="Home" ><span class="material-icons">home</span></a></li>
+        <li><a href="#" title="Search" class="text-yellow-400"><span class="material-icons">search</span></a></li>
+        <li><a href="/blog" title="Blogs"><span class="material-icons">article</span></a></li>
+        <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
       </ul>
     </nav>
   </header>
  <!-- Main Content -->
  <main class="container mx-auto my-8 px-4 ">
-    <!-- 
-      This is your in-page Google Custom Search:
-      1) The search box (gcse-searchbox)
-      2) The search results (gcse-searchresults)
-      Google will automatically place the results beneath the box, no modal needed.
-    -->        <h1 class="text-5xl font-bold mb-4 text-gray-800 text-center">Search in HelloGrade</h1>
-    <div class="gcse-searchbox"
+    <h1 class="text-5xl font-bold mb-4 text-gray-800 text-center">Search in HelloGrade</h1>
+    <div id="noQueryMsg" class="text-center text-red-600 mb-4" style="display:none;">
+        Please enter a search term above.
+    </div>
+    <div id="searchBoxContainer" class="gcse-searchbox"
          data-as_sitesearch="hellograde.online"
          data-auto-complete="true"
          data-auto-complete-max-completions="5">
     </div>
-
-    <div class="gcse-searchresults"
+    <div id="searchResultsContainer" class="gcse-searchresults"
          data-link-target="_self" 
          data-as_sitesearch="hellograde.online">
     </div>
-  </main>
+</main>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    const noQueryMsg = document.getElementById('noQueryMsg');
+    const searchBoxContainer = document.getElementById('searchBoxContainer');
+    const searchResultsContainer = document.getElementById('searchResultsContainer');
 
+    if (!query) {
+      if (noQueryMsg) noQueryMsg.style.display = 'block';
+      if (searchBoxContainer) searchBoxContainer.style.display = 'none';
+      if (searchResultsContainer) searchResultsContainer.style.display = 'none';
+    } else {
+      if (noQueryMsg) noQueryMsg.style.display = 'none';
+      if (searchBoxContainer) searchBoxContainer.style.display = '';
+      if (searchResultsContainer) searchResultsContainer.style.display = '';
+      setTimeout(() => {
+        const searchBox = document.querySelector('input.gsc-input');
+        if (searchBox) {
+          searchBox.value = query;
+          const searchButton = document.querySelector('input.gsc-search-button');
+          if (searchButton) {
+            searchButton.click();
+          }
+        }
+      }, 500);
+    }
+  });
+</script>
 
  
 <!-- Contact Support -->
