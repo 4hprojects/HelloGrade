@@ -1,150 +1,269 @@
 <!DOCTYPE html>
 <html lang="en" style="scroll-behavior: smooth;">
-
 <head>
     <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
-        <script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-X5E3N182NE');
-        </script>
+    </script>
     <link rel="canonical" href="https://hellograde.online">
     <meta name="google-adsense-account" content="ca-pub-4537208011192461">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Welcome to HelloGrade, your one-stop student grading portal. Simplify grade management, enhance transparency, and access grades efficiently on any device.">
-    <title>Welcome to HelloGrade - Your Student Grading Portal</title>
+    <title>HelloGrade - All-in-One Educational Platform</title>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="/css/ustyles.css">
+    <link rel="stylesheet" href="/css/index.css">
+
     <!-- Scroll Reveal and Smooth Scrolling -->
     <link rel="stylesheet" href="/dist/output.css">
-    
-    <!-- Tailwind CSS -->
+
+        <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js" defer></script>
     <script src="https://unpkg.com/scrollreveal" defer></script>
     <script src="/js/uscripts.js" defer></script>
-</head>
 
+</head>
 <body>
-    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
-        <div class="flex items-center">
-            <a href="https://hellograde.online/">
-                <img src="images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3">
-            </a>
-            <p class="text-xl font-bold">HelloGrade</p>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="images/icon.webp" alt="HelloGrade Logo">
+                <div class="logo-text">Hello<span>Grade</span></div>
+            </div>
+            
+            <nav class="nav-desktop">
+                <a href="/" class="nav-link active">
+                    <span class="material-icons">home</span>
+                    Home
+                </a>
+                <a href="/search.html#gsc.tab=0" class="nav-link">
+                    <span class="material-icons">search</span>
+                    Search
+                </a>
+                <a href="/blogs/" class="nav-link">
+                    <span class="material-icons">article</span>
+                    Blogs
+                </a>
+                <a href="/events/" class="nav-link">
+                    <span class="material-icons">event</span>
+                    Events
+                </a>
+                <a href="/lessons/" class="nav-link">
+                    <span class="material-icons">menu_book</span>
+                    Lessons
+                </a>
+                <a href="/login" class="nav-link" id="signinLink">
+                    <span class="material-icons">login</span>
+                    Sign In
+                </a>
+            </nav>
+            
+            <button class="mobile-menu-btn">
+                <span class="material-icons">menu</span>
+            </button>
         </div>
-        <nav>
-            <ul id="navMenu" class="flex flex-row gap-4">
-                <li><a href="/index" title="Home" class="text-yellow-400"><span class="material-icons">home</span></a></li>
-                <li><a href="#" title="Search" onclick="toggleSearchOverlay()"><span class="material-icons">search</span></a></li>
-                <li><a href="/blog" title="Blogs"><span class="material-icons">article</span></a></li>
-                <li><a href="/events" title="Events"><span class="material-icons">event</span></a></li>
-                <li><a href="/lessons" title="Lessons" ><span class="material-icons">menu_book</span></a></li>
-                <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
-            </ul>
-        </nav>
     </header>
 
-    <!-- Main Content with Smooth Scrolling and Reveal Animations -->
-    <!-- Introduction Section -->
-    <section class="hero bg-gray-100 text-gray-800 py-20 px-4">
-        <div class="container mx-auto text-center">
-            <h1 class="text-5xl font-bold mb-4 text-gray-800">Welcome to HelloGrade</h1>
-            <p class="text-xl mb-6 text-gray-700">
-                We understand that success isn’t just about grades—it’s about growth. Our platform is designed to empower students and educators with tools to streamline academic processes while nurturing personal development.
-            </p>
-            <br>
-            <a href="/login" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow-md">
-                Get Started
-            </a>
-        </div>
-    </section>
-    
-    <!-- Ad Section Placeholder -->
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-4537208011192461"
-        data-ad-slot="1190959056"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-
-    <!-- What is HelloGrade Section -->
-    <section id="why-choose" class="py-16 px-4 bg-gray-50">
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-blue-600 mb-4"></h2>
-            <p class="text-lg text-gray-700 max-w-2xl mx-auto">
-                HelloGrade combines educational excellence with a tech-driven focus to empower educators, students, and professionals. Here’s how we stand out:
-            </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div class="card-effect">
-                <img src="/images/index/educational-technology.png" alt="Educational Technology Trends" class="mx-auto mb-4 w-24 h-24">
-                <h3 class="text-2xl font-bold text-blue-600">Educational Technology Trends</h3>
-                <p>
-                    Stay ahead with insights into the latest tools and innovations reshaping education, from AI in classrooms to data-driven teaching.
-                </p>
-            </div>
-            <div class="card-effect">
-                <img src="/images/index/personal-growth.png" alt="Personal & Professional Growth" class="mx-auto mb-4 w-24 h-24">
-                <h3 class="text-2xl font-bold text-blue-600">Personal & Professional Growth</h3>
-                <p>
-                    Support for educators, students, and professionals to develop skills, boost productivity, and achieve meaningful, balanced lives.
-                </p>
-            </div>
-            <div class="card-effect">
-                <img src="/images/index/practical-solutions.png" alt="Practical Education Solutions" class="mx-auto mb-4 w-24 h-24">
-                <h3 class="text-2xl font-bold text-blue-600">Practical Education Solutions</h3>
-                <p>
-                    Explore actionable strategies and tools to streamline processes, engage students, and enhance learning outcomes immediately.
-                </p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content animate">
+            <h1>Transform Education with HelloGrade</h1>
+            <p>The all-in-one platform combining learning management, event coordination, and educational tools to empower educators and students.</p>
+            <div class="cta-container">
+                <a href="/login" class="btn btn-primary">
+                    Get Started Free
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    <span class="material-icons">play_circle</span>
+                    Watch Demo
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Why Choose Section -->
-   
-    <section id="why-choose" class="py-16 px-4 bg-gray-50">
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-blue-600 mb-4">Why Choose HelloGrade?</h2>
-            <p class="text-lg text-gray-700 max-w-2xl mx-auto">
-                HelloGrade isn’t just a tool for managing grades—it’s a transformative platform designed to support educators, empower students, and redefine how academic progress is tracked and celebrated. Here are three key reasons why HelloGrade is the right choice for you:
-            </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div class="card-effect">
-                <h3 class="text-2xl font-bold text-blue-600">Simplify Grade Management</h3>
-                <p>
-                    Managing academic records can be overwhelming for both educators and students. HelloGrade makes the process effortless with tools to input, organize, and update grades seamlessly, track performance, and ensure transparency and accessibility anytime, anywhere.
-                </p>
+    <!-- Features Section -->
+    <section>
+        <div class="container">
+            <div class="section-title animate">
+                <h2>Comprehensive Educational Solutions</h2>
+                <p>HelloGrade provides integrated tools to manage every aspect of the educational experience</p>
             </div>
-            <div class="card-effect">
-                <h3 class="text-2xl font-bold text-blue-600">Foster Personal Growth</h3>
-                <p>
-                    At HelloGrade, we believe that education goes beyond the classroom. That’s why we offer blogs and resources focused on self-improvement, study habits, and time management. Motivational stories and personalized insights help students set and achieve meaningful goals.
-                </p>
-            </div>
-            <div class="card-effect">
-                <h3 class="text-2xl font-bold text-blue-600">Prioritize Security and Reliability</h3>
-                <p>
-                    We understand the importance of safeguarding academic data. HelloGrade protects all data with robust encryption and secure access protocols. The platform is reliable, accessible, and complies with strict data protection standards to give users peace of mind.
-                </p>
+            
+            <div class="features-grid">
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">
+                        <span class="material-icons">school</span>
+                    </div>
+                    <h3>Learning Management</h3>
+                    <p>Create, distribute, and track courses with our intuitive LMS. Manage assignments, grades, and student progress in one place.</p>
+                </div>
+                
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">
+                        <span class="material-icons">event_available</span>
+                    </div>
+                    <h3>Event Management</h3>
+                    <p>Plan, promote, and manage educational events, workshops, and conferences with our comprehensive event tools.</p>
+                </div>
+                
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">
+                        <span class="material-icons">build</span>
+                    </div>
+                    <h3>Educational Tools</h3>
+                    <p>Access a suite of specialized tools including grade calculators, plagiarism checkers, and collaborative whiteboards.</p>
+                </div>
             </div>
         </div>
     </section>
-    
-    
 
+    <!-- Platform Highlights -->
+    <section class="platform-highlights">
+        <div class="container">
+            <div class="section-title animate">
+                <h2>Integrated Educational Platform</h2>
+                <p>Discover how HelloGrade transforms educational management</p>
+            </div>
+            
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="learning">
+                        <span class="material-icons">school</span>
+                        Learning Management
+                    </button>
+                    <button class="tab-btn" data-tab="events">
+                        <span class="material-icons">event</span>
+                        Event Coordination
+                    </button>
+                    <button class="tab-btn" data-tab="tools">
+                        <span class="material-icons">build</span>
+                        Educational Tools
+                    </button>
+                </div>
+                
+                <div class="tab-content active" id="learning-tab">
+                    <div class="tab-grid">
+                        <div class="tab-text">
+                            <h3>Comprehensive Learning Management</h3>
+                            <p>HelloGrade's LMS provides everything educators need to deliver exceptional learning experiences:</p>
+                            <ul>
+                                <li>Course creation with multimedia content support</li>
+                                <li>Automated grading and performance analytics</li>
+                                <li>Student progress tracking and intervention tools</li>
+                                <li>Collaborative learning spaces</li>
+                                <li>Mobile access for learning anywhere</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary">Explore LMS Features</a>
+                        </div>
+                        <div class="tab-image">
+                            <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Learning Management">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="events-tab">
+                    <div class="tab-grid">
+                        <div class="tab-text">
+                            <h3>Seamless Event Management</h3>
+                            <p>Plan and execute educational events with our comprehensive tools:</p>
+                            <ul>
+                                <li>Event creation with customizable registration</li>
+                                <li>Automated scheduling and calendar integration</li>
+                                <li>Attendance tracking and reporting</li>
+                                <li>Virtual and hybrid event support</li>
+                                <li>Resource management for workshops</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary">Explore Event Tools</a>
+                        </div>
+                        <div class="tab-image">
+                            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Event Management">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="tools-tab">
+                    <div class="tab-grid">
+                        <div class="tab-text">
+                            <h3>Powerful Educational Tools</h3>
+                            <p>Enhance teaching and learning with our specialized toolkit:</p>
+                            <ul>
+                                <li>Grade calculators and GPA predictors</li>
+                                <li>Plagiarism detection system</li>
+                                <li>Interactive whiteboards and collaboration spaces</li>
+                                <li>Learning analytics and performance dashboards</li>
+                                <li>Resource library with thousands of materials</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary">Explore All Tools</a>
+                        </div>
+                        <div class="tab-image">
+                            <img src="https://images.unsplash.com/photo-1584697964358-3e14ca57658b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Educational Tools">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Updated Stats Section -->
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item animate">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-text">Educator time savings</div>
+                    </div>
+                    <div class="stat-item animate delay-1">
+                        <div class="stat-number">87%</div>
+                        <div class="stat-text">Student engagement increase</div>
+                    </div>
+                    <div class="stat-item animate delay-2">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-text">Assignment completion rate</div>
+                    </div>
+                    <div class="stat-item animate delay-3">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-text">Grade & resource access</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- Testimonials -->
+    <!-- Updated Testimonials Heading -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title animate">
+                <h2>Students: Track Grades, References & Assessments Online</h2>
+                <p>See how HelloGrade helps students monitor progress and access learning materials</p>
+            </div>
+            <!-- ... rest of testimonials ... -->
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section>
+        <div class="container">
+            <div class="cta-section animate">
+                <h2>Ready to Transform Your Educational Institution?</h2>
+                <p>Join thousands of educators using HelloGrade to streamline learning, manage events, and enhance education.</p>
+                <a href="/login" class="cta-btn">
+                    Sign Up for Free
+                </a>
+            </div>
+        </div>
+    </section>
+
+    
     <section id="latestBlog" class="container mx-auto px-4 py-8">
         <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Latest Blog</h2>
         <div id="latestBlogContainer" class="bg-white p-6 rounded-lg shadow-md  card-effect">
@@ -166,108 +285,216 @@
         </div>
     </section>
 
-    <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
-        <span class="material-icons">arrow_upward</span>
-    </button>
-
-    <!-- Floating Search Button -->
-    <button 
-      class="fixed bottom-20 right-5 h-12 w-12 rounded-full bg-green-500 text-white 
-             hover:bg-green-600 flex items-center justify-center shadow-lg z-50"
-      onclick="toggleSearchOverlay()"
-      aria-label="Search"
-    >
-      <span class="material-icons">search</span>
-    </button>
-
-    <!-- Search Overlay (Hidden by Default) -->
-    <div 
-      id="searchOverlay" 
-      class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-[9999] hidden"
-    >
-      <div class="bg-white rounded-md p-4 w-11/12 sm:w-3/5 lg:w-2/5 relative">
-        <!-- Close Button -->
-        <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
-                onclick="toggleSearchOverlay()"
-                aria-label="Close">
-          <span class="material-icons">close</span>
-        </button>
-        
-        <h2 class="text-lg font-semibold mb-4 text-gray-800">Search HelloGrade</h2>
-        <!-- Search Form -->
-        <form onsubmit="return goToSearchPage()">
-          <input 
-            type="text" 
-            id="overlaySearchInput"
-            class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-            placeholder="Type your search..."
-          />
-          <button 
-            type="submit"
-            class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
-            Search
-          </button>
-        </form>
-      </div>
-    </div>
-    
-    <!-- Contact Support -->
-    <div>
-        <section class="text-center bg-gray-100 p-8 rounded-lg shadow-lg">
-            <h3 class="text-3xl font-bold mb-4 text-blue-800">
-                Ready to Take the Next Step?
-            </h3>
-            <p class="mb-6 text-gray-700 text-lg">
-                Join a thriving community of university students and educators revolutionizing academic management. Enhance your educational experience and pave the way for your future career growth.
-            </p>
-            <a href="/login" 
-            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg transition-transform transform hover:scale-105">
-                Let's Start!
-            </a>
-            <br>
-        </section>
-        <br>
-    </div>
-
-    <br>
-<!-- Advertisement Section -->
-<div id="ad2"></div>
-<br>
 
 
-<button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
-<span class="material-icons">arrow_upward</span>
+<!-- Floating Search Button -->
+<button 
+  class="fixed bottom-20 right-5 h-12 w-12 rounded-full bg-green-500 text-white 
+         hover:bg-green-600 flex items-center justify-center shadow-lg z-50 transition-transform"
+  onclick="toggleSearchOverlay()"
+  aria-label="Open search"
+  id="searchFloatingBtn"
+>
+  <span class="material-icons">search</span>
 </button>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+<!-- Enhanced Search Overlay -->
+<div 
+  id="searchOverlay" 
+  class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-[9999] hidden transition-opacity duration-300"
+>
+  <div class="bg-white rounded-lg p-6 w-11/12 sm:w-3/5 lg:w-2/5 relative transform transition-transform duration-300 scale-95" 
+       onclick="event.stopPropagation()">
+    <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors"
+            onclick="toggleSearchOverlay()"
+            aria-label="Close search">
+      <span class="material-icons text-2xl">close</span>
+    </button>
+    
+    <h2 class="text-xl font-bold mb-4 text-gray-800">Search HelloGrade</h2>
+    
+    <form onsubmit="return handleSearch(event)" class="mb-3">
+      <div class="relative">
+        <input 
+          type="text" 
+          id="overlaySearchInput"
+          class="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+          placeholder="Search courses, events, blogs..."
+          aria-label="Search input"
+        >
+        <span class="material-icons absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">search</span>
+      </div>
+      <button 
+        type="submit"
+        class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
+      >
+        <span class="material-icons mr-2">search</span>
+        Search
+      </button>
+    </form>
+    
+    <!-- Search Results Container -->
+    <div id="searchResults" class="mt-4 max-h-60 overflow-y-auto hidden">
+      <div class="text-center py-4 text-gray-500">
+        <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-500" role="status"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-            // Scroll to the top smoothly when the button is clicked
-            scrollToTopBtn.addEventListener("click", function () {
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
-            });
-        });
+<script>
+// ====== SEARCH FUNCTIONALITY ====== //
+function toggleSearchOverlay() {
+  console.log('toggleSearchOverlay called');
+  const overlay = document.getElementById('searchOverlay');
+  overlay.classList.toggle('hidden');
+  
+  if (!overlay.classList.contains('hidden')) {
+    // Show animation
+    overlay.style.opacity = "0";
+    setTimeout(() => {
+      overlay.style.opacity = "1";
+      document.querySelector('#searchOverlay > div').classList.remove('scale-95');
+    }, 10);
+    
+    // Focus input
+    setTimeout(() => document.getElementById('overlaySearchInput').focus(), 100);
+  } else {
+    // Hide animation
+    document.querySelector('#searchOverlay > div').classList.add('scale-95');
+  }
+}
 
-        // ScrollReveal configuration
-        ScrollReveal().reveal('.scroll-reveal', { duration: 1200, origin: 'bottom', distance: '30px' });
+function handleSearch(event) {
+  event.preventDefault();
+  const searchTerm = document.getElementById('overlaySearchInput').value.trim();
+  
+  if (!searchTerm) return false;
+  
+  // Show loading state
+  const resultsContainer = document.getElementById('searchResults');
+  resultsContainer.classList.remove('hidden');
+  resultsContainer.innerHTML = `
+    <div class="text-center py-4 text-gray-500">
+      <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-500" role="status"></div>
+      <p class="mt-2">Searching for "${searchTerm}"...</p>
+    </div>
+  `;
+  
+  // Simulate search (replace with actual API call)
+  setTimeout(() => showSearchResults(searchTerm), 800);
+  
+  return false;
+}
 
-        // Show/hide the scroll-to-top button
-        window.onscroll = function() {
-            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                scrollToTopBtn.style.display = "flex";
-            } else {
-                scrollToTopBtn.style.display = "none";
-            }
-        };
+function showSearchResults(term) {
+  const resultsContainer = document.getElementById('searchResults');
+  
+  // Sample results (replace with real implementation)
+  const results = [
+    { type: 'Course', title: 'Introduction to Mathematics', url: '/courses/math101' },
+    { type: 'Event', title: 'Annual Science Fair', url: '/events/science-fair' },
+    { type: 'Blog', title: 'Top 10 Study Techniques', url: '/blogs/study-techniques' }
+  ];
+  
+  if (results.length === 0) {
+    resultsContainer.innerHTML = `
+      <div class="p-4 text-center text-gray-600">
+        <span class="material-icons text-4xl text-gray-400 mb-2">search_off</span>
+        <p>No results found for "${term}"</p>
+        <p class="text-sm mt-2">Try different keywords</p>
+      </div>
+    `;
+    return;
+  }
+  
+  let html = `<div class="divide-y">`;
+  results.forEach(item => {
+    html += `
+      <a href="${item.url}" class="block p-3 hover:bg-gray-50 transition-colors">
+        <div class="flex items-center">
+          <span class="material-icons text-blue-500 mr-3">${getIconForType(item.type)}</span>
+          <div>
+            <h3 class="font-medium">${item.title}</h3>
+            <p class="text-sm text-gray-500">${item.type}</p>
+          </div>
+        </div>
+      </a>
+    `;
+  });
+  html += `</div>`;
+  
+  resultsContainer.innerHTML = html;
+}
 
+function getIconForType(type) {
+  const icons = {
+    'Course': 'school',
+    'Event': 'event',
+    'Blog': 'article'
+  };
+  return icons[type] || 'search';
+}
 
-    </script>
+// Close overlay when clicking outside
+document.getElementById('searchOverlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('searchOverlay')) {
+    toggleSearchOverlay();
+  }
+});
+
+// Close overlay with ESC key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !document.getElementById('searchOverlay').classList.contains('hidden')) {
+    toggleSearchOverlay();
+  }
+});
+
+// ====== SCROLL FUNCTIONALITY ====== //
+let isScrolling = false;
+
+document.addEventListener("DOMContentLoaded", function() {
+  const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+  if (!scrollToTopBtn) {
+    console.error('scrollToTopBtn not found!');
+  }
+  // Scroll to top function
+  scrollToTopBtn.addEventListener("click", function() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+    this.blur(); // Remove focus after click
+  });
+  
+  // Scroll position handler with debouncing
+  window.addEventListener("scroll", () => {
+    if (isScrolling) return;
+    
+    isScrolling = true;
+    requestAnimationFrame(handleScroll);
+  });
+});
+
+function handleScroll() {
+  const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+  const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+  
+  // Show/hide button with animation
+  if (scrollPosition > 300) {
+    scrollToTopBtn.classList.remove('opacity-0', 'scale-90');
+    scrollToTopBtn.classList.add('opacity-100', 'scale-100');
+  } else {
+    scrollToTopBtn.classList.remove('opacity-100', 'scale-100');
+    scrollToTopBtn.classList.add('opacity-0', 'scale-90');
+  }
+  
+  isScrolling = false;
+}
+
+// Initialize scroll position on load
+window.addEventListener('load', handleScroll);
+</script>
 
     <!-- Footer -->
     <div id="footerContainer"></div>
