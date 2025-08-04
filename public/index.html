@@ -1,80 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" style="scroll-behavior: smooth;">
+
 <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
-    <script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
+        <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
+
         gtag('config', 'G-X5E3N182NE');
-    </script>
+        </script>
     <link rel="canonical" href="https://hellograde.online">
     <meta name="google-adsense-account" content="ca-pub-4537208011192461">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Welcome to HelloGrade, your one-stop student grading portal. Simplify grade management, enhance transparency, and access grades efficiently on any device.">
-    <title>HelloGrade - All-in-One Educational Platform</title>
+    <title>Welcome to HelloGrade - Your Student Grading Portal</title>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="css/ustyles.css">
-
+    <link rel="stylesheet" href="/css/ustyles.css">
+    
     <!-- Scroll Reveal and Smooth Scrolling -->
-
-
-        <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="/dist/output.css">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js" defer></script>
+    <script src="https://unpkg.com/scrollreveal" defer></script>
     <script src="/js/uscripts.js" defer></script>
-
-
 </head>
+
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <div class="logo-container">
-                <img src="images/icon.webp" alt="HelloGrade Logo">
-                <div class="logo-text">Hello<span>Grade</span></div>
-            </div>
-            
-            <nav class="nav-desktop">
-                <a href="/" class="nav-link active">
-                    <span class="material-icons">home</span>
-                    Home
-                </a>
-                <a href="/search.html#gsc.tab=0" class="nav-link">
-                    <span class="material-icons">search</span>
-                    Search
-                </a>
-                <a href="/blogs/" class="nav-link">
-                    <span class="material-icons">article</span>
-                    Blogs
-                </a>
-                <a href="/events/" class="nav-link">
-                    <span class="material-icons">event</span>
-                    Events
-                </a>
-                <a href="/lessons/" class="nav-link">
-                    <span class="material-icons">menu_book</span>
-                    Lessons
-                </a>
-                <a href="/login" class="nav-link" id="signinLink">
-                    <span class="material-icons">login</span>
-                    Sign In
-                </a>
-            </nav>
-            
-            <button class="mobile-menu-btn">
-                <span class="material-icons">menu</span>
-            </button>
+    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
+        <div class="flex items-center">
+            <a href="https://hellograde.online/">
+                <img src="images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3">
+            </a>
+            <p class="text-xl font-bold">HelloGrade</p>
         </div>
+        <nav>
+            <ul id="navMenu" class="flex flex-row gap-4">
+                <li><a href="/index" title="Home" class="text-yellow-400"><span class="material-icons">home</span></a></li>
+                <li><a href="#" title="Search" onclick="toggleSearchOverlay()"><span class="material-icons">search</span></a></li>
+                <li><a href="/blogs" title="Blogs"><span class="material-icons">article</span></a></li>
+                <li><a href="/events" title="Events"><span class="material-icons">event</span></a></li>
+                <li><a href="/lessons" title="Lessons" ><span class="material-icons">menu_book</span></a></li>
+                <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Main Content with Smooth Scrolling and Reveal Animations -->
+   <!-- Hero Section -->
     <section class="hero">
         <div class="container hero-content animate">
             <h1>Transform Education with HelloGrade</h1>
@@ -90,6 +71,18 @@
             </div>
         </div>
     </section>
+    
+    <!-- Ad Section Placeholder -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-4537208011192461"
+        data-ad-slot="1190959056"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
 
     <!-- Features Section -->
     <section>
@@ -262,15 +255,16 @@
             </div>
         </div>
     </section>
-
     
+    
+
     <section id="latestBlog" class="container mx-auto px-4 py-8">
         <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">Latest Blog</h2>
         <div id="latestBlogContainer" class="bg-white p-6 rounded-lg shadow-md  card-effect">
             <!-- Latest blog will be inserted here dynamically -->
         </div>
     </section>
-
+    
 
     <section id="randomBlogs" class="container mx-auto px-4 py-8">
         <div class="text-center mb-8">
@@ -284,6 +278,7 @@
         <p class="text-lg text-gray-700"></class=>
         </div>
     </section>
+
     <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
         <span class="material-icons">arrow_upward</span>
     </button>
@@ -329,18 +324,64 @@
         </form>
       </div>
     </div>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
-     crossorigin="anonymous"></script>
-<!-- Vertical -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-4537208011192461"
-     data-ad-slot="6484558778"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+    
+    <!-- Contact Support -->
+    <div>
+        <section class="text-center bg-gray-100 p-8 rounded-lg shadow-lg">
+            <h3 class="text-3xl font-bold mb-4 text-blue-800">
+                Ready to Take the Next Step?
+            </h3>
+            <p class="mb-6 text-gray-700 text-lg">
+                Join a thriving community of university students and educators revolutionizing academic management. Enhance your educational experience and pave the way for your future career growth.
+            </p>
+            <a href="/login" 
+            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg transition-transform transform hover:scale-105">
+                Let's Start!
+            </a>
+            <br>
+        </section>
+        <br>
+    </div>
+
+    <br>
+<!-- Advertisement Section -->
+<div id="ad2"></div>
+<br>
+
+
+<button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
+<span class="material-icons">arrow_upward</span>
+</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+            // Scroll to the top smoothly when the button is clicked
+            scrollToTopBtn.addEventListener("click", function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+        });
+
+        // ScrollReveal configuration
+        ScrollReveal().reveal('.scroll-reveal', { duration: 1200, origin: 'bottom', distance: '30px' });
+
+        // Show/hide the scroll-to-top button
+        window.onscroll = function() {
+            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollToTopBtn.style.display = "flex";
+            } else {
+                scrollToTopBtn.style.display = "none";
+            }
+        };
+
+
+    </script>
+
     <!-- Footer -->
     <div id="footerContainer"></div>
     <script src="/js/ads.js"></script>
