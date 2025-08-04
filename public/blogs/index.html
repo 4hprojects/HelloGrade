@@ -155,52 +155,66 @@
         </div>
     </section>
 
-    <!-- Blog Directory -->
-    <section class="container">
-        <h2 class="section-title">Browse All Blog Articles</h2>
-        
-        <div class="category-grid">
-            <div class="category-card">
-                <h3 class="category-title finance-title">Finance</h3>
-                <ul class="blog-list">
-                    <li><a href="/blogs/finance/gfunds-dividends.html">GFunds Dividends: What You Need to Know</a></li>
-                </ul>
+        <!-- Organized Blog Directory -->
+        <section class="mt-12">
+            <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">Browse All Blog Articles</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Finance -->
+                <div id="finance" class="bg-white rounded-lg shadow p-4">
+                    <h3 class="text-xl font-semibold text-green-700 mb-3">Finance</h3>
+                    <ul class="list-disc list-inside space-y-2 text-green-900 text-sm">
+                        <li><a href="/blogs/finance/gfunds-dividends.html" class="hover:underline">GFunds Dividends: What You Need to Know</a></li>
+                    </ul>
+                </div>
+                <!-- Tech -->
+                <div id="tech" class="bg-white rounded-lg shadow p-4">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Tech</h3>
+                    <ul class="list-disc list-inside space-y-2 text-blue-900 text-sm">
+                        <li><a href="/blogs/tech/5G-vs-6G.html" class="hover:underline">5G vs 6G: The Next Generation</a></li>
+                        <li><a href="/blogs/tech/beginnersguide-usb-abc.html" class="hover:underline">Beginner's Guide: USB A, B, C</a></li>
+                        <li><a href="/blogs/tech/best-programming-practices.html" class="hover:underline">Best Programming Practices</a></li>
+                        <li><a href="/blogs/tech/brainrot.html" class="hover:underline">Brainrot: Digital Overload</a></li>
+                        <li><a href="/blogs/tech/email-clients-comparison.html" class="hover:underline">Email Clients Comparison</a></li>
+                        <li><a href="/blogs/tech/navigation-apps.html" class="hover:underline">Navigation Apps: Which is Best?</a></li>
+                        <li><a href="/blogs/tech/promptengineering.html" class="hover:underline">Prompt Engineering</a></li>
+                        <li><a href="/blogs/tech/year2038.html" class="hover:underline">The Year 2038 Problem</a></li>
+                    </ul>
+                </div>
+                <!-- General Growth -->
+                <div id="gen" class="bg-white rounded-lg shadow p-4">
+                    <h3 class="text-xl font-semibold text-yellow-700 mb-3">General Growth</h3>
+                    <ul class="list-disc list-inside space-y-2 text-yellow-900 text-sm">
+                        <li><a href="/blogs/gen/AttendSeminars.html" class="hover:underline">Why Attend Seminars?</a></li>
+                        <li><a href="/blogs/gen/brands-that-failed-to-innovate-and-disappeared.html" class="hover:underline">Brands That Failed to Innovate</a></li>
+                        <li><a href="/blogs/gen/BuildingHabits.html" class="hover:underline">Building Habits</a></li>
+                        <li><a href="/blogs/gen/DevelopingDigitalLiteracy.html" class="hover:underline">Developing Digital Literacy</a></li>
+                        <li><a href="/blogs/gen/effective-study-techniques.html" class="hover:underline">Effective Study Techniques</a></li>
+                        <li><a href="/blogs/gen/emotional-resilience.html" class="hover:underline">Emotional Resilience</a></li>
+                        <li><a href="/blogs/gen/handwritingcode.html" class="hover:underline">Handwriting Code</a></li>
+                        <li><a href="/blogs/gen/how-to-recover-your-energy-on-weekends.html" class="hover:underline">Recover Your Energy on Weekends</a></li>
+                        <li><a href="/blogs/gen/IWishIKnewBeforeEnteringIT.html" class="hover:underline">What I Wish I Knew Before Entering IT</a></li>
+                        <li><a href="/blogs/gen/master-time-management.html" class="hover:underline">Master Time Management</a></li>
+                        <li><a href="/blogs/gen/programmingmindset.html" class="hover:underline">Programming Mindset</a></li>
+                        <li><a href="/blogs/gen/role-of-technology-in-education.html" class="hover:underline">Role of Technology in Education</a></li>
+                        <li><a href="/blogs/gen/SemestralBreaks.html" class="hover:underline">Making the Most of Semestral Breaks</a></li>
+                        <li><a href="/blogs/gen/specialist-vs-generalist.html" class="hover:underline">Specialist vs Generalist</a></li>
+                        <li><a href="/blogs/gen/why-writing-down-your-goals-is-important.html" class="hover:underline">Why Writing Down Your Goals Is Important</a></li>
+                    </ul>
+                </div>
+                <!-- Events -->
+                <div id="events" class="bg-white rounded-lg shadow p-4">
+                    <h3 class="text-xl font-semibold text-purple-700 mb-3">Events</h3>
+                    <ul class="list-disc list-inside space-y-2 text-purple-900 text-sm">
+                        <li><a href="/blogs/events/2025bytefunrun.html" class="hover:underline">2025 Byte Fun Run</a></li>
+                        <li><a href="/blogs/events/2025bytefunruninfo.html" class="hover:underline">2025 Byte Fun Run Info</a></li>
+                        <li><a href="/blogs/events/baguio-smart-city-challenge-bsu.html" class="hover:underline">Baguio Smart City Challenge (BSU)</a></li>
+                        <li><a href="/blogs/events/bytefunrun2025results.html" class="hover:underline">Byte Fun Run 2025 Results</a></li>
+                        <li><a href="/blogs/events/itquizbee2025.html" class="hover:underline">IT Quiz Bee 2025</a></li>
+                        <li><a href="/blogs/events/itquizbee2025results.html" class="hover:underline">IT Quiz Bee 2025 Results</a></li>
+                    </ul>
+                </div>
             </div>
-            
-            <div class="category-card">
-                <h3 class="category-title tech-title">Tech</h3>
-                <ul class="blog-list">
-                    <li><a href="/blogs/tech/5G-vs-6G.html">5G vs 6G: The Next Generation</a></li>
-                    <li><a href="/blogs/tech/beginnersguide-usb-abc.html">Beginner's Guide: USB A, B, C</a></li>
-                    <li><a href="/blogs/tech/best-programming-practices.html">Best Programming Practices</a></li>
-                    <li><a href="/blogs/tech/brainrot.html">Brainrot: Digital Overload</a></li>
-                    <li><a href="/blogs/tech/email-clients-comparison.html">Email Clients Comparison</a></li>
-                </ul>
-            </div>
-            
-            <div class="category-card">
-                <h3 class="category-title growth-title">Personal Growth</h3>
-                <ul class="blog-list">
-                    <li><a href="/blogs/gen/AttendSeminars.html">Why Attend Seminars?</a></li>
-                    <li><a href="/blogs/gen/brands-that-failed-to-innovate-and-disappeared.html">Brands That Failed to Innovate</a></li>
-                    <li><a href="/blogs/gen/BuildingHabits.html">Building Habits</a></li>
-                    <li><a href="/blogs/gen/DevelopingDigitalLiteracy.html">Developing Digital Literacy</a></li>
-                    <li><a href="/blogs/gen/effective-study-techniques.html">Effective Study Techniques</a></li>
-                </ul>
-            </div>
-            
-            <div class="category-card">
-                <h3 class="category-title events-title">Events</h3>
-                <ul class="blog-list">
-                    <li><a href="/blogs/events/2025bytefunrun.html">2025 Byte Fun Run</a></li>
-                    <li><a href="/blogs/events/2025bytefunruninfo.html">2025 Byte Fun Run Info</a></li>
-                    <li><a href="/blogs/events/baguio-smart-city-challenge-bsu.html">Baguio Smart City Challenge (BSU)</a></li>
-                    <li><a href="/blogs/events/bytefunrun2025results.html">Byte Fun Run 2025 Results</a></li>
-                    <li><a href="/blogs/events/itquizbee2025.html">IT Quiz Bee 2025</a></li>
-                </ul>
-            </div>
-        </div>
-    </section>
+        </section>
 
     <!-- Random Blogs -->
     <section id="randomBlogs" class="container mx-auto px-2 sm:px-4 py-8">
