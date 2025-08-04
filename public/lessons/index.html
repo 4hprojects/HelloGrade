@@ -30,7 +30,7 @@
 
     <!-- Scroll Reveal and Smooth Scrolling -->
     <link rel="stylesheet" href="/dist/output.css">
-    <link rel="stylesheet" href="css/lessons.css">
+
 
         <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com" defer></script>
@@ -41,44 +41,23 @@
 
 <body>
     <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <div class="logo-container">
-                <img src="/images/icon.webp" alt="HelloGrade Logo">
-                <div class="logo-text">Hello<span>Grade</span></div>
-            </div>
-            
-            <nav class="nav-desktop">
-                <a href="/" class="nav-link active">
-                    <span class="material-icons">home</span>
-                    Home
-                </a>
-                <a href="/search" class="nav-link" onclick="toggleSearchOverlay()">
-                    <span class="material-icons">search</span>
-                    Search
-                </a>
-                <a href="/blogs/index" class="nav-link">
-                    <span class="material-icons">article</span>
-                    Blogs
-                </a>
-                <a href="/events/index" class="nav-link">
-                    <span class="material-icons">event</span>
-                    Events
-                </a>
-                <a href="/lessons/index" class="nav-link">
-                    <span class="material-icons">menu_book</span>
-                    Lessons
-                </a>
-                <a href="/login" class="nav-link" id="signinLink">
-                    <span class="material-icons">login</span>
-                    Sign In
-                </a>
-            </nav>
-            
-            <button class="mobile-menu-btn">
-                <span class="material-icons">menu</span>
-            </button>
+    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
+        <div class="flex items-center">
+            <a href="https://hellograde.online/">
+                <img src="/images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3">
+            </a>
+            <p class="text-xl font-bold">HelloGrade</p>
         </div>
+        <nav>
+            <ul id="navMenu" class="flex flex-row gap-4">
+                <li><a href="/index" title="Home" ><span class="material-icons">home</span></a></li>
+                <li><a href="#" title="Search" onclick="toggleSearchOverlay()"><span class="material-icons">search</span></a></li>
+                <li><a href="/blogs" title="Blogs"><span class="material-icons">article</span></a></li>
+                <li><a href="/events" title="Events"><span class="material-icons">event</span></a></li>
+                <li><a href="/lessons" title="Lessons" class="text-yellow-400"><span class="material-icons">menu_book</span></a></li>
+                <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- Lessons Content -->
