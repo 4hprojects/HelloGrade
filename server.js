@@ -2581,17 +2581,20 @@ app.get("/ads.txt", (req, res) => {
     res.send("google.com, pub-4537208011192461, DIRECT, f08c47fec0942fa0");
 });
 
-// Serve HTML files without .html extension
-app.get('/:page', (req, res, next) => {
-    const page = req.params.page;
+// Serve HTML files from any subfolder depth without .html extension
+app.get('/*', (req, res, next) => {
+    // Remove leading slash and split path
+    const segments = req.path.replace(/^\/+/, '').split('/');
     // Prevent directory traversal
-    if (!/^[a-zA-Z0-9\-_]+$/.test(page)) return next();
-    const filePath = path.join(__dirname, 'public', `${page}.html`);
+    if (!segments.every(seg => /^[a-zA-Z0-9\-_]+$/.test(seg))) return next();
+    // Build file path
+    const filePath = path.join(__dirname, 'public', ...segments) + '.html';
     fs.access(filePath, fs.constants.F_OK, (err) => {
         if (err) return next(); // File doesn't exist, continue to 404
         res.sendFile(filePath);
     });
 });
+
 app.get('/:folder/:page', (req, res, next) => {
     const { folder, page } = req.params;
     if (!/^[a-zA-Z0-9\-_]+$/.test(folder) || !/^[a-zA-Z0-9\-_]+$/.test(page)) return next();
