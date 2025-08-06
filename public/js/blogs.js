@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+const latestBlogContainer = document.getElementById("latestBlogContainer");
+
     const blogPool = [
+
+        // mini lessons
         {
             id: "recursive-algorithms",
             title: "Recursive Algorithms: Code That Calls Itself",
@@ -8,222 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
             link: "/lessons/mini/recursion.html",
             description: "Master recursive algorithms with this comprehensive guide. Learn recursion fundamentals, types, practical examples, and when to use recursion vs iteration. Essential for developers."
         },
-        {
-            id: "gfunds-dividends",
-            title: "GFunds That Pay You: Exploring Dividends for Young Investors",
-            date: "July 23, 2025",
-            image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjIc2Q-hchzLiGg-vrLtTbDtJaPB_3XgGIIlTkZOnBW2Y8gYaKtrYwlur4BhIHxGnsPP3NUDXAcCBl94NR2ECWaRFPDV68zOYrG9Ta8H9ymBJH2IpIq8lLOP6In5GlQm7HifsMm8QwR0i4/s3073/GCash+logo+horizontal.png",
-            link: "/blogs/finance/gfunds-dividends.html",
-            description: "Learn how GFunds with dividends work, especially for Filipino beginners. Find out how to invest as low as ₱1,000 in dividend-paying mutual funds like ALFM and Manulife for passive income."
-        },
-        {
-            id: "navigation-apps",
-            title: "Waze vs Google Maps vs Apple Maps : Choosing Your Perfect GPS Companion",
-            date: "June 6, 2025",
-            image: "/images/tech-comparison/navigation-apps-comparison.jpg",
-            link: "/blogs/tech/navigation-apps.html",
-            description: "Professional comparison of Waze, Google Maps, and Apple Maps. Discover which navigation app wins for real-time traffic, privacy, business listings, and route optimization with up-to-date data and expert insights."
-        },
-        {
-            id: "specialist-vs-generalist",
-            title: "Specialist vs Generalist",
-            date: "April 7, 2025",
-            image: "/images/blogs/specialist-vs-generalist-career.webp",
-            link: "/blogs/gen/specialist-vs-generalist.html",
-            description: "85% of companies now seek hybrid talent. Discover whether to specialize or generalize in your career, with actionable strategies to become a T-shaped professional and future-proof your skills."
-        },
-        {
-            id:"it114-lesson20-programdocumentation",
-            title: "Software Documentation Guide",
-            date: "April 4, 2025",
-            image: "/images/it114/software-documentation.webp",
-            link: "/lessons/it114/it114-lesson20-programdocumentation.html",
-            description: "Comprehensive guide to software documentation covering its importance, essential components, best practices, and real-world examples. Learn how to create documentation that boosts productivity and maintains code quality."
-        },
-        {
-            id: "it114-lesson19-exefile",
-            title: "Python to EXE: Create Standalone Apps with PyInstaller",
-            date: "April 3, 2025",
-            image: "/images/it114/python-to-exe-guide.webp",
-            link: "/lessons/it114/it114-lesson19-exefile.html",
-            description: "Step-by-step guide to convert Python scripts to executable (.exe) files using PyInstaller. Learn to create standalone apps for Windows, macOS, and Linux with flags like --onefile and --windowed. Includes troubleshooting tips for common issues."
-        },
-        {
-            id: "it114-lesson18-classes",
-            title: "Python OOP: Mastering Classes and Objects",
-            date: "April 3, 2025",
-            image: "/images/it114/python-classes.webp",
-            link: "/lessons/it114/it114-lesson18-classes.html",
-            description: "Comprehensive guide to Python classes and object-oriented programming. Learn class syntax, inheritance, methods, and practical OOP applications with clear examples."
-        },
-        {
-            id: "it114-lesson17-threading",
-            title: "Python Threading",
-            date: "April 2, 2025",
-            image: "/images/it114/python-threading.webp",
-            link: "/lessons/it114/it114-lesson17-threading.html",
-            description: "Master Python threading to speed up I/O-bound tasks while avoiding race conditions, deadlocks, and GIL limitations. Includes practical examples and synchronization techniques."
-        },
-        {
-            id: "byteQuizBee2025",
-            title: "BYTe Quiz Bee 2025 Results: Winners & Highlights",
-            date: "March 22, 2025",
-            image: "/images/events/byte-quiz-bee-2025.jpg",
-            link: "/events/itquizbee2025results.html",  // Updated path
-            description: "Discover the top performers of the BYTe Quiz Bee 2025. View the complete results, winners, and highlights of this year's IT quiz bee event for non-IT students at Benguet State University."
-        },
-        {
-            id: "byteFunRun2025Results",
-            title: "BYTe Fun Run 2025 Results: Race Highlights & Winners",
-            date: "March 4, 2025",
-            image: "/images/events/2025byterun/bytefunrun2025-banner.jpg",
-            link: "/events/bytefunrun2025results.html",
-            description: "The official results of the BYTe Fun Run 2025! Discover the top finishers in 3K and 5K categories, event highlights, and the sponsors who made it possible. Relive the race day excitement through our photo gallery."
-        },
-        {
-            id: "byteFunRun2025Results2",
-            title: "BYTe Fun Run 2025 Results",
-            date: "March 23, 2025",
-            image: "/images/events/2025byterun/bytefunrun2025-banner.jpg",
-            link: "/events/bytefunrun2025results2.html",
-            description: "See the official results of the BYTe Fun Run 2025! Discover the top finishers, event highlights, and the sponsors who made it possible."
-        },
-        {
-            id: "it114-lesson16-lambda",
-            title: "Python Lambda Functions: Write Cleaner, Faster Code",
-            date: "March 28, 2025",
-            image: "/images/it114/lambda.png",
-            link: "/lessons/it114/it114-lesson16-lambda.html",
-            description: "Master Python lambda functions with this comprehensive guide. Learn syntax, practical use cases with map()/filter()/sorted(), and when to use them versus regular functions for cleaner code. Includes exercises and assessment."
-        },
-        {
-            id: "principle5",
-            title: "The Staff of Direction: How Great Leaders Guide Their Teams (Principle 5 of The Way of the Shepherd)",
-            date: "March 27, 2025",
-            image: "/images/twots/principle5.webp",
-            link: "/books/the-way-of-the-shepherd/principle5.html",
-            description: "Master the biblical art of leadership direction with the Staff of Direction. Learn how to guide teams like a shepherd—setting clear paths, gentle correction, and protection—just as taught in The Way of the Shepherd. Includes actionable strategies and modern parallels."
-        },
-        {
-            id: "it114-lesson15-textcolor",
-            title: "Python Text Colors: Mastering Colorama and ANSI Escape Sequences",
-            date: "March 26, 2025",
-            image: "/images/it114/python-text-colors.webp",
-            link: "/lessons/it114/it114-lesson15-textcolor.html",
-            description: "Learn to enhance Python console applications with Colorama and ANSI escape sequences. This guide covers cross-platform text coloring, styling techniques, and practical examples for better debugging and user experience."
-        },
-        {
-            id: "it114-lesson14-install-python-library",
-            title: "IT114 Lesson 14: Installing New Libraries in Python",
-            date: "March 26, 2025",
-            image: "/images/it114/python-library-installation.webp",
-            link: "/lessons/it114/it114-lesson14-install-python-library.html",
-            description: "Learn how to install and manage Python libraries using pip, explore virtual environments, and discover alternative installation methods. Boost your programming skills with practical tips and hands-on examples."
-        },
-        {
-            id: "it114-lesson13-2dnestedloop",
-            title: "IT 114 - Lesson 13: 2D Lists and Nested Loops",
-            date: "March 24, 2025",
-            image: "/images/it114/lesson13-2d-lists-nested-loops.webp",
-            link: "/lessons/it114/it114-lesson13-2dnestedloop.html",
-            description: "Master 2D lists and nested loops in Python with practical examples, operations, and methods. Learn how to create, modify, and iterate through 2D lists effectively."
-        },
-        {
-            id: "principle4",
-            title: "Help Your Sheep Identify with You",
-            date: "March 22, 2025",
-            image: "/images/twots/principle4.webp",
-            link: "/books/the-way-of-the-shepherd/principle4.html",
-            description: "Discover how to create a safe workplace environment with Principle #4 from 'The Way of the Shepherd.' Learn actionable strategies to foster trust, boost productivity, and ensure employee well-being."
-        },
-        {
-            id: "principle3",
-            title: "Help Your Sheep Identify with You",
-            date: "March 13, 2025",
-            image: "/images/twots/principle3.webp",
-            link: "/books/the-way-of-the-shepherd/principle3.html",
-            description: "Learn how to build trust and connection with your team by helping them identify with you. Explore actionable strategies from The Way of the Shepherd to inspire loyalty, foster open communication, and lead with authenticity."
-        },
-        {
-            id: "it114-lesson12",
-            title: "Time Module and Datetime Module",
-            date: "March 11, 2025",
-            image: "/images/hellograde-blog-python-time.webp",
-            link: "/lessons/it114/it114-lesson12-pythontimedate.html",
-            description: "Master Python’s time and datetime modules! Learn how to handle timestamps, format time, use delays, and perform date arithmetic with real-world applications."
-        },
-        {
-            id: "weekend-recovery",
-            title: "How to Recover Your Energy on Weekends: Science-Backed Strategies",
-            date: "February 28, 2025",
-            image: "/images/blog-weekend-recovery.webp",
-            link: "/blogs/gen/how-to-recover-your-energy-on-weekends.html",
-            description: "Maximize your weekend recovery with science-backed strategies. Learn how to balance active and passive relaxation, set boundaries between work and personal life, and recharge effectively for better productivity and well-being."
-        },
-        {
-            id: "principle2",
-            title: "Discover the Shape of Your Sheep",
-            date: "March 6, 2025",
-            image: "/images/twots/principle2.webp",
-            link: "/books/the-way-of-the-shepherd/principle2.html",
-            description: "Know the Condition of Your Flock. Learn actionable leadership strategies to build trust, improve communication, and inspire your team to thrive."
-        },  
-        {
-            id: "principle1",
-            title: "Know the Condition of Your Flock",
-            date: "February 27, 2025",
-            image: "/images/twots/principle1.webp",
-            link: "/books/the-way-of-the-shepherd/principle1.html",
-            description: "Understand the first principle of The Way of the Shepherd: Know the Condition of Your Flock. Strengthen leadership skills with trust and engagement."
-        },  
-        {
-            id: "best-programming-practices",
-            title: "Best Programming Practices for Beginners in Python",
-            date: "February 27, 2025",
-            image: "/images/blog-best-programming-practices.webp",
-            link: "/blogs/gen/best-programming-practices.html",
-            description: "Master Python programming with essential best practices for beginners. Learn how to plan before coding, create task lists, organize functions, and use keyboard shortcuts to write clean, efficient code."
-        },        
-        {
-            id: "brainrot",
-            title: "How to Overcome Brain Rot and Rebuild Your Attention Span",
-            date: "February 24, 2025",
-            image: "/images/brainrot.webp",
-            link: "/blogs/gen/brainrot.html",
-            description: "Brain rot and doom scrolling are rewiring your brain, making it harder to focus. Learn practical, science-backed strategies to improve your attention span, escape internet addiction, and regain control of your mental clarity."
-        },
-        {
-            id: "scp7-sharpen-the-saw",
-            title: "Sharpen the Saw®: The Key to Sustainable Success",
-            date: "February 18, 2025",
-            image: "/images/scp7-sharpen.webp",
-            link: "/books/7-habits/scp7-sharpen-the-saw.html",
-            description: "Sharpen the Saw®—Habit 7 of The 7 Habits of Highly Effective People—focuses on continuous self-renewal. Learn how strengthening your physical, mental, emotional, and spiritual well-being leads to lasting productivity and success."
-        },        
-        {
-            id: "it114-lesson11",
-            title: "Python Scope and the LEGB Rule",
-            date: "February 18, 2025",
-            image: "/images/it114-lesson11-pythonscope.webp",
-            link: "/lessons/it114/it114-lesson11.html",
-            description: "Master Python Scope and the LEGB Rule: Learn how Local, Enclosing, Global, and Built-in scopes work in Python, avoid common mistakes, and follow best practices to write efficient and error-free code."
-        },
-        {
-            id: "it114-lesson9_1-returnstatement",
-            title: "Python Return Statement",
-            date: "February 16, 2025",
-            image: "/images/it114-lesson9_1-return.webp",
-            link: "/lessons/it114/it114-lesson9_1-returnstatement.html",
-            description: "Master the Python return statement and learn how to send data back from functions efficiently. Explore real-world examples of returning values, handling multiple returns, early exits, and recursion to enhance your Python programming skills."
-        },
-        {
-            id: "it114-lesson10-errorhandling",
-            title: "Python Error Handling",
-            date: "February 16, 2025",
-            image: "/images/it114-lesson10-error-handling.webp",
-            link: "/lessons/it114/it114-lesson10-errorhandling.html",
-            description: "Learn how to handle errors in Python using try-except blocks, prevent crashes, and write more resilient applications. This in-depth guide covers syntax errors, runtime exceptions, debugging techniques, and best practices for structured error handling."
-        },
+
+        // mst24 lessons
         {
             id: "mst24-lesson1",
             title: "Understanding Information Technology",
@@ -392,6 +182,59 @@ document.addEventListener("DOMContentLoaded", () => {
             link: "/lessons/mst24/mst24-lesson13-9.html",
             description: "Comprehensive guide to Google Gemini: Learn to leverage Google's advanced AI for content creation, research automation, and productivity enhancement."
         },
+
+        // the way of the shepherd
+        {
+            id: "principle5",
+            title: "The Staff of Direction: How Great Leaders Guide Their Teams (Principle 5 of The Way of the Shepherd)",
+            date: "March 27, 2025",
+            image: "/images/twots/principle5.webp",
+            link: "/books/the-way-of-the-shepherd/principle5.html",
+            description: "Master the biblical art of leadership direction with the Staff of Direction. Learn how to guide teams like a shepherd—setting clear paths, gentle correction, and protection—just as taught in The Way of the Shepherd. Includes actionable strategies and modern parallels."
+        },
+        {
+            id: "principle4",
+            title: "Help Your Sheep Identify with You",
+            date: "March 22, 2025",
+            image: "/images/twots/principle4.webp",
+            link: "/books/the-way-of-the-shepherd/principle4.html",
+            description: "Discover how to create a safe workplace environment with Principle #4 from 'The Way of the Shepherd.' Learn actionable strategies to foster trust, boost productivity, and ensure employee well-being."
+        },
+        {
+            id: "principle3",
+            title: "Help Your Sheep Identify with You",
+            date: "March 13, 2025",
+            image: "/images/twots/principle3.webp",
+            link: "/books/the-way-of-the-shepherd/principle3.html",
+            description: "Learn how to build trust and connection with your team by helping them identify with you. Explore actionable strategies from The Way of the Shepherd to inspire loyalty, foster open communication, and lead with authenticity."
+        },
+        {
+            id: "principle2",
+            title: "Discover the Shape of Your Sheep",
+            date: "March 6, 2025",
+            image: "/images/twots/principle2.webp",
+            link: "/books/the-way-of-the-shepherd/principle2.html",
+            description: "Know the Condition of Your Flock. Learn actionable leadership strategies to build trust, improve communication, and inspire your team to thrive."
+        },  
+        {
+            id: "principle1",
+            title: "Know the Condition of Your Flock",
+            date: "February 27, 2025",
+            image: "/images/twots/principle1.webp",
+            link: "/books/the-way-of-the-shepherd/principle1.html",
+            description: "Understand the first principle of The Way of the Shepherd: Know the Condition of Your Flock. Strengthen leadership skills with trust and engagement."
+        },  
+
+
+        // Technology Blogs
+        {
+            id: "year2038",
+            title: "The Year 2038 Problem",
+            date: "February 7, 2025",
+            image: "/images/year2038.webp",
+            link: "/blogs/tech/year2038.html",
+            description: "Explore the risks of the Y2K38 bug and how the Unix time overflow could disrupt banking, aviation, infrastructure, and IoT. Learn about 64-bit migration, patching legacy systems, and industry-wide solutions to prevent a global digital meltdown before 2038."
+        }, 
         {
             id: "promptengineering",
             title: "Google’s Prompt Engineering Essentials",
@@ -401,60 +244,78 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Learn Google's Prompt Engineering Essentials and become an expert in AI prompt engineering. Discover AI automation, workflow optimization, and advanced AI prompting techniques."
         },  
         {
-            id: "it114-lesson9",
-            title: "Python Functions and Modules",
-            date: "February 12, 2025",
-            image: "/images/it114-lesson9-functions.webp",
-            link: "/lessons/it114/it114-lesson9-functionmodules.html",
-            description: "Master Python functions and modules with this complete guide. Learn how to create efficient, reusable functions, import Python modules, and build custom modules to organize your code effectively."
-        },   
-        {
-            id: "scp6-synergize",
-            title: "Habit 6: Synergize®",
-            date: "February 13, 2025",
-            image: "/images/scp6-habit6-synergize.webp",
-            link: "/books/7-habits/scp6-synergize.html",
-            description: "Discover how Habit 6: Synergize® from 'The 7 Habits of Highly Effective People' can transform teamwork and problem-solving. Learn how creative collaboration, valuing differences, and the third alternative mindset lead to better solutions and stronger relationships."
+            id: "navigation-apps",
+            title: "Waze vs Google Maps vs Apple Maps : Choosing Your Perfect GPS Companion",
+            date: "June 6, 2025",
+            image: "/images/tech-comparison/navigation-apps-comparison.jpg",
+            link: "/blogs/tech/navigation-apps.html",
+            description: "Professional comparison of Waze, Google Maps, and Apple Maps. Discover which navigation app wins for real-time traffic, privacy, business listings, and route optimization with up-to-date data and expert insights."
         },
         {
-            id: "handwriting-code-guide",
-            title: "Improving Coding Skills Through Handwriting",
-            date: "February 11, 2025",
-            image: "/images/handwriting-code.webp",
-            link: "/blogs/gen/handwritingcode.html",
-            description: "Discover how writing code with pen and paper can improve your problem-solving, debugging, and coding skills. Learn actionable steps to practice pen and paper coding techniques and improve your coding fluency by applying traditional coding methods."
-        },        
+            id: "email-clients-comparison",
+            title: "Email Clients Comparison: Find Your Perfect Productivity Match",
+            date: "June 10, 2025",
+            image: "/images/email-clients-comparison.webp",
+            link: "/blogs/tech/email-clients-comparison",
+            description: "Compare Outlook, Gmail, Spark, Thunderbird, and more to discover the best email client for your workflow. Explore features, security, integrations, and expert tips to boost your email productivity."
+        },
         {
-            id: "it114-lesson8-randommodule",
-            title: "Python Random Module",
-            date: "February 7, 2025",
-            image: "/images/it114-lesson8-randommodule.webp",
-            link: "/lessons/it114/it114-lesson8-randommodule.html",
-            description: "Learn how to use the Python random module for generating random numbers, shuffling lists, selecting random elements, and more. Explore key functions like random(), randint(), shuffle(), choice(), and uniform(), and see how randomness is used in AI, game development, cryptography, and simulations."
-        },        
+            id: "brainrot",
+            title: "How to Overcome Brain Rot and Rebuild Your Attention Span",
+            date: "February 24, 2025",
+            image: "/images/brainrot.webp",
+            link: "/blogs/gen/brainrot.html",
+            description: "Brain rot and doom scrolling are rewiring your brain, making it harder to focus. Learn practical, science-backed strategies to improve your attention span, escape internet addiction, and regain control of your mental clarity."
+        },
         {
-            id: "year2038-problem",
-            title: "The Year 2038 Problem",
-            date: "February 7, 2025",
-            image: "/images/year2038.webp",
-            link: "/blogs/tech/year2038.html",
-            description: "Explore the risks of the Y2K38 bug and how the Unix time overflow could disrupt banking, aviation, infrastructure, and IoT. Learn about 64-bit migration, patching legacy systems, and industry-wide solutions to prevent a global digital meltdown before 2038."
-        },        
+            id: "best-programming-practices",
+            title: "Best Programming Practices for Beginners in Python",
+            date: "February 27, 2025",
+            image: "/images/blog-best-programming-practices.webp",
+            link: "/blogs/gen/best-programming-practices.html",
+            description: "Master Python programming with essential best practices for beginners. Learn how to plan before coding, create task lists, organize functions, and use keyboard shortcuts to write clean, efficient code."
+        },   
         {
-            id: "scp5-seek-first-to-understand",
-            title: "Seek First to Understand, Then to Be Understood",
-            date: "February 6, 2025",
-            image: "/images/sc/scp5-seek-first-to-understand.webp",
-            link: "/books/7-habits/scp5-seek-first-to-understand.html",
-            description: "Discover how Habit 5 from Stephen Covey’s 7 Habits of Highly Effective People can transform communication, leadership, and problem-solving. Learn practical strategies for empathic listening and how to apply them in IT, business, and personal relationships."
-        },        
+            id: "beginnersguide-usb-abc",
+            title: "Beginner's Guide to USB-A, USB-B, and USB-C",
+            date: "January 3, 2025", 
+            image: "/images/blog9.webp",
+            link: "/blogs/tech/beginnersguide-usb-abc.html",
+            description: "Learn the differences between USB-A, USB-B, and USB-C, their history, uses, and why USB-C is the future. A comprehensive guide for tech enthusiasts and beginners alike."
+        },
         {
-            id: "it114-lesson7",
-            title: "Mastering Python For Loops",
-            date: "February 4, 2025",
-            image: "/images/it114-lesson7-blog-python-for-loops.webp",
-            link: "/lessons/it114/it114-lesson7-forloop.html",
-            description: "Learn how to use Python for loops effectively with this step-by-step guide. Explore the syntax, iterate over sequences, work with nested loops, and apply advanced techniques like enumerate(), zip(), and range(). Unlock the full potential of iteration in Python with real-world examples and exercises."
+            id: "5G-vs-6G",
+            title: "5G vs 6G",
+            date: "January 18, 2025",
+            image: "/images/blog15-5g-vs-6g.webp",
+            link: "/blogs/tech/5G-vs-6G.html",
+            description: "Discover the key differences between 5G and 6G, their transformative applications, and how businesses can prepare for the next wave of wireless connectivity."
+        }, 
+
+        // General Blogs
+        {
+            id: "why-writing-down-your-goals-is-important",
+            title: "Why Writing Down Your Goals Is Crucial",
+            date: "January 12, 2025", 
+            image: "/images/blog11-gabrielle-henderson-5HqtJT2l9Gw-unsplash.webp",
+            link: "/blogs/gen/why-writing-down-your-goals-is-important.html",
+            description: "Learn why writing down goals boosts success. Discover insights from Covey's The 7 Habits and neuroscience to achieve clarity, accountability, and progress."
+        },
+        {
+            id: "SemestralBreaks",
+            title: "What to Do During Semestral Breaks",
+            date: "December 5, 2024",
+            image: "/images/blog5.webp",
+            link: "/blogs/gen/SemestralBreaks.html",
+            description: "Maximise your semestral break with tips for rest, skill development, and exciting activities."
+        },
+        {   
+            id: "role-of-technology-in-education",
+            title: "Technology in Education",
+            date: "December 1, 2024",
+            image: "/images/blog1.webp",
+            link: "/blogs/gen/role-of-technology-in-education.html",
+            description: "Learn how technology is shaping the way educators and students interact in today's classrooms."
         },
         {
             id: "programmingMindset",
@@ -465,84 +326,45 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Develop a strong programming mindset with key problem-solving strategies. Learn debugging techniques, optimization principles, and practical approaches that help you write better code and become a more efficient developer."
         },
         {
-            id: "scp4-think-win-win",
-            title: "Think Win-Win",
-            date: "January 29, 2025",
-            image: "/images/scp4-krakenimages-Y5bvRlcCx8k-unsplash.webp",
-            link: "/books/7-habits/scp4-think-win-win.html",
-            description: "Discover how Think Win-Win, the 4th habit from The 7 Habits of Highly Effective People, fosters collaboration, leadership, and long-term success through mutual benefit."
+            id: "master-time-management",
+            title: "Master Time Management",
+            date: "January 15, 2025", 
+            image: "/images/blog12-djim-loic-ft0-Xu4nTvA-unsplash.webp",
+            link: "/blogs/gen/master-time-management.html",
+            description: "Discover practical time management methods, including the Eisenhower Matrix, time-blocking, and the Pomodoro technique. Transform your productivity with actionable strategies inspired by The 7 Habits of Highly Effective People."
+        },
+
+        {
+            id: "IWishIKnewBeforeEnteringIT",
+            title: "10 Things I Wish I Knew Before Entering IT",
+            date: "December 30, 2024",
+            image: "/images/blog7.webp",
+            link: "/blogs/gen/IWishIKnewBeforeEnteringIT.html",
+            description: "Discover the essential lessons to thrive in IT, from mastering problem-solving and debugging to embracing perseverance and practical skills. Avoid common regrets and excel in your IT career with these expert tips."
         },
         {
-            id: "it114lesson3",
-            title: "Python Strings",
-            date: "January 15, 2025",
-            image: "/images/it114lesson3-hellograde-blog-python-strings.jpg",
-            link: "/lessons/it114/it114-lesson3-python-strings.html",  // Updated path
-            description: "Discover the power of Python strings. Learn string manipulation, slicing, formatting, and essential string methods with real-world examples to enhance your coding skills."
+            id: "weekend-recovery",
+            title: "How to Recover Your Energy on Weekends: Science-Backed Strategies",
+            date: "February 28, 2025",
+            image: "/images/blog-weekend-recovery.webp",
+            link: "/blogs/gen/how-to-recover-your-energy-on-weekends.html",
+            description: "Maximize your weekend recovery with science-backed strategies. Learn how to balance active and passive relaxation, set boundaries between work and personal life, and recharge effectively for better productivity and well-being."
         },
         {
-            id: "it114lesson2",
-            title: "Python Programming Basics",
-            date: "January 13, 2025",
-            image: "/images/it114lesson2-hellograde-blog-python-basics.jpg",
-            link: "/lessons/it114/it114-lesson2-python-programming-basics.html",  // Updated path
-            description: "Learn Python programming from scratch. Explore Python syntax, variables, data types, and operators with hands-on examples. Build a strong foundation for coding and software development."
+            id: "handwriting-blog",
+            title: "Improving Coding Skills Through Handwriting",
+            date: "February 11, 2025",
+            image: "/images/handwriting-code.webp",
+            link: "/blogs/gen/handwritingcode",
+            description: "Discover how writing code with pen and paper can improve your coding skills. Learn the benefits of handwriting code, boost problem-solving, and master coding fundamentals through pen and paper coding techniques."
         },
         {
-            id: "it114lesson1",
-            title: "Introduction to Python Programming",
-            date: "January 9, 2025",
-            image: "/images/it114lesson1-python-intro.webp",
-            link: "/lessons/it114/it114-lesson1-introduction-to-python.html",  // Updated path
-            description: "Start your Python journey with this beginner-friendly lesson. Learn about Python’s history, why it became the world’s most popular programming language, and how to set up your development environment. Get ready to write your first Python script and take the first step into coding."
-        },
-        {
-            id: "it114lesson6",
-            title: "Data Structures in Python",
-            date: "January 27, 2025",
-            image: "/images/it114-lesson6-python-data-structures.webp",
-            link: "/lessons/it114/it114-lesson6-datastructures.html",  // Updated path
-            description: "Dive into Python data structures like lists, tuples, sets, and dictionaries. Learn their characteristics, practical use cases, and actionable tips to write efficient, scalable, and maintainable code. Master the foundations for smarter programming."
-        },    
-        {
-            id: "it114lesson4",
-            title: "Python Conditional Statements",
-            date: "January 23, 2025",
-            image: "/images/it114-lesson4-conditional-statements.webp",
-            link: "/lessons/it114/it114-lesson4-conditional-statements.html",  // Updated path
-            description: "Learn Python conditional statements with if, elif, else, and nested logic. Write smarter, dynamic code with practical examples and actionable tips for better decision-making in your programs."
-        },
-        {
-            id: "scp3-put-first-things-first",
-            title: "Put First Things First",
-            date: "January 23, 2025",
-            image: "/images/blog19ch_pski-bylXfUFJylU-unsplash.webp",
-            link: "/books/7-habits/scp3-put-first-things-first.html",
-            description: "Learn actionable strategies from Stephen R. Covey’s Habit 3 to prioritise your Big Rocks, manage your time effectively, and align daily actions with your personal mission."
-        },
-        {
-            id: "it114-lesson5-while-looping-statement",
-            title: "While Looping Statement",
-            date: "January 22, 2025",
-            image: "/images/blog17lucas-hein-3tgwzKpxHa4-unsplash.webp",
-            link: "/lessons/it114/it114-lesson5-while-looping-statement.html",
-            description: "Learn Python while looping statements with clear examples, practical tips, and expert insights to improve your coding skills."
-        },  
-        {
-            id: "5G-vs-6G",
-            title: "5G vs 6G",
-            date: "January 18, 2025",
-            image: "/images/blog15-5g-vs-6g.webp",
-            link: "/blogs/tech/5G-vs-6G.html",
-            description: "Discover the key differences between 5G and 6G, their transformative applications, and how businesses can prepare for the next wave of wireless connectivity."
-        },        
-        {   
-            id: "role-of-technology-in-education",
-            title: "Technology in Education",
-            date: "December 1, 2024",
-            image: "/images/blog1.webp",
-            link: "/blogs/gen/role-of-technology-in-education.html",
-            description: "Learn how technology is shaping the way educators and students interact in today's classrooms."
+            id: "emotional-resilience",
+            title: "Emotional Resilience: How to Bounce Back Stronger from Setbacks",
+            date: "April 29, 2025",
+            image: "/images/blogs/emotional-resilience-guide.webp",
+            link: "/blogs/gen/emotional-resilience",
+            description: "Master emotional resilience with actionable strategies to manage stress, bounce back from setbacks, and thrive under pressure. Essential for professionals seeking mental toughness and workplace resilience."
         },
         {
             id: "effective-study-techniques",
@@ -561,6 +383,22 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Empower students with essential competencies to thrive in the digital age."
         },
         {
+            id: "BuildingHabits",
+            title: "Building Habits for Success: Your Journey to Personal Growth",
+            date: "January 2, 2025",
+            image: "/images/beproactive.webp",
+            link: "/blogs/gen/BuildingHabits",
+            description: "Discover how to build positive habits and unlock your potential for success. Learn practical strategies to overcome challenges, achieve goals, and foster personal growth on your journey to self-improvement."
+        },
+        {
+            id: "brands-that-failed-to-innovate-and-disappeared",
+            title: "Brands That Failed to Innovate and Disappeared",
+            date: "January 17, 2025", 
+            image: "/images/blog14chris-lawton-5IHz5WhosQE-unsplash.webp",
+            link: "/blogs/gen/brands-that-failed-to-innovate-and-disappeared.html",
+            description: "Discover the cautionary tales of once-dominant brands like Blockbuster, Kodak, and Nokia that failed to innovate and lost their edge. Learn why they failed, the lessons they teach, and how businesses can avoid the same fate."
+        },
+        {
             id: "AttendSeminars",
             title: "Why Should We Attend Seminars and Conferences",
             date: "December 2, 2024",
@@ -568,46 +406,61 @@ document.addEventListener("DOMContentLoaded", () => {
             link: "/blogs/gen/AttendSeminars.html",
             description: "Discover the benefits of seminars and conferences: networking, fresh perspectives, and staying updated on trends."
         },
+
+        // Financial Literacy Series
         {
-            id: "SemestralBreaks",
-            title: "What to Do During Semestral Breaks",
-            date: "December 5, 2024",
-            image: "/images/blog5.webp",
-            link: "/blogs/gen/SemestralBreaks.html",
-            description: "Maximise your semestral break with tips for rest, skill development, and exciting activities."
+            id: "gfunds-dividends",
+            title: "GFunds That Pay You: Exploring Dividends for Young Investors",
+            date: "July 23, 2025",
+            image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjIc2Q-hchzLiGg-vrLtTbDtJaPB_3XgGIIlTkZOnBW2Y8gYaKtrYwlur4BhIHxGnsPP3NUDXAcCBl94NR2ECWaRFPDV68zOYrG9Ta8H9ymBJH2IpIq8lLOP6In5GlQm7HifsMm8QwR0i4/s3073/GCash+logo+horizontal.png",
+            link: "/blogs/finance/gfunds-dividends.html",
+            description: "Learn how GFunds with dividends work, especially for Filipino beginners. Find out how to invest as low as ₱1,000 in dividend-paying mutual funds like ALFM and Manulife for passive income."
         },
+
+
+        // Events
         {
             id: "baguio-smart-city-challenge-bsu",
             title: "Baguio Smart City Challenge",
             date: "December 11, 2024",
             image: "/images/blog6.webp",
-            link: "/blogs/news/baguio-smart-city-challenge-bsu.html",  // Updated path
+            link: "/blogs/events/baguio-smart-city-challenge-bsu.html",  // Updated path
             description: "Explore the projects, lessons, and insights from this transformative experience."
         },
         {
-            id: "IWishIKnewBeforeEnteringIT",
-            title: "10 Things I Wish I Knew Before Entering IT",
-            date: "December 30, 2024",
-            image: "/images/blog7.webp",
-            link: "/blogs/gen/IWishIKnewBeforeEnteringIT.html",
-            description: "Discover the essential lessons to thrive in IT, from mastering problem-solving and debugging to embracing perseverance and practical skills. Avoid common regrets and excel in your IT career with these expert tips."
+            id: "specialist-vs-generalist",
+            title: "Specialist vs Generalist",
+            date: "April 7, 2025",
+            image: "/images/blogs/specialist-vs-generalist-career.webp",
+            link: "/blogs/gen/specialist-vs-generalist.html",
+            description: "85% of companies now seek hybrid talent. Discover whether to specialize or generalize in your career, with actionable strategies to become a T-shaped professional and future-proof your skills."
         },
         {
-            id: "BuildingHabits",
-            title: "Be Proactive",
-            date: "January 2, 2025", 
-            image: "/images/beproactive.webp",
-            link: "/books/7-habits/scp1-be-proactive.html",
-            description: "Discover how to build positive habits and unlock your potential for success. Learn practical strategies to overcome challenges, achieve goals, and foster personal growth on your journey to self-improvement."
+            id: "byteQuizBee2025",
+            title: "BYTe Quiz Bee 2025 Results: Winners & Highlights",
+            date: "March 22, 2025",
+            image: "/images/events/byte-quiz-bee-2025.jpg",
+            link: "/blogs/events/itquizbee2025results.html",  // Updated path
+            description: "Discover the top performers of the BYTe Quiz Bee 2025. View the complete results, winners, and highlights of this year's IT quiz bee event for non-IT students at Benguet State University."
         },
         {
-            id: "beginnersguide-usb-abc",
-            title: "Beginner's Guide to USB-A, USB-B, and USB-C",
-            date: "January 3, 2025", 
-            image: "/images/blog9.webp",
-            link: "/blogs/tech/beginnersguide-usb-abc.html",
-            description: "Learn the differences between USB-A, USB-B, and USB-C, their history, uses, and why USB-C is the future. A comprehensive guide for tech enthusiasts and beginners alike."
+            id: "byteFunRun2025Results",
+            title: "BYTe Fun Run 2025 Results: Race Highlights & Winners",
+            date: "March 4, 2025",
+            image: "/images/events/2025byterun/bytefunrun2025-banner.jpg",
+            link: "/blogs/events/bytefunrun2025results.html",
+            description: "The official results of the BYTe Fun Run 2025! Discover the top finishers in 3K and 5K categories, event highlights, and the sponsors who made it possible. Relive the race day excitement through our photo gallery."
         },
+        {
+            id: "2025ByteFunRunInfo",
+            title: "2025 BYTe Fun Run - Benguet State University",
+            date: "February 28, 2025",
+            image: "/images/events/2025BYTeRunraceroute.png",
+            link: "/blogs/events/2025bytefunrun",
+            description: "Join the 2025 BYTe Fun Run at Benguet State University! Celebrate the culmination of IT Month with a 3KM or 5KM scenic run, open to all students and the community. Register online to secure your race bib, enjoy the vibrant campus, and be part of an event that blends health, innovation, and community spirit. Gun start at 5:20 pm (5K) and 5:30 pm (3K)."
+        },
+
+        // 7 Habits of Highly Effective People Series
         {
             id: "scp1-be-proactive",
             title: "A Professional’s Guide to Personal and Leadership Growth",
@@ -615,22 +468,6 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "/images/blog10.webp",
             link: "/books/7-habits/scp1-be-proactive.html",
             description: "Unlock the secrets to personal effectiveness and leadership with our professional guide to The 7 Habits of Highly Effective People. Explore actionable self-improvement tips, productivity habits, and strategies for habit formation in this 8-part series based on Stephen R. Covey’s timeless principles."
-        },
-        {
-            id: "why-writing-down-your-goals-is-important",
-            title: "Why Writing Down Your Goals Is Crucial",
-            date: "January 12, 2025", 
-            image: "/images/blog11-gabrielle-henderson-5HqtJT2l9Gw-unsplash.webp",
-            link: "/blogs/gen/why-writing-down-your-goals-is-important.html",
-            description: "Learn why writing down goals boosts success. Discover insights from Covey's The 7 Habits and neuroscience to achieve clarity, accountability, and progress."
-        },
-        {
-            id: "master-time-management",
-            title: "Master Time Management",
-            date: "January 15, 2025", 
-            image: "/images/blog12-djim-loic-ft0-Xu4nTvA-unsplash.webp",
-            link: "/blogs/gen/master-time-management.html",
-            description: "Discover practical time management methods, including the Eisenhower Matrix, time-blocking, and the Pomodoro technique. Transform your productivity with actionable strategies inspired by The 7 Habits of Highly Effective People."
         },
         {
             id: "scp2-beginning-with-the-end-in-mind",
@@ -641,89 +478,279 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Discover practical time management methods, including the Eisenhower Matrix, time-blocking, and the Pomodoro technique. Transform your productivity with actionable strategies inspired by The 7 Habits of Highly Effective People."
         },
         {
-            id: "brands-that-failed-to-innovate-and-disappeared",
-            title: "Brands That Failed to Innovate and Disappeared",
-            date: "January 17, 2025", 
-            image: "/images/blog14chris-lawton-5IHz5WhosQE-unsplash.webp",
-            link: "/blogs/gen/brands-that-failed-to-innovate-and-disappeared.html",
-            description: "Discover the cautionary tales of once-dominant brands like Blockbuster, Kodak, and Nokia that failed to innovate and lost their edge. Learn why they failed, the lessons they teach, and how businesses can avoid the same fate."
-        }
+            id: "scp3-put-first-things-first",
+            title: "Put First Things First",
+            date: "January 23, 2025",
+            image: "/images/blog19ch_pski-bylXfUFJylU-unsplash.webp",
+            link: "/books/7-habits/scp3-put-first-things-first.html",
+            description: "Learn actionable strategies from Stephen R. Covey’s Habit 3 to prioritise your Big Rocks, manage your time effectively, and align daily actions with your personal mission."
+        },
+        {
+            id: "scp4-think-win-win",
+            title: "Think Win-Win",
+            date: "January 29, 2025",
+            image: "/images/scp4-krakenimages-Y5bvRlcCx8k-unsplash.webp",
+            link: "/books/7-habits/scp4-think-win-win.html",
+            description: "Discover how Think Win-Win, the 4th habit from The 7 Habits of Highly Effective People, fosters collaboration, leadership, and long-term success through mutual benefit."
+        },
+        {
+            id: "scp5-seek-first-to-understand",
+            title: "Seek First to Understand, Then to Be Understood",
+            date: "February 6, 2025",
+            image: "/images/sc/scp5-seek-first-to-understand.webp",
+            link: "/books/7-habits/scp5-seek-first-to-understand.html",
+            description: "Discover how Habit 5 from Stephen Covey’s 7 Habits of Highly Effective People can transform communication, leadership, and problem-solving. Learn practical strategies for empathic listening and how to apply them in IT, business, and personal relationships."
+        },
+        {
+            id: "scp6-synergize",
+            title: "Habit 6: Synergize®",
+            date: "February 13, 2025",
+            image: "/images/scp6-habit6-synergize.webp",
+            link: "/books/7-habits/scp6-synergize.html",
+            description: "Discover how Habit 6: Synergize® from 'The 7 Habits of Highly Effective People' can transform teamwork and problem-solving. Learn how creative collaboration, valuing differences, and the third alternative mindset lead to better solutions and stronger relationships."
+        },
+        {
+            id: "scp7-sharpen-the-saw",
+            title: "Sharpen the Saw®: The Key to Sustainable Success",
+            date: "February 18, 2025",
+            image: "/images/scp7-sharpen.webp",
+            link: "/books/7-habits/scp7-sharpen-the-saw.html",
+            description: "Sharpen the Saw®—Habit 7 of The 7 Habits of Highly Effective People—focuses on continuous self-renewal. Learn how strengthening your physical, mental, emotional, and spiritual well-being leads to lasting productivity and success."
+        },  
+
+        // IT114 Lessons
+        {
+            id: "it114-lesson1",
+            title: "Introduction to Python Programming",
+            date: "January 9, 2025",
+            image: "/images/it114-lesson1-python-intro.webp",
+            link: "/lessons/it114/it114-lesson1-introduction-to-python.html",  // Updated path
+            description: "Start your Python journey with this beginner-friendly lesson. Learn about Python’s history, why it became the world’s most popular programming language, and how to set up your development environment. Get ready to write your first Python script and take the first step into coding."
+        },
+        {
+            id: "it114-lesson2",
+            title: "Python Programming Basics",
+            date: "January 13, 2025",
+            image: "/images/it114-lesson2-hellograde-blog-python-basics.jpg",
+            link: "/lessons/it114/it114-lesson2-python-programming-basics.html",  // Updated path
+            description: "Learn Python programming from scratch. Explore Python syntax, variables, data types, and operators with hands-on examples. Build a strong foundation for coding and software development."
+        },
+        {
+            id: "it114-lesson3",
+            title: "Python Strings",
+            date: "January 15, 2025",
+            image: "/images/it114-lesson3-hellograde-blog-python-strings.jpg",
+            link: "/lessons/it114/it114-lesson3-python-strings.html",  // Updated path
+            description: "Discover the power of Python strings. Learn string manipulation, slicing, formatting, and essential string methods with real-world examples to enhance your coding skills."
+        },
+        {
+            id: "it114-lesson4",
+            title: "Python Conditional Statements",
+            date: "January 23, 2025",
+            image: "/images/it114-lesson4-conditional-statements.webp",
+            link: "/lessons/it114/it114-lesson4-conditional-statements.html",  // Updated path
+            description: "Learn Python conditional statements with if, elif, else, and nested logic. Write smarter, dynamic code with practical examples and actionable tips for better decision-making in your programs."
+        },
+        {
+            id: "it114-lesson5",
+            title: "While Looping Statement",
+            date: "January 22, 2025",
+            image: "/images/blog17lucas-hein-3tgwzKpxHa4-unsplash.webp",
+            link: "/lessons/it114/it114-lesson5-while-looping-statement.html",
+            description: "Learn Python while looping statements with clear examples, practical tips, and expert insights to improve your coding skills."
+        }, 
+        {
+            id: "it114-lesson6",
+            title: "Data Structures in Python",
+            date: "January 27, 2025",
+            image: "/images/it114-lesson6-python-data-structures.webp",
+            link: "/lessons/it114/it114-lesson6-datastructures.html",  // Updated path
+            description: "Dive into Python data structures like lists, tuples, sets, and dictionaries. Learn their characteristics, practical use cases, and actionable tips to write efficient, scalable, and maintainable code. Master the foundations for smarter programming."
+        }, 
+        {
+            id: "it114-lesson7",
+            title: "Mastering Python For Loops",
+            date: "February 4, 2025",
+            image: "/images/it114-lesson7-blog-python-for-loops.webp",
+            link: "/lessons/it114/it114-lesson7-forloop.html",
+            description: "Learn how to use Python for loops effectively with this step-by-step guide. Explore the syntax, iterate over sequences, work with nested loops, and apply advanced techniques like enumerate(), zip(), and range(). Unlock the full potential of iteration in Python with real-world examples and exercises."
+        },
+        {
+            id: "it114-lesson8",
+            title: "Python Random Module",
+            date: "February 7, 2025",
+            image: "/images/it114-lesson8-randommodule.webp",
+            link: "/lessons/it114/it114-lesson8-randommodule.html",
+            description: "Learn how to use the Python random module for generating random numbers, shuffling lists, selecting random elements, and more. Explore key functions like random(), randint(), shuffle(), choice(), and uniform(), and see how randomness is used in AI, game development, cryptography, and simulations."
+        },  
+        {
+            id: "it114-lesson9",
+            title: "Python Functions and Modules",
+            date: "February 12, 2025",
+            image: "/images/it114-lesson9-functions.webp",
+            link: "/lessons/it114/it114-lesson9-functionmodules.html",
+            description: "Master Python functions and modules with this complete guide. Learn how to create efficient, reusable functions, import Python modules, and build custom modules to organize your code effectively."
+        },  
+        {
+            id: "it114-lesson9_1",
+            title: "Python Return Statement",
+            date: "February 16, 2025",
+            image: "/images/it114-lesson9_1-return.webp",
+            link: "/lessons/it114/it114-lesson9_1-returnstatement.html",
+            description: "Master the Python return statement and learn how to send data back from functions efficiently. Explore real-world examples of returning values, handling multiple returns, early exits, and recursion to enhance your Python programming skills."
+        },
+        {
+            id: "it114-lesson10",
+            title: "Python Error Handling",
+            date: "February 16, 2025",
+            image: "/images/it114-lesson10-error-handling.webp",
+            link: "/lessons/it114/it114-lesson10-errorhandling.html",
+            description: "Learn how to handle errors in Python using try-except blocks, prevent crashes, and write more resilient applications. This in-depth guide covers syntax errors, runtime exceptions, debugging techniques, and best practices for structured error handling."
+        },
+        {
+            id: "it114-lesson11",
+            title: "Python Scope and the LEGB Rule",
+            date: "February 18, 2025",
+            image: "/images/it114-lesson11-pythonscope.webp",
+            link: "/lessons/it114/it114-lesson11.html",
+            description: "Master Python Scope and the LEGB Rule: Learn how Local, Enclosing, Global, and Built-in scopes work in Python, avoid common mistakes, and follow best practices to write efficient and error-free code."
+        },
+        {
+            id: "it114-lesson12",
+            title: "Time Module and Datetime Module",
+            date: "March 11, 2025",
+            image: "/images/hellograde-blog-python-time.webp",
+            link: "/lessons/it114/it114-lesson12-pythontimedate.html",
+            description: "Master Python’s time and datetime modules! Learn how to handle timestamps, format time, use delays, and perform date arithmetic with real-world applications."
+        },
+        {
+            id: "it114-lesson13",
+            title: "IT 114 - Lesson 13: 2D Lists and Nested Loops",
+            date: "March 24, 2025",
+            image: "/images/it114/lesson13-2d-lists-nested-loops.webp",
+            link: "/lessons/it114/it114-lesson13-2dnestedloop.html",
+            description: "Master 2D lists and nested loops in Python with practical examples, operations, and methods. Learn how to create, modify, and iterate through 2D lists effectively."
+        },
+        {
+            id: "it114-lesson14",
+            title: "IT114 Lesson 14: Installing New Libraries in Python",
+            date: "March 26, 2025",
+            image: "/images/it114/python-library-installation.webp",
+            link: "/lessons/it114/it114-lesson14-install-python-library.html",
+            description: "Learn how to install and manage Python libraries using pip, explore virtual environments, and discover alternative installation methods. Boost your programming skills with practical tips and hands-on examples."
+        },
+        {
+            id: "it114-lesson15",
+            title: "Python Text Colors: Mastering Colorama and ANSI Escape Sequences",
+            date: "March 26, 2025",
+            image: "/images/it114/python-text-colors.webp",
+            link: "/lessons/it114/it114-lesson15-textcolor.html",
+            description: "Learn to enhance Python console applications with Colorama and ANSI escape sequences. This guide covers cross-platform text coloring, styling techniques, and practical examples for better debugging and user experience."
+        },
+        {
+            id: "it114-lesson16",
+            title: "Python Lambda Functions: Write Cleaner, Faster Code",
+            date: "March 28, 2025",
+            image: "/images/it114/lambda.png",
+            link: "/lessons/it114/it114-lesson16-lambda.html",
+            description: "Master Python lambda functions with this comprehensive guide. Learn syntax, practical use cases with map()/filter()/sorted(), and when to use them versus regular functions for cleaner code. Includes exercises and assessment."
+        },
+        {
+            id: "it114-lesson17",
+            title: "Python Threading",
+            date: "April 2, 2025",
+            image: "/images/it114/python-threading.webp",
+            link: "/lessons/it114/it114-lesson17-threading.html",
+            description: "Master Python threading to speed up I/O-bound tasks while avoiding race conditions, deadlocks, and GIL limitations. Includes practical examples and synchronization techniques."
+        },
+                {
+            id: "it114-lesson18",
+            title: "Python OOP: Mastering Classes and Objects",
+            date: "April 3, 2025",
+            image: "/images/it114/python-classes.webp",
+            link: "/lessons/it114/it114-lesson18-classes.html",
+            description: "Comprehensive guide to Python classes and object-oriented programming. Learn class syntax, inheritance, methods, and practical OOP applications with clear examples."
+        },
+                {
+            id: "it114-lesson19",
+            title: "Python to EXE: Create Standalone Apps with PyInstaller",
+            date: "April 3, 2025",
+            image: "/images/it114/python-to-exe-guide.webp",
+            link: "/lessons/it114/it114-lesson19-exefile.html",
+            description: "Step-by-step guide to convert Python scripts to executable (.exe) files using PyInstaller. Learn to create standalone apps for Windows, macOS, and Linux with flags like --onefile and --windowed. Includes troubleshooting tips for common issues."
+        },
+        {
+            id:"it114-lesson20",
+            title: "Software Documentation Guide",
+            date: "April 4, 2025",
+            image: "/images/it114/software-documentation.webp",
+            link: "/lessons/it114/it114-lesson20-programdocumentation.html",
+            description: "Comprehensive guide to software documentation covering its importance, essential components, best practices, and real-world examples. Learn how to create documentation that boosts productivity and maintains code quality."
+        },
     ];
 
-  
-// Render all categories
-renderCategory("itEraContainer", "Living in the IT Era", categoryMap["Living in the IT Era"]);
-renderCategory("pythonBasicsContainer", "Python Programming Basics", categoryMap["Python Programming Basics"]);
-renderCategory("habitsContainer", "7 Habits of Highly Effective People", categoryMap["7 Habits of Highly Effective People"]);
-renderCategory("techRelatedContainer", "Tech Related", categoryMap["Tech Related"]);
-renderCategory("selfHelpContainer", "Self Help & Study Techniques", categoryMap["Self Help & Study Techniques"]);
+    const sortedBlogs = blogPool.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
 
-// 1. Add a category property to each blog in blogPool (do this where you define blogPool)
-const categoryMapForFilter = {
-    "Finance": ["gfunds-dividends"],
-    "Tech": [
-        "navigation-apps", "year2038-problem", "beginnersguide-usb-abc", "promptengineering", "5G-vs-6G"
-    ],
-    "Personal Growth": [
-        "specialist-vs-generalist", "best-programming-practices", "brainrot", "weekend-recovery", "handwriting-code-guide", "why-writing-down-your-goals-is-important", "master-time-management", "brands-that-failed-to-innovate-and-disappeared"
-    ],
-    "Events": [
-        "byteQuizBee2025", "byteFunRun2025Results", "byteFunRun2025Results2", "baguio-smart-city-challenge-bsu"
-    ]
-};
-// Assign category to each blog in blogPool
-blogPool.forEach(blog => {
-    for (const [cat, ids] of Object.entries(categoryMapForFilter)) {
-        if (ids.includes(blog.id)) {
-            blog.category = cat;
-            return;
-        }
+    // 1. Latest / Random Blog Sections
+       const numberOfBlogsToShow = 3;
+  // Sort blogs by date (largest/newest date first)
+    const latestBlog = sortedBlogs[0];
+
+   // Display the latest blog (if container exists)
+    if (latestBlogContainer) {
+        latestBlogContainer.innerHTML = `
+            <img src="${latestBlog.image}" alt="${latestBlog.title}" class="w-full h-64 object-cover rounded-md mb-4">
+            <h3 class="text-2xl font-semibold text-gray-800">
+                <a href="${latestBlog.link}" class="text-blue-600 hover:underline">${latestBlog.title}</a>
+            </h3>
+
+               <p class="text-gray-600 text-sm">Published on: <span class="font-medium">${latestBlog.date}</span></p>
+            <p class="text-gray-600 mt-2">${latestBlog.description}</p>
+            <a href="${latestBlog.link}" class="text-blue-500 mt-4 inline-block hover:underline">Read More</a>
+        `;
     }
-    // Default/fallback
-    blog.category = "General";
-});
 
-// 2. Rendering functions
-function renderBlogCard(blog) {
-    return `
-    <div class="bg-white rounded-lg shadow p-5 flex flex-col h-full blog-card" data-category="${blog.category}">
-        <a href="${blog.link}">
-            <img src="${blog.image || '/images/default-blog.jpg'}" alt="${blog.title}" loading="lazy" class="rounded mb-4 w-full h-40 object-cover">
-            <h3 class="font-semibold text-lg mb-2">${blog.title}</h3>
-        </a>
-        <p class="text-gray-600 text-sm mb-2">${blog.description || ''}</p>
-        <span class="inline-block bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">${blog.category}</span>
-        <span class="block text-xs text-gray-400 mt-2">${blog.date || ''}</span>
-    </div>
-    `;
-}
+     // 2. Blog Navigation (Previous / Next)
+    const currentBlogId = document.body.getAttribute("data-blog-id"); // e.g., "blog7"
+    const currentIndex = sortedBlogs.findIndex(blog => blog.id === currentBlogId);
 
-function renderLatestBlogs(category = "All") {
-    const container = document.getElementById("latestBlogsContainer");
-    let filtered = category === "All" ? blogPool : blogPool.filter(b => b.category === category);
-    container.innerHTML = filtered.map(renderBlogCard).join('') || `<div class="col-span-full text-center text-gray-400">No blogs found.</div>`;
-}
+    // If the blog ID is recognized (currentIndex >= 0), build nav
+    if (currentIndex !== -1) {
+        // Looping logic:
+        const prevIndex = (currentIndex + 1) % sortedBlogs.length;
+        const nextIndex = (currentIndex - 1 + sortedBlogs.length) % sortedBlogs.length;
 
-function renderRandomBlogs() {
-    const container = document.getElementById("randomBlogsContainer");
-    let shuffled = blogPool.slice().sort(() => 0.5 - Math.random());
-    let randomBlogs = shuffled.slice(0, 3);
-    container.innerHTML = randomBlogs.map(renderBlogCard).join('');
-}
+        const prevBlog = sortedBlogs[prevIndex];
+        const nextBlog = sortedBlogs[nextIndex];
 
-// 3. Category filter logic
-document.addEventListener("DOMContentLoaded", () => {
-    renderLatestBlogs(); // Show all by default
-    renderRandomBlogs();
+        const navContainer = document.getElementById("blogNav");
+        if (navContainer) {
+            navContainer.innerHTML = `
+            <div class="mt-6 flex justify-center space-x-4">
+                <a
+                    href="${prevBlog.link}"
+                    class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm text-center hover:bg-blue-700"
+                >
+                    Previous: ${prevBlog.title}
+                </a>
+                <a
+                    href="/blogs/"
+                    class="text-white bg-green-700 px-4 py-2 rounded-md text-sm text-center hover:bg-green-800"
+                >
+                    Check Other Blogs
+                </a>
+                <a
+                    href="${nextBlog.link}"
+                    class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm text-center hover:bg-blue-700"
+                >
+                    Next: ${nextBlog.title}
+                </a>
+            </div>
 
-    const categoryBtns = document.querySelectorAll('.category-btn');
-    categoryBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            categoryBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const category = btn.getAttribute('data-category');
-            renderLatestBlogs(category);
-        });
-    });
-});
+            `;
+        }
+    } else {
+        // Optional: console error if data-blog-id doesn't match
+        console.error("No matching blog for data-blog-id:", currentBlogId);
+    }
 });
