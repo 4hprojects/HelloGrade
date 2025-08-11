@@ -21,9 +21,17 @@
     <meta name="keywords" content="Python tutorial, Learn Python, Python programming, Python for beginners, Python coding, Python basics, Python syntax, Variables in Python, Python data types, Python operators, Python comments">
     <meta name="robots" content="index, follow">
     
-    <title>IT 114 - Lesson 2: Python Programming Basics | HelloGrade Blogs</title>
+    <title>Lesson 2: Python Programming Basics | HelloGrade Lessons</title>
     
-    <!-- Fonts and Stylesheets -->
+
+    <meta property="og:title" content="IT 114 - Lesson 2: Python Programming Basics | HelloGrade Blogs">
+    <meta property="og:description" content="Master Python fundamentals: syntax, variables, data types, and operators. Start coding with confidence in this step-by-step guide.">
+    <meta property="og:image" content="https://hellograde.online/images/hellograde-blog-python-basics.jpg">
+    <meta property="og:url" content="https://hellograde.online/blogs/it114-lesson2-python-programming-basics.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="HelloGrade">
+
+        <!-- Fonts and Stylesheets -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
@@ -37,29 +45,34 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/js/uscripts.js"></script>
 
-    <meta property="og:title" content="IT 114 - Lesson 2: Python Programming Basics | HelloGrade Blogs">
-    <meta property="og:description" content="Master Python fundamentals: syntax, variables, data types, and operators. Start coding with confidence in this step-by-step guide.">
-    <meta property="og:image" content="https://hellograde.online/images/hellograde-blog-python-basics.jpg">
-    <meta property="og:url" content="https://hellograde.online/blogs/it114-lesson2-python-programming-basics.html">
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="HelloGrade">
+
+    <!-- Custom CSS for branding overrides -->
+    <link rel="stylesheet" href="/blogs/css/blogs.css">
+    <!-- Header Styles -->
+    <link rel="stylesheet" href="/css/uheader.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/css/ustyles.css">
+
+    <link rel="stylesheet" href="/dist/output.css">
 </head>
 
 
-<body data-blog-id="it114lesson2">
+<body data-blog-id="it114-lesson2">
     <!-- Header -->
     <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
         <div class="flex items-center">
             <a href="https://hellograde.online/">
-                <img src="/images/icon.webp" alt="HelloGrade Logo" class="h-12 mr-3">
+                <img src="/images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3">
             </a>
-            <h1 class="text-xl font-bold">HelloGrade</h1>
+            <p class="text-xl font-bold">HelloGrade</p>
         </div>
         <nav>
             <ul id="navMenu" class="flex flex-row gap-4">
-                <li><a href="/index" title="Home"><span class="material-icons">home</span></a></li>
-                <li><a href="/search" title="Search"><span class="material-icons">search</span></a></li>
-                <li><a href="/blog" title="Blogs" class="text-yellow-400"><span class="material-icons">article</span></a></li>
+                <li><a href="/index" title="Home" ><span class="material-icons">home</span></a></li>
+                <li><a href="#" title="Search" onclick="toggleSearchOverlay()"><span class="material-icons">search</span></a></li>
+                <li><a href="/blogs" title="Blogs"><span class="material-icons">article</span></a></li>
+                <li><a href="/events" title="Events"><span class="material-icons">event</span></a></li>
+                <li><a href="/lessons" title="Lessons" class="text-yellow-400"><span class="material-icons">menu_book</span></a></li>
                 <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
             </ul>
         </nav>
@@ -557,8 +570,8 @@ print(z)  # Output: "42"
             </p>
 
             <div class="text-center my-6">
-                <a href="https://forms.gle/mPJTu6sdS8F1arf79" target="_blank" 
-                   class="bg-green-600 text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-green-700">
+                <a href="https://forms.gle/QBbkq67nj8vdUCze7" target="_blank" 
+                   class="bg-red-600 text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-green-700">
                    Take the Python Basics Assessment
                 </a>
             </div>
@@ -570,8 +583,8 @@ print(z)  # Output: "42"
             </p>
 
             <ul class="list-disc ml-6 mb-4">
-                <li><a href="/blogs/it114-lesson1-introduction-to-python" class="text-blue-600 hover:underline">Previous Lesson: Introduction to Python Programming</a></li>
-                <li><a href="/blogs/it114-lesson3-python-strings" class="text-blue-600 hover:underline">Next Lesson: Python Strings</a></li>
+                <li><a href="/lessons/it114/it114-lesson1-introduction-to-python" class="text-blue-600 hover:underline">Previous Lesson: Introduction to Python Programming</a></li>
+                <li><a href="/lessons/it114/it114-lesson3-python-strings" class="text-blue-600 hover:underline">Next Lesson: Python Strings</a></li>
             </ul>
 
             <h4 class="text-xl font-semibold text-blue-600 mt-6 mb-3">Explore More Topics</h4>
@@ -581,7 +594,7 @@ print(z)  # Output: "42"
             </p>
 
             <ul class="list-disc ml-6 mb-4">
-                <li><a href="/blogs/scp3-put-first-things-first" class="text-blue-600 hover:underline" target="_blank">Habit 3: Put First Things First</a></li>
+                <li><a href="/blogs/books/scp3-put-first-things-first" class="text-blue-600 hover:underline" target="_blank">Habit 3: Put First Things First</a></li>
             </ul>
 
             <p class="mb-4">
