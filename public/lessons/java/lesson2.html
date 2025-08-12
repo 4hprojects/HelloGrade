@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-X5E3N182NE');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="author" content="Henson M. Sagorsor">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Introduction to Computer Programming: Learn the basics of coding, understand how programs work, and gain practical skills to start writing code. Perfect for beginners and professionals aiming to enhance their programming skills.">
+    <meta name="keywords" content="computer programming, coding basics, learn programming, programming skills, writing code, beginner programming, start coding, programming concepts">
+    <meta name="robots" content="index, follow">
+    
+    <title>Lesson 1: Introduction to Computer Programming | HelloGrade Lessons</title>
+        <meta property="og:title" content="Understanding Recursive Algorithms: A Developer's Guide | HelloGrade Blogs">
+    <meta property="og:description" content="Master recursive algorithms with practical examples of factorial calculation, tree traversal, and recursion vs iteration comparison.">
+    <meta property="og:image" content="https://hellograde.online/images/recursive-algorithms-guide.jpg">
+    <meta property="og:url" content="https://hellograde.online/blogs/recursive-algorithms-guide">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="HelloGrade">
+    
+    <!-- ✅ Correct Google AdSense Script in <head> -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+        crossorigin="anonymous"></script>
+
+    <!-- Fonts and Stylesheets -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/css/ustyles.css">
+    <link rel="stylesheet" href="/css/blogs.css">
+    <link rel="stylesheet" href="/dist/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="/js/uscripts.js"></script>
+
+
+    <!-- Custom CSS for branding overrides -->
+    <link rel="stylesheet" href="/blogs/css/blogs.css">
+    <!-- Header Styles -->
+    <link rel="stylesheet" href="/css/uheader.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/css/ustyles.css">
+
+    <link rel="stylesheet" href="/dist/output.css">
+    
+</head>
+
+
+<body data-blog-id="IntroductionJava">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
+        <div class="flex items-center">
+            <a href="https://hellograde.online/">
+                <img src="/images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3">
+            </a>
+            <p class="text-xl font-bold">HelloGrade</p>
+        </div>
+        <nav>
+            <ul id="navMenu" class="flex flex-row gap-4">
+                <li><a href="/index" title="Home" ><span class="material-icons">home</span></a></li>
+                <li><a href="#" title="Search" onclick="toggleSearchOverlay()"><span class="material-icons">search</span></a></li>
+                <li><a href="/blogs" title="Blogs"><span class="material-icons">article</span></a></li>
+                <li><a href="/events" title="Events"><span class="material-icons">event</span></a></li>
+                <li><a href="/lessons" title="Lessons" class="text-yellow-400"><span class="material-icons">menu_book</span></a></li>
+                <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+<!-- Blog Content -->
+    <main class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">
+        Lesson 2 - Introduction to Java
+    </h1>
+
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold text-green-700 mb-4 text-left">Why Java</h2>
+        <p>
+            “Java powers over 3 billion devices worldwide,” according to Oracle. That’s not just a statistic—it’s proof of how deeply this programming language shapes the technology we use daily. From banking apps to Android phones, Java is there, quietly making things work.
+        </p>
+        <p>
+            Learning Java isn’t just about syntax. It’s about mastering a skill that is portable, scalable, and trusted by some of the biggest tech companies in the world. Whether your goal is to build mobile apps, enterprise software, or cloud solutions, Java gives you a foundation that’s relevant and in demand.
+        </p>
+    </section>
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold text-green-700 mb-4 text-left">Why Learn Java</h2>
+        <ul class="list-disc pl-6">
+            <li>Widely Used – Runs on over 3 billion devices worldwide.</li>
+            <li>Strong Career Potential – In-demand for enterprise, mobile, and cloud-based applications.</li>
+            <li>Cross-Platform Development – One codebase works on multiple operating systems.</li>
+            <li>Foundation for Other Languages – Teaches object-oriented concepts used in C#, Python, Kotlin, and more.</li>
+            <li>Trusted by Industry Leaders – Used by companies like Google, Accenture, and Intel.</li>
+            <li>Long-Term Relevance – Over two decades old and still actively developed.</li>
+            <li>Rich Ecosystem – Access to powerful libraries, frameworks, and tools.</li>
+            <li>Scalable – Suitable for small apps and large enterprise systems.</li>
+            <li>Stable and Secure – Designed to minimise security risks and ensure reliability.</li>
+        </ul>
+    </section>
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold text-green-700 mb-4 text-left">What is Java</h2>
+        <p>
+            Java is a high-level, object-oriented programming language designed to run on multiple platforms without modification. This is possible because of the Java Virtual Machine (JVM), which executes Java programs on any device or operating system.
+        </p>
+        <ul class="list-disc pl-6">
+            <li><strong>High-level</strong> – Closer to human language than machine code, making it easier to write and understand.</li>
+            <li><strong>Object-oriented</strong> – Organises code into objects that hold both data (attributes) and behaviours (methods).</li>
+            <li><strong>Platform-independent</strong> – Write the code once, run it anywhere with Java support.</li>
+        </ul>
+        <p>
+            <em>Analogy:</em> Think of Java as a universal charger—you can plug it in anywhere, and it works without needing a different version for each device.
+        </p>
+    </section>
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold text-green-700 mb-4 text-left">History of Java</h2>
+        <p>
+            Java was developed in the early 1990s by James Gosling and his team at Sun Microsystems, known as the Green Team. Initially intended for interactive television—like live voting during a TV show—the technology was too advanced for the market at the time but found its ideal match in the growing World Wide Web.
+        </p>
+        <h3 class="text-xl font-semibold mt-4">Key Milestones:</h3>
+        <ul class="list-disc pl-6">
+            <li>Initially called Green Talk, then Oak in 1994.</li>
+            <li>Official release as Java 1.0 in 1995.</li>
+            <li>2006 – JVM made open source; J2SE renamed Java Standard Edition (Java SE).</li>
+            <li>Major releases – Java SE 6 (2006), Java SE 8 (2014). Java 8 and Java 11 are Long-Term Support (LTS) versions.</li>
+            <li>Since 2007, Java has been managed through the Java Community Process (JCP).</li>
+        </ul>
+        <h3 class="text-xl font-semibold mt-4">Impact:</h3>
+        <p>
+            Java powers frameworks and tools like JUnit, Eclipse, Hadoop, and Android. It’s used by companies such as Google, Accenture, Intel, and Philips. It is also the official language for Android development, even in popular games like PUBG.
+        </p>
+    </section>
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold text-green-700 mb-4 text-left">Features of Java</h2>
+        <p>Java’s features make it one of the most versatile programming languages in existence:</p>
+        <ul class="list-disc pl-6">
+            <li><strong>Simple</strong> – Easier to learn compared to older languages, with a clean syntax and no pointer complexity.</li>
+            <li><strong>Object-Oriented</strong> – Encourages code reuse and modular design.</li>
+            <li><strong>Platform-Independent</strong> – JVM ensures “Write Once, Run Anywhere.”</li>
+            <li><strong>Secure</strong> – Built-in safeguards protect against unauthorised access.</li>
+            <li><strong>Robust</strong> – Strong memory management and exception handling.</li>
+            <li><strong>Multithreaded</strong> – Handles multiple tasks at the same time.</li>
+            <li><strong>High Performance</strong> – JIT compiler boosts execution speed.</li>
+            <li><strong>Distributed</strong> – Supports network-based applications.</li>
+            <li><strong>Modern Enhancements (Java 8–21)</strong> – Lambda expressions, Streams API, var keyword, Pattern Matching, Record classes, and Virtual Threads for scalable concurrency.</li>
+        </ul>
+    </section>
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold text-green-700 mb-4 text-left">Conclusion</h2>
+        <p>
+            Java has stood the test of time because it adapts while staying true to its core principles. It is as relevant in mobile app development as it is in enterprise and cloud computing. For students, learning Java means gaining skills that transfer to many other languages and platforms.
+        </p>
+    </section>
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold text-green-700 mb-4 text-left">Call to Action</h2>
+        <p>
+            Start small. Install Java on your computer and write your first program today.
+            Practice regularly, explore Java’s object-oriented features, and experiment with real-world projects.
+            The sooner you begin coding in Java, the sooner you’ll understand why it remains one of the most trusted tools in the world of programming.
+        </p>
+    </section>
+</main>
+
+<br>
+<!-- Final Section: Conclusion & Resources -->
+<section>
+    <h2 class="text-2xl font-semibold text-green-700 mb-4 text-left">Conclusion & Resources</h2>
+    <p>
+        You’ve explored the foundations of computer programming—from the core concepts to real-world career paths—and walked through the life cycle of building software.
+    </p>
+    <p>
+        Keep practicing by writing simple programs, testing them, and refining your logic. That’s how you build true programming skills over time.
+    </p>
+    <p>
+        Use the materials below to revisit key ideas, reinforce learning, and prepare for what comes next in your coding journey.
+    </p>
+
+    <div class="mt-6">
+        <h3 class="text-xl font-semibold">Notes</h3>
+        <p>
+            Download detailed lecture notes here:
+            <a href="https://drive.google.com/file/d/1h5Q7Uh7FzQvFRfvupzacwZpRjVtPUmP3/view?usp=drive_link"
+               class="text-blue-600 hover:underline" target="_blank">
+               PROGIT1 – Lesson 2 Notes
+            </a>
+        </p>
+    </div>
+    <div class="mt-4">
+        <h3 class="text-xl font-semibold">Slides</h3>
+        <p>
+            View presentation slides here:
+            <a href="https://drive.google.com/file/d/18w7H6wGTTJPrNK3vnhgJ4YbHa61OeZFX/view?usp=drive_link"
+               class="text-blue-600 hover:underline" target="_blank">
+               PROGIT1 – Lesson 2 Slides
+            </a>
+        </p>
+    </div>
+    <!-- Call-to-Action: Test Your Knowledge -->
+<div class="mt-8 bg-red-50 p-6 rounded-lg">
+    <h4 class="text-xl font-semibold text-red-600 mb-4">Test Your Knowledge</h4>
+    <p>
+        Ready to test your understanding of computer programming basics? Take our 
+        <a href="https://forms.gle/yd7PgPRn9ywfXxGV7" 
+           class="text-blue-600 hover:underline" target="_blank">Introduction to Java</a>. 
+        Challenge yourself and see how well you grasp the key concepts from this lesson.
+    </p>
+<br>
+</div>
+</section>
+
+<br>
+            <!-- Call-to-Action: Explore More Learning Resources -->
+            <div class="mt-8 bg-blue-50 p-6 rounded-lg">
+                <h4 class="text-xl font-semibold text-blue-600 mb-4">Expand Your Knowledge</h4>
+                <p>
+                    Dive deeper into technology and productivity with these related articles:
+                </p>
+                <ul class="list-disc pl-6 mt-4">
+                    <li>
+                        <a href="https://www.hellograde.online/lessons/mst24/mst24-lesson1" 
+                           class="text-green-600 hover:underline" target="_blank">
+                            Understanding IT
+                        </a> – Build a solid foundation in Information Technology essentials.
+                    </li>
+                    <li>
+                        <a href="https://www.hellograde.online/blogs/gen/specialist-vs-generalist" 
+                           class="text-green-600 hover:underline" target="_blank">
+                           Specialist vs Generalist
+                        </a> – 85% of companies now seek hybrid talent. Discover whether to specialize or generalize in your career, with actionable strategies to become a T-shaped professional and future-proof your skills.
+                    </li>
+                    <li>
+                        <a href="https://www.hellograde.online/blogs/tech/promptengineering" 
+                           class="text-green-600 hover:underline" target="_blank">
+                            Prompt Engineering: Writing Effective AI Prompts
+                        </a> – Master the skill of crafting precise AI prompts for better results.
+                    </li>
+                    <li>
+                        <a href="https://www.hellograde.online/blogs/tech/brainrot" 
+                           class="text-green-600 hover:underline" target="_blank">
+                            Understanding Brain Rot in the Digital Age
+                        </a> – Break free from digital overload and regain focus.
+                    </li>
+                    <li>
+                        <a href="https://www.hellograde.online/blogs/gen/effective-study-techniques" 
+                           class="text-green-600 hover:underline" target="_blank">
+                            Effective Study Techniques for Better Learning
+                        </a> – Discover research-backed strategies to boost learning retention.
+                    </li>
+                </ul>
+            </div>
+<br>
+
+
+                    </article> 
+        <br>
+        <div id="share-buttons" class="mt-6 flex justify-center space-x-4"></div>
+        <br>
+        <div id="blogNav"></div>
+        <br>
+        <div id="latestBlogContainer"></div>
+        <br>
+
+            <!-- ✅ Ad Before Comments -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-4537208011192461"
+                    data-ad-slot="1190959056"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+                <!-- Comment Section -->
+                <h3 class="text-2xl font-semibold mt-8 mb-4">We'd Like to Hear Your Feedback</h3>
+                <form id="commentForm" class="flex flex-col mb-6">
+                    <textarea id="commentInput" name="comment" rows="4" placeholder="Write your comment here..." class="p-4 border rounded-lg mb-4" required></textarea>
+                    <div class="flex items-center mb-4">
+                        <input type="checkbox" id="anonymousCheckbox" class="mr-2">
+                        <label for="anonymousCheckbox" class="text-gray-700">Post anonymously</label>
+                    </div>
+                    <div class="mt-6 flex justify-between">
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Post Comment</button>
+                </div>
+                </form>
+                <div id="commentError" class="text-red-500 mt-2"></div>
+        
+                <h4 class="text-xl font-semibold mb-4">Comments</h4>
+                <div id="commentsContainer" class="space-y-4">
+                    <!-- Placeholder for comments -->
+                    <p class="text-gray-600">No comments yet. Be the first to share your thoughts!</p>
+                </div>
+        
+                <!-- Scroll To Top Button -->
+                <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
+                    <span class="material-icons">arrow_upward</span>
+                </button>
+</main>
+
+            <!-- Footer -->
+            <div id="footerContainer"></div>
+    <!-- ✅ Footer Ad -->
+            <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-4537208011192461"
+            data-ad-slot="1190959056"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+       <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+       </script>
+
+        <script>
+            ScrollReveal().reveal("[data-scroll-reveal]", {
+                duration: 1000,
+                delay: 300,
+                reset: true
+            });
+        </script>
+        <script src="/js/blogs.js" defer></script>
+        <script src="/js/blogComments.js"></script>
+        <script src="/js/checkSession.js" defer></script>
+        <script src="/js/shareButtons.js"></script>
+</body>
+
+</html>
