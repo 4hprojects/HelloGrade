@@ -155,18 +155,8 @@ a.button:hover {
     transform: translateY(-3px);
 }
 
-/* Footer */
-footer {
-    background: linear-gradient(90deg, #28a745, #218838);
-    color: #ffffff;
-    text-align: center;
-    padding: 15px 0;
-    font-size: 0.9rem;
-}
 
-footer p {
-    margin: 0;
-}
+
 
 /* Scroll-to-Top Button */
 #scrollToTopBtn {
@@ -218,5 +208,50 @@ footer p {
 
     nav ul li a {
         font-size: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    table {
+        display: block;
+        width: 100%;
+    }
+    th, td {
+        padding: 8px 4px; /* Reduce padding for smaller screens */
+        font-size: 12px; /* Smaller font size for mobile */
+    }
+    th {
+        white-space: nowrap; /* Prevent header text from wrapping */
+    }
+}
+
+@media (max-width: 640px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+    td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label);
+        font-weight: bold;
     }
 }
