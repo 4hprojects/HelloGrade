@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-X5E3N182NE');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="author" content="Henson M. Sagorsor">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ✅ SEO Optimized Meta -->
+    <title>Getting Started with Node.js and Express | Beginner’s Guide</title>
+    <meta name="description" content="Learn how to get started with Node.js and Express. This beginner-friendly lesson covers installation, setup, routing, and best practices for building modern web applications with server-side JavaScript.">
+    <meta name="keywords" content="Node.js and Express, Node.js tutorial, Express.js basics, Node.js for beginners, web development with Node.js, server-side JavaScript">
+
+    <!-- ✅ Robots -->
+    <meta name="robots" content="index, follow">
+
+    <!-- ✅ Canonical URL -->
+    <link rel="canonical" href="https://hellograde.online/lessons/node/node-lesson2" />
+
+    <!-- ✅ Open Graph (OG) for Social Sharing -->
+    <meta property="og:title" content="Getting Started with Node.js and Express | Beginner’s Guide">
+    <meta property="og:description" content="Master the basics of Node.js and Express. Learn installation, setup, and routing to start building powerful web applications with server-side JavaScript.">
+    <meta property="og:image" content="https://hellograde.online/images/nodejs-express-guide.jpg">
+    <meta property="og:url" content="https://hellograde.online/lessons/node/node-lesson2">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="HelloGrade">
+
+    <!-- ✅ Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Getting Started with Node.js and Express | Beginner’s Guide">
+    <meta name="twitter:description" content="Step-by-step lesson on Node.js and Express for beginners. Learn setup, routing, and web development basics with server-side JavaScript.">
+    <meta name="twitter:image" content="https://hellograde.online/images/nodejs-express-guide.jpg">
+
+    <!-- ✅ AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461"
+     crossorigin="anonymous"></script>
+
+    <!-- ✅ Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/css/ustyles.css">
+    <link rel="stylesheet" href="/css/blogs.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/dist/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- ✅ Scripts -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="/js/uscripts.js"></script>
+</head>
+
+
+
+<body data-blog-id="blogNumber">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 flex items-center justify-between px-4 py-2 bg-green-600 text-white">
+        <div class="flex items-center">
+            <a href="https://hellograde.online/">
+                <img src="/images/icon.webp" alt="HelloGrade Student Grading Portal Logo" class="h-12 mr-3">
+            </a>
+            <p class="text-xl font-bold">HelloGrade</p>
+        </div>
+        <nav>
+            <ul id="navMenu" class="flex flex-row gap-4">
+                <li><a href="/index" title="Home" ><span class="material-icons">home</span></a></li>
+                <li><a href="#" title="Search" onclick="toggleSearchOverlay()"><span class="material-icons">search</span></a></li>
+                <li><a href="/blogs" title="Blogs"><span class="material-icons">article</span></a></li>
+                <li><a href="/events" title="Events"><span class="material-icons">event</span></a></li>
+                <li><a href="/lessons" title="Lessons" class="text-yellow-400"><span class="material-icons">menu_book</span></a></li>
+                <li><a id="signinLink" href="/login" title="Sign In"><span class="material-icons">login</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Blog Content -->
+<main class="container mx-auto px-4 py-8">
+    <br>
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">
+        Getting Started with Node.js and Express
+    </h1>
+    <p class="text-gray-600 text-sm text-center">
+        Published on: <span class="font-medium">August 22, 2025</span> by <span class="font-medium">Henson M. Sagorsor</span>
+    </p>
+    <br>
+        <!-- ✅ Ad Below Blog Title -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4537208011192461"
+             data-ad-slot="1190959056"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+ 
+        <br>
+        <img src="/images/mst24/lesson13/office-suites-intro.webp" alt="Introduction to Office Suites" class="w-full h-64 object-cover rounded-lg mb-8">
+        <br>
+        <article class="text-gray-800 leading-7 text-left" id="content">
+            <!-- Section 1: Introduction -->
+            <section>
+        <p>
+            “JavaScript is eating the world of software.” That line has been repeated in developer circles for over a decade, and Node.js is a big reason why. Today, more than <strong>42% of professional developers use Node.js</strong> to build scalable applications. That’s a number you can’t ignore.
+        </p>
+        <p>
+            If you’ve worked with JavaScript in the browser, you already hold the key to server-side programming. The only difference is that with Node.js, your code runs on the server instead of inside Chrome or Firefox. Add Express.js into the mix, and you suddenly have a streamlined way to handle routes, responses, and the overall flow of your web app.
+        </p>
+        <p>
+            In this lesson, we’ll walk through practical steps: installing Node.js, setting up Express, and creating a working project structure you can build upon. You’ll see how the <strong>MVC pattern (Model, View, Controller)</strong> fits into the picture, and why it matters when your application grows.
+        </p>
+        <p>
+            No theory overload, no fluff. Just actionable knowledge you can use right after reading. By the end, you’ll not only understand what Node.js and Express are—you’ll have a working app running on your machine!
+        </p>
+
+            </section>
+
+            <br>
+            <section class="mt-12">
+            <div class="mb-6 flex justify-center">
+            <a href="#mandatory-assessment"
+               class="inline-flex items-center px-5 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors text-lg shadow">
+                <span class="material-icons mr-2">assignment_turned_in</span>
+                Jump to Mandatory Assessment
+            </a>
+        </div>
+
+    <h2 class="text-2xl font-semibold text-green-700 mb-4">Key Terms and Definitions</h2>
+    <p>
+        Before diving into installation and coding, it’s important to clarify the terms you’ll see repeatedly in any
+        <strong>Node.js tutorial</strong>. These concepts form the foundation of working with <strong>Node.js and Express</strong>.
+    </p>
+    <ul class="list-disc pl-6 mt-4 space-y-2">
+        <li>
+            <strong>Node.js</strong> – A JavaScript runtime built on Google Chrome’s V8 engine. It allows JavaScript to run outside the browser, making it possible to build scalable servers and APIs.  
+            <em>Example:</em> Running a chat application backend using Node.js.
+        </li>
+        <li>
+            <strong>npm (Node Package Manager)</strong> – A package manager that comes with Node.js. It helps developers install, update, and manage libraries.  
+            <em>Example:</em> Installing Express with <code>npm install express</code>.
+        </li>
+        <li>
+            <strong>Express.js</strong> – A fast and minimal web application framework for Node.js. It simplifies routing, middleware, and handling server responses.  
+            <em>Example:</em> Creating routes like <code>/login</code> or <code>/grades</code> in a grading portal.
+        </li>
+        <li>
+            <strong>MVC (Model–View–Controller)</strong> – A design pattern that separates concerns in an application.  
+            <ul class="list-disc pl-6 mt-2">
+                <li><strong>Model:</strong> Manages data and logic. <em>Example:</em> A Student model that saves and retrieves student records.</li>
+                <li><strong>View:</strong> Handles presentation. <em>Example:</em> An HTML page that displays student grades.</li>
+                <li><strong>Controller:</strong> Connects everything by handling requests and responses. <em>Example:</em> A GradesController that fetches grades and passes them to the view.</li>
+            </ul>
+        </li>
+    </ul>
+</section>
+
+<section class="mt-12">
+    <h2 class="text-2xl font-semibold text-green-700 mb-4">Node.js Overview</h2>
+    <p>
+        Why do so many developers use <strong>Node.js</strong> for <strong>server-side JavaScript</strong>? The answer lies in its speed and flexibility. Here are the main reasons:
+    </p>
+    <ul class="list-disc pl-6 mt-4 space-y-2">
+        <li>Fast and lightweight, thanks to the V8 engine.</li>
+        <li>Uses non-blocking I/O, so it can handle multiple requests simultaneously.</li>
+        <li>Event-driven architecture, making it efficient for real-time applications.</li>
+        <li>Massive ecosystem of reusable packages through npm.</li>
+    </ul>
+    <p class="mt-4">
+        It’s also crucial to understand the difference between browser JavaScript and Node.js:
+    </p>
+    <ul class="list-disc pl-6 mt-4 space-y-2">
+        <li><strong>Browser JavaScript:</strong> Runs on the client side, can manipulate the DOM (HTML, CSS).</li>
+        <li><strong>Node.js:</strong> Runs on the server side, can access files, databases, and handle HTTP requests.</li>
+    </ul>
+</section>
+<br>
+<section class="mt-12">
+    <h2 class="text-2xl font-semibold text-green-700 mb-4">Installing Node.js and npm</h2>
+    <p>
+        To start building applications with <strong>Node.js and Express</strong>, you first need to install Node.js. 
+        This installation also includes <strong>npm</strong>, which you’ll use to manage packages and dependencies.
+    </p>
+
+    <h3 class="text-xl font-semibold text-blue-600 mt-6 mb-2">Step 1: Download Node.js</h3>
+    <p>
+        Visit the official Node.js website: 
+        <a href="https://nodejs.org" class="text-green-600 hover:underline" target="_blank">https://nodejs.org</a> 
+        and download the <strong>LTS (Long-Term Support)</strong> version. The LTS release is recommended for most developers since it’s stable and widely supported.
+    </p>
+
+    <h3 class="text-xl font-semibold text-blue-600 mt-6 mb-2">Step 2: Verify Installation</h3>
+    <p>
+        After installation, open your terminal or command prompt and check the installed versions:
+    </p>
+    <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>node -v
+npm -v</code></pre>
+    <p>
+        If you see version numbers, it means your installation was successful. You now have both 
+        <strong>Node.js</strong> and <strong>npm</strong> ready to go.
+    </p>
+
+    <h3 class="text-xl font-semibold text-blue-600 mt-6 mb-2">Step 3: Test Node.js with REPL</h3>
+    <p>
+        To confirm that Node.js is running properly, enter the following command in your terminal:
+    </p>
+    <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>node
+console.log("Hello from Node!");</code></pre>
+    <p>
+        You’ll see the message displayed in the terminal. Unlike the browser console, Node.js 
+        <strong>does not have access to the DOM</strong> (HTML or CSS). Instead, it’s designed for 
+        <strong>server-side JavaScript</strong> tasks like working with files, databases, and APIs.
+    </p>
+</section>
+
+<br>
+<section class="mt-12">
+    <h2 class="text-2xl font-semibold text-green-700 mb-4">Setting Up a Basic Express Project</h2>
+    <p>
+        Once <strong>Node.js and npm</strong> are installed, the next step is to set up an 
+        <strong>Express.js project</strong>. Express makes it easier to handle routing, requests, and responses 
+        in your applications. Let’s go step by step.
+    </p>
+
+    <h3 class="text-xl font-semibold text-blue-600 mt-6 mb-2">Step 1: Create a New Project Folder</h3>
+    <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>mkdir myapp
+cd myapp</code></pre>
+
+    <h3 class="text-xl font-semibold text-blue-600 mt-6 mb-2">Step 2: Initialize npm</h3>
+    <p>
+        This command will generate a <code>package.json</code> file, which keeps track of your project’s dependencies:
+    </p>
+    <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>npm init -y</code></pre>
+
+    <h3 class="text-xl font-semibold text-blue-600 mt-6 mb-2">Step 3: Install Express</h3>
+    <p>
+        Now install Express.js using npm:
+    </p>
+    <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>npm install express</code></pre>
+
+    <h3 class="text-xl font-semibold text-blue-600 mt-6 mb-2">Step 4: Project Folder Structure</h3>
+    <p>
+        A good project layout helps organize your code as it grows. Here’s a suggested folder structure:
+    </p>
+    <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>myapp/
+│   package.json
+│   server.js
+├── models/
+├── views/
+├── controllers/
+├── routes/
+└── public/</code></pre>
+
+    <h3 class="text-xl font-semibold text-blue-600 mt-6 mb-2">Step 5: Create <code>server.js</code></h3>
+    <p>
+        This file will act as the entry point of your application. Copy the following code:
+    </p>
+    <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>const express = require('express');
+const app = express();
+const PORT = 3000;
+
+app.get('/', (req, res) => {
+    res.send('Hello World from Node.js and Express!');
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});</code></pre>
+
+    <h3 class="text-xl font-semibold text-blue-600 mt-6 mb-2">Step 6: Run the Server</h3>
+    <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>node server.js</code></pre>
+    <p>
+        Now open your browser and go to 
+        <a href="http://localhost:3000" class="text-green-600 hover:underline" target="_blank">http://localhost:3000</a>.  
+        You should see the message: <strong>Hello World from Node.js and Express!</strong>
+    </p>
+</section>
+
+<br>
+<section class="mt-12">
+    <h2 class="text-2xl font-semibold text-green-700 mb-4">MVC in a Real-World System Examples</h2>
+    <p>
+        The <strong>MVC pattern (Model–View–Controller)</strong> is not just theory—it’s a practical way to 
+        structure applications. By dividing responsibilities into three parts, you make your code more 
+        organized, maintainable, and scalable. Let’s look at two examples where MVC is applied in 
+        everyday systems.
+    </p>
+
+    <h3 class="text-xl font-semibold text-blue-600 mt-6 mb-2">Example 1: Online Store</h3>
+    <ul class="list-disc pl-6 mt-2 space-y-2">
+        <li><strong>Model:</strong> Product, Cart, User.</li>
+        <li><strong>View:</strong> Webpages that display the product catalog, shopping cart, and checkout page.</li>
+        <li><strong>Controller:</strong> Functions that handle adding products to the cart, checking out, and processing orders.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold text-blue-600 mt-6 mb-2">Example 2: Grading Portal</h3>
+    <ul class="list-disc pl-6 mt-2 space-y-2">
+        <li><strong>Model:</strong> Student, Subject, Grade.</li>
+        <li><strong>View:</strong> Webpages that show student profiles and grade reports.</li>
+        <li><strong>Controller:</strong> Functions that fetch grades from the database and deliver them to the correct view.</li>
+    </ul>
+
+    <p class="mt-6">
+        In both examples, notice how each component has a clear responsibility. 
+        The <strong>Model</strong> manages the data, the <strong>View</strong> presents it, and the 
+        <strong>Controller</strong> acts as the bridge between them. This structure helps avoid 
+        mixing business logic with presentation, which keeps your applications clean and professional.
+    </p>
+</section>
+
+<br>
+            <!-- ✅ Ad Inside Content -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4537208011192461"
+                 data-ad-slot="1190959056"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+
+
+<br>
+            <!-- Call-to-Action: Test Your Knowledge -->
+<section class="mt-12" id="mandatory-assessment">
+    <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg shadow">
+        <h3 class="text-xl font-bold text-red-600 mb-2 flex items-center">
+            <span class="material-icons mr-2">quiz</span>
+            Lesson 2 – Mandatory Assessment
+        </h3>
+        <p class="mb-3 text-gray-800">
+            <strong>All students must complete the assessment for this lesson.</strong> Your submission is required for course completion.
+        </p>
+        <a href="https://forms.gle/14FHSjtiPTV7pScPA"
+           target="_blank"
+           class="inline-flex items-center px-5 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors text-lg shadow">
+            <span class="material-icons mr-2">assignment_turned_in</span>
+            Take the Node.js & Express Assessment
+        </a>
+        <p class="mt-2 text-red-700 font-semibold">
+            <span class="material-icons align-middle text-base">warning</span>
+            <span class="align-middle">Don’t miss this! Assessment link is required for all students.</span>
+        </p>
+    </div>
+</section>
+
+<!-- ✅ Additional Learning Resources -->
+<section class="mt-12 bg-blue-50 p-6 rounded-lg shadow">
+    <h4 class="text-xl font-semibold text-blue-600 mb-4">Lesson 2 Resources</h4>
+    <ul class="list-disc pl-6 space-y-2">
+        <li>
+            <a href="https://drive.google.com/file/d/1KqGZ23JQ3Tf_OBSCWpwpfwTEH6wpfsxK/view?usp=drive_link"
+               class="text-green-600 hover:underline" target="_blank">
+                📘 Download Lesson 2 Notes
+            </a>
+        </li>
+        <li>
+            <a href="https://drive.google.com/file/d/1Lla-Wbvk20LK4f-_PI7CRECblz6T4ty_/view?usp=drive_link"
+               class="text-green-600 hover:underline" target="_blank">
+                📑 Download Lesson 2 Slides
+            </a>
+        </li>
+    </ul>
+</section>
+
+<br>
+            <!-- Call-to-Action: Explore More Learning Resources -->
+            <div class="mt-8 bg-blue-50 p-6 rounded-lg">
+                <h4 class="text-xl font-semibold text-blue-600 mb-4">Expand Your Knowledge</h4>
+                <p>
+                    Dive deeper into technology and productivity with these related articles:
+                </p>
+                <ul class="list-disc pl-6 mt-4">
+                    <li>
+                        <a href="https://www.hellograde.online/lessons/mst24/mst24-lesson1" 
+                           class="text-green-600 hover:underline" target="_blank">
+                            Understanding IT
+                        </a> – Build a solid foundation in Information Technology essentials.
+                    </li>
+                    <li>
+                        <a href="/blogs/gen/specialist-vs-generalist" 
+                           class="text-green-600 hover:underline" target="_blank">
+                           Specialist vs Generalist
+                        </a> – 85% of companies now seek hybrid talent. Discover whether to specialize or generalize in your career, with actionable strategies to become a T-shaped professional and future-proof your skills.
+                    </li>
+                    <li>
+                        <a href="https://www.hellograde.online/blogs/tech/promptengineering" 
+                           class="text-green-600 hover:underline" target="_blank">
+                            Prompt Engineering: Writing Effective AI Prompts
+                        </a> – Master the skill of crafting precise AI prompts for better results.
+                    </li>
+                    <li>
+                        <a href="https://www.hellograde.online/blogs/tech/brainrot" 
+                           class="text-green-600 hover:underline" target="_blank">
+                            Understanding Brain Rot in the Digital Age
+                        </a> – Break free from digital overload and regain focus.
+                    </li>
+                    <li>
+                        <a href="https://www.hellograde.online/blogs/gen/effective-study-techniques" 
+                           class="text-green-600 hover:underline" target="_blank">
+                            Effective Study Techniques for Better Learning
+                        </a> – Discover research-backed strategies to boost learning retention.
+                    </li>
+                </ul>
+            </div>
+<br>
+
+
+                    </article> 
+        <br>
+        <div id="share-buttons" class="mt-6 flex justify-center space-x-4"></div>
+        <br>
+        <div id="blogNav"></div>
+        <br>
+        <div id="latestBlogContainer"></div>
+        <br>
+
+            <!-- ✅ Ad Before Comments -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-4537208011192461"
+                    data-ad-slot="1190959056"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+                <!-- Comment Section -->
+                <h3 class="text-2xl font-semibold mt-8 mb-4">We'd Like to Hear Your Feedback</h3>
+                <form id="commentForm" class="flex flex-col mb-6">
+                    <textarea id="commentInput" name="comment" rows="4" placeholder="Write your comment here..." class="p-4 border rounded-lg mb-4" required></textarea>
+                    <div class="flex items-center mb-4">
+                        <input type="checkbox" id="anonymousCheckbox" class="mr-2">
+                        <label for="anonymousCheckbox" class="text-gray-700">Post anonymously</label>
+                    </div>
+                    <div class="mt-6 flex justify-between">
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Post Comment</button>
+                </div>
+                </form>
+                <div id="commentError" class="text-red-500 mt-2"></div>
+        
+                <h4 class="text-xl font-semibold mb-4">Comments</h4>
+                <div id="commentsContainer" class="space-y-4">
+                    <!-- Placeholder for comments -->
+                    <p class="text-gray-600">No comments yet. Be the first to share your thoughts!</p>
+                </div>
+        
+                <!-- Scroll To Top Button -->
+                <button id="scrollToTopBtn" class="fixed bottom-5 right-5 h-10 w-10 rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center justify-center shadow-lg">
+                    <span class="material-icons">arrow_upward</span>
+                </button>
+</main>
+
+            <!-- Footer -->
+            <div id="footerContainer"></div>
+    <!-- ✅ Footer Ad -->
+            <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-4537208011192461"
+            data-ad-slot="1190959056"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+       <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+       </script>
+
+        <script>
+            ScrollReveal().reveal("[data-scroll-reveal]", {
+                duration: 1000,
+                delay: 300,
+                reset: true
+            });
+        </script>
+        <script src="/js/blogs.js" defer></script>
+        <script src="/js/blogComments.js"></script>
+        <script src="/js/checkSession.js" defer></script>
+        <script src="/js/shareButtons.js"></script>
+</body>
+
+</html>
