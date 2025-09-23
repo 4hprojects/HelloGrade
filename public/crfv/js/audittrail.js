@@ -62,7 +62,17 @@ async function loadAuditLogs(page = 1, search = '', limit = 50, dateFrom = '', d
       headers: { 'Authorization': `Bearer ${localStorage.getItem('authToken')}` }
     });
     if (!res.ok) throw new Error('Failed to fetch logs');
-    const { logs, totalPages, count } = await res.json();
+    let payload = await res.json();
+    let logs, totalPages, count;
+    if (Array.isArray(payload)) {
+      logs = payload;
+      totalPages = 1;
+      count = payload.length;
+    } else {
+      logs = payload.logs || [];
+      totalPages = payload.totalPages || 1;
+      count = payload.count || 0;
+    }
     renderLogsTable(logs);
     renderLogsPagination(page, totalPages, search, limit, dateFrom, dateTo, 'logsPagination');
     renderLogsPagination(page, totalPages, search, limit, dateFrom, dateTo, 'inlinePagination');
