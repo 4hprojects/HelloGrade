@@ -144,7 +144,8 @@ connectToDatabase()
 
 // Place all route definitions here
 
-
+    const lessonQuizRoutes = require('./routes/lessonQuizRoutes');
+    app.use('/api/lesson-quiz', lessonQuizRoutes(client));
 
 app.get('/api/config', (req, res) => {
     res.json({
