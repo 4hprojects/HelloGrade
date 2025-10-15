@@ -228,6 +228,15 @@ const latestBlogContainer = document.getElementById("latestBlogContainer");
 
         // Technology Blogs
         {
+            id: "chatgpt-2025-practical-guide",
+            title: "ChatGPT in 2025: A Practical Guide to Features You’ll Actually Use",
+            date: "October 2025",
+            image: "https://hellograde.online/images/ai/chatgpt-2025-guide-og.jpg",
+            link: "https://www.hellograde.online/blogs/ai/chatgpt-2025-practical-guide",
+            description: "Explore ChatGPT’s most useful 2025 features including Deep Research, Agent Mode, Projects, Codex, and Sora. Learn how to automate tasks, analyse data, code applications, and build AI-driven workflows in one workspace. Perfect for IT students, educators, and developers who want to move beyond simple prompting."
+        },
+
+        {
             id: "year2038",
             title: "The Year 2038 Problem",
             date: "February 7, 2025",
