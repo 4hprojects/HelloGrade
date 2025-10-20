@@ -12,7 +12,14 @@ const latestBlogContainer = document.getElementById("latestBlogContainer");
             link: "/lessons/mini/recursion.html",
             description: "Master recursive algorithms with this comprehensive guide. Learn recursion fundamentals, types, practical examples, and when to use recursion vs iteration. Essential for developers."
         },
-
+        {
+            id: "dsa-linear-vs-non-linear-20251020",
+            title: "Linear Data Structure vs Non-Linear Data Structure — Definitions, Use Cases, Big-O",
+            date: "October 20, 2025",
+            image: "/images/mst24lesson1-towfiqu-barbhuiya-oZuBNC-6E2s-unsplash.webp",
+            link: "/lessons/dsalgo/dsalgo-lesson6",
+            description: "Clear, practical guide to arrays, lists, stacks, queues, trees, and graphs. When to use each, with quick Big-O, a decision checklist, and Java/Python/JS snippets."
+        },
         // mst24 lessons
         {
             id: "mst24-lesson1",
@@ -227,15 +234,6 @@ const latestBlogContainer = document.getElementById("latestBlogContainer");
 
 
         // Technology Blogs
-        {
-            id: "chatgpt-2025-practical-guide",
-            title: "ChatGPT in 2025: A Practical Guide to Features You’ll Actually Use",
-            date: "October 15, 2025",
-            image: "/images/brainrot.webp",
-            link: "/blogs/tech/chatgpt2025.html",
-            description: "Explore ChatGPT’s most useful 2025 features including Deep Research, Agent Mode, Projects, Codex, and Sora. Learn how to automate tasks, analyse data, code applications, and build AI-driven workflows in one workspace. Perfect for IT students, educators, and developers who want to move beyond simple prompting."
-        },
-
         {
             id: "year2038",
             title: "The Year 2038 Problem",
@@ -735,27 +733,26 @@ const latestBlogContainer = document.getElementById("latestBlogContainer");
         const navContainer = document.getElementById("blogNav");
         if (navContainer) {
             navContainer.innerHTML = `
-            <div class="mt-6 flex justify-center space-x-4">
-                <a
-                    href="${prevBlog.link}"
-                    class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm text-center hover:bg-blue-700"
-                >
-                    Previous: ${prevBlog.title}
-                </a>
-                <a
-                    href="/blogs/"
-                    class="text-white bg-green-700 px-4 py-2 rounded-md text-sm text-center hover:bg-green-800"
-                >
-                    Check Other Blogs
-                </a>
-                <a
-                    href="${nextBlog.link}"
-                    class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm text-center hover:bg-blue-700"
-                >
-                    Next: ${nextBlog.title}
-                </a>
-            </div>
-
+                <div class="mt-6 flex flex-col md:flex-row justify-center md:space-x-4 space-y-3 md:space-y-0">
+                    <a
+                        href="${prevBlog.link}"
+                        class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm text-center hover:bg-blue-700"
+                    >
+                        Previous: ${prevBlog.title}
+                    </a>
+                    <a
+                        href="/blogs/"
+                        class="text-white bg-green-700 px-4 py-2 rounded-md text-sm text-center hover:bg-green-800"
+                    >
+                        Check Other Blogs
+                    </a>
+                    <a
+                        href="${nextBlog.link}"
+                        class="text-white bg-blue-600 px-4 py-2 rounded-md text-sm text-center hover:bg-blue-700"
+                    >
+                        Next: ${nextBlog.title}
+                    </a>
+                </div>
             `;
         }
     } else {
