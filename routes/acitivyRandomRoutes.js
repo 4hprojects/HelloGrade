@@ -1,6 +1,7 @@
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const fetch = require('node-fetch');
+const randomizeActivity = require('../utils/activityRandomizer');
 
 module.exports = function activityRandomRoutes({ activityAssignmentsCollection, sendEmail }) {
   const router = express.Router();
@@ -70,8 +71,8 @@ module.exports = function activityRandomRoutes({ activityAssignmentsCollection, 
         }
       }
 
-      // Pick random link
-      const activityLink = LINKS[subject][Math.floor(Math.random() * LINKS[subject].length)];
+      // Pick random activity link via util
+      const activityLink = randomizeActivity(subject);
 
       // Persist
       await activityAssignmentsCollection.insertOne({
