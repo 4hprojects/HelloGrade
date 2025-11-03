@@ -1,0 +1,87 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('activityRandomForm');
+  const responseMessage = document.getElementById('responseMessage');
+  const submitBtn = document.getElementById('submitBtn');
+
+  // Exemptions for testing
+  const TEST_EMAILS = new Set(['henson.sagorsor@e.ubaguio.edu']);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('studentEmail').value.trim();
+    const idNumber = document.getElementById('idNumber').value.trim();
+    const subject = document.getElementById('subject').value;
+
+    const isTest = TEST_EMAILS.has(email.toLowerCase());
+
+    // Validate (skip strict checks for test email)
+    const emailPattern = /^(\d+)@s\.ubaguio\.edu$/i;
+    const match = email.match(emailPattern);
+
+    if (!isTest) {
+      if (!match) {
+        return show('Please enter a valid email: idnumber@s.ubaguio.edu', true);
+      }
+      if (match[1] !== idNumber) {
+        return show('ID number must match the email local-part.', true);
+      }
+    }
+
+    if (!subject) {
+      return show('Please select a subject.', true);
+    }
+
+    // Captcha (skip for test email)
+    const captchaResponse = (window.grecaptcha && grecaptcha.getResponse()) || '';
+    if (!captchaResponse && !isTest) {
+      return show('Please complete the captcha.', true);
+    }
+
+    const confirmed = window.confirm(`Send a randomized activity link to ${email} for ${subject}?`);
+    if (!confirmed) return;
+
+    toggleSubmitting(true);
+    try {
+      const payload = {
+        email,
+        idNumber,
+        subject,
+      };
+      if (!isTest) {
+        payload['g-recaptcha-response'] = captchaResponse;
+      }
+
+      const res = await fetch('/api/activity/random', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success) {
+        show('Activity assigned and emailed. Check your inbox.', false);
+        form.reset();
+        if (!isTest && window.grecaptcha) grecaptcha.reset();
+      } else {
+        show(data.message || 'Request failed.', true);
+        if (!isTest && window.grecaptcha) grecaptcha.reset();
+      }
+    } catch (err) {
+      console.error(err);
+      show('An error occurred. Please try again.', true);
+      if (!isTest && window.grecaptcha) grecaptcha.reset();
+    } finally {
+      toggleSubmitting(false);
+    }
+  });
+
+  function show(msg, isError) {
+    responseMessage.textContent = msg;
+    responseMessage.style.color = isError ? '#b00020' : '#0b6b0b';
+  }
+
+  function toggleSubmitting(isSubmitting) {
+    submitBtn.disabled = isSubmitting;
+    submitBtn.textContent = isSubmitting ? 'Submitting...' : 'Submit';
+  }
+});
