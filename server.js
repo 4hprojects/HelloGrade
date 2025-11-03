@@ -141,7 +141,11 @@ connectToDatabase()
       res.sendFile(path.join(__dirname, 'public', 'activity', 'random.html'));
     });
 
-    // Keep protectHtml AFTER auth
+    // Mount activity random API BEFORE protectHtml so it’s public
+    const activityRandomRoutes = require('./routes/activityRandomRoutes');
+    app.use('/api', activityRandomRoutes({ activityAssignmentsCollection, sendEmail }));
+
+    // Keep protectHtml AFTER public routes
     app.use(protectHtml(__dirname));
 
     // Attach admin routes
@@ -184,10 +188,6 @@ connectToDatabase()
 
     const lessonQuizRoutes = require('./routes/lessonQuizRoutes');
     app.use('/api/lesson-quiz', lessonQuizRoutes(client));
-
-    // Mount activity random routes (public)
-    const activityRandomRoutes = require('./routes/activityRandomRoutes');
-    app.use('/api', activityRandomRoutes({ activityAssignmentsCollection, sendEmail }));
 
     // Start the server
     const PORT = process.env.PORT || 3000;
