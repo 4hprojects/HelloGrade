@@ -57,13 +57,23 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      const data = await res.json();
-      if (data.success) {
+
+      // Parse safely (404 may return HTML)
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); } catch { data = null; }
+
+      if (!res.ok) {
+        const msg = (data && data.message) || `Request failed (${res.status})`;
+        return show(msg, true);
+      }
+
+      if (data && data.success) {
         show('Activity assigned and emailed. Check your inbox.', false);
         form.reset();
         if (!isTest && window.grecaptcha) grecaptcha.reset();
       } else {
-        show(data.message || 'Request failed.', true);
+        show((data && data.message) || 'Request failed.', true);
         if (!isTest && window.grecaptcha) grecaptcha.reset();
       }
     } catch (err) {
