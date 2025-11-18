@@ -79,6 +79,7 @@ let quizzesCollection;
 let attemptsCollection;
 let classesCollection;
 let countersCollection;
+let quizSubmissionsCollection;
 
 // Session management with MongoDB store
 app.use(session({
@@ -129,7 +130,10 @@ connectToDatabase()
     // Attach admin routes
     const adminUsersRoutes = require('./routes/adminUsersRoutes');
     app.use('/api/admin/users', adminUsersRoutes(usersCollection, isAuthenticated, isAdmin));
-
+    const makeQuizRoutes = require('./routes/quizRoutes');
+    const quizRouter = makeQuizRoutes({ quizSubmissionsCollection, ObjectId });
+    app.use('/api', quizRouter);
+    console.log('✅ Quiz routes mounted at /api/quiz/*');
     // Start the server
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
@@ -465,7 +469,13 @@ async function connectToDatabase() {
         classesCollection = database.collection('tblClasses');
         countersCollection = database.collection('tblCounters');
         classQuizCollection = database.collection('tblClassQuizzes');
-
+        quizSubmissionsCollection = db.collection('quizSubmissions'); //added
+            // Create compound index for email + quizId uniqueness
+            await quizSubmissionsCollection.createIndex(
+              { email: 1, quizId: 1 },
+              { unique: true }
+            ); //added
+        
         // Initialize SendGrid with API key
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
