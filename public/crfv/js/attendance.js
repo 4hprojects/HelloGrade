@@ -137,7 +137,6 @@ function logEntry(entry) {
       <div class="log-main-row">
         <span class="log-name">${fullName}</span>
         <span class="slot-badge">${entry.slot || ''}</span>
-        ${lateBadge}
         ${pendingBadge}
       </div>
       <div class="log-meta-row">
