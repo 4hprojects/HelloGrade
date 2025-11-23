@@ -54,7 +54,11 @@ const paymentsReportApi = require('./routes/paymentsReportsApi');
 const userSignInOutApi = require('./routes/userSignInOutApi');
 const auditTrailApi = require('./routes/auditTrailApi');
 const activityRoutes = require('./routes/activity/activityRoutes');
+const activityReportsApi = require('./routes/admin_dashboard/activities'); //added 23 Nov 2025
+const adminActivitiesRoutes = require('./routes/admin_dashboard/activities');// Middleware for authentication
 
+app.use('/api/admin_dashboard', activityReportsApi);//added 23 Nov 2025
+app.use('/api/admin_dashboard', adminActivitiesRoutes);//added 23 Nov 2025
 app.use('/api/activity', activityRoutes);
 app.use('/api', require('./routes/reportsApi'));
 app.use('/api', auditTrailApi);
