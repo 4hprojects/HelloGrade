@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Activity Reports | HelloGrade Admin</title>
+    <link rel="stylesheet" href="css/activity_reports.css">
+</head>
+<body>
+    <header>
+        <h1>Activity Reports</h1>
+        <a href="admin_dashboard.html" class="search-button" style="margin-left: 2rem;">← Back to Dashboard</a>
+    </header>
+    <main style="margin-top: 80px;">
+        <section class="content-section">
+            <div class="content-inner">
+                <h2>Filter & Search</h2>
+                <form id="filterForm" class="search-container" style="margin-bottom: 1rem;">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search member, email, or URL">
+                    <input type="date" id="startDateInput" class="search-input" placeholder="Start Date">
+                    <input type="date" id="endDateInput" class="search-input" placeholder="End Date">
+                    <button type="submit" class="search-button">Apply</button>
+                    <button type="button" id="resetFiltersBtn" class="search-button">Reset</button>
+                </form>
+                <div style="margin-bottom: 1rem;">
+                    <button id="downloadXlsxBtn" class="search-button">Download XLSX</button>
+                    <button id="downloadPdfBtn" class="search-button">Download PDF</button>
+                </div>
+                <div class="table-container">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f3f4f6;">
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #e5e7eb;">Submission #</th>
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #e5e7eb;">Group #</th>
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #e5e7eb;">Members</th>
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #e5e7eb;">Project URL</th>
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #e5e7eb;">Email</th>
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #e5e7eb;">Submitted At</th>
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #e5e7eb;">Status</th>
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #e5e7eb;">Checklist Summary</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportsTableBody">
+                            <!-- Rows will be inserted here by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="js/activity_reports.js"></script>
+</body>
+</html>
