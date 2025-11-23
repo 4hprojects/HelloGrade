@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Project Checklist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Warm Neutrals (White, Gray, Indigo) -->
+    <!-- Application Structure Plan: A dashboard-style SPA. The top features a dynamic "Progress Overview" with two Chart.js donut charts (Core & Bonus) and text summaries. This provides immediate, high-level feedback. Below, "Filter" buttons allow users to toggle visibility ('All', 'Remaining', 'Completed'). The main content consists of collapsible sections (like an accordion) for each checklist category (Setup, Users, Products, etc.), transforming static items into interactive, checkable tasks. This structure was chosen to turn a passive checklist into an active, engaging tool, allowing users to track progress visually and filter their view to focus on remaining tasks, enhancing usability. -->
+    <!-- Visualization & Content Choices: 1) Overall Progress (Core & Bonus): Goal: Inform/Track. Viz: Two Chart.js Donut charts. Interaction: Charts dynamically update on task-click. Justification: Provides a clear, immediate visual summary of completion status, separating required tasks from optional ones. Library: Chart.js. 2) Task List: Goal: Organize/Track. Viz: Styled HTML checkboxes. Interaction: onClick, triggers JS update for charts/filters. Justification: This is the primary interaction, turning the static list into a functional tool. Method: HTML/JS. 3) Task Filters: Goal: Organize/Explore. Viz: HTML button group. Interaction: onClick, JS function adds/removes Tailwind 'hidden' class to tasks. Justification: Improves usability by letting users focus on what's left to do. Method: HTML/JS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-X5E3N182NE');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4537208011192461" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/ws2checklist.css">
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-5">
+            <h1 class="text-3xl font-bold text-indigo-700">Final Project Checklist</h1>
+            <p class="text-lg text-gray-600">WEBSYS2 Mini E-Commerce (Lessons 1–24)</p>
+            <p class="mt-2 text-gray-700">This is an interactive version of your project checklist. Check items as you complete them to track your progress. Use the filters to focus on what's completed or what's still remaining.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+
+        <!-- Section: Progress Overview & Filters -->
+        <section id="dashboard" class="bg-white p-6 rounded-lg shadow-lg mb-8">
+            <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Progress Overview</h2>
+            
+            <div class="flex flex-col md:flex-row md:items-center md:space-x-8">
+                <div class="flex-1 space-y-4 mb-6 md:mb-0">
+                    <h3 id="coreProgressText" class="text-xl font-semibold text-center text-indigo-800">Core Tasks: 0 / 0</h3>
+                    <div class="chart-container">
+                        <canvas id="coreProgressChart"></canvas>
+                    </div>
+                </div>
+                <div class="flex-1 space-y-4">
+                    <h3 id="bonusProgressText" class="text-xl font-semibold text-center text-gray-700">Bonus Tasks: 0 / 0</h3>
+                    <div class="chart-container">
+                        <canvas id="bonusProgressChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 border-t pt-4">
+                <h3 class="text-lg font-semibold mb-2">Filter Tasks:</h3>
+                <div class="flex flex-wrap gap-2">
+                    <button id="filter-all" class="filter-btn bg-indigo-600 text-white py-2 px-4 rounded-lg font-medium shadow transition-transform transform hover:scale-105">Show All</button>
+                    <button id="filter-remaining" class="filter-btn bg-white text-indigo-600 border border-indigo-600 py-2 px-4 rounded-lg font-medium shadow transition-transform transform hover:scale-105">Show Remaining</button>
+                    <button id="filter-completed" class="filter-btn bg-white text-indigo-600 border border-indigo-600 py-2 px-4 rounded-lg font-medium shadow transition-transform transform hover:scale-105">Show Completed</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sections 1-10: Checklist Items -->
+        <div class="space-y-6">
+            
+            <!-- Section 1: Project Setup -->
+            <details class="bg-white p-6 rounded-lg shadow-lg group" open>
+                <summary class="text-2xl font-semibold cursor-pointer list-none -m-6 p-6 group-open:border-b group-open:border-gray-200">
+                    <span class="group-open:text-indigo-700">Section 1: Project Setup and Infrastructure</span>
+                </summary>
+                <div class="mt-6 space-y-3">
+                    <p class="text-gray-600 mb-4">Focus on the foundation of your application.</p>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Can run the project with `npm start` without errors.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Has a clear file structure (`server.js`, `routes/`, `views/`, `public/`).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Has a <strong>.env</strong> file that is <strong>not</strong> committed to GitHub.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Passwords are stored as <strong>hashed values</strong>.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">App connects to MongoDB Atlas successfully.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">EJS is set up and renders pages from `views/`.</span>
+                    </label>
+                </div>
+            </details>
+            
+            <!-- Section 2: Users, Login, and Roles -->
+            <details class="bg-white p-6 rounded-lg shadow-lg group">
+                <summary class="text-2xl font-semibold cursor-pointer list-none -m-6 p-6 group-open:border-b group-open:border-gray-200">
+                    <span class="group-open:text-indigo-700">Section 2: Users, Login, and Roles</span>
+                </summary>
+                <div class="mt-6 space-y-3">
+                    <p class="text-gray-600 mb-4">Verify security and authentication features.</p>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Users can register and log in.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Passwords are stored as **hashed values**.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">`express-session` is configured and working.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Session stores `userId`, `email`, and `role` after login.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">`users` collection has required fields and at least one admin and one customer.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">`requireLogin` middleware is used for protected routes.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">`isAdmin` middleware is used for admin-only routes.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">The admin account `henson.sagorsor@e.ubaguio.edu` is created and functional.</span>
+                    </label>
+                </div>
+            </details>
+
+            <!-- Section 3: Products -->
+            <details class="bg-white p-6 rounded-lg shadow-lg group">
+                <summary class="text-2xl font-semibold cursor-pointer list-none -m-6 p-6 group-open:border-b group-open:border-gray-200">
+                    <span class="group-open:text-indigo-700">Section 3: Products – Customer View & Admin Management</span>
+                </summary>
+                <div class="mt-6 space-y-3">
+                    <p class="text-gray-600 mb-4">Check the core e-commerce feature: Product management (CRUD, Search, Safe Delete).</p>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Customer Side:</strong> Page exists to view products, and data comes from the <strong>products</strong> collection.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Customer Side:</strong> Each product shows <strong>Name, Price, Category, and Description</strong>.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Admin Side:</strong> <strong>/admin/products</strong> shows a product table (admin-only).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Admin Side:</strong> Admin can <strong>Add</strong> a new product (with validation).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Admin Side:</strong> Admin can <strong>Edit</strong> an existing product (with validation).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Admin Side:</strong> Admin can <strong>Delete</strong> a product.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Admin Side:</strong> <strong>Safe Delete</strong> is implemented (delete is blocked if product is in an order).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Admin Side:</strong> Admin can search products by name.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Admin Side:</strong> Admin can filter products by category or chosen search design.</span>
+                    </label>
+                </div>
+            </details>
+
+            <!-- Section 4: Orders and Checkout -->
+            <details class="bg-white p-6 rounded-lg shadow-lg group">
+                <summary class="text-2xl font-semibold cursor-pointer list-none -m-6 p-6 group-open:border-b group-open:border-gray-200">
+                    <span class="group-open:text-indigo-700">Section 4: Orders and Checkout (Basic Transaction Flow)</span>
+                </summary>
+                <div class="mt-6 space-y-3">
+                    <p class="text-gray-600 mb-4">Verify the checkout process and order tracking.</p>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">`orders` collection exists with necessary fields (`orderId`, `items`, `totalAmount`, `orderStatus`, etc.).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Route for checkout (e.g., `POST /orders/checkout`) exists.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Checkout requires login and calculates totals correctly.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Order is inserted into the `orders` collection upon checkout.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>orderStatus</strong> is stored with at least 6 distinct values (<strong>to_pay</strong>, <strong>completed</strong>, etc.).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Admin view for orders (`/admin/orders`) is available and lists key details.</span>
+                    </label>
+                </div>
+            </details>
+
+            <!-- Section 5: User Dashboard -->
+            <details class="bg-white p-6 rounded-lg shadow-lg group">
+                <summary class="text-2xl font-semibold cursor-pointer list-none -m-6 p-6 group-open:border-b group-open:border-gray-200">
+                    <span class="group-open:text-indigo-700">Section 5: User Dashboard, Profile, and Purchase History</span>
+                </summary>
+                <div class="mt-6 space-y-3">
+                    <p class="text-gray-600 mb-4">Assess the customer-facing account management features.</p>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">`/user/dashboard` shows basic user info and **counts of orders per status**.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">`/user/profile` shows current data and allows updating allowed fields.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">`/user/orders` lists <strong>only</strong> the logged-in user's orders (matches dashboard counts).</span>
+                    </label>
+                </div>
+            </details>
+
+            <!-- Section 6 & 7: Admin Reports -->
+            <details class="bg-white p-6 rounded-lg shadow-lg group">
+                <summary class="text-2xl font-semibold cursor-pointer list-none -m-6 p-6 group-open:border-b group-open:border-gray-200">
+                    <span class="group-open:text-indigo-700">Section 6 & 7: Admin Reports, Excel Exports, and Print</span>
+                </summary>
+                <div class="mt-6 space-y-3">
+                    <p class="text-gray-600 mb-4">Verify the advanced reporting features (Sales Overview, Exports, Print-ready).</p>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Sales Overview (Lesson 22):</strong> <strong>/admin/reports/sales</strong> exists and is protected by <strong>isAdmin</strong>.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Sales Overview:</strong> Has a filter form (<strong>startDate</strong>, <strong>endDate</strong>, <strong>status</strong>) read from query string.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Sales Overview:</strong> Uses <strong>MongoDB Aggregation</strong> to build <strong>dailySales</strong> (Grouped by day).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Sales Overview:</strong> Computes and displays summary totals (Total Sales, Total Orders, Average Order Value).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Sales Overview:</strong> EJS view shows the Daily Sales table.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Sales Overview:</strong> <strong>Chart.js</strong> graph displays sales data visually (Labels=dates, Data=total sales).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Excel Exports (Lesson 24):</strong> "Download Daily Sales (Excel)" link works (uses <strong>exceljs</strong> or similar).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Excel Exports:</strong> Daily Sales Excel file correctly aggregates totals and matches UI summary.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Print/PDF (Lesson 24):</strong> "Print / Save as PDF" button calls <strong>window.print()</strong>.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800"><strong>Print/PDF:</strong> <strong>@media print</strong> styles <strong>hide navigation, buttons, and filter form</strong> for a clean preview.</span>
+                    </label>
+                </div>
+            </details>
+
+            <!-- Section 8: Demo Flow -->
+            <details class="bg-white p-6 rounded-lg shadow-lg group">
+                <summary class="text-2xl font-semibold cursor-pointer list-none -m-6 p-6 group-open:border-b group-open:border-gray-200">
+                    <span class="group-open:text-indigo-700">Section 8: Demo Flow and Documentation</span>
+                </summary>
+                <div class="mt-6 space-y-3">
+                    <p class="text-gray-600 mb-4">Final checks on readiness for presentation.</p>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Prepared a short <strong>README</strong> with setup steps, sample accounts, and main features.</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Prepared a simple demo flow for <strong>Customer</strong> (Login → Profile Update → Order → View History).</span>
+                    </label>
+                    <label class="task-item core-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Prepared a simple demo flow for <strong>Admin</strong> (Login → Product Management → Orders → Reports → Export).</span>
+                    </label>
+                </div>
+            </details>
+
+            <!-- Section 9: Optional Improvements -->
+            <details class="bg-white p-6 rounded-lg shadow-lg group">
+                <summary class="text-2xl font-semibold cursor-pointer list-none -m-6 p-6 group-open:border-b group-open:border-gray-200">
+                    <span class="group-open:text-indigo-700">Section 9: Optional: Recommended Improvements (Bonus)</span>
+                </summary>
+                <div class="mt-6 space-y-3">
+                    <p class="text-gray-600 mb-4">Please check any bonus features you implemented beyond the core requirements.</p>
+                    <label class="task-item bonus-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Add stronger client-side validation.</span>
+                    </label>
+                    <label class="task-item bonus-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Add more detailed server-side validation and sanitize inputs.</span>
+                    </label>
+                    <label class="task-item bonus-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Create clean 404 and 500 error pages.</span>
+                    </label>
+                    <label class="task-item bonus-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Review UI for consistency and mobile-friendliness.</span>
+                    </label>
+                    <label class="task-item bonus-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Implemented an <strong>Order Details</strong> page.</span>
+                    </label>
+                    <label class="task-item bonus-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Added support for <strong>Multiple Addresses</strong> or a <strong>Wishlist</strong>.</span>
+                    </label>
+                    <label class="task-item bonus-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Added simple <strong>Product Reviews/Ratings</strong>.</span>
+                    </label>
+                    <label class="task-item bonus-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Implemented <strong>Inventory/Stock Tracking</strong>.</span>
+                    </label>
+                    <label class="task-item bonus-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Added more reports (e.g., Top Products, Sales by Category).</span>
+                    </label>
+                    <label class="task-item bonus-task flex items-center p-3 -mx-3 rounded-lg hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" class="task-checkbox h-5 w-5 rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-3 text-gray-800">Explored <strong>rate limiting</strong> or <strong>event logging</strong>.</span>
+                    </label>
+                </div>
+            </details>
+
+            <!-- Section 10: Final Comments -->
+            <details class="bg-white p-6 rounded-lg shadow-lg group">
+                <summary class="text-2xl font-semibold cursor-pointer list-none -m-6 p-6 group-open:border-b group-open:border-gray-200">
+                    <span class="group-open:text-indigo-700">Section 10: Final Comments</span>
+                </summary>
+                <div class="mt-6">
+                    <p class="text-gray-600 mb-4">Use this space for any final comments, known issues, or notes for the project evaluator.</p>
+                    <textarea class="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Type your notes here..."></textarea>
+                </div>
+            </details>
+
+        </div>
+
+        <!-- ============ GROUP PROJECT SUBMISSION FORM ============ -->
+        <section id="submissionSection" class="mt-12 bg-gradient-to-r from-green-50 to-blue-50 p-8 rounded-lg shadow-lg border-2 border-green-300">
+            <h2 class="text-3xl font-bold text-center mb-2 text-green-700">📤 Group Project Submission</h2>
+            <p class="text-center text-gray-600 mb-6">Submit your completed project details below. <strong>Submissions are final and cannot be changed.</strong></p>
+            
+            
+
+            <form id="submissionForm" class="bg-white p-6 rounded-lg shadow-md mt-6">
+                
+                <!-- Group Number -->
+                <div class="mb-6">
+                    <label for="groupNumber" class="block text-lg font-semibold text-gray-700 mb-2">Group Number <span class="text-red-600">*</span></label>
+                    <input type="number" id="groupNumber" name="groupNumber" required 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" 
+                           placeholder="e.g., 1" min="1">
+                    <p class="text-sm text-gray-500 mt-1">📌 Must be unique. Each group can only submit once.</p>
+                </div>
+
+                <!-- Group Members -->
+                <div class="mb-6">
+                    <label class="block text-lg font-semibold text-gray-700 mb-2">Group Members Names <span class="text-red-600">*</span></label>
+                    <div id="membersContainer">
+                        <div class="member-field flex gap-2 mb-3">
+                            <input type="text" class="member-input flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" 
+                                   placeholder="Member Name" required>
+                            <button type="button" class="remove-member bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors hidden">Remove</button>
+                        </div>
+                    </div>
+                    <button type="button" id="addMemberBtn" class="mt-3 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                        + Add Another Member
+                    </button>
+                    <p class="text-sm text-gray-500 mt-2">Enter all group member names</p>
+                </div>
+
+                <!-- Project URL -->
+                <div class="mb-6">
+                    <label for="projectUrl" class="block text-lg font-semibold text-gray-700 mb-2">Project URL <span class="text-red-600">*</span></label>
+                    <input type="url" id="projectUrl" name="projectUrl" required 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" 
+                           placeholder="https://your-deployed-project.com">
+                    <p class="text-sm text-gray-500 mt-1">🔗 Must be a valid URL starting with http:// or https://</p>
+                </div>
+
+                <!-- Email Address -->
+                <div class="mb-6">
+                    <label for="senderEmail" class="block text-lg font-semibold text-gray-700 mb-2">Email Address <span class="text-red-600">*</span></label>
+                    <input type="email" id="senderEmail" name="senderEmail" required 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" 
+                           placeholder="your.email@ubaguio.edu">
+                    <p class="text-sm text-gray-500 mt-1">📧 Confirmation will be sent to this email address</p>
+                </div>
+
+                <!-- Success Banner (Hidden by default) -->
+                <div id="successBanner" class="hidden mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                    <h3 class="font-bold mb-2">✅ Submission Successful!</h3>
+                    <p class="mb-2">Your project has been submitted successfully.</p>
+                    <p class="font-semibold">Submission Reference: <span id="refNumber" class="text-lg font-mono bg-white px-2 py-1 rounded">SUB-XXXXXXXXX</span></p>
+                    <p class="text-sm mt-2">A confirmation email has been sent to the admin. Keep this reference number for your records.</p>
+                </div>
+
+
+
+                <!-- Submit Button -->
+                <button type="button" id="submitBtn" class="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-bold text-lg hover:bg-green-700 transition-colors shadow-lg">
+                    🚀 Submit Project
+                </button>
+                <p class="text-xs text-gray-500 text-center mt-3">⚠️ By clicking Submit, you confirm all information is correct. This action cannot be undone.</p>
+                            <!-- Ad: Before Submit Button -->
+                <div class="my-6">
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-4537208011192461"
+                        data-ad-slot="1190959056"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </form>
+        </section>
+
+        <!-- ============ CONFIRMATION MODAL ============ -->
+        <div id="confirmationModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl p-8 max-w-md mx-auto">
+                <h2 class="text-2xl font-bold text-red-600 mb-4">⚠️ Final Confirmation</h2>
+                <p class="text-gray-700 mb-4">Please review your submission details below. <strong>This action cannot be undone.</strong></p>
+                
+                <div id="reviewData" class="bg-gray-50 p-4 rounded-lg mb-6 max-h-64 overflow-y-auto">
+                    <!-- Review data will be inserted here -->
+                </div>
+
+                <p class="text-sm text-gray-600 mb-6">Are you sure all information is correct and final?</p>
+
+                <div class="flex gap-3">
+                    <button id="cancelBtn" class="flex-1 bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition-colors font-semibold">
+                        ❌ Cancel
+                    </button>
+                    <button id="confirmBtn" class="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-semibold">
+                        ✅ Confirm & Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    
+    <footer class="text-center py-6 mt-8 text-gray-500">
+        <p>Interactive Checklist created from Source Report.</p>
+    </footer>
+
+    <!-- External JavaScript -->
+    <script src="js/ws2checklist.js"></script>
+</body>
+</html>
