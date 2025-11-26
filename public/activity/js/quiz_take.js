@@ -1,0 +1,621 @@
+// Game state
+let gameState = {
+    studentInfo: {},
+    questions: [],
+    currentQuestionIndex: 0,
+    score: 0,
+    answers: [],
+    times: [],
+    timer: null,
+    timeLeft: 15,
+    leaderboard: [],
+    quizData: null
+};
+
+// DOM Elements
+const screens = {
+    studentInfo: document.getElementById('studentInfoScreen'),
+    question: document.getElementById('questionScreen'),
+    feedback: document.getElementById('feedbackScreen'),
+    results: document.getElementById('resultsScreen')
+};
+
+// Utility functions
+function showScreen(screenName) {
+    Object.values(screens).forEach(screen => screen.classList.remove('active'));
+    screens[screenName].classList.add('active');
+}
+
+function formatDisplayName(firstName, lastName) {
+    const formatPart = (part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+    return `${formatPart(firstName)} ${formatPart(lastName).charAt(0)}.`;
+}
+
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
+function getQuizFilename() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('quiz');
+}
+
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+async function fetchQuiz(filename) {
+    try {
+        const res = await fetch(`/api/activity/json/${filename}`);
+        if (!res.ok) throw new Error('Quiz not found');
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching quiz:', error);
+        return null;
+    }
+}
+
+// Check for duplicate attempt
+async function checkDuplicateAttempt(quizFilename, idNumber, email) {
+    try {
+        const res = await fetch('/api/check-attempt', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ quiz: quizFilename, idNumber, email })
+        });
+        
+        if (!res.ok) throw new Error('Failed to check duplicate');
+        return await res.json();
+    } catch (error) {
+        console.error('Error checking duplicate:', error);
+        return { exists: false }; // Continue if check fails
+    }
+}
+
+// Fetch leaderboard data
+async function fetchLeaderboard(quizFilename) {
+    try {
+        const res = await fetch(`/api/leaderboard/${quizFilename}`);
+        if (!res.ok) throw new Error('Failed to fetch leaderboard');
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching leaderboard:', error);
+        return []; // Return empty array if fetch fails
+    }
+}
+
+// Form validation and submission
+document.getElementById('studentInfoForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Get form values
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const idNumber = document.getElementById('idNumber').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const section = document.getElementById('section').value.trim();
+    const quizFilename = getQuizFilename();
+    
+    let isValid = true;
+    
+    // Reset error states
+    document.querySelectorAll('.form-group').forEach(group => group.classList.remove('error'));
+    document.getElementById('duplicateError').style.display = 'none';
+    document.getElementById('loadingIndicator').style.display = 'none';
+    
+    // Validate fields
+    if (!firstName) {
+        document.getElementById('firstName').parentElement.classList.add('error');
+        isValid = false;
+    }
+    
+    if (!lastName) {
+        document.getElementById('lastName').parentElement.classList.add('error');
+        isValid = false;
+    }
+    
+    if (!idNumber || idNumber.length > 8) {
+        document.getElementById('idNumber').parentElement.classList.add('error');
+        isValid = false;
+    }
+    
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        document.getElementById('email').parentElement.classList.add('error');
+        isValid = false;
+    }
+    
+    if (!section) {
+        document.getElementById('section').parentElement.classList.add('error');
+        isValid = false;
+    }
+    
+    if (!isValid) return;
+    
+    // Show loading indicator
+    document.getElementById('loadingIndicator').style.display = 'flex';
+    
+    try {
+        // Check for duplicate attempt
+        const duplicateCheck = await checkDuplicateAttempt(quizFilename, idNumber, email);
+        
+        if (duplicateCheck.exists) {
+            document.getElementById('duplicateError').style.display = 'block';
+            document.getElementById('loadingIndicator').style.display = 'none';
+            return;
+        }
+        
+        // Store student info
+        gameState.studentInfo = {
+            firstName: toTitleCase(firstName),
+            lastName: toTitleCase(lastName),
+            idNumber,
+            email,
+            section: toTitleCase(section),
+            displayName: formatDisplayName(firstName, lastName)
+        };
+        
+        // Start the quiz
+        await startQuiz();
+        
+    } catch (error) {
+        console.error('Error during form submission:', error);
+        document.getElementById('loadingIndicator').style.display = 'none';
+        alert('An error occurred. Please try again.');
+    }
+});
+
+// Start the quiz
+async function startQuiz() {
+    const filename = getQuizFilename();
+    
+    try {
+        // Load quiz data
+        gameState.quizData = await fetchQuiz(filename);
+        
+        if (!gameState.quizData) {
+            alert('Quiz not found!');
+            return;
+        }
+        
+        // Update UI with quiz title
+        document.getElementById('quizTitleElement').textContent = gameState.quizData.title || 'Quiz';
+        
+        // Prepare questions
+        gameState.questions = prepareQuestions(gameState.quizData);
+        document.getElementById('totalQuestions').textContent = gameState.questions.length;
+        
+        // Load initial leaderboard
+        gameState.leaderboard = await fetchLeaderboard(filename);
+        
+        // Show the first question
+        showQuestion(0);
+        
+    } catch (error) {
+        console.error('Error starting quiz:', error);
+        alert('Failed to load quiz. Please try again.');
+    }
+}
+
+// Prepare questions from quiz data - HANDLES BOTH FORMATS
+function prepareQuestions(quizData) {
+    let questions = [];
+    
+    console.log('Quiz data:', quizData);
+    
+    // Handle multiple choice questions in BOTH formats
+    if (quizData.multipleChoice) {
+        quizData.multipleChoice.forEach((q, idx) => {
+            // Check which format this question uses
+            if (q.choices && typeof q.choices === 'object') {
+                // Format 1: {choices: {a: "option1", b: "option2"}, answer: "a"}
+                let choices = Object.entries(q.choices);
+                questions.push({
+                    type: 'mcq',
+                    question: q.question,
+                    choices: shuffleArray(choices),
+                    answer: q.answer,
+                    explanation: q.explanation || ''
+                });
+            } else if (q.options && Array.isArray(q.options)) {
+                // Format 2: {options: ["option1", "option2", "option3"], answer: "12"}
+                // Convert array format to key-value pairs
+                let choices = [];
+                q.options.forEach((option, index) => {
+                    const key = String.fromCharCode(97 + index); // a, b, c, d
+                    choices.push([key, option]);
+                });
+                questions.push({
+                    type: 'mcq',
+                    question: q.question,
+                    choices: shuffleArray(choices),
+                    answer: q.answer,
+                    explanation: q.explanation || ''
+                });
+            } else if (typeof q.answer === 'boolean') {
+                // True/false question (boolean answer)
+                questions.push({
+                    type: 'tf',
+                    question: q.question,
+                    answer: q.answer,
+                    explanation: q.explanation || ''
+                });
+            }
+        });
+    }
+    
+    // Handle separate trueFalse array
+    if (quizData.trueFalse) {
+        quizData.trueFalse.forEach((q, idx) => {
+            questions.push({
+                type: 'tf',
+                question: q.question,
+                answer: q.answer,
+                explanation: q.explanation || ''
+            });
+        });
+    }
+    
+    console.log('Prepared questions:', questions);
+    return shuffleArray(questions);
+}
+
+// Show a question - FIXED VERSION
+function showQuestion(index) {
+    if (index >= gameState.questions.length) {
+        showFinalResults();
+        return;
+    }
+    
+    gameState.currentQuestionIndex = index;
+    const question = gameState.questions[index];
+    
+    console.log('Showing question:', question); // Debug log
+    
+    // Update UI
+    document.getElementById('questionNumber').textContent = index + 1;
+    document.getElementById('questionText').textContent = question.question;
+    
+    // Create answer buttons
+    const answersContainer = document.getElementById('answerOptions');
+    answersContainer.innerHTML = '';
+    
+    if (question.type === 'mcq') {
+        // For MC questions, create buttons for each choice
+        question.choices.forEach(([key, value]) => {
+            const button = document.createElement('button');
+            button.className = 'answer-btn';
+            button.textContent = value;
+            button.dataset.key = key;
+            button.onclick = () => selectAnswer(key, button);
+            answersContainer.appendChild(button);
+        });
+    } else if (question.type === 'tf') {
+        // For True/False questions
+        const trueButton = document.createElement('button');
+        trueButton.className = 'answer-btn';
+        trueButton.textContent = 'True';
+        trueButton.dataset.key = 'true';
+        trueButton.onclick = () => selectAnswer(true, trueButton);
+        answersContainer.appendChild(trueButton);
+        
+        const falseButton = document.createElement('button');
+        falseButton.className = 'answer-btn';
+        falseButton.textContent = 'False';
+        falseButton.dataset.key = 'false';
+        falseButton.onclick = () => selectAnswer(false, falseButton);
+        answersContainer.appendChild(falseButton);
+    }
+    
+    // Start the timer
+    startTimer();
+    
+    // Show the quiz screen
+    showScreen('question');
+}
+
+// Start the question timer
+function startTimer() {
+    clearInterval(gameState.timer);
+    gameState.timeLeft = 15;
+    document.getElementById('timerText').textContent = gameState.timeLeft;
+    
+    // Reset timer progress
+    const timerProgress = document.querySelector('.timer-progress');
+    timerProgress.style.strokeDashoffset = '0';
+    
+    gameState.timer = setInterval(() => {
+        gameState.timeLeft--;
+        document.getElementById('timerText').textContent = gameState.timeLeft;
+        
+        // Update progress circle
+        const progress = (gameState.timeLeft / 15) * 283;
+        timerProgress.style.strokeDashoffset = 283 - progress;
+        
+        if (gameState.timeLeft <= 0) {
+            clearInterval(gameState.timer);
+            timeUp();
+        }
+    }, 1000);
+}
+
+// Handle answer selection
+function selectAnswer(answer, button) {
+    clearInterval(gameState.timer);
+    
+    // Disable all buttons
+    const allButtons = document.querySelectorAll('.answer-btn');
+    allButtons.forEach(btn => {
+        btn.disabled = true;
+    });
+    
+    // Highlight selected button
+    button.classList.add('selected');
+    
+    // Store the answer and time
+    gameState.answers.push(answer);
+    gameState.times.push(gameState.timeLeft);
+    
+    // Show feedback
+    showFeedback(answer);
+}
+
+// Handle time up
+function timeUp() {
+    // Disable all buttons
+    const allButtons = document.querySelectorAll('.answer-btn');
+    allButtons.forEach(btn => {
+        btn.disabled = true;
+    });
+    
+    // Store no answer
+    gameState.answers.push(null);
+    gameState.times.push(0);
+    
+    // Show feedback
+    showFeedback(null);
+}
+
+// Enhanced compact showFeedback function
+function showFeedback(selectedAnswer) {
+    const question = gameState.questions[gameState.currentQuestionIndex];
+    let isCorrect = false;
+    let correctAnswerDisplay = '';
+    
+    // Determine correctness and correct answer display
+    if (question.type === 'mcq') {
+        isCorrect = selectedAnswer === question.answer;
+        correctAnswerDisplay = question.choices.find(([key]) => key === question.answer)?.[1] || question.answer;
+    } else if (question.type === 'tf') {
+        isCorrect = selectedAnswer === question.answer;
+        correctAnswerDisplay = question.answer ? 'True' : 'False';
+    }
+    
+    // Update feedback UI with compact styling
+    const feedbackIcon = document.getElementById('feedbackIcon');
+    const feedbackResult = document.getElementById('feedbackResult');
+    const feedbackText = document.getElementById('feedbackText');
+    
+    feedbackIcon.textContent = isCorrect ? '✅' : '❌'; // Smaller, simpler icons
+    feedbackResult.textContent = isCorrect ? 'Correct!' : 'Incorrect!';
+    feedbackResult.className = `feedback-result ${isCorrect ? 'correct' : 'incorrect'}`;
+    
+    feedbackText.className = 'feedback-text'; // Reset classes
+    
+    if (selectedAnswer === null) {
+        feedbackText.textContent = "⏰ Time's up! No answer selected.";
+        feedbackText.classList.add('timeup-feedback');
+    } else if (isCorrect) {
+        feedbackText.textContent = "Great job! You got it right!";
+        feedbackText.classList.add('correct-feedback');
+    } else {
+        feedbackText.innerHTML = `Incorrect! Correct answer: <span class="correct-answer-display">${correctAnswerDisplay}</span>`;
+        feedbackText.classList.add('incorrect-feedback');
+    }
+    
+    // Compact explanation
+    document.getElementById('explanationText').textContent = question.explanation || '';
+    
+    // Calculate points earned
+    const pointsEarned = calculatePoints(isCorrect, gameState.timeLeft);
+    gameState.score += pointsEarned;
+    
+    document.getElementById('pointsEarned').textContent = pointsEarned;
+    document.getElementById('currentScore').textContent = gameState.score;
+    
+    // Update and display leaderboard
+    updateLeaderboard();
+    
+    // Show feedback screen
+    showScreen('feedback');
+    
+    // Auto-advance to next question after 5 seconds
+    let countdown = 5;
+    document.getElementById('nextTimerCount').textContent = countdown;
+    
+    const countdownInterval = setInterval(() => {
+        countdown--;
+        document.getElementById('nextTimerCount').textContent = countdown;
+        
+        if (countdown <= 0) {
+            clearInterval(countdownInterval);
+            showQuestion(gameState.currentQuestionIndex + 1);
+        }
+    }, 1000);
+}
+
+// Calculate points based on Kahoot scoring
+function calculatePoints(isCorrect, timeLeft) {
+    if (!isCorrect) return 0;
+    
+    // Kahoot-style scoring: 1000 base + up to 500 speed bonus
+    const basePoints = 1000;
+    const speedBonus = Math.floor((timeLeft / 15) * 500);
+    
+    return basePoints + speedBonus;
+}
+
+// Update leaderboard with current player
+function updateLeaderboard() {
+    // Add current player to leaderboard if not already there
+    const currentPlayer = {
+        name: gameState.studentInfo.displayName,
+        score: gameState.score
+    };
+    
+    // Check if player already exists in leaderboard
+    const existingPlayerIndex = gameState.leaderboard.findIndex(
+        player => player.name === currentPlayer.name
+    );
+    
+    if (existingPlayerIndex !== -1) {
+        // Update existing player score
+        gameState.leaderboard[existingPlayerIndex].score = currentPlayer.score;
+    } else {
+        // Add new player
+        gameState.leaderboard.push(currentPlayer);
+    }
+    
+    // Sort by score (descending)
+    gameState.leaderboard.sort((a, b) => b.score - a.score);
+    
+    // Update leaderboard UI (show top 5)
+    const leaderboardList = document.getElementById('leaderboardList');
+    leaderboardList.innerHTML = '';
+    
+    gameState.leaderboard.slice(0, 5).forEach((player, index) => {
+        const item = document.createElement('div');
+        item.className = 'leaderboard-item';
+        item.innerHTML = `
+            <div class="rank">${index + 1}</div>
+            <div class="name">${player.name}</div>
+            <div class="score">${player.score}</div>
+        `;
+        leaderboardList.appendChild(item);
+    });
+}
+
+// Show final results
+async function showFinalResults() {
+    document.getElementById('finalScore').textContent = gameState.score;
+    
+    // Refresh leaderboard with latest data from server
+    try {
+        const latestLeaderboard = await fetchLeaderboard(getQuizFilename());
+        if (latestLeaderboard.length > 0) {
+            gameState.leaderboard = latestLeaderboard;
+        }
+    } catch (error) {
+        console.error('Error fetching final leaderboard:', error);
+    }
+    
+    // Add current player to leaderboard for display
+    const currentPlayer = {
+        name: gameState.studentInfo.displayName,
+        score: gameState.score
+    };
+    
+    const displayLeaderboard = [...gameState.leaderboard];
+    const existingIndex = displayLeaderboard.findIndex(p => p.name === currentPlayer.name);
+    
+    if (existingIndex !== -1) {
+        displayLeaderboard[existingIndex] = currentPlayer;
+    } else {
+        displayLeaderboard.push(currentPlayer);
+    }
+    
+    displayLeaderboard.sort((a, b) => b.score - a.score);
+    
+    // Update podium with top 3
+    const topPlayers = displayLeaderboard.slice(0, 3);
+    
+    if (topPlayers[0]) {
+        document.getElementById('firstPlace').textContent = topPlayers[0].name;
+        document.getElementById('firstScore').textContent = topPlayers[0].score;
+    }
+    
+    if (topPlayers[1]) {
+        document.getElementById('secondPlace').textContent = topPlayers[1].name;
+        document.getElementById('secondScore').textContent = topPlayers[1].score;
+    }
+    
+    if (topPlayers[2]) {
+        document.getElementById('thirdPlace').textContent = topPlayers[2].name;
+        document.getElementById('thirdScore').textContent = topPlayers[2].score;
+    }
+    
+    // Update full leaderboard
+    const fullLeaderboardList = document.getElementById('fullLeaderboardList');
+    fullLeaderboardList.innerHTML = '';
+    
+    displayLeaderboard.forEach((player, index) => {
+        const item = document.createElement('div');
+        item.className = 'leaderboard-item';
+        item.innerHTML = `
+            <div class="rank">${index + 1}</div>
+            <div class="name">${player.name}</div>
+            <div class="score">${player.score}</div>
+        `;
+        fullLeaderboardList.appendChild(item);
+    });
+    
+    // Submit results to server
+    await submitQuizResults();
+    
+    // Show results screen
+    showScreen('results');
+}
+
+// Submit quiz results to server
+async function submitQuizResults() {
+    const payload = {
+        student: gameState.studentInfo,
+        quiz: getQuizFilename(),
+        answers: gameState.answers,
+        times: gameState.times,
+        score: gameState.score
+    };
+    
+    try {
+        const res = await fetch('/api/activity/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        
+        if (!res.ok) throw new Error('Failed to submit results');
+        
+        const result = await res.json();
+        console.log('Quiz submitted successfully:', result);
+        
+    } catch (error) {
+        console.error('Error submitting quiz results:', error);
+    }
+}
+
+// Play again button
+document.getElementById('playAgainBtn').addEventListener('click', function() {
+    // Redirect to home or refresh the page
+    window.location.href = '/';
+});
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', function() {
+    const quizFilename = getQuizFilename();
+    if (!quizFilename) {
+        alert('No quiz specified in URL');
+        return;
+    }
+    
+    // Load quiz title initially
+    fetchQuiz(quizFilename).then(quizData => {
+        if (quizData) {
+            document.getElementById('quizTitleElement').textContent = quizData.title || 'Quiz';
+        }
+    });
+});
