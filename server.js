@@ -56,7 +56,7 @@ const auditTrailApi = require('./routes/auditTrailApi');
 const activityRoutes = require('./routes/activity/activityRoutes');
 const activityReportsApi = require('./routes/admin_dashboard/activities'); //added 23 Nov 2025
 const adminActivitiesRoutes = require('./routes/admin_dashboard/activities');// Middleware for authentication
-const evaluationRoutes = require('./routes/evaluation/evaluationRoutes'); // added 25 Nove 2025
+//const evaluationRoutes = require('./routes/evaluation/evaluationRoutes'); // added 25 Nove 2025
 const activityJsonApi = require('./routes/activityJsonApi'); // added 27 Nov 2025
 const activitySubmit = require('./routes/activitySubmit'); // added 27 Nov 2025
 
@@ -130,7 +130,7 @@ app.use('/api/attendance-summary', attendanceSummaryApi);
 
 app.use('/api/events', require('./routes/eventsApi'));
 app.use(express.static(path.join(__dirname, "public")));
-app.use('/api/evaluation', evaluationRoutes(client)); // added 25 Nov 2025
+//app.use('/api/evaluation', evaluationRoutes(client)); // added 25 Nov 2025
 
 // Call the database connection function
 connectToDatabase()
