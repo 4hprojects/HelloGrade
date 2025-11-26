@@ -1,0 +1,336 @@
+{
+  "title": "JAVA BASICS QUIZ — INTERMEDIATE VERSION",
+  "description": "25 MULTIPLE CHOICE, 10 TRUE OR FALSE. Answers shown immediately after each item.",
+  "settings": {
+    "showAnswersAfterEachItem": true
+  },
+  "multipleChoice": [
+    {
+      "id": 1,
+      "question": "What is the output?\nint a = 10;\na += 5;\nSystem.out.println(a);",
+      "choices": {
+        "a": "10",
+        "b": "15",
+        "c": "5",
+        "d": "error"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 2,
+      "question": "What is the value of x after execution?\nint x = 8;\nx = x / 2 + x * 2;",
+      "choices": {
+        "a": "12",
+        "b": "20",
+        "c": "18",
+        "d": "10"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 3,
+      "question": "Which statement correctly checks if a number is NOT equal to 20?",
+      "choices": {
+        "a": "num <> 20",
+        "b": "num != 20",
+        "c": "num == 20",
+        "d": "num =! 20"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 4,
+      "question": "What is the output?\nSystem.out.println(\"Hello\".length());",
+      "choices": {
+        "a": "4",
+        "b": "5",
+        "c": "6",
+        "d": "error"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 5,
+      "question": "Which loop will always execute at least once?",
+      "choices": {
+        "a": "for",
+        "b": "while",
+        "c": "do-while",
+        "d": "foreach"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 6,
+      "question": "What is the result?\nint[] arr = {3, 6, 9};\nSystem.out.println(arr[1] + arr[2]);",
+      "choices": {
+        "a": "12",
+        "b": "9",
+        "c": "15",
+        "d": "error"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 7,
+      "question": "Which code snippet correctly declares and initializes a char?",
+      "choices": {
+        "a": "char c = \"A\";",
+        "b": "char c = 'A';",
+        "c": "char c = A;",
+        "d": "char c = 'ABC';"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 8,
+      "question": "What is the final value of x?\nint x = 5;\nx++;\n++x;",
+      "choices": {
+        "a": "6",
+        "b": "7",
+        "c": "8",
+        "d": "error"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 9,
+      "question": "What happens when dividing two integers?\nint a = 7 / 2;",
+      "choices": {
+        "a": "3",
+        "b": "3.5",
+        "c": "4",
+        "d": "error"
+      },
+      "answer": "a"
+    },
+    {
+      "id": 10,
+      "question": "Which of the following is NOT a Java loop?",
+      "choices": {
+        "a": "for",
+        "b": "foreach",
+        "c": "while",
+        "d": "repeat"
+      },
+      "answer": "d"
+    },
+    {
+      "id": 11,
+      "question": "What is printed?\nboolean flag = true;\nif (!flag) System.out.println(\"A\");\nelse System.out.println(\"B\");",
+      "choices": {
+        "a": "A",
+        "b": "B",
+        "c": "true",
+        "d": "nothing"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 12,
+      "question": "What is the output?\nint x = 2, y = 3;\nSystem.out.println(x > y);",
+      "choices": {
+        "a": "true",
+        "b": "false",
+        "c": "2",
+        "d": "3"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 13,
+      "question": "Which line creates a String correctly?",
+      "choices": {
+        "a": "String name = “John”;",
+        "b": "String name = 'John';",
+        "c": "String name = String(\"John\");",
+        "d": "string name = \"John\";"
+      },
+      "answer": "a"
+    },
+    {
+      "id": 14,
+      "question": "Which array has 4 elements?",
+      "choices": {
+        "a": "int[] a = new int[3];",
+        "b": "int[] a = {1, 2, 3, 4};",
+        "c": "int[] a = new int[] {1, 2, 3};",
+        "d": "int[] a = {10, 20, 30};"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 15,
+      "question": "What is the output?\nSystem.out.println(10 % 4);",
+      "choices": {
+        "a": "1",
+        "b": "2",
+        "c": "0",
+        "d": "3"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 16,
+      "question": "What is the value of sum?\nint[] n = {1, 2, 3, 4};\nint sum = 0;\nfor (int i = 0; i < 4; i++) sum += n[i];",
+      "choices": {
+        "a": "6",
+        "b": "8",
+        "c": "10",
+        "d": "4"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 17,
+      "question": "What is the result?\nString s = \"Java\";\nSystem.out.println(s.charAt(2));",
+      "choices": {
+        "a": "J",
+        "b": "a",
+        "c": "v",
+        "d": "error"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 18,
+      "question": "What will this print?\nint x = 1;\nwhile (x < 3) { x++; }\nSystem.out.println(x);",
+      "choices": {
+        "a": "1",
+        "b": "2",
+        "c": "3",
+        "d": "infinite loop"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 19,
+      "question": "Which is the correct way to compare strings?",
+      "choices": {
+        "a": "s1 == s2",
+        "b": "compare(s1, s2)",
+        "c": "s1.equals(s2)",
+        "d": "s1 === s2"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 20,
+      "question": "What is the output?\ndouble d = 5 / 2;\nSystem.out.println(d);",
+      "choices": {
+        "a": "2",
+        "b": "2.5",
+        "c": "2.0",
+        "d": "error"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 21,
+      "question": "What does this loop do?\nfor (int i = 0; i < 5; i++);\nSystem.out.println(\"Hi\");",
+      "choices": {
+        "a": "Prints Hi 5 times",
+        "b": "Prints Hi 4 times",
+        "c": "Prints Hi once",
+        "d": "Prints nothing"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 22,
+      "question": "What happens if Scanner is not closed?",
+      "choices": {
+        "a": "Program crashes",
+        "b": "Input stops",
+        "c": "Possible resource leak",
+        "d": "Nothing"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 23,
+      "question": "Which of the following causes an error?",
+      "choices": {
+        "a": "int x = 5.5;",
+        "b": "double y = 5;",
+        "c": "boolean a = true;",
+        "d": "String s = \"OK\";"
+      },
+      "answer": "a"
+    },
+    {
+      "id": 24,
+      "question": "What will happen?\nint[] a = new int[3];\nSystem.out.println(a[0]);",
+      "choices": {
+        "a": "0",
+        "b": "null",
+        "c": "garbage value",
+        "d": "error"
+      },
+      "answer": "a"
+    },
+    {
+      "id": 25,
+      "question": "What is the output?\nint x = 4;\nSystem.out.println(x == 4 || x > 10);",
+      "choices": {
+        "a": "true",
+        "b": "false",
+        "c": "error",
+        "d": "4"
+      },
+      "answer": "a"
+    }
+  ],
+  "trueFalse": [
+    {
+      "id": 1,
+      "question": "The expression “&&” stops evaluating once a false condition is found.",
+      "answer": true
+    },
+    {
+      "id": 2,
+      "question": "In Java, String is a primitive type.",
+      "answer": false
+    },
+    {
+      "id": 3,
+      "question": "The condition inside a for loop is checked before every iteration.",
+      "answer": true
+    },
+    {
+      "id": 4,
+      "question": "Arrays in Java can change size after creation.",
+      "answer": false
+    },
+    {
+      "id": 5,
+      "question": "The charAt() method returns a character.",
+      "answer": true
+    },
+    {
+      "id": 6,
+      "question": "A do-while loop checks the condition before the loop body runs.",
+      "answer": false
+    },
+    {
+      "id": 7,
+      "question": "Using == on Strings compares memory addresses.",
+      "answer": true
+    },
+    {
+      "id": 8,
+      "question": "Accessing an index out of bounds causes a runtime error.",
+      "answer": true
+    },
+    {
+      "id": 9,
+      "question": "The modulo operator (%) works with both ints and doubles.",
+      "answer": false
+    },
+    {
+      "id": 10,
+      "question": "Java automatically imports java.util.*",
+      "answer": false
+    }
+  ]
+}

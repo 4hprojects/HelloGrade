@@ -1,0 +1,336 @@
+{
+  "title": "JAVA BASICS QUIZ",
+  "description": "25 MULTIPLE CHOICE, 10 TRUE OR FALSE. Answers shown immediately after each item.",
+  "settings": {
+    "showAnswersAfterEachItem": true
+  },
+  "multipleChoice": [
+    {
+      "id": 1,
+      "question": "Which keyword is used to declare a variable in Java?",
+      "choices": {
+        "a": "var",
+        "b": "int",
+        "c": "let",
+        "d": "data"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 2,
+      "question": "What is the correct way to print in Java?",
+      "choices": {
+        "a": "print()",
+        "b": "cout <<",
+        "c": "System.out.print()",
+        "d": "echo()"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 3,
+      "question": "Which data type stores whole numbers?",
+      "choices": {
+        "a": "double",
+        "b": "int",
+        "c": "boolean",
+        "d": "char"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 4,
+      "question": "Which data type stores true or false?",
+      "choices": {
+        "a": "boolean",
+        "b": "String",
+        "c": "float",
+        "d": "char"
+      },
+      "answer": "a"
+    },
+    {
+      "id": 5,
+      "question": "What is the output of:\nSystem.out.println(3 + 2 * 2);",
+      "choices": {
+        "a": "10",
+        "b": "7",
+        "c": "5",
+        "d": "12"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 6,
+      "question": "Which operator checks equality?",
+      "choices": {
+        "a": "=",
+        "b": "==",
+        "c": "!=",
+        "d": "equals"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 7,
+      "question": "What is the correct way to take input?",
+      "choices": {
+        "a": "Scanner sc = new Scanner();",
+        "b": "Scanner sc = new Scanner(System.in);",
+        "c": "input()",
+        "d": "readLine()"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 8,
+      "question": "Which is a valid variable name?",
+      "choices": {
+        "a": "1score",
+        "b": "score!",
+        "c": "_score",
+        "d": "score-value"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 9,
+      "question": "What does length refer to in an array?",
+      "choices": {
+        "a": "Number of bytes",
+        "b": "Number of elements",
+        "c": "Last index",
+        "d": "Size minus one"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 10,
+      "question": "What is the index of the first element in a Java array?",
+      "choices": {
+        "a": "-1",
+        "b": "0",
+        "c": "1",
+        "d": "any"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 11,
+      "question": "How do you create an int array with 5 elements?",
+      "choices": {
+        "a": "int arr = [5];",
+        "b": "int[] arr = new int[5];",
+        "c": "array int arr(5);",
+        "d": "new array int(5);"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 12,
+      "question": "What is the result of:\nint x = 5;\nSystem.out.println(++x);",
+      "choices": {
+        "a": "4",
+        "b": "5",
+        "c": "6",
+        "d": "error"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 13,
+      "question": "Which loop is best when you know the number of repetitions?",
+      "choices": {
+        "a": "while",
+        "b": "do-while",
+        "c": "for",
+        "d": "repeat"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 14,
+      "question": "What is the correct if-statement syntax?",
+      "choices": {
+        "a": "if x > 10",
+        "b": "if (x > 10)",
+        "c": "if: x > 10",
+        "d": "if x > 10 then"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 15,
+      "question": "Which of the following is a String?",
+      "choices": {
+        "a": "\"A\"",
+        "b": "'A'",
+        "c": "7",
+        "d": "true"
+      },
+      "answer": "a"
+    },
+    {
+      "id": 16,
+      "question": "What does break do in a loop?",
+      "choices": {
+        "a": "Ends the loop",
+        "b": "Skips one iteration",
+        "c": "Restarts the loop",
+        "d": "Pauses the loop"
+      },
+      "answer": "a"
+    },
+    {
+      "id": 17,
+      "question": "What does continue do?",
+      "choices": {
+        "a": "Ends the loop",
+        "b": "Skips current iteration",
+        "c": "Jumps to main",
+        "d": "Restarts program"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 18,
+      "question": "How do you convert int to String?",
+      "choices": {
+        "a": "int.toString()",
+        "b": "String.valueOf(intVar)",
+        "c": "intVar.string()",
+        "d": "convert()"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 19,
+      "question": "What happens if you access arr[5] in a 5-element array?",
+      "choices": {
+        "a": "0",
+        "b": "-1",
+        "c": "Exception",
+        "d": "null"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 20,
+      "question": "Which operator finds remainder?",
+      "choices": {
+        "a": "/",
+        "b": "%",
+        "c": "*",
+        "d": "//"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 21,
+      "question": "Which statement stops input reading?",
+      "choices": {
+        "a": "stop()",
+        "b": "close()",
+        "c": "Scanner.end()",
+        "d": "input.close()"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 22,
+      "question": "A block of code inside {} is called a:",
+      "choices": {
+        "a": "package",
+        "b": "segment",
+        "c": "block",
+        "d": "module"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 23,
+      "question": "Default value of an int inside a class?",
+      "choices": {
+        "a": "1",
+        "b": "0",
+        "c": "null",
+        "d": "undefined"
+      },
+      "answer": "b"
+    },
+    {
+      "id": 24,
+      "question": "What is the correct main method?",
+      "choices": {
+        "a": "public static void main()",
+        "b": "public static void main(String args)",
+        "c": "public static void main(String[] args)",
+        "d": "static void main()"
+      },
+      "answer": "c"
+    },
+    {
+      "id": 25,
+      "question": "How do you create a comment?",
+      "choices": {
+        "a": "# comment",
+        "b": "// comment",
+        "c": "<!-- comment -->",
+        "d": "comment()"
+      },
+      "answer": "b"
+    }
+  ],
+  "trueFalse": [
+    {
+      "id": 1,
+      "question": "Java is case-sensitive.",
+      "answer": true
+    },
+    {
+      "id": 2,
+      "question": "A float stores more precise values than a double.",
+      "answer": false
+    },
+    {
+      "id": 3,
+      "question": "Strings in Java are objects.",
+      "answer": true
+    },
+    {
+      "id": 4,
+      "question": "The while loop always runs at least once.",
+      "answer": false
+    },
+    {
+      "id": 5,
+      "question": "Array indexes start at 1.",
+      "answer": false
+    },
+    {
+      "id": 6,
+      "question": "A boolean variable can only be true or false.",
+      "answer": true
+    },
+    {
+      "id": 7,
+      "question": "The Scanner class can read both text and numbers.",
+      "answer": true
+    },
+    {
+      "id": 8,
+      "question": "The == operator compares the content of Strings.",
+      "answer": false
+    },
+    {
+      "id": 9,
+      "question": "break can be used in switch statements.",
+      "answer": true
+    },
+    {
+      "id": 10,
+      "question": "Java allows multiple main methods in one file.",
+      "answer": false
+    }
+  ]
+}
