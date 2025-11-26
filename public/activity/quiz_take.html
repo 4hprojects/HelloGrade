@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Take Quiz | HelloUniversity.online</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/quiz_style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body class="kahoot-theme">
+  <header class="game-header">
+    <div class="header-content">
+      <a href="/" class="logo">
+        <img src="/images/icon.webp" alt="HelloUniversity Logo" class="logo-img">
+        <span class="brand-name">HelloUniversity.online</span>
+      </a>
+      <div id="gamePin" class="game-pin">Quiz: <span id="quizTitleElement">Loading...</span></div>
+    </div>
+  </header>
+  
+  <main class="game-container">
+    <!-- Student Info Screen -->
+    <div id="studentInfoScreen" class="screen active">
+      <div class="student-info-content">
+        <h1>Enter Your Information</h1>
+        <p class="instruction">Please provide your details to start the quiz</p>
+        
+        <form id="studentInfoForm" class="student-form">
+          <div class="name-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" required autocomplete="given-name" placeholder="Enter first name">
+              <div class="error-message">Please enter your first name</div>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" required autocomplete="family-name" placeholder="Enter last name">
+              <div class="error-message">Please enter your last name</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="idNumber">ID Number <span class="optional">(max 8 characters)</span></label>
+            <input type="text" id="idNumber" name="idNumber" maxlength="8" required autocomplete="off" inputmode="numeric" pattern="\d*" placeholder="e.g. 12345678">
+            <div class="error-message">Please enter a valid ID number (max 8 characters)</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required autocomplete="email" placeholder="e.g. student@email.com">
+            <div class="error-message">Please enter a valid email address</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="section">Section</label>
+            <input type="text" id="section" name="section" required autocomplete="section" placeholder="e.g. BSIT-3A">
+            <div class="error-message">Please enter your section</div>
+          </div>
+          
+          <button type="submit" class="btn start-btn">Start Quiz</button>
+        </form>
+        
+        <div id="duplicateError" class="error-message full-width" style="display: none;">
+          You have already taken this quiz. Each student can only attempt once.
+        </div>
+
+        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+          <div class="spinner"></div>
+          <span>Checking...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question Screen -->
+    <div id="questionScreen" class="screen">
+      <div class="question-container">
+        <div class="question-header">
+          <div class="question-counter">Question <span id="questionNumber">1</span>/<span id="totalQuestions">0</span></div>
+          <div class="timer-container">
+            <div class="timer-circle">
+              <svg class="timer-svg" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" class="timer-background"></circle>
+                <circle cx="50" cy="50" r="45" class="timer-progress"></circle>
+              </svg>
+              <span id="timerText" class="timer-text">15</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="question-content">
+          <div id="questionText" class="question-text">Loading question...</div>
+          <div id="answerOptions" class="answer-options">
+            <!-- Answer buttons will be inserted here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Answer Feedback Screen -->
+    <div id="feedbackScreen" class="screen">
+      <div class="feedback-container">
+        <div class="feedback-header">
+          <div id="feedbackIcon" class="feedback-icon">✅</div>
+          <div id="feedbackResult" class="feedback-result"></div>
+        </div>
+        
+        <div id="feedbackText" class="feedback-text">
+          Feedback will appear here
+        </div>
+        
+        <div class="explanation" id="explanationText">
+          Explanation will appear here
+        </div>
+        
+        <div id="scoreUpdate" class="score-update">
+          +<span id="pointsEarned">0</span> points! Total: <span id="currentScore">0</span>
+        </div>
+        
+        <div class="leaderboard-preview">
+          <h3>Leaderboard</h3>
+          <div id="leaderboardList" class="leaderboard-list">
+            <!-- Top players will appear here -->
+          </div>
+        </div>
+        
+        <div class="next-timer">Next question in <span id="nextTimerCount">5</span>s</div>
+      </div>
+    </div>
+
+    <!-- Final Results Screen -->
+    <div id="resultsScreen" class="screen">
+      <div class="results-container">
+        <h1 class="results-title">Quiz Complete!</h1>
+        
+        <div class="final-score">
+          Your Score: <span id="finalScore">0</span>
+        </div>
+        
+        <div class="podium">
+          <div class="podium-spot second">
+            <div class="player-rank">2nd</div>
+            <div id="secondPlace" class="player-name">-</div>
+            <div id="secondScore" class="player-score">-</div>
+          </div>
+          <div class="podium-spot first">
+            <div class="player-rank">1st</div>
+            <div id="firstPlace" class="player-name">-</div>
+            <div id="firstScore" class="player-score">-</div>
+          </div>
+          <div class="podium-spot third">
+            <div class="player-rank">3rd</div>
+            <div id="thirdPlace" class="player-name">-</div>
+            <div id="thirdScore" class="player-score">-</div>
+          </div>
+        </div>
+        
+        <div class="full-leaderboard">
+          <h3>All-Time Leaderboard</h3>
+          <div id="fullLeaderboardList" class="leaderboard-list">
+            <!-- Full leaderboard will appear here -->
+          </div>
+        </div>
+        
+        <button id="playAgainBtn" class="btn play-again-btn">Return to Home</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/quiz_take.js"></script>
+</body>
+</html>
