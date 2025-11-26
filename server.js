@@ -139,8 +139,8 @@ connectToDatabase()
 
     // Attach admin routes
     const adminUsersRoutes = require('./routes/adminUsersRoutes');
-    const classJoinRoute = require('./routes/classes/classJoinRoute'); //added 25 Nov 2025
-        app.use('/api', classJoinRoute(classesCollection, isAuthenticated)); //added 25 Nov 2025
+    //const classJoinRoute = require('./routes/classes/classJoinRoute'); //added 25 Nov 2025
+    //    app.use('/api', classJoinRoute(classesCollection, isAuthenticated)); //added 25 Nov 2025
     app.use('/api/admin/users', adminUsersRoutes(usersCollection, isAuthenticated, isAdmin));
 
     // Start the server
