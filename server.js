@@ -56,7 +56,12 @@ const auditTrailApi = require('./routes/auditTrailApi');
 const activityRoutes = require('./routes/activity/activityRoutes');
 const activityReportsApi = require('./routes/admin_dashboard/activities'); //added 23 Nov 2025
 const adminActivitiesRoutes = require('./routes/admin_dashboard/activities');// Middleware for authentication
+const evaluationRoutes = require('./routes/evaluation/evaluationRoutes'); // added 25 Nove 2025
+const activityJsonApi = require('./routes/activityJsonApi'); // added 27 Nov 2025
+const activitySubmit = require('./routes/activitySubmit'); // added 27 Nov 2025
 
+app.use('/api/activity', activitySubmit); // added 27 Nov 2025
+app.use('/api/activity', activityJsonApi); // added 27 Nov 2025
 app.use('/api/admin_dashboard', activityReportsApi);//added 23 Nov 2025
 app.use('/api/admin_dashboard', adminActivitiesRoutes);//added 23 Nov 2025
 app.use('/api/activity', activityRoutes);
@@ -125,6 +130,7 @@ app.use('/api/attendance-summary', attendanceSummaryApi);
 
 app.use('/api/events', require('./routes/eventsApi'));
 app.use(express.static(path.join(__dirname, "public")));
+app.use('/api/evaluation', evaluationRoutes(client)); // added 25 Nov 2025
 
 // Call the database connection function
 connectToDatabase()
@@ -133,6 +139,8 @@ connectToDatabase()
 
     // Attach admin routes
     const adminUsersRoutes = require('./routes/adminUsersRoutes');
+    const classJoinRoute = require('./routes/classes/classJoinRoute'); //added 25 Nov 2025
+        app.use('/api', classJoinRoute(classesCollection, isAuthenticated)); //added 25 Nov 2025
     app.use('/api/admin/users', adminUsersRoutes(usersCollection, isAuthenticated, isAdmin));
 
     // Start the server
@@ -1517,7 +1525,7 @@ app.get('/api/quizzes/:quizId/export', isAuthenticated, isAdmin, async (req, res
  * POST /api/classes/join
  * Body: { "classCode": "CLS-000123" }
  * The student wants to join a class by code.
- */
+ *//*
 app.post('/api/classes/join', isAuthenticated, async (req, res) => {
     try {
       if (req.session.role !== 'student') {
@@ -1562,7 +1570,7 @@ app.post('/api/classes/join', isAuthenticated, async (req, res) => {
     }
     });
   
-
+*/
 app.put('/api/quizzes/:quizId/active', isAuthenticated, isAdmin, async (req, res) => {
     try {
         const { quizId } = req.params;
@@ -2599,6 +2607,10 @@ app.get('/*', (req, res, next) => {
         if (err) return next(); // File doesn't exist, continue to 404
         res.sendFile(filePath);
     });
+});
+
+app.get('/activity', (req, res) => {
+    res.sendFile(__dirname + '/public/activity/quiz_index.html');
 });
 
 app.get('/:folder/:page', (req, res, next) => {
