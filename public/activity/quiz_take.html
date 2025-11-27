@@ -18,7 +18,7 @@
       <div id="gamePin" class="game-pin">Quiz: <span id="quizTitleElement">Loading...</span></div>
     </div>
   </header>
-  
+  <br>
   <main class="game-container">
     <!-- Student Info Screen -->
     <div id="studentInfoScreen" class="screen active">
@@ -40,22 +40,23 @@
             </div>
           </div>
           
-          <div class="form-group">
-            <label for="idNumber">ID Number <span class="optional">(max 8 characters)</span></label>
-            <input type="text" id="idNumber" name="idNumber" maxlength="8" required autocomplete="off" inputmode="numeric" pattern="\d*" placeholder="e.g. 12345678">
-            <div class="error-message">Please enter a valid ID number (max 8 characters)</div>
+          <div class="id-section-row">
+            <div class="form-group">
+              <label for="idNumber">ID Number <span class="optional"></span></label>
+              <input type="text" id="idNumber" name="idNumber" maxlength="8" required autocomplete="off" inputmode="numeric" pattern="\d*" placeholder="e.g. 12345678">
+              <div class="error-message">Please enter a valid ID number (max 8 characters)</div>
+            </div>
+            <div class="form-group">
+              <label for="section">Section</label>
+              <input type="text" id="section" name="section" required autocomplete="section" placeholder="e.g. BSIT-3A">
+              <div class="error-message">Please enter your section</div>
+            </div>
           </div>
           
           <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" required autocomplete="email" placeholder="e.g. student@email.com">
             <div class="error-message">Please enter a valid email address</div>
-          </div>
-          
-          <div class="form-group">
-            <label for="section">Section</label>
-            <input type="text" id="section" name="section" required autocomplete="section" placeholder="e.g. BSIT-3A">
-            <div class="error-message">Please enter your section</div>
           </div>
           
           <button type="submit" class="btn start-btn">Start Quiz</button>
@@ -135,6 +136,11 @@
         
         <div class="final-score">
           Your Score: <span id="finalScore">0</span>
+        </div>
+        
+        <div>
+          <span id="correctItems"></span>
+          <span id="accuracy"></span>
         </div>
         
         <div class="podium">
