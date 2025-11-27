@@ -1,8 +1,8 @@
 {
     "quizID": "java-basics-004",
-  "title": "JAVA BASICS QUIZ — INTERMEDIATE VERSION",
-  "description": "25 MULTIPLE CHOICE, 10 TRUE OR FALSE. Answers shown immediately after each item.",
-  "settings": {
+    "title": "Java Basics Quiz — Intermediate Version",
+    "description": "Take this quiz to gauge your understanding of intermediate Java concepts. It includes operators, expressions, conditions, loops, and arrays.",
+    "settings": {
     "showAnswersAfterEachItem": true
   },
   "multipleChoice": [
