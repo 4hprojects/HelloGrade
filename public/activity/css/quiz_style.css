@@ -119,9 +119,9 @@
 /* ===== ENHANCED STUDENT INFO FORM ===== */
 .student-info-content {
   background: var(--card-bg);
-  padding: 3rem 2.5rem;
-  border-radius: 24px;
-  max-width: 520px;
+  padding: 1.5rem 1rem;      /* Reduced from 3rem 2.5rem */
+  border-radius: 14px;       /* Reduced from 24px */
+  max-width: 400px;          /* Reduced from 520px */
   width: 100%;
   backdrop-filter: blur(20px);
   border: 1px solid var(--card-border);
@@ -153,9 +153,9 @@
 
 .student-info-content h1 {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;     /* Reduced from 1rem */
   font-weight: 800;
-  font-size: 2.1rem;
+  font-size: 1.4rem;         /* Reduced from 2.1rem */
   background: linear-gradient(135deg, #FFFFFF, #E0E7FF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -165,8 +165,8 @@
 
 .instruction {
   text-align: center;
-  margin-bottom: 2rem;
-  font-size: 1.05rem;
+  margin-bottom: 1rem;       /* Reduced from 2rem */
+  font-size: 0.95rem;        /* Reduced from 1.05rem */
   opacity: 0.9;
   line-height: 1.5;
   font-weight: 500;
@@ -174,13 +174,13 @@
 }
 
 .student-form {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;       /* Reduced from 1.5rem */
 }
 
 .name-row {
   display: flex;
-  gap: 16px;
-  margin-bottom: 1.2rem;
+  gap: 8px;                  /* Reduced from 16px */
+  margin-bottom: 0.8rem;     /* Reduced from 1.2rem */
 }
 
 .name-row .form-group {
@@ -188,16 +188,16 @@
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;       /* Reduced from 1.5rem */
   position: relative;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 4px;        /* Reduced from 8px */
   font-weight: 600;
   color: var(--text-light);
-  font-size: 0.95rem;
+  font-size: 0.85rem;        /* Reduced from 0.95rem */
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
@@ -209,12 +209,12 @@
 
 .form-group input {
   width: 100%;
-  padding: 14px 18px;
+  padding: 10px 12px;        /* Reduced from 14px 18px */
   border: 2px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
+  border-radius: 8px;        /* Reduced from 12px */
   background: rgba(255, 255, 255, 0.92);
   font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem;        /* Reduced from 1rem */
   font-weight: 500;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: var(--text-dark);
@@ -1116,4 +1116,15 @@
     background: white !important;
     color: black !important;
   }
+}
+
+.id-section-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.id-section-row .form-group {
+  flex: 1 1 0;
+  margin-bottom: 0;
 }
