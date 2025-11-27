@@ -62,28 +62,28 @@ async function fetchQuiz(filename) {
 }
 
 // Check for duplicate attempt
-async function checkDuplicateAttempt(quizFilename, idNumber, email) {
+async function checkDuplicateAttempt(quizID, idNumber) {
     try {
-        const res = await fetch('/api/check-attempt', {
+        const res = await fetch('/api/activity/check-attempt', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ quiz: quizFilename, idNumber, email })
+            body: JSON.stringify({ quizID, idNumber })
         });
-        
         if (!res.ok) throw new Error('Failed to check duplicate');
         return await res.json();
     } catch (error) {
         console.error('Error checking duplicate:', error);
-        return { exists: false }; // Continue if check fails
+        return { attempted: false };
     }
 }
 
 // Fetch leaderboard data
-async function fetchLeaderboard(quizFilename) {
+async function fetchLeaderboard(quizID) {
     try {
-        const res = await fetch(`/api/leaderboard/${quizFilename}`);
+        const res = await fetch(`/api/activity/quiz-leaderboard/${quizID}`);
         if (!res.ok) throw new Error('Failed to fetch leaderboard');
-        return await res.json();
+        const data = await res.json();
+        return data.leaderboard || [];
     } catch (error) {
         console.error('Error fetching leaderboard:', error);
         return []; // Return empty array if fetch fails
@@ -142,7 +142,10 @@ document.getElementById('studentInfoForm').addEventListener('submit', async func
     
     try {
         // Check for duplicate attempt
-        const duplicateCheck = await checkDuplicateAttempt(quizFilename, idNumber, email);
+        // Make sure you have the correct quiz title and idNumber
+        const quizData = await fetchQuiz(quizFilename);
+        const quizTitle = quizData?.title || quizFilename;
+        const duplicateCheck = await checkDuplicateAttempt(quizTitle, idNumber);
         
         if (duplicateCheck.exists) {
             document.getElementById('duplicateError').style.display = 'block';
@@ -191,7 +194,7 @@ async function startQuiz() {
         document.getElementById('totalQuestions').textContent = gameState.questions.length;
         
         // Load initial leaderboard
-        gameState.leaderboard = await fetchLeaderboard(filename);
+        gameState.leaderboard = await fetchLeaderboard(gameState.quizData.title);
         
         // Show the first question
         showQuestion(0);
@@ -324,24 +327,29 @@ function startTimer() {
     clearInterval(gameState.timer);
     gameState.timeLeft = 15;
     document.getElementById('timerText').textContent = gameState.timeLeft;
-    
+
     // Reset timer progress
     const timerProgress = document.querySelector('.timer-progress');
     timerProgress.style.strokeDashoffset = '0';
-    
+
+    // Record the start time
+    const startTime = Date.now();
+
     gameState.timer = setInterval(() => {
-        gameState.timeLeft--;
+        // Calculate elapsed time
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        gameState.timeLeft = Math.max(15 - elapsed, 0);
         document.getElementById('timerText').textContent = gameState.timeLeft;
-        
+
         // Update progress circle
         const progress = (gameState.timeLeft / 15) * 283;
         timerProgress.style.strokeDashoffset = 283 - progress;
-        
+
         if (gameState.timeLeft <= 0) {
             clearInterval(gameState.timer);
             timeUp();
         }
-    }, 1000);
+    }, 250); // Use a shorter interval for smoother updates
 }
 
 // Handle answer selection
@@ -382,7 +390,7 @@ function timeUp() {
 }
 
 // Enhanced compact showFeedback function
-function showFeedback(selectedAnswer) {
+async function showFeedback(selectedAnswer) {
     const question = gameState.questions[gameState.currentQuestionIndex];
     let isCorrect = false;
     let correctAnswerDisplay = '';
@@ -424,13 +432,15 @@ function showFeedback(selectedAnswer) {
     // Calculate points earned
     const pointsEarned = calculatePoints(isCorrect, gameState.timeLeft);
     gameState.score += pointsEarned;
-    
+
     document.getElementById('pointsEarned').textContent = pointsEarned;
     document.getElementById('currentScore').textContent = gameState.score;
-    
-    // Update and display leaderboard
+
+    // Update leaderboard on server and fetch latest leaderboard
+    await updateLeaderboardOnServer();
+    gameState.leaderboard = await fetchLeaderboard(gameState.quizData.title);
     updateLeaderboard();
-    
+
     // Show feedback screen
     showScreen('feedback');
     
@@ -462,39 +472,39 @@ function calculatePoints(isCorrect, timeLeft) {
 
 // Update leaderboard with current player
 function updateLeaderboard() {
-    // Add current player to leaderboard if not already there
-    const currentPlayer = {
-        name: gameState.studentInfo.displayName,
-        score: gameState.score
-    };
-    
-    // Check if player already exists in leaderboard
-    const existingPlayerIndex = gameState.leaderboard.findIndex(
-        player => player.name === currentPlayer.name
-    );
-    
-    if (existingPlayerIndex !== -1) {
-        // Update existing player score
-        gameState.leaderboard[existingPlayerIndex].score = currentPlayer.score;
-    } else {
-        // Add new player
-        gameState.leaderboard.push(currentPlayer);
-    }
-    
-    // Sort by score (descending)
-    gameState.leaderboard.sort((a, b) => b.score - a.score);
-    
-    // Update leaderboard UI (show top 5)
+    const formattedLeaderboard = gameState.leaderboard.map(player => ({
+        name: (player.firstName && player.lastName)
+            ? `${player.firstName} ${player.lastName}`
+            : 'Anonymous',
+        score: player.score,
+        accuracy: player.accuracy !== undefined ? player.accuracy : 0,
+        correctItems: player.correctItems !== undefined ? player.correctItems : 0,
+        totalItems: player.totalItems !== undefined ? player.totalItems : 0
+    }));
+
+    formattedLeaderboard.sort((a, b) => b.score - a.score);
+
     const leaderboardList = document.getElementById('leaderboardList');
-    leaderboardList.innerHTML = '';
-    
-    gameState.leaderboard.slice(0, 5).forEach((player, index) => {
+    leaderboardList.innerHTML = `
+        <div class="leaderboard-header" style="display: flex; font-weight: bold; padding: 8px 12px;">
+            <div style="width: 40px;">Rank</div>
+            <div style="flex: 1;">Name</div>
+            <div style="width: 80px;">Score</div>
+            <div style="width: 90px;">Accuracy</div>
+            <div style="width: 120px;">Correct/Total</div>
+        </div>
+    `;
+
+    formattedLeaderboard.slice(0, 5).forEach((player, index) => {
         const item = document.createElement('div');
         item.className = 'leaderboard-item';
+        item.style.display = 'flex';
         item.innerHTML = `
-            <div class="rank">${index + 1}</div>
-            <div class="name">${player.name}</div>
-            <div class="score">${player.score}</div>
+            <div style="width: 40px;">${index + 1}</div>
+            <div style="flex: 1;">${player.name}</div>
+            <div style="width: 80px;">${player.score}</div>
+            <div style="width: 90px;">${player.accuracy}%</div>
+            <div style="width: 120px;">${player.correctItems} / ${player.totalItems}</div>
         `;
         leaderboardList.appendChild(item);
     });
@@ -503,105 +513,154 @@ function updateLeaderboard() {
 // Show final results
 async function showFinalResults() {
     document.getElementById('finalScore').textContent = gameState.score;
-    
+
     // Refresh leaderboard with latest data from server
     try {
-        const latestLeaderboard = await fetchLeaderboard(getQuizFilename());
+        const latestLeaderboard = await fetchLeaderboard(gameState.quizData.quizID);
         if (latestLeaderboard.length > 0) {
             gameState.leaderboard = latestLeaderboard;
         }
     } catch (error) {
         console.error('Error fetching final leaderboard:', error);
     }
-    
-    // Add current player to leaderboard for display
+
+    // Map leaderboard with all stats
+    const displayLeaderboard = gameState.leaderboard.map(player => ({
+        name: (player.firstName && player.lastName)
+            ? `${player.firstName} ${player.lastName}`
+            : 'Anonymous',
+        score: player.score,
+        accuracy: player.accuracy,
+        correctItems: player.correctItems,
+        totalItems: player.totalItems
+    }));
+
+    // Add current player to leaderboard for display (with all stats)
+    const { totalItems, correctItems, accuracy } = calculateQuizStats();
     const currentPlayer = {
-        name: gameState.studentInfo.displayName,
-        score: gameState.score
+        name: `${gameState.studentInfo.firstName} ${gameState.studentInfo.lastName}`,
+        score: gameState.score,
+        accuracy,
+        correctItems,
+        totalItems
     };
-    
-    const displayLeaderboard = [...gameState.leaderboard];
+
     const existingIndex = displayLeaderboard.findIndex(p => p.name === currentPlayer.name);
-    
+
     if (existingIndex !== -1) {
         displayLeaderboard[existingIndex] = currentPlayer;
     } else {
         displayLeaderboard.push(currentPlayer);
     }
-    
+
     displayLeaderboard.sort((a, b) => b.score - a.score);
-    
+
     // Update podium with top 3
     const topPlayers = displayLeaderboard.slice(0, 3);
-    
+
     if (topPlayers[0]) {
         document.getElementById('firstPlace').textContent = topPlayers[0].name;
         document.getElementById('firstScore').textContent = topPlayers[0].score;
     }
-    
+
     if (topPlayers[1]) {
         document.getElementById('secondPlace').textContent = topPlayers[1].name;
         document.getElementById('secondScore').textContent = topPlayers[1].score;
     }
-    
+
     if (topPlayers[2]) {
         document.getElementById('thirdPlace').textContent = topPlayers[2].name;
         document.getElementById('thirdScore').textContent = topPlayers[2].score;
     }
-    
+
     // Update full leaderboard
     const fullLeaderboardList = document.getElementById('fullLeaderboardList');
     fullLeaderboardList.innerHTML = '';
-    
+
     displayLeaderboard.forEach((player, index) => {
         const item = document.createElement('div');
         item.className = 'leaderboard-item';
         item.innerHTML = `
             <div class="rank">${index + 1}</div>
             <div class="name">${player.name}</div>
-            <div class="score">${player.score}</div>
+            <div class="score">Score: ${player.score}</div>
+            <div class="accuracy">Accuracy: ${player.accuracy !== undefined ? player.accuracy : 0}%</div>
+            <div class="items">Correct: ${player.correctItems !== undefined ? player.correctItems : 0} / ${player.totalItems !== undefined ? player.totalItems : 0}</div>
         `;
         fullLeaderboardList.appendChild(item);
     });
-    
+
     // Submit results to server
     await submitQuizResults();
-    
-    // Show results screen
+
+    // Always show results screen
     showScreen('results');
 }
 
 // Submit quiz results to server
 async function submitQuizResults() {
+    const { totalItems, correctItems, accuracy } = calculateQuizStats();
     const payload = {
-        student: gameState.studentInfo,
-        quiz: getQuizFilename(),
+        studentInfo: gameState.studentInfo,
+        quizID: gameState.quizData.quizID,
+        quiz: gameState.quizData,
         answers: gameState.answers,
         times: gameState.times,
-        score: gameState.score
+        score: gameState.score,
+        totalItems,
+        correctItems,
+        accuracy
     };
-    
     try {
         const res = await fetch('/api/activity/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-        
         if (!res.ok) throw new Error('Failed to submit results');
-        
         const result = await res.json();
         console.log('Quiz submitted successfully:', result);
-        
     } catch (error) {
         console.error('Error submitting quiz results:', error);
     }
 }
 
+// Add this function to quiz_take.js
+function calculateQuizStats() {
+    const totalItems = gameState.questions.length;
+    const correctItems = gameState.answers.filter((ans, idx) => {
+        const q = gameState.questions[idx];
+        return ans !== null && ans === q.answer;
+    }).length;
+    const accuracy = totalItems > 0 ? Math.round((correctItems / totalItems) * 100) : 0;
+    return { totalItems, correctItems, accuracy };
+}
+
+async function updateLeaderboardOnServer() {
+    const { totalItems, correctItems, accuracy } = calculateQuizStats();
+    const payload = {
+        studentInfo: gameState.studentInfo,
+        quizID: gameState.quizData.quizID,
+        score: gameState.score,
+        timeTaken: gameState.times.reduce((a, b) => a + b, 0),
+        totalItems,
+        correctItems,
+        accuracy
+    };
+    try {
+        await fetch('/api/activity/update-leaderboard', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+    } catch (error) {
+        console.error('Error updating leaderboard on server:', error);
+    }
+}
+
 // Play again button
 document.getElementById('playAgainBtn').addEventListener('click', function() {
-    // Redirect to home or refresh the page
-    window.location.href = '/';
+    window.location.href = '/activity';
 });
 
 // Initialize the page
@@ -619,3 +678,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+console.log('[DEBUG] submit payload:', req.body);
