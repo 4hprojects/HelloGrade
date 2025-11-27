@@ -32,167 +32,32 @@ async function getDb() {
  */
 router.post('/submit', async (req, res) => {
     try {
-        const { groupNumber, members, projectUrl, senderEmail, checklistSummary } = req.body;
-
-        // ============ VALIDATION ============
-        if (!groupNumber || !members || !Array.isArray(members) || members.length === 0 || !projectUrl || !senderEmail) {
-            return res.status(400).json({
-                success: false,
-                message: 'All fields are required and members must be a non-empty array.'
-            });
+        const {
+            studentInfo, quizID, quiz, answers, times, score,
+            totalItems, correctItems, accuracy
+        } = req.body;
+        if (!studentInfo || !quizID || !quiz || !answers || !times || typeof score !== 'number') {
+            return res.status(400).json({ success: false, message: 'Missing required quiz fields.' });
         }
-
-        // Validate email format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(senderEmail)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid email format.'
-            });
-        }
-
-        // Validate URL format
-        try {
-            new URL(projectUrl);
-        } catch (err) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid project URL.'
-            });
-        }
-
-        // ============ DATABASE SETUP ============
         const db = await getDb();
-        const submissionsCollection = db.collection('tblSubmissions');
-        const emailQuotaCollection = db.collection('emailQuota');
-
-        // Generate submission reference number
-        const submissionNumber = `SUB-${Date.now()}`;
-
-        // ============ SAVE SUBMISSION & CHECKLIST TO DATABASE ============
-        const submissionDoc = {
-            submissionNumber,
-            groupNumber: parseInt(groupNumber),
-            members,
-            projectUrl,
-            senderEmail,
-            checklistSummary: checklistSummary || {},
-            submittedAt: new Date(),
-            status: 'submitted'
+        const quizResultsCollection = db.collection('tblQuizResults');
+        const resultDoc = {
+            studentInfo,
+            quizID,
+            quiz,
+            answers,
+            times,
+            score,
+            totalItems,
+            correctItems,
+            accuracy,
+            submittedAt: new Date()
         };
-
-        await submissionsCollection.insertOne(submissionDoc);
-
-        // Enhanced console log with collection name
-        console.log(`✅ Submission saved to database`);
-        console.log(`   Collection: tblSubmissions`);
-        console.log(`   Reference: ${submissionNumber}`);
-        console.log(`   Group: ${groupNumber}`);
-        console.log(`   Members: ${members.join(', ')}`);
-
-        // ============ SEND EMAIL TO STUDENT ============
-        try {
-            const studentEmailContent = `
-                <p>Dear Group ${groupNumber},</p>
-                <p>Thank you for submitting your WebSys2 Mini E-Commerce final project!</p>
-                
-                <h3>Submission Details:</h3>
-                <ul>
-                    <li><strong>Group Number:</strong> ${groupNumber}</li>
-                    <li><strong>Members:</strong> ${members.join(', ')}</li>
-                    <li><strong>Project URL:</strong> <a href="${projectUrl}" target="_blank">${projectUrl}</a></li>
-                    <li><strong>Submission Reference:</strong> ${submissionNumber}</li>
-                    <li><strong>Submitted At:</strong> ${new Date().toLocaleString('en-PH', { timeZone: 'Asia/Manila' })}</li>
-                </ul>
-
-                <h3>Checklist Summary:</h3>
-                <p>Your completed checklist items will be reviewed by instructors.</p>
-
-                <p><strong>Keep this reference number for your records:</strong> ${submissionNumber}</p>
-                <p>Your project submission has been received and will be reviewed by the instructors.</p>
-
-                <p>Best regards,<br/>HelloGrade Team</p>
-            `;
-
-            const studentEmailResult = await sendEmail({
-                to: senderEmail,  // ← EMAIL SENT TO STUDENT
-                subject: `[${submissionNumber}] WebSys2 Project Submission Confirmation`,
-                html: studentEmailContent
-            });
-
-            if (studentEmailResult.success) {
-                console.log(`✅ Confirmation email sent to student: ${senderEmail}`);
-                // Track email in quota
-                await trackEmailQuota(emailQuotaCollection, studentEmailResult.provider);
-            } else {
-                console.error('⚠️ Student email sending failed:', studentEmailResult.error);
-                // Don't fail the submission if email fails
-            }
-        } catch (emailError) {
-            console.error('⚠️ Error sending student email:', emailError);
-            // Don't fail the submission if email fails
-        }
-
-        // ============ SEND NOTIFICATION EMAIL TO ADMIN ============
-        try {
-            const adminEmail = process.env.ADMIN_EMAIL || 'henson.sagorsor@e.ubaguio.edu';
-            
-            // Calculate completed tasks
-            const checklistStats = calculateChecklistStats(checklistSummary);
-
-            const adminEmailContent = `
-                <p>A new WebSys2 project submission has been received:</p>
-                
-                <h3>Submission Information:</h3>
-                <ul>
-                    <li><strong>Reference Number:</strong> ${submissionNumber}</li>
-                    <li><strong>Group Number:</strong> ${groupNumber}</li>
-                    <li><strong>Members:</strong> ${members.join(', ')}</li>
-                    <li><strong>Project URL:</strong> <a href="${projectUrl}" target="_blank">${projectUrl}</a></li>
-                    <li><strong>Student Email:</strong> ${senderEmail}</li>
-                    <li><strong>Submitted At:</strong> ${new Date().toLocaleString('en-PH', { timeZone: 'Asia/Manila' })}</li>
-                </ul>
-
-                <h3>Checklist Completion:</h3>
-                <ul>
-                    <li><strong>Core Tasks Completed:</strong> ${checklistStats.coreCompleted} / ${checklistStats.coreTotal}</li>
-                    <li><strong>Bonus Tasks Completed:</strong> ${checklistStats.bonusCompleted} / ${checklistStats.bonusTotal}</li>
-                    <li><strong>Overall Progress:</strong> ${checklistStats.overallPercent}%</li>
-                </ul>
-
-                <p><a href="${projectUrl}" target="_blank">View Project</a></p>
-            `;
-
-            const adminEmailResult = await sendEmail({
-                to: adminEmail,  // ← EMAIL SENT TO ADMIN
-                subject: `[${submissionNumber}] New WebSys2 Submission - Group ${groupNumber}`,
-                html: adminEmailContent
-            });
-
-            if (adminEmailResult.success) {
-                console.log(`✅ Notification email sent to admin: ${adminEmail}`);
-                // Track email in quota
-                await trackEmailQuota(emailQuotaCollection, adminEmailResult.provider);
-            } else {
-                console.error('⚠️ Admin email sending failed:', adminEmailResult.error);
-            }
-        } catch (emailError) {
-            console.error('⚠️ Error sending admin email:', emailError);
-        }
-
-        // ============ RESPONSE ============
-        return res.status(200).json({
-            success: true,
-            submissionNumber,
-            message: 'Project submission received successfully!'
-        });
-
+        await quizResultsCollection.insertOne(resultDoc);
+        res.json({ success: true, message: 'Quiz results saved.' });
     } catch (error) {
-        console.error('Error in /api/activity/submit:', error);
-        return res.status(500).json({
-            success: false,
-            message: 'Server error during submission.'
-        });
+        console.error('Error saving quiz results:', error);
+        res.status(500).json({ success: false, message: 'Server error.' });
     }
 });
 
@@ -333,6 +198,223 @@ router.get('/submissions/:submissionNumber', async (req, res) => {
             success: false,
             message: 'Failed to fetch submission.'
         });
+    }
+});
+
+/**
+ * POST /api/activity/quiz-submit
+ * Saves quiz results from quiz_take.js
+ * Expects:
+ * {
+ *   studentInfo: { ... },
+ *   quiz: { ... },
+ *   answers: [ ... ],
+ *   times: [ ... ],
+ *   score: Number
+ * }
+ */
+router.post('/quiz-submit', async (req, res) => {
+    console.log('[DEBUG] /quiz-submit called');
+    console.log('[DEBUG] Request body:', req.body);
+
+    try {
+        const { studentInfo, quiz, answers, times, score } = req.body;
+        if (!studentInfo || !quiz || !Array.isArray(answers) || !Array.isArray(times) || typeof score !== 'number') {
+            console.log('[DEBUG] Missing required quiz fields');
+            return res.status(400).json({ success: false, message: 'Missing required quiz fields.' });
+        }
+
+        const db = await getDb();
+        const quizResultsCollection = db.collection('tblQuizResults');
+
+        const resultDoc = {
+            studentInfo,
+            quiz,
+            answers,
+            times,
+            score,
+            submittedAt: new Date()
+        };
+
+        console.log('[DEBUG] Inserting quiz result:', resultDoc);
+        await quizResultsCollection.insertOne(resultDoc);
+
+        const leaderboardCollection = db.collection('tblQuizLeaderboard');
+        const totalTime = times.reduce((a, b) => a + b, 0);
+
+        console.log('[DEBUG] Upserting leaderboard for:', studentInfo.idNumber, quiz.title);
+        await leaderboardCollection.updateOne(
+            {
+                quizTitle: quiz.title,
+                idNumber: studentInfo.idNumber
+            },
+            {
+                $set: {
+                    firstName: studentInfo.firstName,
+                    lastName: studentInfo.lastName,
+                    email: studentInfo.email,
+                    score,
+                    timeTaken: totalTime,
+                    submittedAt: new Date()
+                }
+            },
+            { upsert: true }
+        );
+
+        console.log('[DEBUG] Quiz results and leaderboard updated.');
+        res.json({ success: true, message: 'Quiz results saved.' });
+    } catch (error) {
+        console.error('[ERROR] Error saving quiz results:', error);
+        res.status(500).json({ success: false, message: 'Server error.' });
+    }
+});
+
+/**
+ * GET /api/activity/quiz-leaderboard/:quizID
+ * View quiz leaderboard for a specific quiz
+ */
+router.get('/quiz-leaderboard/:quizID', async (req, res) => {
+    console.log('[DEBUG] /quiz-leaderboard called for:', req.params.quizID);
+
+    try {
+        const db = await getDb();
+        const leaderboardCollection = db.collection('tblQuizLeaderboard');
+        const { quizID } = req.params;
+
+        const leaderboard = await leaderboardCollection
+            .find({ quizID })
+            .sort({ score: -1, timeTaken: 1 })
+            .toArray();
+
+        console.log('[DEBUG] Leaderboard data:', leaderboard);
+        res.json({ success: true, leaderboard });
+    } catch (error) {
+        console.error('[ERROR] Error fetching leaderboard:', error);
+        res.status(500).json({ success: false, message: 'Server error.' });
+    }
+});
+
+/**
+ * POST /api/activity/check-attempt
+ * Checks if a student has already attempted a quiz
+ * Expects: { idNumber: String, quizTitle: String }
+ */
+router.post('/check-attempt', async (req, res) => {
+    try {
+        const { idNumber, quizID } = req.body;
+        if (!idNumber || !quizID) {
+            return res.status(400).json({ success: false, message: 'Missing idNumber or quizID.' });
+        }
+        const db = await getDb();
+        const quizResultsCollection = db.collection('tblQuizResults');
+        const attempt = await quizResultsCollection.findOne({
+            'studentInfo.idNumber': idNumber,
+            quizID
+        });
+        res.json({ success: true, attempted: !!attempt });
+    } catch (error) {
+        console.error('[ERROR] Error checking attempt:', error);
+        res.status(500).json({ success: false, message: 'Server error.' });
+    }
+});
+
+/**
+ * POST /api/activity/update-leaderboard
+ * Updates or inserts a leaderboard entry for a quiz
+ * Expects:
+ * {
+ *   studentInfo: { ... },
+ *   quizTitle: String,
+ *   score: Number,
+ *   timeTaken: Number
+ * }
+ */
+router.post('/update-leaderboard', async (req, res) => {
+    try {
+        const {
+            studentInfo, quizID, score, timeTaken,
+            totalItems, correctItems, accuracy
+        } = req.body;
+        if (!studentInfo || !quizID || typeof score !== 'number') {
+            return res.status(400).json({ success: false, message: 'Missing required fields.' });
+        }
+        const db = await getDb();
+        const leaderboardCollection = db.collection('tblQuizLeaderboard');
+        await leaderboardCollection.updateOne(
+            {
+                quizID,
+                idNumber: studentInfo.idNumber
+            },
+            {
+                $set: {
+                    firstName: studentInfo.firstName,
+                    lastName: studentInfo.lastName,
+                    email: studentInfo.email,
+                    score,
+                    timeTaken,
+                    totalItems,
+                    correctItems,
+                    accuracy,
+                    submittedAt: new Date()
+                }
+            },
+            { upsert: true }
+        );
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Error updating leaderboard:', error);
+        res.status(500).json({ success: false, message: 'Server error.' });
+    }
+});
+
+/**
+ * POST /api/activity/save-results
+ * Saves the results of a quiz attempt, including item-level details
+ * Expects:
+ * {
+ *   studentInfo: { ... },
+ *   quiz: { ... },
+ *   answers: [ ... ],
+ *   times: [ ... ],
+ *   score: Number,
+ *   totalItems: Number,
+ *   correctItems: Number,
+ *   accuracy: Number
+ * }
+ */
+router.post('/save-results', async (req, res) => {
+    console.log('[DEBUG] /save-results called');
+    console.log('[DEBUG] Request body:', req.body);
+
+    try {
+        const { studentInfo, quiz, answers, times, score, totalItems, correctItems, accuracy } = req.body;
+        if (!studentInfo || !quiz || !Array.isArray(answers) || !Array.isArray(times) || typeof score !== 'number') {
+            console.log('[DEBUG] Missing required fields for results saving');
+            return res.status(400).json({ success: false, message: 'Missing required fields.' });
+        }
+
+        const db = await getDb();
+        const resultsCollection = db.collection('tblResults');
+
+        const resultDoc = {
+            studentInfo,
+            quiz,
+            answers,
+            times,
+            score,
+            totalItems,
+            correctItems,
+            accuracy,
+            submittedAt: new Date()
+        };
+
+        console.log('[DEBUG] Inserting results document:', resultDoc);
+        await resultsCollection.insertOne(resultDoc);
+
+        res.json({ success: true, message: 'Results saved successfully.' });
+    } catch (error) {
+        console.error('[ERROR] Error saving results:', error);
+        res.status(500).json({ success: false, message: 'Server error.' });
     }
 });
 
