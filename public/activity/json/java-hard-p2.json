@@ -1,5 +1,6 @@
 {
-  "title": "JAVA BASICS QUIZ - Intermediate Version (Tracing & Operators)",
+    "quizID": "java-basics-003",
+  "title": "JAVA BASICS QUIZ - Hard Version (Tracing & Operators)",
   "meta": {
     "multipleChoiceCount": 25,
     "trueFalseCount": 10,
@@ -210,4 +211,3 @@
     }
   ]
 }
-
