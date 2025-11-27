@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5E3N182NE"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-X5E3N182NE');
+        </script>
   <meta charset="UTF-8">
   <title>Take Quiz | HelloUniversity.online</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,6 +81,19 @@
         </div>
       </div>
     </div>
+
+    <!-- Ad block: not shown during quiz questions -->
+    <section class="ad-section" style="margin: 24px 0; text-align: center;">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4537208011192461"
+           data-ad-slot="1190959056"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </section>
 
     <!-- Question Screen -->
     <div id="questionScreen" class="screen">
@@ -168,11 +190,36 @@
           </div>
         </div>
         
+        <!-- Ad block: after results, before play again button -->
+        <section class="ad-section" style="margin: 24px 0; text-align: center;">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-4537208011192461"
+               data-ad-slot="1190959056"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </section>
+        
         <button id="playAgainBtn" class="btn play-again-btn">Return to Home</button>
       </div>
     </div>
   </main>
 
   <script src="js/quiz_take.js"></script>
+  
+  <section class="ad-section" style="margin: 24px 0; text-align: center;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4537208011192461"
+         data-ad-slot="1190959056"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </section>
 </body>
 </html>
