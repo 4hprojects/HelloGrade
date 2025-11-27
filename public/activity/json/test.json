@@ -1,0 +1,32 @@
+{
+"quizID": "test",
+  "title": "JAVA BASICS QUIZ",
+  "description": "25 MULTIPLE CHOICE, 10 TRUE OR FALSE. Answers shown immediately after each item.",
+  "settings": {
+    "showAnswersAfterEachItem": true
+  },
+  "multipleChoice": [
+    {
+      "id": 1,
+      "question": "Which keyword is used to declare a variable in Java?",
+      "choices": {
+        "a": "var",
+        "b": "int",
+        "c": "let",
+        "d": "data"
+      },
+      "answer": "b"
+    },
+        {
+      "id": 2,
+      "question": "Which keyword is used to declare a variable in Java?",
+      "choices": {
+        "a": "var",
+        "b": "int",
+        "c": "let",
+        "d": "data"
+      },
+      "answer": "b"
+    }
+  ]
+}
