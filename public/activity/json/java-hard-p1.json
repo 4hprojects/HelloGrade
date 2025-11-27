@@ -1,5 +1,6 @@
 {
-  "title": "JAVA BASICS QUIZ - Intermediate Version (Loops & Arrays)",
+    "quizID": "java-basics-002",
+  "title": "JAVA BASICS QUIZ - Hard Version (Loops & Arrays)",
   "meta": {
     "multipleChoiceCount": 25,
     "trueFalseCount": 10,
@@ -240,4 +241,3 @@
     }
   ]
 }
-
