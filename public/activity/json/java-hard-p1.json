@@ -1,6 +1,7 @@
 {
     "quizID": "java-basics-002",
-  "title": "JAVA BASICS QUIZ - Hard Version (Loops & Arrays)",
+  "title": "Java Basics Quiz - (Loops & Arrays)",
+  "description": "Take this quiz to see how well you understand loops and arrays. It includes loop control flow, indexing, iteration, and basic array operations.",
   "meta": {
     "multipleChoiceCount": 25,
     "trueFalseCount": 10,
