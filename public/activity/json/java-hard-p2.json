@@ -1,6 +1,7 @@
 {
     "quizID": "java-basics-003",
-  "title": "JAVA BASICS QUIZ - Hard Version (Tracing & Operators)",
+  "title": "Java Basics Quiz - (Tracing & Operators)",
+  "description": "Take this quiz to assess how well you can trace Java code. It includes arithmetic operators, logical operators, evaluation order, and expression results.",
   "meta": {
     "multipleChoiceCount": 25,
     "trueFalseCount": 10,
