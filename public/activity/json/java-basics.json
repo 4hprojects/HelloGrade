@@ -1,9 +1,11 @@
 {
-"quizID": "java-basics-001",
-  "title": "JAVA BASICS QUIZ",
-  "description": "25 MULTIPLE CHOICE, 10 TRUE OR FALSE. Answers shown immediately after each item.",
-  "settings": {
-    "showAnswersAfterEachItem": true
+  "quizID": "java-basics-002",
+  "title": "Java Basics Quiz - (Loops & Arrays)",
+  "description": "Take this quiz to check your understanding of core Java basics. It covers variables, data types, input, output, and simple expressions.",
+  "meta": {
+    "multipleChoiceCount": 25,
+    "trueFalseCount": 10,
+    "showAnswersImmediately": true
   },
   "multipleChoice": [
     {
