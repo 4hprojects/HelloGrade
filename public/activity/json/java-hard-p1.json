@@ -1,7 +1,7 @@
 {
-    "quizID": "java-basics-002",
-  "title": "Java Basics Quiz - (Loops & Arrays)",
-  "description": "Take this quiz to see how well you understand loops and arrays. It includes loop control flow, indexing, iteration, and basic array operations.",
+  "quizID": "java-basics-003",
+  "title": "Java Basics Quiz - (Tracing & Operators)",
+  "description": "Take this quiz to assess how well you can trace Java code. It includes arithmetic operators, logical operators, evaluation order, and expression results.",
   "meta": {
     "multipleChoiceCount": 25,
     "trueFalseCount": 10,
@@ -10,234 +10,204 @@
   "multipleChoice": [
     {
       "id": 1,
-      "question": "What is the output?\nint[] nums = {2, 4, 6};\nint sum = 0;\nfor (int i = 0; i < nums.length; i++) {\n    sum += nums[i];\n}\nSystem.out.println(sum);",
-      "options": ["6", "8", "10", "12"],
-      "answer": "12"
+      "question": "What is printed?\nint a = 5, b = 2;\nSystem.out.println(a / b + a % b);",
+      "options": ["2", "3", "4", "5"],
+      "answer": "3"
     },
     {
       "id": 2,
-      "question": "How many times will the inner println execute?\nfor (int i = 1; i <= 3; i++) {\n    for (int j = 1; j <= 2; j++) {\n        System.out.println(i + \",\" + j);\n    }\n}",
-      "options": ["2", "3", "5", "6"],
-      "answer": "6"
+      "question": "What is the final value of x?\nint x = 10;\nx = x++ + ++x;",
+      "options": ["20", "21", "22", "23"],
+      "answer": "22"
     },
     {
       "id": 3,
-      "question": "What is the last printed value?\nfor (int i = 0; i < 5; i++) {\n    System.out.print(i + \" \");\n}",
-      "options": ["3", "4", "5", "i"],
-      "answer": "4"
+      "question": "What prints?\nint m = 7;\nSystem.out.println(m > 5 && m < 10);",
+      "options": ["true", "false", "5", "7"],
+      "answer": "true"
     },
     {
       "id": 4,
-      "question": "What is the output?\nint[] arr = {1, 2, 3, 4};\nfor (int i = 0; i < arr.length; i += 2) {\n    System.out.print(arr[i] + \" \");\n}",
-      "options": ["1 2 3 4", "1 3", "2 4", "1 2 4"],
-      "answer": "1 3"
+      "question": "What is printed?\nSystem.out.println(10 - 4 * 2 + 6 / 3);",
+      "options": ["2", "4", "6", "8"],
+      "answer": "4"
     },
     {
       "id": 5,
-      "question": "What is the value of count?\nint[] arr = {3, 5, 7, 2, 8};\nint count = 0;\nfor (int x : arr) {\n    if (x > 4) {\n        count++;\n    }\n}",
-      "options": ["1", "2", "3", "4"],
-      "answer": "3"
+      "question": "What is x?\nint x = 4;\nx *= 3 + 2;",
+      "options": ["20", "4", "12", "8"],
+      "answer": "20"
     },
     {
       "id": 6,
-      "question": "What will this code print?\nint[] a = {10, 20, 30};\nfor (int i = a.length - 1; i >= 0; i--) {\n    System.out.print(a[i] + \" \");\n}",
-      "options": ["10 20 30", "30 20 10", "10 30 20", "20 10 30"],
-      "answer": "30 20 10"
+      "question": "What is printed?\nint a = 10;\nSystem.out.println(a == 10 || a / 0 == 2);",
+      "options": ["true", "false", "error", "2"],
+      "answer": "true"
     },
     {
       "id": 7,
-      "question": "What is the output?\nint[] a = {1, 2, 3};\nfor (int x : a) {\n    x = x * 2;\n}\nSystem.out.println(a[0] + \" \" + a[1] + \" \" + a[2]);",
-      "options": ["1 2 3", "2 4 6", "0 0 0", "Compile error"],
-      "answer": "1 2 3"
+      "question": "What is printed?\nint n = 5;\nSystem.out.println(n++ + ++n);",
+      "options": ["10", "11", "12", "13"],
+      "answer": "12"
     },
     {
       "id": 8,
-      "question": "What is printed?\nint[] a = {1, 2, 3, 4};\nint i = 0;\nwhile (i < a.length) {\n    System.out.print(a[i] + \" \");\n    i++;\n}",
-      "options": [
-        "1 2 3",
-        "1 2 3 4",
-        "0 1 2 3",
-        "2 3 4"
-      ],
-      "answer": "1 2 3 4"
+      "question": "What is output?\nint x = 3 * 2 + 4 / 2 - 1;",
+      "options": ["5", "6", "7", "8"],
+      "answer": "7"
     },
     {
       "id": 9,
-      "question": "What is the output?\nint[] a = {2, 4, 6, 8};\nfor (int i = 0; i < a.length; i++) {\n    if (a[i] == 6) {\n        break;\n    }\n    System.out.print(a[i] + \" \");\n}",
-      "options": ["2", "2 4", "2 4 6", "2 4 6 8"],
-      "answer": "2 4"
+      "question": "Which operator has highest precedence?",
+      "options": ["==", "%", "&&", "+"],
+      "answer": "%"
     },
     {
       "id": 10,
-      "question": "What will be printed?\nint[] a = {2, 4, 6, 8};\nfor (int i = 0; i < a.length; i++) {\n    if (a[i] % 4 == 0) {\n        continue;\n    }\n    System.out.print(a[i] + \" \");\n}",
-      "options": ["2 4 6 8", "2 6", "4 8", "6 8"],
-      "answer": "2 6"
+      "question": "What prints?\nint a = 3, b = 4;\nSystem.out.println(a > b ? a : b);",
+      "options": ["3", "4", "true", "false"],
+      "answer": "4"
     },
     {
       "id": 11,
-      "question": "What is the output?\nint[] a = {5, 1, 4};\nint max = a[0];\nfor (int i = 1; i < a.length; i++) {\n    if (a[i] > max) {\n        max = a[i];\n    }\n}\nSystem.out.println(max);",
-      "options": ["1", "4", "5", "9"],
-      "answer": "5"
+      "question": "What is printed?\nint x = 4;\nSystem.out.println(++x * 2);",
+      "options": ["4", "6", "8", "10"],
+      "answer": "10"
     },
     {
       "id": 12,
-      "question": "What is printed?\nint[] a = {1, 3, 5, 7};\nint sum = 0;\nfor (int i = 1; i < a.length - 1; i++) {\n    sum += a[i];\n}\nSystem.out.println(sum);",
-      "options": ["0", "3", "8", "16"],
-      "answer": "8"
-    },
-    {
-      "id": 13,
-      "question": "What is the length of arr?\nint[] arr = new int[10];",
-      "options": ["0", "9", "10", "11"],
-      "answer": "10"
-    },
-    {
-      "id": 14,
-      "question": "What is the default value of arr[2]?\nint[] arr = new int[5];",
-      "options": ["0", "1", "null", "undefined"],
-      "answer": "0"
-    },
-    {
-      "id": 15,
-      "question": "Which loop header correctly visits every element of an int array named a?",
-      "options": [
-        "for (int i = 1; i <= a.length; i++)",
-        "for (int i = 0; i <= a.length; i++)",
-        "for (int i = 0; i < a.length; i++)",
-        "for (int i = 1; i < a.length - 1; i++)"
-      ],
-      "answer": "for (int i = 0; i < a.length; i++)"
-    },
-    {
-      "id": 16,
-      "question": "Which code correctly uses the enhanced for-loop?\nArray: int[] nums = {1, 2, 3};",
-      "options": [
-        "for (int i = 0 : nums) { System.out.println(i); }",
-        "for (num in nums) { System.out.println(num); }",
-        "for (int num : nums) { System.out.println(num); }",
-        "foreach (int num in nums) { System.out.println(num); }"
-      ],
-      "answer": "for (int num : nums) { System.out.println(num); }"
-    },
-    {
-      "id": 17,
-      "question": "What is the value of i after the loop?\nint i = 0;\nwhile (i < 3) {\n    i++;\n}",
-      "options": ["0", "1", "2", "3"],
+      "question": "What is printed?\nSystem.out.println(15 / 4);",
+      "options": ["3", "3.75", "4", "5"],
       "answer": "3"
     },
     {
+      "id": 13,
+      "question": "What is printed?\nSystem.out.println(15 / 4.0);",
+      "options": ["3", "3.75", "4", "error"],
+      "answer": "3.75"
+    },
+    {
+      "id": 14,
+      "question": "Evaluate:\nint x = 5;\nx += x * 2;",
+      "options": ["10", "15", "20", "25"],
+      "answer": "15"
+    },
+    {
+      "id": 15,
+      "question": "What prints?\nint a = 2, b = 3, c = 4;\nSystem.out.println(a + b * c - a);",
+      "options": ["10", "11", "12", "13"],
+      "answer": "12"
+    },
+    {
+      "id": 16,
+      "question": "What is printed?\nboolean flag = false;\nSystem.out.println(!flag || true);",
+      "options": ["true", "false", "error", "0"],
+      "answer": "true"
+    },
+    {
+      "id": 17,
+      "question": "What prints?\nint x = 1;\nx = x + x++ + ++x;",
+      "options": ["4", "5", "6", "7"],
+      "answer": "5"
+    },
+    {
       "id": 18,
-      "question": "What is printed?\nint i = 0;\ndo {\n    System.out.print(i + \" \");\n    i++;\n} while (i < 3);",
-      "options": ["0 1 2", "1 2 3", "0 1 2 3", "0 0 0"],
-      "answer": "0 1 2"
+      "question": "What prints?\nSystem.out.println((5 > 3) && (8 < 2));",
+      "options": ["true", "false", "5", "error"],
+      "answer": "false"
     },
     {
       "id": 19,
-      "question": "What happens with this code?\nint[] arr = {1, 2, 3};\nSystem.out.println(arr[3]);",
-      "options": [
-        "Prints 3",
-        "Prints 0",
-        "Throws ArrayIndexOutOfBoundsException",
-        "Nothing is printed"
-      ],
-      "answer": "Throws ArrayIndexOutOfBoundsException"
+      "question": "What is printed?\nSystem.out.println(9 % 4 * 2);",
+      "options": ["1", "2", "3", "4"],
+      "answer": "2"
     },
     {
       "id": 20,
-      "question": "What is printed?\nint[] arr = {2, 4, 6, 8};\nint sum = 0;\nfor (int i = 0; i < arr.length; i++) {\n    if (i % 2 == 0) {\n        sum += arr[i];\n    }\n}\nSystem.out.println(sum);",
-      "options": ["10", "12", "14", "20"],
-      "answer": "10"
+      "question": "What is printed?\nint x = 10;\nSystem.out.println(x-- - --x);",
+      "options": ["0", "1", "2", "3"],
+      "answer": "2"
     },
     {
       "id": 21,
-      "question": "Which line correctly declares and initialises an array with values 3, 6, 9?",
-      "options": [
-        "int[] a = new int[3]{3, 6, 9};",
-        "int[] a = {3, 6, 9};",
-        "int a = {3, 6, 9};",
-        "array int a = {3, 6, 9};"
-      ],
-      "answer": "int[] a = {3, 6, 9};"
+      "question": "What prints?\nint a = 8, b = 3;\nSystem.out.println((a / b) * b);",
+      "options": ["6", "7", "8", "9"],
+      "answer": "6"
     },
     {
       "id": 22,
-      "question": "What is the output?\nint[] a = {1, 2, 3, 4};\nfor (int i = 0; i < a.length; i++) {\n    for (int j = 0; j < 2; j++) {\n        System.out.print(a[i] + \" \");\n    }\n}",
-      "options": [
-        "1 2 3 4",
-        "1 1 2 2 3 3 4 4",
-        "1 2 1 2 3 4",
-        "2 2 4 4"
-      ],
-      "answer": "1 1 2 2 3 3 4 4"
+      "question": "What prints?\nint a = 6;\na /= 2;\na -= 1;\nSystem.out.println(a);",
+      "options": ["1", "2", "3", "4"],
+      "answer": "2"
     },
     {
       "id": 23,
-      "question": "What is printed?\nint[] a = {1, 2, 3, 4, 5};\nfor (int i = 0; i < a.length; i++) {\n    if (a[i] % 2 == 0) {\n        System.out.print(a[i] + \" \");\n    }\n}",
-      "options": ["1 3 5", "2 4", "1 2 3 4 5", "4 2"],
-      "answer": "2 4"
+      "question": "What is printed?\nSystem.out.println(4 + 3 + \"Hello\" + 2 + 1);",
+      "options": ["7Hello21", "Hello7", "43Hello3", "7Hello3"],
+      "answer": "7Hello21"
     },
     {
       "id": 24,
-      "question": "What is printed?\nint[] a = {2, 2, 2};\nint product = 1;\nfor (int x : a) {\n    product *= x;\n}\nSystem.out.println(product);",
-      "options": ["2", "4", "6", "8"],
-      "answer": "8"
+      "question": "What is printed?\nint a = 5, b = 10;\nSystem.out.println((a > b) ? a + b : a * b);",
+      "options": ["15", "50", "5", "10"],
+      "answer": "50"
     },
     {
       "id": 25,
-      "question": "What is printed?\nint[] a = {1, 2, 3, 4};\nfor (int i = a.length - 1; i >= 0; i -= 2) {\n    System.out.print(a[i] + \" \");\n}",
-      "options": ["4 3 2 1", "4 2", "3 1", "2 4"],
-      "answer": "4 2"
+      "question": "Evaluate:\nSystem.out.println(4 * (2 + 3) / 2);",
+      "options": ["8", "10", "12", "14"],
+      "answer": "10"
     }
   ],
   "trueFalse": [
     {
       "id": 1,
-      "question": "An enhanced for-loop (for-each) can iterate over an array without using an index.",
+      "question": "The ++ prefix changes the value before the expression is evaluated.",
       "answer": true
     },
     {
       "id": 2,
-      "question": "A while loop always executes its body at least once.",
-      "answer": false
+      "question": "Logical OR (||) stops evaluating once a true value is found.",
+      "answer": true
     },
     {
       "id": 3,
-      "question": "A do-while loop checks the condition before running the loop body.",
+      "question": "5 / 2 always gives 2.5 in Java.",
       "answer": false
     },
     {
       "id": 4,
-      "question": "Accessing an array index that is equal to its length will cause an exception.",
+      "question": "x += y * 2 is the same as x = x + (y * 2).",
       "answer": true
     },
     {
       "id": 5,
-      "question": "In Java, the last valid index of an array with length 5 is 5.",
+      "question": "The == operator compares String content.",
       "answer": false
     },
     {
       "id": 6,
-      "question": "The expression a.length gives the number of elements in the array a.",
+      "question": "The ternary operator selects between two values.",
       "answer": true
     },
     {
       "id": 7,
-      "question": "Using break inside a loop will skip only the current iteration and continue with the next one.",
+      "question": "10 % 3 equals 3.",
       "answer": false
     },
     {
       "id": 8,
-      "question": "Using continue inside a loop will skip the rest of the current iteration.",
+      "question": "Mixing int and double in operations results in double output.",
       "answer": true
     },
     {
       "id": 9,
-      "question": "All elements of a newly created int[] array are automatically initialised to 0.",
+      "question": "Division by zero using integers causes a runtime error.",
       "answer": true
     },
     {
       "id": 10,
-      "question": "The enhanced for-loop allows you to directly change the values stored in the original array by reassigning the loop variable.",
+      "question": "x++ increases x before using it in the expression.",
       "answer": false
     }
   ]
