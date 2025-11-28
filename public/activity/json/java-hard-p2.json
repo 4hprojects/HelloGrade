@@ -1,5 +1,5 @@
 {
-    "quizID": "java-basics-003",
+  "quizID": "java-basics-003",
   "title": "Java Basics Quiz - (Tracing & Operators)",
   "description": "Take this quiz to assess how well you can trace Java code. It includes arithmetic operators, logical operators, evaluation order, and expression results.",
   "meta": {
@@ -12,7 +12,7 @@
       "id": 1,
       "question": "What is printed?\nint a = 5, b = 2;\nSystem.out.println(a / b + a % b);",
       "options": ["2", "3", "4", "5"],
-      "answer": "4"
+      "answer": "3"
     },
     {
       "id": 2,
@@ -48,7 +48,7 @@
       "id": 7,
       "question": "What is printed?\nint n = 5;\nSystem.out.println(n++ + ++n);",
       "options": ["10", "11", "12", "13"],
-      "answer": "13"
+      "answer": "12"
     },
     {
       "id": 8,
@@ -72,7 +72,7 @@
       "id": 11,
       "question": "What is printed?\nint x = 4;\nSystem.out.println(++x * 2);",
       "options": ["4", "6", "8", "10"],
-      "answer": "8"
+      "answer": "10"
     },
     {
       "id": 12,
@@ -96,7 +96,7 @@
       "id": 15,
       "question": "What prints?\nint a = 2, b = 3, c = 4;\nSystem.out.println(a + b * c - a);",
       "options": ["10", "11", "12", "13"],
-      "answer": "11"
+      "answer": "12"
     },
     {
       "id": 16,
@@ -108,7 +108,7 @@
       "id": 17,
       "question": "What prints?\nint x = 1;\nx = x + x++ + ++x;",
       "options": ["4", "5", "6", "7"],
-      "answer": "7"
+      "answer": "5"
     },
     {
       "id": 18,
@@ -120,7 +120,7 @@
       "id": 19,
       "question": "What is printed?\nSystem.out.println(9 % 4 * 2);",
       "options": ["1", "2", "3", "4"],
-      "answer": "3"
+      "answer": "2"
     },
     {
       "id": 20,
@@ -156,7 +156,7 @@
       "id": 25,
       "question": "Evaluate:\nSystem.out.println(4 * (2 + 3) / 2);",
       "options": ["8", "10", "12", "14"],
-      "answer": "8"
+      "answer": "10"
     }
   ],
   "trueFalse": [
